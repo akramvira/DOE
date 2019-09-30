@@ -1,0 +1,446 @@
+
+<div class=" animated fadeIn row border-bottom justify-content-center">
+  <div class="col-12">
+    <div class="card card-accent-success">
+      <div class="card-header">
+        همه کابران
+      </div>
+      <div class="card-body">
+        
+<div>
+    <ngx-datatable 
+      #usersTable
+      class="material expandable"
+      [rows]="users"
+      [columnMode]="'force'"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      [rowHeight]="'auto'"
+      [externalPaging]="true"
+      [count]="page.totalElements"
+      [offset]="page.pageNumber"
+      [limit]="page.size"
+      (page)='setPage($event)'
+      >
+      <ngx-datatable-row-detail
+          [rowHeight]="'auto'"
+          #myDetailRow
+          (toggle)="onDetailToggle($event)"
+        >
+          <ng-template
+            let-row="row"
+            let-expanded="true"
+            ngx-datatable-row-detail-template
+          >
+          <div class="col-10">
+            <div class="row">
+              <div class="col-12 col-md-6 xol-lg-6 col-xl-2"><strong><i class="fa fa-user text-black-50 mr-1"></i>شماره تلفن</strong>:{{row.phonenumber}}</div>
+              <div  class="col-12 col-md-6 xol-lg-6 col-xl-2"><strong><i class="fa fa-users text-black-50 mr-1"></i>شماره کنفرانس</strong>:{{row.conferance}}</div>
+              <div  class="col-12 col-md-6 xol-lg-6 col-xl-2"><strong><i class="fa fa-circle text-black-50 mr-1"></i>شماره تماس مجدد</strong>:{{row.numRedial}}</div>
+              <div  class="col-12 col-md-6 xol-lg-6 col-xl-2"><strong><i class="fa fa-pause text-black-50 mr-1"></i>شماره Hold</strong>:{{row.numHold}}</div>
+              <div  class="col-12 col-md-6 xol-lg-6 col-xl-2"><strong><i class="fa fa-park text-black-50 mr-1"></i>شماره پارک</strong>:{{row.numPark}}</div>
+              <div  class="col-12 col-md-6 xol-lg-6 col-xl-2"><strong><i class="fa fa-list text-black-50 mr-1"></i>شماره صف</strong>:{{row.numQueue1}}</div>
+              
+            </div>
+          </div>
+          </ng-template>
+        </ngx-datatable-row-detail>
+
+      <ngx-datatable-column name="id"  [width]="30" >
+ 
+        <ng-template let-column="column" ngx-datatable-header-template>
+          شناسه
+        </ng-template>
+        <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" ngx-datatable-cell-template>
+        {{rowIndex+1}}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="name"  [width]="80">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+              <span (click)="sort()">نام</span>
+              <input
+              type='text'
+              class="form-control-sm border"  
+              id="name"
+              [formControl] = 'name'
+              style='width:60%'
+              placeholder='Filter..'
+              (keyup)='FilterData($event)'
+              />
+
+            </ng-template>
+
+          <ng-template let-value="value"  let-expanded="true" let-row="row" 
+          let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+              <span
+              title="Double click to edit"
+              (dblclick)="editing[rowIndex + '-name'] = true"
+              *ngIf="!editing[rowIndex + '-name']">
+              {{value}}
+            </span>
+            <input class="form-text col-12"
+              autofocus
+              (blur)="updateValue($event, 'name', rowIndex)"
+              *ngIf="editing[rowIndex+ '-name']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+        </ngx-datatable-column>
+
+        <ngx-datatable-column name="username"  [width]="100">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+              <span (click)="sort()">نام کاربری</span>
+              <input
+              type='text'
+              class="form-control-sm border"  
+              id="username"
+              [formControl] = 'username'
+              style='width:60%'
+              placeholder='Filter..'
+              (keyup)='FilterData($event)'
+              />
+            </ng-template>
+            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                <span
+                title="Double click to edit"
+                (dblclick)="editing[rowIndex + '-username'] = true"
+                *ngIf="!editing[rowIndex + '-username']">
+                {{value}}
+              </span>
+              <input class="form-text col-12"
+                autofocus
+                (blur)="updateValue($event, 'username', rowIndex)"
+                *ngIf="editing[rowIndex+ '-username']"
+                type="text"
+                [value]="value"
+              />
+    
+              
+    
+            </ng-template>
+          </ngx-datatable-column>
+    
+         
+
+      <ngx-datatable-column name="active"  [width]="80">
+        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+          <span (click)="sort()">وضعیت</span>
+        </ng-template>
+        <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <span class="badge"
+            [ngClass]="{' badge-success': value=='1', ' badge-secondary' :value=='0' }" 
+            >{{value=='1'? 'فعال': 'غیرفعال' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
+
+      <ngx-datatable-column name="level" [width]="100">
+         
+      <ng-template   let-row="row" let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+          <span (click)="sort()">نوع</span>
+        </ng-template>
+        <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+          <span title={{value}}>
+              <i  class="fa fa-user fa-2x "
+              [ngClass]="{'text-success': value=='admin', 'text-warning' :value!='admin' }"  ></i> 
+              <i class="fa fa-phone " *ngIf="value!='admin'"></i>
+              <i class="fa fa-cog " *ngIf="value=='admin'"></i>
+          </span>
+          <small>
+            <a 
+            *ngIf="value!='admin'"
+            href="javascript:void(0)"
+            [class.datatable-icon-left]="!expanded"
+            [class.datatable-icon-down]="expanded"
+            title="مشاهده اطلاعات بیشتر"
+            (click)="toggleExpandRow(row)"
+            class=""
+            >
+            مشاهده جزییات
+            </a>
+            </small> 
+        </ng-template>
+      </ngx-datatable-column>
+      
+
+     
+    
+      <ngx-datatable-column name="roles"  [width]="80">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+            <!-- <pre>{{value | json}}</pre> -->
+            <span class="badge badge-primary" *ngFor="let item of  value">{{item.name}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column name="updatedAt"  [width]="80">
+          <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+              <span (click)="sort()">آخرین به روز رسانی</span>
+            </ng-template>
+            <ng-template let-value="value" ngx-datatable-cell-template>
+                {{value}}
+            </ng-template>
+          </ngx-datatable-column>
+  
+
+    <ngx-datatable-column name="id"  [width]="80">
+        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+          <span>عملیات</span>
+        </ng-template>
+        <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+          <div class="btn-group">
+            <button class="btn btn-primary" (click)="showEditModal(rowIndex)"><i class="fa fa-cog"></i></button>
+            <button class="btn btn-danger" (click)="showRemoveModal(rowIndex)"><i class="fa fa-trash"></i></button>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+
+    </ngx-datatable>
+
+
+  </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<div bsModal #removeItemModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+         
+          <button type="button" class="close" (click)="removeItemModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">حذف کاربر</h4>
+        </div>
+        <div class="modal-body">
+          <p>آیا از حذف  کاربر "{{selectedItemNameToDelete}}" مطمئنید؟</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary mr-2" (click)="removeItemModal.hide()">انصراف</button>
+          <button type="button" class="btn btn-danger" (click)="confirmDelete()">بله حذف شود</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  
+
+
+
+
+  <div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-primary" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+        
+        <button type="button" class="close" (click)="editModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title"> "{{selectedItemNameToEdit}}" ویرایش کابر</h4>
+      </div>
+      <div class="modal-body">
+          <div class="animated fadeIn row border-bottom justify-content-center">
+              <div class="col-10">
+              <div class="card card-accent-success">
+                <div class="card-header">
+          اطلاعات کاربر جدید
+                </div>
+                <div class="card-body">
+                  <form [formGroup]=userData  (ngSubmit)="onSubmit()">
+    
+                    <div class="form-group card-accent-success  bg-info">
+                  
+    
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"> نوع کاربر </span>
+                        </div>
+                        <select class="form-control bg-info"   formControlName=role >
+                          <option value="operator" selected>اپراتور</option>
+                          <option value="admin">ادمین</option>
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        </div>
+                      </div>
+                    </div>
+    
+    
+                      <div class="form-group">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text"> وضعیت کاربر </span>
+                            </div>
+                            <select class="form-control"  formControlName=active >
+                              <option>فعال</option>
+                              <option>غیر فعال</option>
+                            </select>
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                            </div>
+                          </div>
+                        </div>
+    
+    
+                    <div class="form-group" >
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"> نام و نام خانوادگی</span>
+                          </div>
+                          <input type="text"  class="form-control" formControlName=name>
+                          <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">نام کاربری</span>
+                        </div>
+                        <input type="text" class="form-control"  formControlName=username>
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="fa fa-user"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                    
+    
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-12">
+                              <div class="btn btn-sm mb-1 btn-success" *ngFor="let item of selectedRoles">{{item.title}}</div>
+                            </div>
+                          </div>
+    
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text"> مقام </span>
+                        </div>
+                        
+                        <select  class="form-control"  formControlName=role (change)="selecteRole($event)" >
+                          <option *ngFor="let item of notSelectedRoles" [value]="item.id" >{{item.title}}</option>
+                        </select>
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                        </div>
+                      </div>
+                    </div>
+    
+    
+                    <!-- operator section -->
+                    <div [hidden]="userData.value.role == 'admin'">
+                    <div class="form-group" >
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">شماره تلفن</span>
+                          </div>
+                          <input type="text" class="form-control"  formControlName=phonenumber>
+                          <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          </div>
+                        </div>
+                      </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">شماره صف </span>
+                          </div>
+                          <input type="text" class="form-control"  formControlName=numQueue1>
+                          <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          </div>
+                        </div>
+                      </div>
+    
+    
+                    <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text"> شماره پارک</span>
+                          </div>
+                          <input type="text" class="form-control"  formControlName=numPark>
+                          <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          </div>
+                        </div>
+                      </div>
+    
+    
+                    <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">شماره انتظار </span>
+                          </div>
+                          <input type="text" class="form-control"  formControlName=numHold>
+                          <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-user"></i></span>
+                          </div>
+                        </div>
+                      </div>
+    
+                      <div class="form-group">
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <span class="input-group-text">شماره تکرار مجدد</span>
+                            </div>
+                            <input type="text" class="form-control"  formControlName=numRedial>
+                            <div class="input-group-append">
+                              <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                          </div>
+                    </div>
+    
+                    </div>
+    
+    
+    
+                    <div class="form-group">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">کلمه عبور</span>
+                        </div>
+                        <input type="password"  class="form-control"  formControlName=password>
+                        <div class="input-group-append">
+                          <span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">تکرار  کلمه عبور</span>
+                          </div>
+                          <input type="password"  class="form-control"  formControlName=confirmpassword>
+                          <div class="input-group-append">
+                            <span class="input-group-text"><i class="fa fa-asterisk"></i></span>
+                          </div>
+                        </div>
+                      </div>
+    
+                    <div class="form-group form-actions text-center">
+                      <button type="submit" class="btn btn-sm btn-success">ذخیره شود</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mr-2" (click)="editModal.hide()">انصراف</button>
+        <button type="button" class="btn btn-success" (click)="confirmEdit()">بله حذف شود</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+

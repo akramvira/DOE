@@ -1,0 +1,15 @@
+.ngx-datatable{
+    &.fixed-header {
+        .datatable-header {
+            .datatable-header-inner {
+                .datatable-header-cell{
+                    padding:4px;
+                }
+            }
+          }
+        }
+    }
+
+ .datatable-header-cell-template-wrap{
+     text-align:center;
+ }

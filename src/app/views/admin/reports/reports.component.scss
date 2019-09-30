@@ -1,0 +1,78 @@
+.dp-date-picker{
+
+&.dp-material {
+    .dp-picker-input{
+    width:100%!important;
+    }
+}
+}
+
+.ngx-datatable {
+    overflow: visible!important;
+    
+    .datatable-header{
+        overflow: visible!important;
+    } 
+    .datatable-row-center{
+        z-index:1000;
+    }
+
+    &.fixed-header {
+            .datatable-header 
+            {
+                .datatable-header-inner {
+                    .datatable-header-cell{
+                        overflow: visible!important;
+                        }
+        
+                }
+            }
+        }
+}
+
+.date-filter>input{
+    width:60%;
+    text-align:center;
+}
+
+
+.datatable-checkbox {
+    input[type='checkbox']{
+        margin:0!important;
+        width:1em;
+    }
+}
+
+
+.dropdown-list {
+    li{
+        text-align:right;
+    }
+    
+}
+.multiselect-dropdown{
+    .dropdown-btn{
+        border:none!important;
+        text-align:right;
+    }
+}
+.dropdown-btn{text-align:right!important}
+
+.multiselect-item-checkbox{
+    input[type=checkbox] + div
+    {
+        text-align: right;
+        padding-right:2em;
+    }
+}
+
+.multiselect-item-checkbox{
+    input[type=checkbox] + div:before{
+        right:0;
+        left:auto;
+    }
+    input[type=checkbox] + div:after{
+        right:4px;
+        left:auto;
+    }
+}

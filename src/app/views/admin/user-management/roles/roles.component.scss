@@ -1,0 +1,13 @@
+
+.datatable-body-cell{text-align: right}
+.datatable-body-row{color:Red}
+.ngx-datatable.material{box-shadow: none}
+
+
+.ngx-datatable {
+   & .datatable-body {
+      &  .datatable-scroll{width:100% ;}
+    }
+}
+
+.datatable-body-row{color:Red}

@@ -1,0 +1,13 @@
+.datatable-row-wrapper{
+
+&.datatable-row-wrapper
+&[ng-reflect-expanded = "true"] {
+    background: #fafafa;
+}
+}
+
+.ngx-datatable .datatable-body .datatable-row-wrapper{
+    background: #fafafa;
+}
+
+

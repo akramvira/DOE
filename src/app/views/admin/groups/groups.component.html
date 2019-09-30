@@ -1,0 +1,150 @@
+<div class="row animated fadeIn mt-4">
+  <div class="col-2">
+    <div class="card card-accent-primary">
+      <div class="card-header">  لیست گروه ها </div>
+      <div class="card-body">
+          <ngx-datatable class="material border-bottom"
+          [rows]="groups"
+          [headerHeight]="40"
+          
+          [rowHeight]="'auto'"
+          [selectionType]="'single'"
+          [columnMode]="'force'"  
+          style="width: 100%"
+          (activate)="onActivate($event)"
+          >
+         
+
+       <ngx-datatable-column
+       
+        [sortable]="true"
+        [canAutoResize]="false"
+        [draggable]="false"
+        [resizeable]="false"
+        [width]="100"
+        name="name"
+        >
+        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+            <span >نام گروه</span>
+          </ng-template>
+          <ng-template let-value="value"   let-row="row" 
+            let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+              <span
+              title="برای ویرایش دوبار کلیک کنید!"
+              (dblclick)="editing[rowIndex + '-name'] = true"
+              (click)="setActiveRow(rowIndex)"
+              *ngIf="!editing[rowIndex + '-name']">
+              {{value}}
+            </span>
+            <input class="form-text col-12"
+              autofocus
+              (blur)="updateValue($event, 'name', rowIndex)"
+              (keypress)="onKeyPress($event)"
+            
+              *ngIf="editing[rowIndex+ '-name']"
+              type="text"
+              [value]="value"
+            />
+          </ng-template>
+     </ngx-datatable-column>
+     <ngx-datatable-column
+       
+     [sortable]="true"
+     [canAutoResize]="false"
+     [draggable]="false"
+     [resizeable]="false"
+     name="edit"
+     [width]="50"
+     >
+     <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+         <span >حذف</span>
+       </ng-template>
+       <ng-template let-value="value"   let-row="row" 
+         let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+        <span class="btn btn-sm btn-danger" data-toggle="modal" (click)="showRemoveModal(rowIndex)">
+          <i class="fa fa-trash"></i>
+        </span>
+
+       </ng-template>
+  </ngx-datatable-column>
+
+    </ngx-datatable>
+
+  <div class="col-12 text-left">
+    <div class="row text-center justify-content-center">
+      <input class="form-control col-12" [hidden]="!addingNewGroup" [formControl]="newGroupName" >
+
+      <button class="btn  " title="اضافه کردن گروه جدید"
+      [ngClass] = "{'btn-warning btn-pill':!addingNewGroup, 'btn-success col-5':addingNewGroup }"
+       (click)="addNewGroupClick()">{{ addingNewGroup? 'ثبت' : '+' }}</button>
+
+       <button class="col-5 btn btn-warning" [hidden]="!addingNewGroup" (click)="addingNewGroup=false" >لغو</button>
+    </div>
+  </div>
+      </div>
+    </div>  
+  </div>
+
+  
+<div class="col-4">
+  <div class="card card-accent-danger">
+    <div class="card-header p-1  ">
+        <div class="col-12">
+          <div class="row align-items-center">
+            <span class="col-5 pl-2">داخلی های این گروه </span>
+            <input class="form-control col-3" placeholder="فیلتر"/> 
+          </div>
+      </div>
+    </div>
+    <div class="card-body direction-ltr text-center">
+        <div *ngFor="let item of selectedGroupExtensions" class="btn col-2 btn-success m-1"
+        (click)="removeFromSelectedParent($event, item)">
+            {{item }}
+          </div>
+            {{selectedGroupExtensions? '' : 'گروهی انتخاب نشده است.' }}
+    </div>
+    <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
+  </div>
+</div>
+<div class="col-6">
+  <div class="card card-accent-success">
+      <div class="card-header p-1  ">
+          <div class="col-12">
+            <div class="row align-items-center">
+              <span class="col-5 pl-2">همه داخلی ها </span>
+              <input class="form-control col-3 text-left" type="number"
+               placeholder="فیلتر" (keyup)="filterAllExtensions($event)" /> 
+            </div>
+        </div>
+      </div>
+    <div class="card-body row justify-content-center align-items-center direction-ltr text-center">
+          <div *ngFor="let item of remainingExtensions" class="col-2 btn btn-info m-1" 
+          (click)="addItemToSelectedParent($event, item)">
+              {{ item }}
+            </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+<div bsModal #removeGroupModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+       
+        <button type="button" class="close" (click)="smallModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <h4 class="modal-title">حذف گروه</h4>
+      </div>
+      <div class="modal-body">
+        <p>آیا از حذف  گروه "{{selectedItemNameToDelete}}" مطمئنید؟</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary mr-2" (click)="smallModal.hide()">انصراف</button>
+        <button type="button" class="btn btn-danger" (click)="confirmDelete()">بله حذف شود</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

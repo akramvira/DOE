@@ -1,0 +1,31 @@
+.dropdown-list {
+    li{
+        text-align:right;
+    }
+    
+}
+.multiselect-dropdown{
+    .dropdown-btn{
+        border:none!important;
+        text-align:right;
+    }
+}
+
+.multiselect-item-checkbox{
+    input[type=checkbox] + div
+    {
+        text-align: right;
+        padding-right:2em;
+    }
+}
+
+.multiselect-item-checkbox{
+    input[type=checkbox] + div:before{
+        right:0;
+        left:auto;
+    }
+    input[type=checkbox] + div:after{
+        right:4px;
+        left:auto;
+    }
+}

@@ -1,0 +1,17 @@
+
+<button class="badge  btn btn-sm border-right float-right" (click)="export('excel')"><i class="fa fa-external-link"></i> Excel</button>
+<button class="badge btn  btn-sm float-right mr-1" (click)="export('csv')"><i class="fa fa-external-link"></i> CSV</button>
+
+<div class="chart-wrapper">
+    <canvas 
+    baseChart 
+    class="chart"
+    [data]="data"
+    [labels]="labels"
+    [chartType]="chartType"
+    [colors] ="colors"
+    [options]="chartOptions"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)">
+  </canvas>
+</div>

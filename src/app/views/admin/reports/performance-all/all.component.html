@@ -1,0 +1,50 @@
+<div class="animated fadeIn">
+        <div class="row justify-content-center">
+            <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+                <div class="card-header row">
+                    عملکرد کلی سیستم در پاسخ گویی تماس ها
+                    <div class="card-header-actions">
+                    </div>
+                </div>  
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="chart-wrapper col-12">
+                                <app-pie-chart 
+                                [data]="pieChartData"
+                                [labels]="pieChartLabels" >
+                                </app-pie-chart>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="row">
+                                    <div class="col-12 p-2 mt-1 badge badge-secondary">همه تماس ها: {{allData['all']}}</div>
+                                    <div class="col-12 p-2 mt-1 badge badge-success">تماس های پاسخ داده شده {{allData['answer']}}</div>
+                                    <div class="col-12 p-2 mt-1 badge badge-danger">تماس های پاسخ داده نشده{{allData['noanswer']}}</div>                                    
+                                </div>
+                            </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card col-12 col-md-12 col-lg-12 col-xl-6">
+                <div class="card-header row">
+                    تماس ها
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <app-bar-chart 
+                        [datasets]="barChartData"
+                        [labels]="barChartLabels"
+                        [contentTitle] = "'نموادار تماس های کل سیستم'"
+                        >
+                    </app-bar-chart>
+                    </div>
+                </div>
+            </div>
+            
+    
+      </div>  
+    </div>

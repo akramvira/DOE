@@ -1,0 +1,16 @@
+
+<button class="badge  btn btn-sm border-right float-right" (click)="export('excel')"><i class="fa fa-external-link"></i> Excel</button>
+<button class="badge btn  btn-sm float-right mr-1" (click)="export('csv')"><i class="fa fa-external-link"></i> CSV</button>
+
+  <div class="chart-wrapper mt-3 mx-3 " >
+  
+    <canvas baseChart class="chart"
+    [datasets]="datasets"
+    [labels]="labels"
+    [options]="lineChartOptions"
+    [colors]="lineChartColours"
+    [legend]="lineChartLegend"
+    [chartType]="lineChartType"
+    (chartHover)="chartHovered($event)"
+    (chartClick)="chartClicked($event)"></canvas>
+</div>

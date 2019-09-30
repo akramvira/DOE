@@ -1,0 +1,704 @@
+<tabset>
+  <tab>
+    <ng-template tabHeading
+      ><i class="icon-calculator"></i> تنظیمات اولیه سیستم</ng-template
+    >
+
+    <div class="row animated fadeIn mt-4">
+      <div class="col-12">
+        <div class="card card-accent-primary">
+          <div class="card-header">
+            اطلاعات دیتابیس ها
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="onSubmitServers($event)" [formGroup]="settings">
+              <div class="row" formGroupName="ami">
+                <label class="col-sm-2 col-form-label">دیتابیس Ami</label>
+                <div class="col-12 col-md-10 col-lg-10 col-xl-10">
+                  <div class="row">
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Server IP </span>
+                        </div>
+                        <input
+                          type="email"
+                          class="form-control border"
+                          [ngClass]="{
+                            'border-success': pingStatus == 1,
+                            'border-danger': pingStatus == -1
+                          }"
+                          autocomplete="email"
+                          formControlName="ip"
+                        />
+                        <div class="input-group-append ">
+                          <button
+                            class="input-group-text"
+                            (click)="pingAmi()"
+                            [ngClass]="{
+                              'bg-success': pingStatus == 1,
+                              'bg-danger': pingStatus == -1
+                            }"
+                          >
+                            {{ pingStatus == 1 ? "ok" : "ping" }}
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Port</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="port"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">user</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="username"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Password</span>
+                        </div>
+                        <input
+                          type="password"
+                          class="form-control"
+                          autocomplete="current-password"
+                          formControlName="password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" formGroupName="operatori">
+                <label class="col-sm-2 col-form-label">دیتابیس operatori</label>
+                <div class="col-10">
+                  <div class="row">
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Server IP </span>
+                        </div>
+                        <input
+                          type="email"
+                          class="form-control"
+                          autocomplete="email"
+                          formControlName="ip"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Port</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="port"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">user</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="username"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Password</span>
+                        </div>
+                        <input
+                          type="password"
+                          class="form-control"
+                          autocomplete="current-password"
+                          formControlName="password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" formGroupName="invatation">
+                <label class="col-sm-2 col-form-label">سرور سیستم فراخوان</label>
+                <div class="col-10">
+                  <div class="row">
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Server IP </span>
+                        </div>
+                        <input
+                          type="email"
+                          class="form-control"
+                          autocomplete="email"
+                          formControlName="ip"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Port</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="port"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">user</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="username"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Password</span>
+                        </div>
+                        <input
+                          type="password"
+                          class="form-control"
+                          autocomplete="current-password"
+                          formControlName="password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" formGroupName="server">
+                <label class="col-sm-2 col-form-label">دیتابیس Server</label>
+                <div class="col-10">
+                  <div class="row">
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Server IP </span>
+                        </div>
+                        <input
+                          type="email"
+                          class="form-control"
+                          autocomplete="email"
+                          formControlName="ip"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Port</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="port"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">user</span>
+                        </div>
+                        <input
+                          type="text"
+                          class="form-control"
+                          formControlName="username"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <span class="input-group-text">Password</span>
+                        </div>
+                        <input
+                          type="password"
+                          class="form-control"
+                          autocomplete="current-password"
+                          formControlName="password"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group form-actions col-12 text-left">
+                <button type="submit" class="btn  btn-primary">
+                  ذخیره شود
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div class=" col-12 col-md-12 col-lg-12 ">
+        <div class="card card-accent-success">
+          <div class="card-header">
+            دیگر اطلاعات سیستم
+          </div>
+          <div class="card-body">
+            <form
+              class="row"
+              [formGroup]="settings"
+              (ngSubmit)="setSettingsRouteData($event)"
+            >
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">countco</span>
+                  </div>
+                  <input class="form-control" formControlName="countco" />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> counte1 </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="counte1"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> counte1 </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="counte1"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> queue_number </span>
+                  </div>
+                  <input class="form-control" formControlName="queue_number" />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      prepend_outbound_from
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    formControlName="prepend_outbound_from"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> prepend_outbound_to </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="prepend_outbound_to"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> did_inbound_from </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="did_inbound_from"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> did_inbound_to </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    formControlName="did_inbound_to"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      prefix_outbound_transfer
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="prefix_outbound_transfer"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group form-actions col-sm-12 text-left">
+                <button type="submit" class="btn  btn-primary">
+                  ذخیره شود
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <ng-template tabHeading
+      ><i class="icon-basket-loaded"></i> تنظیمات لایسنس</ng-template
+    >
+
+    <div class="row animated fadeIn border-bottom justify-content-center">
+      <div class=" col-12 col-md-6 col-lg-6  ">
+        <div class="card card-accent-success">
+          <div class="card-header">
+            ثبت اطلاعات شما
+          </div>
+          <div class="card-body">
+            <form [formGroup]="license" (ngSubmit)="submitLicense()">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">نام سازمان/شخص/شرکت</span>
+                  </div>
+                  <input
+                    type="text"
+                    name="username3"
+                    formControlName="name"
+                    class="form-control"
+                    [ngClass]="{
+                      'is-invalid': licenseSubmitted && licenseForm.name.errors
+                    }"
+                    required
+                  />
+
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-user"></i
+                    ></span>
+                  </div>
+                  <div
+                    *ngIf="licenseSubmitted && licenseForm.name.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="licenseForm.name.errors.required">
+                      وارد کردن نام ضروری است.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> زمان فعال سازی سیستم </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    readonly
+                    formControlName="startDate"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-clock-o"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group ">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Serial number</span>
+                  </div>
+                  <input
+                    class="form-control"
+                    readonly
+                    formControlName="serial"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-asterisk"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group ">
+                <div class="input-group">
+                  <label class="col-sm-3 col-form-label"> فایل لایسنس:</label>
+                  <label for="licence-file" class="btn btn-primary"
+                    >انتخاب...</label
+                  >
+
+                  <input
+                    type="file"
+                    class="form-control-file form-control hide is-invalid"
+                    formControlName="file"
+                    id="licence-file"
+                    (change)="handleFileInput($event.target.files)"
+                  />
+                  <div *ngIf="fileToUpload">{{ fileToUpload.name }}</div>
+                  <div
+                    *ngIf="licenseSubmitted && licenseForm.file.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="licenseForm.file.errors.required">
+                      فایلی انتخاب نشده است.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group form-actions text-left">
+                <button type="submit" class="btn  btn-success">
+                  ذخیره شود
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class=" col-12 col-lg-6 "
+        *ngIf="licenseSubmitted || accessList.length > 0"
+      >
+        <div class="card  card-accent-success">
+          <div class="card-header">
+            دسترسی های شما
+          </div>
+          <div class="card-body text-center">
+            <div class="alert alert-success" *ngFor="let item of accessList">
+              {{ item.title }}: زمان:{{ item.active_time }}: تعداد:{{
+                item.count
+              }}
+            </div>
+            <div class="alert alert-danger" *ngIf="accessList.length == 0">
+              دسترسی موجود نیست.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+  <tab>
+    <ng-template tabHeading
+      ><i class="fa da-list"></i> محاسبه قبوض</ng-template
+    >
+    <div class="row animated fadeIn border-bottom justify-content-center">
+      <div class="col-12 col-md-10 col-lg-10 col-xl-6">
+        <div class="card card-accent-success">
+          <div class="card-header">
+            لیست تعرفه ها
+          </div>
+          <div class="card-body">
+            <form [formGroup]="bills">
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">هزینه هر پالس</span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="bill1"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-user"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      هزینه هر دقیقه مکالمه شهری
+                    </span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="bill2"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-envelope"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group ">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      هزینه هر دقیقه مکالمه غیر شهری</span
+                    >
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="bill3"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-asterisk"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      هزینه هر دقیقه مکالمه موبایل
+                    </span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="bill4"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-envelope"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> هزینه آبونمان </span>
+                  </div>
+                  <input
+                    type="number"
+                    class="form-control"
+                    formControlName="bill5"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text"
+                      ><i class="fa fa-envelope"></i
+                    ></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group form-actions">
+                <button type="submit" class="btn  btn-primary">
+                  ذخیره شود
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
+
+  <tab>
+    <ng-template tabHeading
+    ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template
+  >
+  <div class="row animated fadeIn border-bottom justify-content-center">
+    <div class=" col-12 col-md-6 col-lg-6  ">
+      <div class="card card-accent-success">
+        <div class="card-header">
+          ثبت فایل خروجی ایجاد شده جهت نمایش گزارشات
+        </div>
+        <div class="card-body">
+          <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
+
+
+            <div class="form-group ">
+              <div class="input-group">
+                <label class="col-4 col-form-label"> فایل اطلاعات سیستم:</label>
+                <label for="licence-file" class="btn btn-primary"
+                  >انتخاب...</label
+                >
+
+                <input
+                  type="file"
+                  class="form-control-file form-control hide is-invalid"
+                  formControlName="file"
+                  id="data-file"
+                  (change)="handleDataFileInput($event.target.files)"
+                />
+                <div *ngIf="datafileToUpload">{{ datafileToUpload.name }}</div>
+                <div
+                  *ngIf="licenseSubmitted && licenseForm.file.errors"
+                  class="invalid-feedback"
+                >
+                  <div *ngIf="licenseForm.file.errors.required">
+                    فایلی انتخاب نشده است.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group form-actions text-left">
+              <button type="submit" class="btn  btn-success">
+                ذخیره شود
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  </tab>
+</tabset>

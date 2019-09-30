@@ -1,0 +1,177 @@
+<div class=" animated fadeIn row border-bottom justify-content-center">
+  <div class="col-12">
+    <div class="card card-accent-success">
+      <div class="card-header">
+        اطلاعات ریز مکالمات سیستم
+      </div>
+      <div class="card-body">
+
+        <div>
+          <ngx-datatable #usersTable class="material expandable" 
+          [rows]="data" [columnMode]="'force'"
+            [headerHeight]="80" 
+            [footerHeight]="50" 
+            [rowHeight]="'auto'" 
+            [externalPaging]="true"
+            [count]="page.totalElements" 
+            [offset]="page.pageNumber" 
+            [limit]="page.size"
+             (page)='setPage($event)'>
+
+
+            <ngx-datatable-column name="calldate" [width]="80">
+              <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <div class="row">
+                <span class="col-4" >تاریخ</span>
+                <div class="col-8">
+                    <div>
+                    <span (click)="sort()"> از:</span>
+                    <md-input-container
+                    class="date-filter">
+                        <input 
+                        class="form-control-sm border"
+                        mdInput 
+                        name="someName" 
+                        dir="rtl"
+                        mode="day"
+                        theme="dp-material"
+                        placeholder="تاریخ"
+                        [formControl]="selectedDateFrom"
+                        [dpDayPicker]="datePickerConfig"
+                        (onSelect) = "onSelectDate()"
+                        (onChange) = "onSelectDate()"
+                        />
+                    </md-input-container>
+                    </div>
+                    <div>
+                      <span (click)="sort()"> تا:</span>
+                      <md-input-container
+                      class="date-filter">
+                          <input 
+                          class="form-control-sm border"
+                          mdInput 
+                          name="someName" 
+                          dir="rtl"
+                          mode="day"
+                          theme="dp-material"
+                          placeholder="تاریخ"
+                          [formControl]="selectedDateTo"
+                          [dpDayPicker]="datePickerConfig"
+                          (onSelect) = "onSelectDate()"
+                          (onChange) = "onSelectDate()"
+                          />
+                      </md-input-container>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+
+              <ng-template let-value="value" let-expanded="true" let-row="row" let-rowIndex="rowIndex"
+                ngx-datatable-cell-template>
+                <span>
+                    {{value}}
+                  </span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="disposition" [width]="80">
+              <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                  <span>وضعیت </span>
+                    <select
+                    class="form-control-sm border"
+                    type='text'
+                    id="disposition"
+                    style='border:1px;'
+                    [formControl]="disposition"
+                    placeholder='Filter..'
+                    (change) = 'FilterData($event)'
+                    (keyup)='FilterData($event)'
+                    >
+                    <option value="all" selected>همه</option>
+                    <option value="true" >پاسخ داده شده</option>
+                    <option value="false">پاسخ داده نشده</option>
+                  </select>
+
+
+               
+              </ng-template>
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                  <span class="badge"
+                   [ngClass]="{' badge-success' : value=='ANSWERED', 
+                              ' badge-danger' : value=='CONGESTION'}">
+                      {{value == 'ANSWERED'? 'پاسخ داده شده' : 'پاسخ داده نشده'}}
+                  </span>
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column name="src" [width]="100">
+                <ng-template let-row="row" let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                  <span (click)="sort()">مبدا</span>
+                  <input
+                  type='text'
+                  class="form-control-sm border"  
+                  id="src"
+                  [formControl] = 'src'
+                  style='border:1px;'
+                  placeholder='Filter..'
+                  (keyup)='FilterData($event)'
+                  />
+  
+                  <app-search-column filterText="src" columnName="src"></app-search-column>
+                </ng-template>
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <span>
+                    {{value}}
+                  </span>
+                </ng-template>
+              </ngx-datatable-column>
+
+              
+            <ngx-datatable-column name="dst" [width]="100">
+
+              <ng-template let-row="row" let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span (click)="sort()">مقصد</span>
+                <input
+                class="form-control-sm border"
+                type='text'
+                id="dst"
+                [formControl] = 'dst'
+                style='border:1px;'
+                placeholder='Filter..'
+                (keyup)='FilterData($event)'
+                />
+
+              </ng-template>
+              <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                <span>
+                  {{value}}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+
+           
+            <ngx-datatable-column name="duration" [width]="100">
+              <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                <span (click)="sort()">(دقیقه)مدت تماس</span>
+              </ng-template>
+              <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <span>
+                    {{value}}
+                  </span>
+                </ng-template>
+              </ng-template>
+            </ngx-datatable-column>
+
+
+
+
+          </ngx-datatable>
+
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

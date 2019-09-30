@@ -1,0 +1,204 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-xl-2 col-12">
+            <div class="card card-accent-primary">
+                <div class="card-header"> انتخاب گروه(ها) </div>
+                <div class="card-body">
+                    <ngx-datatable class="material border-bottom"
+                    [rows]="groups"
+                    [headerHeight]="40"
+                    
+                    [rowHeight]="'auto'"
+                    [selectionType]="'checkbox'"
+                    [columnMode]="'force'"  
+                    style="width: 100%"
+                    (activate)="onActivate($event)"
+                    >
+                    
+            
+                    <ngx-datatable-column
+                    
+                    [sortable]="true"
+                    [canAutoResize]="false"
+                    [draggable]="false"
+                    [resizeable]="false"
+                    name="name"
+                    >
+                    <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                        <span >نام گروه</span>
+                    </ng-template>
+                    <ng-template let-value="value"   let-row="row" 
+                        let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                        <span (click)="setActiveRow(rowIndex)">
+                        {{value}}
+                        </span>
+                        
+                    </ng-template>
+                </ngx-datatable-column>
+            
+            
+                </ngx-datatable>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-10 col-12">
+        <div class="card card-accent-primary">
+                <div class="card-header"> قبوض از تاریخ: 
+                    <md-input-container>
+                        <input 
+                        mdInput 
+                        name="someName" 
+                        dir="rtl"
+                        mode="day"
+                        theme="dp-material"
+                        placeholder="تاریخ"
+                        [formControl]="selectedDateFrom"
+                        [dpDayPicker]="datePickerConfig"
+                        
+                        />
+                    </md-input-container>
+                    تا تاریخ:
+                    <md-input-container>
+                        <input 
+                        mdInput 
+                        name="someName" 
+                        dir="rtl"
+                        mode="day"
+                        theme="dp-material"
+                        placeholder="تاریخ"
+                        [formControl]="selectedDateTo"
+                        [dpDayPicker]="datePickerConfig"
+                        
+                        />
+                    </md-input-container>
+                </div>
+                <div class="card-body">
+                        <ngx-datatable 
+                        #billsTable
+                        class="material expandable"
+                        [rows]="bills"
+                        [columnMode]="'force'"
+                        [headerHeight]="50"
+                        [footerHeight]="50"
+                        [rowHeight]="'auto'"
+                        [externalPaging]="true"
+                        [count]="page.totalElements"
+                        [offset]="page.pageNumber"
+                        [limit]="page.size"
+                        (page)='setPage($event)'
+                        [groupRowsBy]="'groupId'"
+                        [groupExpansionDefault]="true"
+                        [limit]="1"
+                        [width]="100"
+                        style="width:100%"
+                        >
+
+                        <ngx-datatable-group-header
+                        [rowHeight]="50"
+                        [width]="100"
+                        #myGroupHeader
+                        (toggle)="onDetailToggle($event)"
+                      >
+                        <ng-template
+                          let-group="group"
+                          let-expanded="expanded"
+                          ngx-datatable-group-header-template
+                        >
+                          <div  class="cursor-pointer">
+                            <a
+                              [class.datatable-icon-left]="!expanded"
+                              [class.datatable-icon-down]="expanded"
+                              title="Expand/Collapse Group"
+                              (click)="toggleExpandGroup(group)"
+                            >
+                              <b>گروه: {{ group.value[0].groupId }}</b>
+                            </a>
+                          </div>
+                        </ng-template>
+                      </ngx-datatable-group-header>
+                    
+                        <ngx-datatable-column name="id"  [width]="30" >
+                    
+                            <ng-template let-column="column" ngx-datatable-header-template>
+                            ردیف
+                            </ng-template>
+                            <ng-template let-rowIndex="rowIndex" let-row="row" let-value="value" ngx-datatable-cell-template>
+                            {{rowIndex+1}}
+                            </ng-template>
+                        </ngx-datatable-column>
+
+
+                        <ngx-datatable-column name="number"  [width]="100">
+                        <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                            <span (click)="sort()">شماره تلفن</span>
+                            </ng-template>
+                            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                                <span>
+                                {{value}}
+                            </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                    
+                        <ngx-datatable-column name="mobile"  [width]="100">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                            <span (click)="sort()">شماره همراه</span>
+                            </ng-template>
+                            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                                <span>
+                                {{value}}
+                            </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="urbanCall"  [width]="100">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                            <span (click)="sort()">تماس شهری</span>
+                            </ng-template>
+                            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                                <span>
+                                {{value}}
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+                        
+                        <ngx-datatable-column name="intercityCall"  [width]="100">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                            <span (click)="sort()">تماس داخلی</span>
+                            </ng-template>
+                            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                                <span>
+                                {{value}}
+                            </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="abonmah"  [width]="100">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                            <span (click)="sort()">آبونمان</span>
+                            </ng-template>
+                            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                                <span>
+                                {{value}}
+                            </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                        <ngx-datatable-column name="sum"  [width]="100">
+                            <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                                <span (click)="sort()">جمع</span>
+                            </ng-template>
+                            <ng-template let-value="value" let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+                                <span>
+                                {{value}} تومان
+                                </span>
+                            </ng-template>
+                        </ngx-datatable-column>
+
+                </ngx-datatable>
+                    
+        </div>
+    </div>
+
+  </div>  
+</div>
