@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from "@angular/core";
+import { Component, OnInit, ChangeDetectorRef, ViewEncapsulation } from "@angular/core";
 import { SettingsService } from "./_service/settings.service";
 import {
   FormControl,
@@ -16,7 +16,8 @@ import { FileUploadComponent } from "./file-upload/file-upload.component";
 
 @Component({
   selector: "app-settings",
-  templateUrl: "./settings.component.html"
+  templateUrl: "./settings.component.html",
+  encapsulation:ViewEncapsulation.None
 })
 export class SettingsComponent implements OnInit {
   fb: FormBuilder;
@@ -247,22 +248,23 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  fileIsUploading = false;
   systemDataSubmitted = false;
   submitSystemData(){
     this.systemDataSubmitted = true;
     if(!this.systemData.invalid){
 
-    
+      this.fileIsUploading = true;
     const formData = new FormData();
     formData.append("file", this.datafileToUpload);
 
     this.settingService.uploadfile(formData).subscribe(
       data => {
-        
+        this.fileIsUploading = false;
         this.toastr.success('پیغام سیستم',data['data']);
       },
       error => {
-        
+        this.fileIsUploading = false;
         this.toastr.error(error.error.errors.file[0]);
       }
     );

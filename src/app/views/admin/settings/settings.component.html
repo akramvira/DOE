@@ -696,7 +696,7 @@
           </form>
         </div>
 
-        <div>
+        <div class="text-center border-top p-4">
           <button class="btn btn-danger" (click)="removeLastFileData()">
     پاک کردن اطلاعات فایل قبلی
           </button>
@@ -706,3 +706,10 @@
   </div>
   </tab>
 </tabset>
+
+
+<div class = "overlay" style="background: rgba(0, 0, 0, 0.41)" [ngClass]="{'hide': !fileIsUploading}">
+  <div class="spinner-border text-primary" role="status">
+      <span class="sr-only">Loading...</span>
+  </div>
+</div> 
