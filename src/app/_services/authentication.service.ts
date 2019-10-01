@@ -84,7 +84,8 @@ export class AuthenticationService  {
 
   public getUserMenues(){
     let userToken = this.getLSToken();
-    return this.http.get( environment.apiUrl + '/admin/menu', {params : { token : userToken}}); 
+    let option = this.getRequestOpions();
+    return this.http.get( environment.apiUrl + '/admin/menu',option); 
     
   }
 

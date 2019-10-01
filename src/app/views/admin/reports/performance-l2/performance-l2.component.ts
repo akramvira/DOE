@@ -4,24 +4,28 @@ import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { debug } from "util";
+import { WebService } from './web.service';
 @Component({
   selector: 'app-performance-l2',
   templateUrl: './performance-l2.component.html',
   styleUrls: ['./performance-l2.component.scss']
 })
 export class PerformanceL2Component implements OnInit {
-  dropdownSettings = {};
+  dropdownSettings1 = {};
+  dropdownSettings2 = {};
 
   constructor(
-    private reportsServ: ReportsService,
+    private webServ: WebService,
     private authServe: AuthenticationService
   ) {}
   groups = new Array();
+  delegates = new Array();
   filters = new FormGroup({
     time: new FormControl("daily"),
     type: new FormControl("all"),
     inorout: new FormControl("all"),
-    selectedItems: new FormControl([])
+    selectedItems1: new FormControl([]),
+    selectedItems2: new FormControl([])
   });
 
   activeFilter(event) {
@@ -39,17 +43,25 @@ export class PerformanceL2Component implements OnInit {
     theme: "dp-material"
   };
 
-  selectedGroups: any = this.filters.value.selectedItems;
-  showAnsweredCalls = false;
-  showNoAnsweredCalls = false;
+  selectedGroups: any = this.filters.value.selectedItems1;
+  showAnsweredCalls = true;
+  showNoAnsweredCalls = true;
   showLineAllCalls = true;
   onSelectAll(item) {}
   onItemSelect(item) {
+
+    console.log(this.filters.value.selectedItems1);
+
+    let labels = [];
+    for(let index in this.filters.value.selectedItems1){
+      labels.push(this.filters.value.selectedItems1[index]['item_text']);
+    }
+    this.mainLabels = labels;
     this.updateCharts();
   }
 
   ngOnInit() {
-    this.dropdownSettings = {
+    this.dropdownSettings1 = {
       singleSelection: false,
       idField: "item_id",
       textField: "item_text",
@@ -57,11 +69,23 @@ export class PerformanceL2Component implements OnInit {
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
-      limitSelection: 2,
+     limitSelection: 1,
       allowSearchFilter: true
     };
-    this.filters.value.selectedItems;
-    this.reportsServ.getExtensionsAndGroups().subscribe(
+
+    this.dropdownSettings2 = {
+      singleSelection: false,
+      idField: "item_id",
+      textField: "item_text",
+      selectAllText: "انتخاب همه",
+      unSelectAllText: "حذف همه موارد",
+      searchPlaceholderText: "جستجو",
+      itemsShowLimit: 1,
+//      limitSelection: 2,
+      allowSearchFilter: true
+    };
+    this.filters.value.selectedItems1;
+    this.webServ.getExtensionsAndGroups().subscribe(
       data => {
         let groupesData = new Array();
         for (var i in data["groups"]) {
@@ -69,8 +93,23 @@ export class PerformanceL2Component implements OnInit {
             item_id: i,
             item_text: data["groups"][i]["name"]
           });
+          
         }
         this.groups = groupesData;
+        this.delegates = groupesData;
+
+        this.filters.patchValue({
+          selectedItems1 : groupesData
+        });
+
+        let labels = [];
+        for(let index in this.filters.value.selectedItems1){
+          labels.push(this.filters.value.selectedItems1[index]['item_text']);
+        }
+        this.mainLabels = labels;
+        this.updateCharts();
+
+
       },
       error => {
         this.authServe.handdleAuthErrors(error);
@@ -101,96 +140,19 @@ export class PerformanceL2Component implements OnInit {
     }
   ];
 
-  dailyTimes = [
-    "00:00",
-    "01:00",
-    "02:00",
-    "03:00",
-    "04:00",
-    "05:00",
-    "06:00",
-    "07:00",
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "24:00"
+
+
+  mainLabels = [
+    'معاونت',
+    'معاونت 2'
   ];
-
-  monthlyTimes = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30"
-  ];
-
-  yearlyTimes = [
-    "فروردین",
-    "اردیبهشت",
-    "خرداد",
-    "تیر",
-    "مرداد",
-    "شهریور",
-    "مهر",
-    "آبان",
-    "آذر",
-    "دی",
-    "بهمن",
-    "اسفند"
-  ];
-
-  timeLabels = {
-    daily: this.dailyTimes,
-    monthly: this.monthlyTimes,
-    yearly: this.yearlyTimes,
-    choosely: ""
-  };
-
-  public performanceChartLabels: string[] = this.dailyTimes;
+  public performanceChartLabels: string[] = this.mainLabels;
   public performanceChartData: any[] = [];
 
-  public callsBarChartLabels: string[] = this.dailyTimes;
+  public callsBarChartLabels: string[] = this.mainLabels;
   public callsChartData: any[] = [];
 
-  public timesChartLabels: string[] = this.dailyTimes;
+  public timesChartLabels: string[] = this.mainLabels;
   public timesChartData: any[] = [];
 
   public chartClicked(e: any): void {
@@ -223,7 +185,7 @@ export class PerformanceL2Component implements OnInit {
   }
 
   public lineChartData: Array<any> = [];
-  public lineChartLabels: Array<any> = this.dailyTimes;
+  public lineChartLabels: Array<any> = this.mainLabels;
   public lineChartColours: Array<any> = [
     {
       //
@@ -301,22 +263,25 @@ export class PerformanceL2Component implements OnInit {
   ];
 
   updateCharts() {
-    debugger;
     let filterData = this.filters.getRawValue();
-    this.lineChartLabels = this.timeLabels[filterData.time];
-    this.callsBarChartLabels = this.timeLabels[filterData.time];
-    this.performanceChartLabels = this.timeLabels[filterData.time];
+    this.lineChartLabels = this.mainLabels;
+    this.callsBarChartLabels = this.mainLabels;
+    this.performanceChartLabels = this.mainLabels;
 
-    if (filterData.selectedItems.length == 1) {
-      filterData["id"] = filterData.selectedItems[0]["item_id"];
+    //if (filterData.selectedItems1.length == 1) {
+  
+
+      if(filterData.selectedItems1.length){
+      filterData["id"] = filterData.selectedItems1[0]["item_id"];
       this.getOneGroupData(filterData);
-    } else if (filterData.selectedItems.length > 1) {
-      this.getMultipleGroupData(filterData);
     }
+    // } else if (filterData.selectedItems1.length > 1) {
+    //   this.getMultipleGroupData(filterData);
+    // }
   }
 
   getOneGroupData(filterData) {
-    this.reportsServ.getGroupPerformance(filterData).subscribe(
+    this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
         this.lineChartData = [];
         this.callsChartData = [];
@@ -377,13 +342,13 @@ export class PerformanceL2Component implements OnInit {
 
   getMultipleGroupData(filterData) {
     let groupsId = {
-      id_group1: filterData.selectedItems[0]["item_id"],
-      id_group2: filterData.selectedItems[1]["item_id"]
+      id_group1: filterData.selectedItems1[0]["item_id"],
+      id_group2: filterData.selectedItems1[1]["item_id"]
     };
 
     
 
-    this.reportsServ.getGroupPerformance(filterData).subscribe(
+    this.webServ.getGroupPerformance(filterData).subscribe(
       dataAll => {
         debugger;
 
@@ -468,35 +433,36 @@ export class PerformanceL2Component implements OnInit {
     );
 
     ///////////////////////////////////calls///////////////////////////////
-    this.reportsServ.getCompareGroupsCalls(groupsId).subscribe(
-      data => {
-        debugger;
+    // this.webServ.getCompareGroupsCalls(groupsId).subscribe(
+    //   data => {
 
-        this.lineChartLabels = this.timeLabels[this.filters.value.time];
-        this.callsBarChartLabels = this.timeLabels[this.filters.value.time];
+    //     this.lineChartLabels = this.mainLabels;
+    //     this.callsBarChartLabels = this.mainLabels;
 
-        let allCalsData = [];
-        let answeredData = [];
-        let noAnsweredData = [];
-        let performanceData = [];
+    //     let allCalsData = [];
+    //     let answeredData = [];
+    //     let noAnsweredData = [];
+    //     let performanceData = [];
 
-        this.filters.value.selectedItems.forEach(item => {
-          allCalsData.push(item["all"]);
-          answeredData.push(item["answer"]);
-          noAnsweredData.push(item["noanswer"]);
-          performanceData.push(item["noanswer"]);
-        });
+    //     this.filters.value.selectedItems1.forEach(item => {
+    //       allCalsData.push(item["all"]);
+    //       answeredData.push(item["answer"]);
+    //       noAnsweredData.push(item["noanswer"]);
+    //       performanceData.push(item["noanswer"]);
+    //     });
 
-        this.callsChartData = [
-          { data: allCalsData, label: "همه" },
-          { data: answeredData, label: "پاسخ داده شده" },
-          { data: noAnsweredData, label: "پاسخ داده نشده" }
-        ];
-      },
-      error => {
-        this.authServe.handdleAuthErrors(error);
-      }
-    );
+    //     this.callsChartData = [
+    //       { data: allCalsData, label: "همه" },
+    //       { data: answeredData, label: "پاسخ داده شده" },
+    //       { data: noAnsweredData, label: "پاسخ داده نشده" }
+    //     ];
+    //   },
+    //   error => {
+    //     this.authServe.handdleAuthErrors(error);
+    //   }
+    // );
+
+
   }
 
   onSelectDate() {}
