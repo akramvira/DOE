@@ -105,13 +105,14 @@ export class SettingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.settingService.getSettingsdata().subscribe(data => {
-      console.log(data);
-
+    this.settingService.getSettingsdata()
+    .subscribe(data => {
+      data=data['data'];
       this.settings.patchValue({
         ami: data["ami"],
         operatori: data["operatori"],
         server: data["server"],
+        invatation: data["invatation"],
 
         countco: data["countco"],
         counte1: data["counte1"],
@@ -122,13 +123,15 @@ export class SettingsComponent implements OnInit {
         did_inbound_to: data["did_inbound_to"],
         prefix_outbound_transfer: data["prefix_outbound_transfer"]
       });
+
+      this.pingAmi();
     });
     this.settingService.getLincenseData().subscribe(data => {
       this.accessList = data["license"];
       this.license.patchValue(data);
     });
 
-    this.pingAmi();
+    
   }
 
   onSubmitServers(event: Event) {
@@ -215,6 +218,7 @@ export class SettingsComponent implements OnInit {
 
   datafileToUpload: File = null;
   handleDataFileInput(files: FileList) {
+ 
     this.datafileToUpload = files.item(0);
   }
 

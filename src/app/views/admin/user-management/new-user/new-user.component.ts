@@ -38,7 +38,7 @@ export class NewUserComponent implements OnInit {
   ngOnInit() {
     this.userServ.getAllRoles().subscribe(
       (data)=>{
-
+        
         let roles = data['roles'];
         let allRoles =[];
         debugger;

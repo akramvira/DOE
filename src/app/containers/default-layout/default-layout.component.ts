@@ -209,8 +209,21 @@ export class DefaultLayoutComponent implements OnDestroy {
         if (haveAccesedMenues.indexOf("groupExtensions") > -1)
           tmpNavItems.push({
             name: "مدیریت گروه بندی ها",
-            url: "/admin/groups",
-            icon: "icon-user"
+            icon: "icon-user",
+            children:[
+              {
+                name: "مدیریت معاونت ها",
+                url: "/admin/groups/assistant",
+                icon: "icon-people"
+              },
+              {
+                name: "مدیریت ادارات",
+                url: "/admin/groups/office",
+                icon: "icon-people"
+              },
+              
+
+            ]
           });
 
         this.navItems = tmpNavItems;

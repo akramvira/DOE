@@ -47,23 +47,24 @@ export class AuthenticationService  {
   logout() {
     // remove user from local storage to log user out
 
-    let userToken = this.getLSToken();
+    let options = this.getRequestOpions();
 
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
 
-    return this.http.post<any>( environment.apiUrl + '/logout', { token : userToken } );
+    return this.http.post<any>( environment.apiUrl + '/logout',{}, options);
   }
 
   public isAuthenticated(){
-    let userToken = this.getLSToken();
-    return this.http.get( environment.apiUrl + '/login', {params : { token : userToken}});
+    let options = this.getRequestOpions();
+
+    return this.http.get( environment.apiUrl + '/login',options);
   }
 
   public getUserData(){
-    let userToken = localStorage.getItem('userToken');
-    return this.http.get( environment.apiUrl + '/admin/userdata', {params : { token : userToken}});
+    let options = this.getRequestOpions();
+    return this.http.get( environment.apiUrl + '/admin/userdata', options );
   }
   public saveUserData(data){
     return this.http.post<any>(`${environment.apiUrl}/userdata`, { } )

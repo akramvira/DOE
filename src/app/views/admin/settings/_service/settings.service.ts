@@ -61,12 +61,14 @@ export class SettingsService {
 
 
   public pingAmi(data){
+    debugger;
     let options = this.authServ.getRequestOpions(true);
-    return this.http.post(environment.apiUrl + '/admin/setting/license',data, options);
+    return this.http.post(environment.apiUrl + '/admin/setting/connection',data, options);
   }
 
 
   public uploadfile(data) {
+  
     let options = this.authServ.getRequestOpions(true);
     return this.http.post(environment.apiUrl + '/admin/setting/uploadfile',data, options);
   }
