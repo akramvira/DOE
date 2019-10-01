@@ -10,6 +10,10 @@ import { LinesComponent } from './performance-lines/lines.component';
 import { ReportsComponent } from './reports.component';
 import { AuthGuardService } from '../../../_services/auth-guard.service';
 import { OperatorComponent } from './operator/operator.component';
+import { PerformanceL1Component } from './performance-l1/performance-l1.component';
+import { PerformanceL2Component } from './performance-l2/performance-l2.component';
+import { PerformanceL3Component } from './performance-l3/performance-l3.component';
+import { CompareAllComponent } from './compare-all/compare-all.component';
 
 const routes: Routes = [
   {   path: '',
@@ -18,6 +22,11 @@ const routes: Routes = [
       children:[ 
           {path: '', redirectTo :'all', pathMatch :'full' },
           {path: 'all', component:AllComponent, data:{title:'عملکرد کلی سیستم'}},
+          {path: 'performance-l1', component:PerformanceL1Component, data:{title:'عملکرد معاونت ها'}},
+          {path: 'performance-l2', component:PerformanceL2Component, data:{title:'عملکرد ادارات '}},
+          {path: 'performance-l3', component:PerformanceL3Component, data:{title:'عملکرد داخلی ها '}},
+          {path: 'comapre-all', component:CompareAllComponent, data:{title:'عملکرد مقایسه کلی '}},
+          
           {path: 'lines', component:LinesComponent, data:{title:'عملکرد داخلی ها'}},
           {path: 'lines-bills', component:LinesBillsComponent, data:{title:'قبوض داخلی ها'}},
           {path: 'groups', component:GroupsComponent, data:{title:'گروه ها'}},
@@ -27,7 +36,9 @@ const routes: Routes = [
           {path: 'operator', component:OperatorComponent, data:{title:'عملکرد اپراتور', accessName: 'operators' },
           canActivate: [AuthGuardService]},
           {path: 'calls-details', component:CallsDetailsComponent, data:{title:'ریز مکالمات سیستم'}},
-          {path: 'all', component:AllComponent, data:{title:'عملکرد کلی سیستم'}}
+
+          
+         
         ]
       }
 ];

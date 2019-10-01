@@ -69,7 +69,6 @@ export class DefaultLayoutComponent implements OnDestroy {
       data => {
         let tmpNavItems = [];
 
-        
         let haveAccesedMenues = data["data"];
         if (haveAccesedMenues.indexOf("dashboard") > -1)
           tmpNavItems.push({
@@ -99,15 +98,27 @@ export class DefaultLayoutComponent implements OnDestroy {
                   icon: "icon-graph"
                 },
                 {
-                  name: "عملکرد داخلی ها",
-                  url: "/admin/reports/lines",
-                  icon: "icon-call-end fa-rotate-180"
+                  name: "مقایسه کلی",
+                  url: "/admin/reports/comapre-all",
+                  icon: "icon-people"
                 },
                 {
-                  name: "عملکرد گروه ها",
-                  url: "/admin/reports/groups",
+                  name: "عملکرد معاونت ها",
+                  url: "/admin/reports/performance-l1",
                   icon: "icon-people"
+                },
+                {
+                  name: "عملکرد ادارات ها",
+                  url: "/admin/reports/performance-l2",
+                  icon: "icon-people"
+                },
+                {
+                  name: "عملکرد داخلی ها",
+                  url: "/admin/reports/performance-l3",
+                  icon: "icon-call-end fa-rotate-180"
                 }
+               
+                
               ]
             },
             {

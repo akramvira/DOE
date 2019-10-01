@@ -67,4 +67,13 @@ export class SettingsService {
   }
 
 
+  public uploadfile(data) {
+    let options = this.authServ.getRequestOpions(true);
+    return this.http.post(environment.apiUrl + '/admin/setting/uploadfile',data, options);
+  }
+
+  public removeLastFileData(){
+    let options = this.authServ.getRequestOpions(true);
+    return this.http.get(environment.apiUrl + '/admin/setting/deleteall', options);
+  }
 }

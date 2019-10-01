@@ -64,6 +64,9 @@ export class SettingsComponent implements OnInit {
   systemData = new FormGroup({
     file: new FormControl("", [Validators.required])
   });
+  get systemDataInfo() {
+    return this.systemData.controls;
+  }
 
   //Tab 2 Data
   license = new FormGroup({
@@ -244,19 +247,40 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  systemDataSubmitted = false;
   submitSystemData(){
+    this.systemDataSubmitted = true;
+    if(!this.systemData.invalid){
+
+    
     const formData = new FormData();
     formData.append("file", this.datafileToUpload);
 
-    // this.settingService.setSystemData(formData).subscribe(
-    //   event => {
-    //     console.log(event);
-    //   },
-    //   error => {
-    //     console.log(error);
-    //   }
-    // );
+    this.settingService.uploadfile(formData).subscribe(
+      data => {
+        
+        this.toastr.success('پیغام سیستم',data['data']);
+      },
+      error => {
+        
+        this.toastr.error(error.error.errors.file[0]);
+      }
+    );
+  }
+  }
 
+
+  removeLastFileData(){
+    this.settingService.removeLastFileData().subscribe(
+      data => {
+        
+        this.toastr.success('پیغام سیستم', 'اطلاعات از پایگاه داده حذف شد.');
+      },
+      error => {
+        
+        this.toastr.error('خطا در پاک کردن اطلاعات.');
+      }
+    );
   }
   pingAmi() {
     this.settingService

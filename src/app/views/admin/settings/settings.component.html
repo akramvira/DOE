@@ -662,12 +662,10 @@
         </div>
         <div class="card-body">
           <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
-
-
             <div class="form-group ">
               <div class="input-group">
                 <label class="col-4 col-form-label"> فایل اطلاعات سیستم:</label>
-                <label for="licence-file" class="btn btn-primary"
+                <label for="data-file" class="btn btn-primary"
                   >انتخاب...</label
                 >
 
@@ -680,10 +678,10 @@
                 />
                 <div *ngIf="datafileToUpload">{{ datafileToUpload.name }}</div>
                 <div
-                  *ngIf="licenseSubmitted && licenseForm.file.errors"
+                  *ngIf="systemDataSubmitted && systemDataInfo.file.errors"
                   class="invalid-feedback"
                 >
-                  <div *ngIf="licenseForm.file.errors.required">
+                  <div *ngIf="systemDataInfo.file.errors.required">
                     فایلی انتخاب نشده است.
                   </div>
                 </div>
@@ -691,11 +689,17 @@
             </div>
 
             <div class="form-group form-actions text-left">
-              <button type="submit" class="btn  btn-success">
+              <button type="submit" class="btn  btn-success" >
                 ذخیره شود
               </button>
             </div>
           </form>
+        </div>
+
+        <div>
+          <button class="btn btn-danger" (click)="removeLastFileData()">
+    پاک کردن اطلاعات فایل قبلی
+          </button>
         </div>
       </div>
     </div>

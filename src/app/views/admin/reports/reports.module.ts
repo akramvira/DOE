@@ -24,6 +24,10 @@ import { LineChartComponent } from "../_components/line-chart/line-chart.compone
 import { DoughnutChartComponent } from "../_components/doughnut-chart/doughnut-chart.component";
 import { BarChartComponent } from "../_components/bar-chart/bar-chart.component";
 import { ComponentsModule } from "../_components/components/components.module";
+import { PerformanceL1Component } from './performance-l1/performance-l1.component';
+import { PerformanceL2Component } from './performance-l2/performance-l2.component';
+import { PerformanceL3Component } from './performance-l3/performance-l3.component';
+import { CompareAllComponent } from './compare-all/compare-all.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +40,11 @@ import { ComponentsModule } from "../_components/components/components.module";
     LinesComponent,
     ReportsComponent,
     OperatorComponent,
-    SearchColumnComponent
+    SearchColumnComponent,
+    PerformanceL1Component,
+    PerformanceL2Component,
+    PerformanceL3Component,
+    CompareAllComponent
   ],
   imports: [
     CommonModule,
