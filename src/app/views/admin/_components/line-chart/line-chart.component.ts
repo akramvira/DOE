@@ -106,36 +106,36 @@ export class LineChartComponent implements OnInit {
       //cpu
       backgroundColor: "rgba(255, 161, 181, 0.2)",
       borderColor: "rgba(255, 161, 181, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
+      pointBackgroundColor: "rgba(255, 161, 181, 0.4)",
+      pointBorderColor: "rgba(255, 161, 181, 0.4)",
+      pointHoverBackgroundColor: "rgba(255, 161, 181, 0.4)",
       pointHoverBorderColor: "rgba(148,159,177,0.8)"
     },
     {
       // ram
       backgroundColor: "rgba(77, 189, 116, 0.2)",
       borderColor: "rgba(77, 189, 116, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
+      pointBackgroundColor: "rgba(77, 189, 116, 0.4)",
+      pointBorderColor: "rgba(77, 189, 116, 0.4)",
+      pointHoverBackgroundColor: "rgba(77, 189, 116, 0.4)",
       pointHoverBorderColor: "rgba(148,159,177,0.8)"
     },
     {
       // swap
       backgroundColor: "rgba(255, 193, 7, 0.2)",
       borderColor: "rgba(255, 193, 7, 0.4)",
-      pointBackgroundColor: "rgba(77,83,96,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
+      pointBackgroundColor: "rgba(255, 193, 7, 0.4)",
+      pointBorderColor: "rgba(255, 193, 7, 0.4)",
+      pointHoverBackgroundColor: "rgba(255, 193, 7, 0.4)",
       pointHoverBorderColor: "rgba(77,83,96,1)"
     },
     {
       // active
       backgroundColor: "rgba(32, 168, 216, 0.2)",
       borderColor: "rgba(32, 168, 216, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
+      pointBackgroundColor: "rgba(32, 168, 216, 0.4)",
+      pointBorderColor: "rgba(32, 168, 216, 0.4)",
+      pointHoverBackgroundColor: "rgba(32, 168, 216, 0.4)",
       pointHoverBorderColor: "rgba(148,159,177,0.8)"
     }
   ];

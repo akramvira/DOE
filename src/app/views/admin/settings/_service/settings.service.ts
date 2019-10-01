@@ -15,9 +15,8 @@ export class SettingsService {
     ) { }
 
   public getSettingsdata(){
-    let token = this.authServ.getLSToken();
-
-    return this.http.get(environment.apiUrl + '/admin/setting',{params:{token:token}});
+    let options = this.authServ.getRequestOpions();
+    return this.http.get(environment.apiUrl + '/admin/setting',options );
   }
   public setSettingsData(data){
 
@@ -51,8 +50,8 @@ export class SettingsService {
 
 
   public getLincenseData(){
-    let token = this.authServ.getLSToken();
-    return this.http.get(environment.apiUrl + '/admin/setting/license',{params:{token: token}});
+    let options = this.authServ.getRequestOpions();
+    return this.http.get(environment.apiUrl + '/admin/setting/license', options);
   }
   public setLincenseData(data){
     let options = this.authServ.getRequestOpions(true);
