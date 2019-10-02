@@ -34,99 +34,280 @@
                     </ng-multiselect-dropdown>
                 </div>
                 <div class="row text-center justify-content-center align-items-center">
-                    <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-3"
-                    [ngClass] = "{
-                        ' col-xl-3' : filters.value.time != 'choosely',
-                        ' col-xl-2' : filters.value.time == 'choosely'
+                        <div
+                        class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-3"
+                        [ngClass]="{
+                        ' col-xl-3': filters.value.time != 'choosely',
+                        ' col-xl-2': filters.value.time == 'choosely'
                         }"
-                        >
+                    >
                         <div class="input-group">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text">بازه زمانی</label>
-                            </div>
-                            <select class="col form-control" (change)="updateCharts()" formControlName = "time" >
-                                    <option  value="daily">یک روز اخیر</option>
-                                    <option  value="monthly">یک ماه اخیر </option>
-                                    <option  value="yearly"> یک سال اخیر</option>
-                                    <option  value="choosely">انتخابی...</option>
-                            </select>
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">بازه زمانی</label>
+                        </div>
+                        <select
+                            class="col form-control"
+                            (change)="updateCharts()"
+                            formControlName="time"
+                        >
+                            <option value="global">یک روز اخیر</option>
+                            <option value="1">یک روز اخیر</option>
+                            <option value="30">یک ماه اخیر </option>
+                            <option value="365"> یک سال اخیر</option>
+                            <option value="choosely">انتخابی...</option>
+                        </select>
                         </div>
                     </div>
-                    <div class="col-2 mb-md-2 mb-sm-2 mb-lg-2" [hidden]="filters.value.time != 'choosely'" >
+                    <div
+                        class="col-2 mb-md-2 mb-sm-2 mb-lg-2"
+                        [hidden]="filters.value.time != 'choosely'"
+                    >
                         <div class="bg-gray-200 p-1 rounded row">
-                            <div class=" col-12">
-                                <span>از تاریخ:</span>
-                                <md-input-container
-                                    class="date-filter">
-                                    <input 
-                                    class="form-control-sm p-0 border"
-                                    mdInput 
-                                    name="someName" 
-                                    dir="rtl"
-                                    mode="day"
-                                    theme="dp-material"
-                                    placeholder="تاریخ"
-                                    [formControl]="selectedDateFrom"
-                                    [dpDayPicker]="datePickerConfig"
-                                    (onSelect) = "onSelectDate()"
-                                    />
-                                </md-input-container>
-                            </div>
-                            <div class=" col-12 ">
-                                <span>تا تاریخ:</span>
-                                <md-input-container
-                                class="date-filter">
-                                <input 
+                        <div class=" col-12">
+                            <span>از تاریخ:</span>
+                            <md-input-container class="date-filter">
+                            <input
                                 class="form-control-sm p-0 border"
-                                mdInput 
-                                name="someName" 
+                                mdInput
+                                name="someName"
+                                dir="rtl"
+                                mode="day"
+                                theme="dp-material"
+                                placeholder="تاریخ"
+                                [formControl]="selectedDateFrom"
+                                [dpDayPicker]="datePickerConfig"
+                                (onSelect)="onSelectDate()"
+                            />
+                            </md-input-container>
+                        </div>
+                        <div class=" col-12 ">
+                            <span>تا تاریخ:</span>
+                            <md-input-container class="date-filter">
+                            <input
+                                class="form-control-sm p-0 border"
+                                mdInput
+                                name="someName"
                                 dir="rtl"
                                 mode="day"
                                 theme="dp-material"
                                 placeholder="تاریخ"
                                 [formControl]="selectedDateTo"
                                 [dpDayPicker]="datePickerConfig"
-                                (onSelect) = "onSelectDate()"
-                                />
-                                </md-input-container>
-                            </div>
+                                (onSelect)="onSelectDate()"
+                            />
+                            </md-input-container>
+                        </div>
                         </div>
                     </div>
-                    <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2"
-                    [ngClass] = "{
-                        ' col-xl-4' : filters.value.time != 'choosely',
-                        ' col-xl-3' : filters.value.time == 'choosely'
+                    <div class="col-12">
+                    <div class="row mb-lg-2 mb-md-2 mb-sm-2 ">
+                        <div class="col-12 col-xl-4">
+                            <div class="row">
+                            <div
+                            class="col-12 btn-group btn-group-toggle"
+                            data-toggle="buttons"
+                            (click)="updateCharts()"
+                            >
+                            <label
+                                class="btn btn-primary"
+                                [ngClass]="{ active: filters.value.inorout == 'in' }"
+                                for="in"
+                                (click)="filters.value.inorout = 'in'"
+                            >
+                                <input
+                                type="radio"
+                                value="in"
+                                formControlName="inorout"
+                                id="in"
+                                autocomplete="off"
+                                />
+                                ورودی
+                            </label>
+                            <label
+                                class="btn btn-primary"
+                                [ngClass]="{ active: filters.value.inorout == 'out' }"
+                                for="out"
+                                (click)="filters.value.inorout = 'out'"
+                            >
+                                <input
+                                type="radio"
+                                value="out"
+                                formControlName="inorout"
+                                id="out"
+                                autocomplete="off"
+                                />
+                                خروجی
+                            </label>
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-xl-4" *ngIf="filters.value.inorout == 'in'">
+                                <div class="row">
+                                    <div
+                                    class="col-12 btn-group btn-group-toggle"
+                                    data-toggle="buttons"
+                                    (click)="updateCharts()"
+                                    >
+                                    <label
+                                    class="btn btn-primary"
+                                    [ngClass]="{ active: filters.value.disposition == '0' }"
+                                    for="disposition0"
+                                    (click)="filters.value.disposition = '0'"
+                                >
+                                    <input
+                                    type="radio"
+                                    value="0"
+                                    formControlName="disposition"
+                                    id="disposition0"
+                                    autocomplete="off"
+                                    />
+                                    همه
+                                    </label>
+        
+                                    <label
+                                        class="btn btn-primary"
+                                        [ngClass]="{ active: filters.value.disposition == '1' }"
+                                        for="disposition1"
+                                        (click)="filters.value.disposition = '1'"
+                                    >
+                                        <input
+                                        type="radio"
+                                        value="1"
+                                        formControlName="disposition"
+                                        id="disposition1"
+                                        autocomplete="off"
+                                        />
+                                        پاسخ داده شده
+                                    </label>
+                                    <label
+                                        class="btn btn-primary"
+                                        [ngClass]="{ active: filters.value.disposition == '2' }"
+                                        for="disposition2"
+                                        (click)="filters.value.disposition = '2'"
+                                    >
+                                        <input
+                                        type="radio"
+                                        value="2"
+                                        formControlName="disposition"
+                                        id="disposition2"
+                                        autocomplete="off"
+                                        />
+                                        پاسخ داده نشده
+                                    </label>
+                                    <label
+                                    class="btn btn-primary"
+                                    [ngClass]="{ active: filters.value.disposition == '3' }"
+                                    for="disposition3"
+                                    (click)="filters.value.disposition = '3'"
+                                >
+                                    <input
+                                    type="radio"
+                                    value="3"
+                                    formControlName="disposition"
+                                    id="disposition3"
+                                    autocomplete="off"
+                                    />
+                                    اشغال
+                                    </label>
+        
+                                    </div>
+                                </div>
+                        </div>
+                        <div class="col-12 col-xl-4"
+                        [ngClass]="{
+                            ' col-xl-4': filters.value.time != 'choosely',
+                            ' col-xl-3': filters.value.time == 'choosely'
                         }"
                         >
                         <div class="row">
-                            <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" (click)="updateCharts()">
-                                <label class="btn btn-primary active"  [ngClass]="{'active' : filters.value.type == 'all' }"  for="all" (click)="filters.value.type = 'all'">
-                                    <input type="radio" value="all" id="all"  formControlName="type" autocomplete="off"  checked> همه
-                                </label>
-                                <label class="btn btn-primary"  [ngClass]="{'active' : filters.value.type == 'in' }"  for="in" (click)="filters.value.type = 'in'">
-                                    <input type="radio" value="in"  id="in" formControlName="type" autocomplete="off"> تماس ورودی
-                                </label>
-                                <label class="btn btn-primary"  [ngClass]="{'active' : filters.value.type == 'out' }"  for="out" (click)="filters.value.type = 'out'">
-                                    <input type="radio" value="out"  id="out" formControlName="type" autocomplete="off"> تماس خروجی
-                                </label>
+                            <div
+                            class="col-12 btn-group btn-group-toggle"
+                            data-toggle="buttons"
+                            (click)="updateCharts()"
+                            >
+                            <label
+                                class="btn btn-primary active"
+                                [ngClass]="{ active: filters.value.type == '0' }"
+                                for="all"
+                                (click)="filters.value.type = '0'"
+                            >
+                                <input
+                                type="radio"
+                                value="all"
+                                id="all"
+                                formControlName="type"
+                                autocomplete="off"
+                                checked
+                                />
+                                همه
+                            </label>
+                            <label
+                                class="btn btn-primary"
+                                [ngClass]="{ active: filters.value.type == '1' }"
+                                for="in"
+                                (click)="filters.value.type = '1'"
+                            >
+                                <input
+                                type="radio"
+                                value="in"
+                                id="in"
+                                formControlName="type"
+                                autocomplete="off"
+                                />
+                                داخلی
+                            </label>
+                            <label
+                                class="btn btn-primary"
+                                [ngClass]="{ active: filters.value.type == '2' }"
+                                for="out"
+                                (click)="filters.value.type = '2'"
+                            >
+                                <input
+                                type="radio"
+                                value="out"
+                                id="out"
+                                formControlName="type"
+                                autocomplete="off"
+                                />
+                                شهری
+                            </label>
+                            <label
+                                class="btn btn-primary"
+                                [ngClass]="{ active: filters.value.type == '3' }"
+                                for="out"
+                                (click)="filters.value.type = '3'"
+                            >
+                                <input
+                                type="radio"
+                                value="out"
+                                id="out"
+                                formControlName="type"
+                                autocomplete="off"
+                                />
+                                بین شهری
+                            </label>
+                            <label
+                                class="btn btn-primary"
+                                [ngClass]="{ active: filters.value.type == '4' }"
+                                for="out"
+                                (click)="filters.value.type = '4'"
+                            >
+                                <input
+                                type="radio"
+                                value="out"
+                                id="out"
+                                formControlName="type"
+                                autocomplete="off"
+                                />
+                                موبایل
+                            </label>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-2">
-                        <div class="row">
-                            <div class="col-12 btn-group btn-group-toggle" data-toggle="buttons" (click)="updateCharts()">
-                                <label class="btn btn-primary active"  [ngClass]="{'active' : filters.value.inorout == 'all' }"  for="all" (click)="filters.value.inorout = 'all'">
-                                    <input type="radio" value="all"  formControlName="inorout" id="all" autocomplete="off" checked> همه
-                                </label> 
-                                <label class="btn btn-primary"  [ngClass]="{'active' : filters.value.inorout == 'co' }"  for="co" (click)="filters.value.inorout = 'co'">
-                                    <input type="radio" value="co" formControlName="inorout" id="co" autocomplete="off"> شهری
-                                </label> 
-                                <label class="btn btn-primary"  [ngClass]="{'active' : filters.value.inorout == 'local' }"  for="local" (click)="filters.value.inorout = 'local'">
-                                    <input type="radio" value="local" formControlName="inorout" id="local" autocomplete="off"> داخلی
-                                </label> 
-                            </div>
                         </div>
                     </div>
+                    </div>
+        
+        
                     
                 </div>
             </div>

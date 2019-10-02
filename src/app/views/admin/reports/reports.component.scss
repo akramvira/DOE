@@ -76,3 +76,9 @@
         left:auto;
     }
 }
+
+.multiselect-item-checkbox {
+    input[type=checkbox] + div{
+        padding-left:0!important;
+    }
+}

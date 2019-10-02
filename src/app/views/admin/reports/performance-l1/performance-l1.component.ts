@@ -4,12 +4,12 @@ import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { debug } from "util";
-import { WebService } from './web.service';
-import { formControlBinding } from '@angular/forms/src/directives/reactive_directives/form_control_directive';
+import { WebService } from "./web.service";
+import { formControlBinding } from "@angular/forms/src/directives/reactive_directives/form_control_directive";
 @Component({
-  selector: 'app-performance-l1',
-  templateUrl: './performance-l1.component.html',
-  styleUrls: ['./performance-l1.component.scss']
+  selector: "app-performance-l1",
+  templateUrl: "./performance-l1.component.html",
+  styleUrls: ["./performance-l1.component.scss"]
 })
 export class PerformanceL1Component implements OnInit {
   dropdownSettings = {};
@@ -20,9 +20,10 @@ export class PerformanceL1Component implements OnInit {
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl("daily"),
-    type: new FormControl("all"),
-    inorout: new FormControl("all"),
+    time: new FormControl("global"),
+    type: new FormControl(0),
+    inorout: new FormControl("in"),
+    disposition: new FormControl(0),
     selectedItems: new FormControl([])
   });
 
@@ -33,11 +34,11 @@ export class PerformanceL1Component implements OnInit {
   }
 
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
-  selectedDateFrom = new FormControl("98/01/01");
-  selectedDateTo = new FormControl("98/01/01");
+  selectedDateFrom = new FormControl("1398/01/01");
+  selectedDateTo = new FormControl("1398/01/01");
 
   datePickerConfig = {
-    format: "YY/MM/DD",
+    format: "YYYY/MM/DD",
     theme: "dp-material"
   };
 
@@ -47,12 +48,11 @@ export class PerformanceL1Component implements OnInit {
   showLineAllCalls = true;
   onSelectAll(item) {}
   onItemSelect(item) {
-
     console.log(this.filters.value.selectedItems);
 
     let labels = [];
-    for(let index in this.filters.value.selectedItems){
-      labels.push(this.filters.value.selectedItems[index]['item_text']);
+    for (let index in this.filters.value.selectedItems) {
+      labels.push(this.filters.value.selectedItems[index]["item_text"]);
     }
     this.mainLabels = labels;
     this.updateCharts();
@@ -67,34 +67,35 @@ export class PerformanceL1Component implements OnInit {
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
-//      limitSelection: 2,
+      
+      //      limitSelection: 2,
       allowSearchFilter: true
     };
     this.filters.value.selectedItems;
+    let data = [];
     this.webServ.getExtensionsAndGroups().subscribe(
       data => {
+        data = data["data"];
+
         let groupesData = new Array();
-        for (var i in data["groups"]) {
+        for (var i in data) {
           groupesData.push({
-            item_id: i,
-            item_text: data["groups"][i]["name"]
+            item_id: data[i]["id"],
+            item_text: data[i]["name"]
           });
-          
         }
         this.groups = groupesData;
 
         this.filters.patchValue({
-          selectedItems : groupesData
+          selectedItems: groupesData
         });
 
         let labels = [];
-        for(let index in this.filters.value.selectedItems){
-          labels.push(this.filters.value.selectedItems[index]['item_text']);
+        for (let index in this.filters.value.selectedItems) {
+          labels.push(this.filters.value.selectedItems[index]["item_text"]);
         }
         this.mainLabels = labels;
         this.updateCharts();
-
-
       },
       error => {
         this.authServe.handdleAuthErrors(error);
@@ -125,12 +126,7 @@ export class PerformanceL1Component implements OnInit {
     }
   ];
 
-
-
-  mainLabels = [
-    'معاونت',
-    'معاونت 2'
-  ];
+  mainLabels = ["معاونت", "معاونت 2"];
   public performanceChartLabels: string[] = this.mainLabels;
   public performanceChartData: any[] = [];
 
@@ -254,20 +250,37 @@ export class PerformanceL1Component implements OnInit {
     this.performanceChartLabels = this.mainLabels;
 
     //if (filterData.selectedItems.length == 1) {
-  
 
-      if(filterData.selectedItems.length){
-      filterData["id"] = filterData.selectedItems[0]["item_id"];
+   // if (filterData.selectedItems.length) {
+     // filterData["id"] = filterData.selectedItems[0]["item_id"];
+    //  debugger;
       this.getOneGroupData(filterData);
-    }
+    //}
     // } else if (filterData.selectedItems.length > 1) {
     //   this.getMultipleGroupData(filterData);
     // }
   }
 
   getOneGroupData(filterData) {
+
+    filterData["id"] = [];
+  
+
+    if(filterData.selectedItems.length == 0 ) return;
+    for(let item in filterData.selectedItems){
+      filterData["id"].push(filterData.selectedItems[item]['item_id']);
+    }
+
+    filterData['id'] = filterData['id'].join(',');
+    if(filterData.time == 'choosely'){
+      filterData.from = this.selectedDateFrom.value,
+      filterData.to = this.selectedDateTo.value
+    }
+
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
+        data=data['data'];
+        
         this.lineChartData = [];
         this.callsChartData = [];
         this.performanceChartData = [];
@@ -279,23 +292,26 @@ export class PerformanceL1Component implements OnInit {
         let timesData = [];
         let avgTimesData = [];
         let avgAll = [];
+
+       
+        this.mainLabels=[];
         for (let index in data) {
-          allCalsData.push(data[index]["all"]);
-          answeredData.push(data[index]["answer"]);
-          noAnsweredData.push(data[index]["noanswer"]);
-          performanceData.push(data[index]["noanswer"]);
-          timesData.push(data[index]["time"]);
-          avgTimesData.push(data[index]["avg"]);
-          avgAll.push(400);
+          this.mainLabels.push(data[index]["name"]);
+
+          allCalsData.push(data[index]["data"]);
+          // answeredData.push(data[index]["answer"]);
+          // noAnsweredData.push(data[index]["noanswer"]);
+          // performanceData.push(data[index]["noanswer"]);
+          // timesData.push(data[index]["time"]);
+          // avgTimesData.push(data[index]["avg"]);
+          // avgAll.push(400);
+
         }
 
         this.callsChartData = [
-          { data: allCalsData, label: "همه تماس ها" },
-          { data: answeredData, label: "پاسخ داده شده" },
-          { data: noAnsweredData, label: "پاسخ داده نشده" }
+          { data: allCalsData, label: "تعداد تماس ها" }
         ];
 
-        debugger;
         this.timesChartData = [
           { data: timesData, label: "مدت زمان تماس" },
           { data: avgTimesData, label: "میانگین زمان تماس" },
@@ -305,14 +321,9 @@ export class PerformanceL1Component implements OnInit {
         let allCalls = this.showLineAllCalls
           ? { data: allCalsData, label: " همه تماس ها" }
           : { data: [], label: " همه تماس ها" };
-        let answerCalls = this.showAnsweredCalls
-          ? { data: answeredData, label: "پاسخ داده شده" }
-          : { data: [], label: "پاسخ داده شده" };
-        let noanswerCalls = this.showNoAnsweredCalls
-          ? { data: noAnsweredData, label: "پاسخ داده نشده" }
-          : { data: [], label: "پاسخ داده نشده" };
 
-        this.lineChartData = [allCalls, answerCalls, noanswerCalls];
+
+        this.lineChartData = [allCalls];
 
         this.pieChartData = [];
         this.performanceChartData = [
@@ -325,130 +336,6 @@ export class PerformanceL1Component implements OnInit {
     );
   }
 
-  getMultipleGroupData(filterData) {
-    let groupsId = {
-      id_group1: filterData.selectedItems[0]["item_id"],
-      id_group2: filterData.selectedItems[1]["item_id"]
-    };
-
-    
-
-    this.webServ.getGroupPerformance(filterData).subscribe(
-      dataAll => {
-        debugger;
-
-        let data = [dataAll, dataAll];//fake
-
-
-        this.lineChartData = [];
-        let lineChartDataTmp = [];
-        this.callsChartData = [];
-        let callsChartDataTmp = [];
-        this.performanceChartData = [];
-        let performanceChartDataTmp = [];
-
-        let timesChartDataTmp = [];
-
-        let allCalsData = [];
-        let answeredData = [];
-        let noAnsweredData = [];
-        let performanceData = [];
-        let timesData = [];
-        let avgTimesData = [];
-        let avgAll = [];
-
-        for (let i = 0; i < 2; i++) {
  
-
-          for (let index in data[i]) {
-            allCalsData.push(data[i][index]["all"]);
-            answeredData.push(data[i][index]["answer"]);
-            noAnsweredData.push(data[i][index]["noanswer"]);
-            performanceData.push(data[i][index]["noanswer"]);
-            timesData.push(data[i][index]["time"]);
-            avgTimesData.push(data[i][index]["avg"]);
-            avgAll.push(400);
-          }
-
-          callsChartDataTmp.push([
-            { data: allCalsData, label: "همه تماس ها، گروه"+ i },
-            { data: answeredData, label: "پاسخ داده شده ، گروه"+ i},
-            { data: noAnsweredData, label: "پاسخ داده نشده ، گروه"+ i }
-          ]);
-
-          timesChartDataTmp = [{ data: timesData, label: "مدت زمان تماس، گروه"+ i }];
-
-         timesChartDataTmp = [
-            { data: timesData, label: "مدت زمان تماس، گروه"+ i },
-            { data: avgTimesData, label: "میانگین زمان تماس ، گروه"+ i },
-            { data: avgAll, label: "میانگین کل، گروه"+ i }
-          ];
-
-          let allCalls = this.showLineAllCalls
-            ? { data: allCalsData, label: " همه تماس ها، گروه"+ i }
-            : { data: [], label: " همه تماس ها، گروه"+ i };
-          let answerCalls = this.showAnsweredCalls
-            ? { data: answeredData, label: "پاسخ داده شده، گروه"+ i }
-            : { data: [], label: "پاسخ داده شده، گروه"+ i };
-          let noanswerCalls = this.showNoAnsweredCalls
-            ? { data: noAnsweredData, label: "پاسخ داده نشده، گروه"+ i }
-            : { data: [], label: "پاسخ داده نشده، گروه"+ i };
-
-          lineChartDataTmp = [allCalls, answerCalls, noanswerCalls];
-
-          
-          performanceChartDataTmp = [
-            { data: performanceData, label: "عملکرد گروه "+ i }
-          ];
-        }
-
-
-
-
-        debugger;
-        this.lineChartData = lineChartDataTmp;
-        this.performanceChartData = performanceChartDataTmp;
-        this.callsChartData = callsChartDataTmp;
-        this.timesChartLabels = timesChartDataTmp;
-
-      },
-      error => {
-        this.authServe.handdleAuthErrors(error);
-      }
-    );
-
-    ///////////////////////////////////calls///////////////////////////////
-    // this.webServ.getCompareGroupsCalls(groupsId).subscribe(
-    //   data => {
-
-    //     this.lineChartLabels = this.mainLabels;
-    //     this.callsBarChartLabels = this.mainLabels;
-
-    //     let allCalsData = [];
-    //     let answeredData = [];
-    //     let noAnsweredData = [];
-    //     let performanceData = [];
-
-    //     this.filters.value.selectedItems.forEach(item => {
-    //       allCalsData.push(item["all"]);
-    //       answeredData.push(item["answer"]);
-    //       noAnsweredData.push(item["noanswer"]);
-    //       performanceData.push(item["noanswer"]);
-    //     });
-
-    //     this.callsChartData = [
-    //       { data: allCalsData, label: "همه" },
-    //       { data: answeredData, label: "پاسخ داده شده" },
-    //       { data: noAnsweredData, label: "پاسخ داده نشده" }
-    //     ];
-    //   },
-    //   error => {
-    //     this.authServe.handdleAuthErrors(error);
-    //   }
-    // );
-
-
-  }
-
   onSelectDate() {}
 }

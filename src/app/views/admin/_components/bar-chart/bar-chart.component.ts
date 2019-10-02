@@ -37,7 +37,7 @@ export class BarChartComponent implements OnInit {
   };
   @Input() colors: Array<any> = [
     {
-      backgroundColor: '#OOEADA',
+      backgroundColor: ['#OOEADA', '#9FC3F2', '#8C162A' , '#947CE2', '#9C91F2', '#20a8d8', '##337ab7', '#f6f5fc'],
       borderWidth: 0
     },
 
