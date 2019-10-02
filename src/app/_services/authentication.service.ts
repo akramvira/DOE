@@ -118,13 +118,23 @@ export class AuthenticationService  {
     // expired 401
     
     console.log('status:',error['status'])
-    if(error['status'] >= 401){
+    if(error['status'] >= 401 && error['status'] < 420 ){
       //user in not authorized
       this.toaster.clear();
       // this.toaster.error('شما از سیستم خارج شدید.');
       // console.log('شما از سیستم خارج شدید.');
       this.logout();
     }
+    else if(error['status'] == 500){
+      this.toaster.clear();
+      this.router.navigate(['500']);
+    }
+    else if(error['status'] == 422){
+      this.toaster.clear();
+      this.toaster.warning('اطلاعات ارسالی صحیح نمی باشد');
+    }
+
+    
   }
 
 }

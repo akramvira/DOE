@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ReportsService } from "../_service/reports.service";
-import { AuthenticationService } from '../../../../_services/authentication.service';
-import * as moment from 'jalali-moment';
+import { AuthenticationService } from "../../../../_services/authentication.service";
+import * as moment from "jalali-moment";
+import { FormControl } from "@angular/forms";
 
 @Component({
   selector: "app-all",
@@ -11,28 +12,65 @@ import * as moment from 'jalali-moment';
 export class AllComponent implements OnInit {
   constructor(
     private reportServ: ReportsService,
-    private authServe : AuthenticationService
-    ) {
+    private authServe: AuthenticationService
+  ) {}
+
+  public inPerformanceLabel: string[] = ["عملکرد کلی سیستم", " "];
+  public inPerformanceColors = [
+    {
+      backgroundColor: ["#20a8d8", "#eeeeee"]
     }
-  
-  public pieChartLabels: string[] = ["پاسخ داده نشده", "پاسخ داده شده"];
-  public pieChartData: number[] = [1, 100];
+  ];
+
+  public inPerformanceData: number[] = [1, 100];
 
   allData: any = [];
-  ngOnInit() {
-    this.reportServ.getSystemPerformance().subscribe(
-      data => {
-        this.pieChartData = [data["answer"], data["noanswer"]];
-        this.pieChartLabels = [
-          "پاسخ داده شده ", 
-          "پاسخ داده نشده" 
-        ];
-        this.allData = data;
+  globData: any = [];
 
-        this.barChartData = [
-          { data: [1000], label: "کل" },
-          { data: [343], label: " پاسخ داده شده" },
-          { data: [600], label: " پاسخ داده نشده" }
+  dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
+  selectedDateFrom = new FormControl("1398/01/01");
+  selectedDateTo = new FormControl("1398/01/01");
+  datePickerConfig = {
+    format: "YYYY/MM/DD",
+    theme: "dp-material"
+  };
+
+  onSelectDate() {
+    
+    this.updateCharts();
+  }
+
+  ngOnInit() {
+    this.updateCharts();
+  }
+
+
+  updateCharts(){
+    let data = {
+      from: this.selectedDateFrom.value,
+      to: this.selectedDateTo.value
+    };
+    this.reportServ.getSystemPerformance(data).subscribe(
+      data => {
+        data = data["data"];
+        this.allData = data;
+        this.barChartDataIn = [
+          { data: [data["in"]["all"]], label: "کل تماس ها" },
+          { data: [data["in"]["answer"]], label: " پاسخ داده شده" },
+          { data: [data["in"]["noanswer"]], label: " پاسخ داده نشده" },
+          { data: [data["in"]["busy"]], label: " مشغول" }
+        ];
+
+        this.inPerformanceData = [
+          data["in"]["performance"],
+          100 - data["in"]["performance"]
+        ];
+
+        this.barChartDataOut = [
+          { data: [data["out"]["all"]], label: "کل تماس ها" },
+          { data: [data["out"]["co"]], label: "شهری" },
+          { data: [data["out"]["betweenco"]], label: "بین شهری" },
+          { data: [data["out"]["mobile"]], label: "موبایل" }
         ];
       },
       error => {
@@ -40,7 +78,6 @@ export class AllComponent implements OnInit {
       }
     );
   }
-
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -49,11 +86,17 @@ export class AllComponent implements OnInit {
   public barChartType = "bar";
   public barChartLegend = true;
 
-  public barChartData: any[] = [
-    { data: [0], label: "کل" },
+  public barChartDataIn: any[] = [
+    { data: [0], label: "کل تماس ها" },
     { data: [0], label: " پاسخ داده شده" },
-    { data: [0], label: " پاسخ داده نشده" }
+    { data: [0], label: " پاسخ داده نشده" },
+    { data: [0], label: "مشغول" }
   ];
 
-
+  public barChartDataOut: any[] = [
+    { data: [0], label: "کل تماس ها" },
+    { data: [0], label: "شهری" },
+    { data: [0], label: "بین شهری" },
+    { data: [0], label: "موبایل" }
+  ];
 }

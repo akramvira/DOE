@@ -32,21 +32,29 @@ export class BarChartComponent implements OnInit {
   @Input() contentTitle: string = '';
   @Input() labels: Array<any> = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15', '16'];
   public chartOptions: any =  {
-    scaleShowVerticalLines: false,
+    scaleShowVerticalLines: true,
     responsive: true
   };
   @Input() colors: Array<any> = [
     {
-      backgroundColor: '#c8ced3',
+      backgroundColor: '#OOEADA',
       borderWidth: 0
     },
 
     {
-      backgroundColor: '#4dbd74',
+      backgroundColor: '#9FC3F2',
       borderWidth: 0
     },
     {
-      backgroundColor: '#ffa1b5',
+      backgroundColor: '#8C162A',
+      borderWidth: 0
+    },
+    {
+      backgroundColor: '#947CE2',
+      borderWidth: 0
+    },
+    {
+      backgroundColor: '#9C91F2',
       borderWidth: 0
     },
   ];

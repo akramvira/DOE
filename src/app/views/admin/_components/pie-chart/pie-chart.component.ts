@@ -24,12 +24,16 @@ export class PieChartComponent implements OnInit {
   @Input() contentTitle: string = "";
   @Input() data: number[] = [1, 100];
   @Input() labels: string[] = ["پاسخ داده نشده", "پاسخ داده شده"];
-
+  @Input() colors : Array<any> = [
+    {
+      backgroundColor: ["#20a8d8", "#e6e6e6"]
+    }
+  ]
+    ;
   public chartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  @Input() colors: Array<any> = [];
   public chartType = "pie";
 
   export(type: string = "excel") {

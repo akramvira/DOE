@@ -56,8 +56,9 @@ export class ReportsService {
   public getCompareGroupsCalls(data) {
     let options = this.authServ.getRequestOpions();
 
-    return this.http.get(
+    return this.http.post(
       environment.apiUrl + "/admin/reports/group/compare/chart/calls",
+      data,
       options
     );
   }
@@ -88,13 +89,16 @@ export class ReportsService {
       options
     );
   }
-  public getSystemPerformance() {
+  public getSystemPerformance(data) {
     let options = this.authServ.getRequestOpions();
-    return this.http.get(
-      environment.apiUrl + "/admin/reports/system/performance",
+    return this.http.post(
+      environment.apiUrl + "/admin/reports/chart/global/number/calls",
+      data,
       options
     );
   }
+
+
   public getGroupsBills(data) {
     let options = this.authServ.getRequestOpions();
     return this.http.post(
