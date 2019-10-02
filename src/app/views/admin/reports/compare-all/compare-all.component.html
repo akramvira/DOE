@@ -1,11 +1,12 @@
-<div class="animated fadeIn row">
+این بخش در ورژن های بعدی ارائه خواهد شد.
+<div class="animated fadeIn row"  *ngIf="false">
    
   <div class="col-12"  >
 
       <div class=" text-left justify-content-end card card-info bg-gray-300 p-sm-2"
       [ngClass] = "{
-          'pt-4 pb-4 ' : filters.value.time != 'choosely',
-          'pt-2 pb-2 ' : filters.value.time == 'choosely'
+          'pt-4 pb-4 ' : filters.value.time != '-1',
+          'pt-2 pb-2 ' : filters.value.time == '-1'
       }"
       >
           <div class="text-center col-12 "    [formGroup]="filters">
@@ -24,8 +25,8 @@
 
                   <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-3"
                   [ngClass] = "{
-                      ' col-xl-3' : filters.value.time != 'choosely',
-                      ' col-xl-2' : filters.value.time == 'choosely'
+                      ' col-xl-3' : filters.value.time != '-1',
+                      ' col-xl-2' : filters.value.time == '-1'
                       }"
                       >
                       <div class="input-group">
@@ -36,11 +37,11 @@
                                   <option  value="daily">یک روز اخیر</option>
                                   <option  value="monthly">یک ماه اخیر </option>
                                   <option  value="yearly"> یک سال اخیر</option>
-                                  <option  value="choosely">انتخابی...</option>
+                                  <option  value="-1">انتخابی...</option>
                           </select>
                       </div>
                   </div>
-                  <div class="col-2 mb-md-2 mb-sm-2 mb-lg-2" [hidden]="filters.value.time != 'choosely'" >
+                  <div class="col-2 mb-md-2 mb-sm-2 mb-lg-2" [hidden]="filters.value.time != '-1'" >
                       <div class="bg-gray-200 p-1 rounded row">
                           <div class=" col-12">
                               <span>از تاریخ:</span>
@@ -82,8 +83,8 @@
                   </div>
                   <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2"
                   [ngClass] = "{
-                      ' col-xl-4' : filters.value.time != 'choosely',
-                      ' col-xl-3' : filters.value.time == 'choosely'
+                      ' col-xl-4' : filters.value.time != '-1',
+                      ' col-xl-3' : filters.value.time == '-1'
                       }"
                       >
                       <div class="row">

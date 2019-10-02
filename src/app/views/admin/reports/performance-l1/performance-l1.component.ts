@@ -20,7 +20,7 @@ export class PerformanceL1Component implements OnInit {
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl("global"),
+    time: new FormControl("0"),
     type: new FormControl(0),
     inorout: new FormControl("in"),
     disposition: new FormControl(0),
@@ -272,7 +272,7 @@ export class PerformanceL1Component implements OnInit {
     }
 
     filterData['id'] = filterData['id'].join(',');
-    if(filterData.time == 'choosely'){
+    if(filterData.time == '-1'){
       filterData.from = this.selectedDateFrom.value,
       filterData.to = this.selectedDateTo.value
     }
