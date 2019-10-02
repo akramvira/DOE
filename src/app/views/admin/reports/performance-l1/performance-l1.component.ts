@@ -20,7 +20,7 @@ export class PerformanceL1Component implements OnInit {
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl("0"),
+    time: new FormControl(0),
     type: new FormControl(0),
     inorout: new FormControl("in"),
     disposition: new FormControl(0),
@@ -277,6 +277,7 @@ export class PerformanceL1Component implements OnInit {
       filterData.to = this.selectedDateTo.value
     }
 
+    filterData.time = parseInt(filterData.time);
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
         data=data['data'];
@@ -337,5 +338,8 @@ export class PerformanceL1Component implements OnInit {
   }
 
  
-  onSelectDate() {}
+  onSelectDate() {
+    debugger;
+    this.getOneGroupData( this.filters.getRawValue());
+  }
 }

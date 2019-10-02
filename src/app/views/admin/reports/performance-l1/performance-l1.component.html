@@ -37,11 +37,11 @@
                     (change)="updateCharts()"
                     formControlName="time"
                 >
-                    <option value="0">همه زمان ها</option>
+                    <option value=0>همه زمان ها</option>
                     <option value="1">یک روز اخیر</option>
                     <option value="30">یک ماه اخیر </option>
                     <option value="365"> یک سال اخیر</option>
-                    <option value="-1">انتخابی...</option>
+                    <option value=-1>انتخابی...</option>
                 </select>
                 </div>
             </div>
@@ -84,11 +84,14 @@
                     />
                     </md-input-container>
                 </div>
+
+                
+                <button class=" col-10 btn btn-info" (click)="onSelectDate()">تایید</button>
                 </div>
             </div>
             <div class="col-12">
             <div class="row mb-lg-2 mb-md-2 mb-sm-2 ">
-                <div class="col-12 col-xl-4">
+                <div class="col-12 col-xl-3">
                     <div class="row">
                     <div
                     class="col-12 btn-group btn-group-toggle"
@@ -200,7 +203,7 @@
                             </div>
                         </div>
                 </div>
-                <div class="col-12 col-xl-4"
+                <div class="col-12 col-xl-5"
                 [ngClass]="{
                     ' col-xl-4': filters.value.time != '-1',
                     ' col-xl-3': filters.value.time == '-1'
