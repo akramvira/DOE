@@ -339,7 +339,6 @@ export class PerformanceL1Component implements OnInit {
 
  
   onSelectDate() {
-    debugger;
     this.getOneGroupData( this.filters.getRawValue());
   }
 }
