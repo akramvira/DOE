@@ -127,7 +127,7 @@ export class AuthenticationService  {
     }
     else if(error['status'] == 500){
       this.toaster.clear();
-      this.router.navigate(['500']);
+      this.toaster.error('پیغام سیستم','خطایی در سمت سرور رخ داده است.')
     }
     else if(error['status'] == 422){
       this.toaster.clear();

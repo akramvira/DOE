@@ -10,6 +10,7 @@ import { interval } from "rxjs";
 import { Toast } from "ngx-toastr";
 import "chartjs-plugin-labels";
 import { ExcelService } from "../../../_services/excel.service";
+import { AuthenticationService } from '../../../_services/authentication.service';
 
 @Component({
   templateUrl: "dashboard.component.html"
@@ -152,85 +153,6 @@ export class DashboardComponent implements OnInit {
   public mainChartLegend = false;
   public mainChartType = "line";
 
-  // social box charts
-
-  public brandBoxChartData1: Array<any> = [
-    {
-      data: [65, 59, 84, 84, 51, 55, 40],
-      label: "Facebook"
-    }
-  ];
-  public brandBoxChartData2: Array<any> = [
-    {
-      data: [1, 13, 9, 17, 34, 41, 38],
-      label: "Twitter"
-    }
-  ];
-  public brandBoxChartData3: Array<any> = [
-    {
-      data: [78, 81, 80, 45, 34, 12, 40],
-      label: "LinkedIn"
-    }
-  ];
-  public brandBoxChartData4: Array<any> = [
-    {
-      data: [35, 23, 56, 22, 97, 23, 64],
-      label: "Google+"
-    }
-  ];
-
-  public brandBoxChartLabels: Array<any> = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July"
-  ];
-  public brandBoxChartOptions: any = {
-    tooltips: {
-      enabled: false,
-      custom: CustomTooltips
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      xAxes: [
-        {
-          display: false
-        }
-      ],
-      yAxes: [
-        {
-          display: false
-        }
-      ]
-    },
-    elements: {
-      line: {
-        borderWidth: 2
-      },
-      point: {
-        radius: 0,
-        hitRadius: 10,
-        hoverRadius: 4,
-        hoverBorderWidth: 3
-      }
-    },
-    legend: {
-      display: false
-    }
-  };
-  public brandBoxChartColours: Array<any> = [
-    {
-      backgroundColor: "rgba(255,255,255,.1)",
-      borderColor: "rgba(255,255,255,.55)",
-      pointHoverBackgroundColor: "#fff"
-    }
-  ];
-  public brandBoxChartLegend = false;
-  public brandBoxChartType = "line";
 
   // system info Chart
   public sysInfoChartOptions: any = {
@@ -258,11 +180,6 @@ export class DashboardComponent implements OnInit {
     { data: [this.Hard], label: "Hard" }
   ];
 
-  // barChart test
-  public testChartOptions: any;
-  public testChartLabels: string[];
-  public testChartType;
-  public testChartLegend;
 
   public testChartData: any[];
 
@@ -277,8 +194,6 @@ export class DashboardComponent implements OnInit {
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
-
-  //</editor-fold>
 
   public loading = true;
 
@@ -342,9 +257,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private apiServ: SysinfoService,
-    private toastr: ToastrService,
-    private router: Router,
-    private excelService: ExcelService
+    private authServ : AuthenticationService
   ) {
     this.loading = true;
     //creating page
@@ -360,7 +273,8 @@ export class DashboardComponent implements OnInit {
 
       this.apiServ.getSysInfo().subscribe(
         res => {
-          res = res['data'];
+          res = res["data"];
+          
           this.Memory = res["ram"];
           this.Cpu = res["cpu"];
           this.swap = res["swap"];
@@ -376,9 +290,6 @@ export class DashboardComponent implements OnInit {
           this.ramDoughnutChartData = [res["ram"], 100 - res["ram"]];
           this.cpuDoughnutChartData = [res["cpu"], 100 - res["cpu"]];
           this.swapDoughnutChartData = [res["swap"], 100 - res["swap"]];
-          /*ramDoughnutChartData
-            hardDoughnutChartData
-            cpuDoughnutChartData*/
 
           this.activeTrunks = res["activeextensions"] || 0;
           this.activeCalls = res["activecalls"] || 0;
@@ -441,10 +352,10 @@ export class DashboardComponent implements OnInit {
           if (
             error.status == 400 ||
             error.status == 403 ||
+            error.status == 401 ||
             error.status == 404
           ) {
-            //this.toastr.error('شما از سیستم خارج شدید!', 'پیغام سیستم');
-            this.router.navigate(["/login"]);
+            this.authServ.handdleAuthErrors(error);
             chartsTimer.unsubscribe();
           }
         }
