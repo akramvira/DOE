@@ -4,26 +4,40 @@ import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { debug } from "util";
+import { WebService } from "./web.service";
 
 @Component({
-  selector: 'app-performance-l3',
-  templateUrl: './performance-l3.component.html',
-  styleUrls: ['./performance-l3.component.scss']
+  selector: "app-performance-l3",
+  templateUrl: "./performance-l3.component.html",
+  styleUrls: ["./performance-l3.component.scss"]
 })
 export class PerformanceL3Component implements OnInit {
-  dropdownSettings = {};
+  asDropdownSettings = {};
+  officeDropdownSettings = {};
+  lineDropdownSettings = {};
 
   constructor(
-    private reportsServ: ReportsService,
+    private webServ: WebService,
     private authServe: AuthenticationService
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl("daily"),
-    type: new FormControl("all"),
-    inorout: new FormControl("all"),
-    selectedItems: new FormControl([])
+    time: new FormControl(0),
+    type: new FormControl(0),
+    inorout: new FormControl("in"),
+    disposition: new FormControl(0),
+    selectedItems: new FormControl([]),
+    selectedSub1: new FormControl([]),
+    selectedSub2: new FormControl([])
   });
+
+  allSub1Data: any = [];
+
+  offices = this.filters.value.selectedItems[0]
+    ? this.allSub1Data[this.filters.value.selectedItems[0]["id"]]
+    : [];
+
+  lines = [];
 
   activeFilter(event) {
     let elem = event.target.element;
@@ -31,58 +45,145 @@ export class PerformanceL3Component implements OnInit {
     this.filters.value.time;
   }
 
-  dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
-  selectedDateFrom = new FormControl("98/01/01");
-  selectedDateTo = new FormControl("98/01/01");
+  dateObject = moment("1398-11-22", "jYYYY,jMM,jDD");
+  selectedDateFrom = new FormControl("1398/01/01");
+  selectedDateTo = new FormControl("1398/01/01");
 
   datePickerConfig = {
-    format: "YY/MM/DD",
+    format: "YYYY/MM/DD",
     theme: "dp-material"
   };
 
   selectedGroups: any = this.filters.value.selectedItems;
-  showAnsweredCalls = false;
-  showNoAnsweredCalls = false;
+  showAnsweredCalls = true;
+  showNoAnsweredCalls = true;
   showLineAllCalls = true;
   onSelectAll(item) {}
   onItemSelect(item) {
-    this.updateCharts();
+    this.offices = this.allSub1Data[item["id"]];
+    this.filters.patchValue({
+      selectedSub1: this.offices
+    });
+    this.updateLines();
+  }
+  onDeSelectMain() {
+    this.offices = [];
+    this.filters.patchValue({
+      selectedSub1: []
+    });
+    return;
   }
 
-  ngOnInit() {
-    this.dropdownSettings = {
-      singleSelection: false,
-      idField: "item_id",
-      textField: "item_text",
-      selectAllText: "انتخاب همه",
-      unSelectAllText: "حذف همه موارد",
-      searchPlaceholderText: "جستجو",
-      itemsShowLimit: 1,
-      limitSelection: 2,
-      allowSearchFilter: true
+  onDeSelectSub1(item) {
+    this.updateLines();
+  }
+
+  updateLines() {
+    let sub1 = [];
+
+    for (let i in this.filters.value.selectedSub1) {
+      sub1.push(this.filters.value.selectedSub1[i]["id"]);
+    }
+
+    let data = {
+      id: this.filters.value.selectedItems[0]["id"],
+      idsub: sub1.join(",")
     };
-    this.filters.value.selectedItems;
-    this.reportsServ.getExtensionsAndGroups().subscribe(
+
+    this.webServ.getNumbers(data).subscribe(
       data => {
-        let groupesData = new Array();
-        for (var i in data["groups"]) {
-          groupesData.push({
-            item_id: i,
-            item_text: data["groups"][i]["name"]
-          });
-        }
-        this.groups = groupesData;
+ 
+        this.lines = data["data"];
+        this.filters.patchValue({
+          selectedSub2 : this.lines
+        })
+        this.updateCharts();
       },
       error => {
         this.authServe.handdleAuthErrors(error);
       }
     );
-
-    this.updateCharts();
   }
 
-  public pieChartLabels: string[] = [];
-  public pieChartData: number[] = [];
+  officeSelected(item) {
+    this.updateLines();
+  }
+  ngOnInit() {
+    this.asDropdownSettings = {
+      singleSelection: false,
+      idField: "id",
+      textField: "name",
+      selectAllText: "انتخاب همه",
+      unSelectAllText: "حذف همه موارد",
+      searchPlaceholderText: "جستجو",
+      itemsShowLimit: 1,
+      limitSelection: 1,
+      allowSearchFilter: true
+    };
+
+    this.officeDropdownSettings = {
+      singleSelection: false,
+      idField: "id",
+      textField: "name",
+      selectAllText: "انتخاب همه",
+      unSelectAllText: "حذف همه موارد",
+      searchPlaceholderText: "جستجو",
+      itemsShowLimit: 1,
+      allowSearchFilter: true
+    };
+
+    this.lineDropdownSettings = {
+      singleSelection: false,
+      idField: "id",
+      textField: "name",
+      selectAllText: "انتخاب همه",
+      unSelectAllText: "حذف همه موارد",
+      searchPlaceholderText: "جستجو",
+      itemsShowLimit: 1,
+      allowSearchFilter: true
+    };
+
+
+    this.filters.value.selectedItems;
+    let data = [];
+    this.webServ.getExtensionsAndGroups().subscribe(
+      data => {
+        data = data["data"];
+        this.filters.patchValue({
+          selectedItems: 0
+        });
+        let groupesData = new Array();
+        let selectedMain = 0;
+        for (var i in data) {
+          if (!selectedMain) selectedMain = data[i];
+
+          groupesData.push({
+            id: data[i]["id"],
+            name: data[i]["name"],
+            item_id: data[i]["id"],
+            item_text: data[i]["name"]
+          });
+
+          this.allSub1Data[data[i]["id"]] = [];
+          this.allSub1Data[data[i]["id"]] = data[i]["sub"];
+        }
+
+        this.groups = groupesData;
+
+        this.offices = this.allSub1Data[selectedMain["id"]];
+
+        this.filters.patchValue({
+          selectedItems: [selectedMain],
+          selectedSub1: this.offices
+        });
+
+        this.updateLines();
+      },
+      error => {
+        this.authServe.handdleAuthErrors(error);
+      }
+    );
+  }
 
   public performanceBarChartOptions: any = {
     scaleShowVerticalLines: false,
@@ -102,96 +203,14 @@ export class PerformanceL3Component implements OnInit {
     }
   ];
 
-  dailyTimes = [
-    "00:00",
-    "01:00",
-    "02:00",
-    "03:00",
-    "04:00",
-    "05:00",
-    "06:00",
-    "07:00",
-    "08:00",
-    "09:00",
-    "10:00",
-    "11:00",
-    "12:00",
-    "13:00",
-    "14:00",
-    "15:00",
-    "16:00",
-    "17:00",
-    "18:00",
-    "19:00",
-    "20:00",
-    "21:00",
-    "22:00",
-    "23:00",
-    "24:00"
-  ];
-
-  monthlyTimes = [
-    "1",
-    "2",
-    "3",
-    "4",
-    "5",
-    "6",
-    "7",
-    "8",
-    "9",
-    "10",
-    "11",
-    "12",
-    "13",
-    "14",
-    "15",
-    "16",
-    "17",
-    "18",
-    "19",
-    "20",
-    "21",
-    "22",
-    "23",
-    "24",
-    "25",
-    "26",
-    "27",
-    "28",
-    "29",
-    "30"
-  ];
-
-  yearlyTimes = [
-    "فروردین",
-    "اردیبهشت",
-    "خرداد",
-    "تیر",
-    "مرداد",
-    "شهریور",
-    "مهر",
-    "آبان",
-    "آذر",
-    "دی",
-    "بهمن",
-    "اسفند"
-  ];
-
-  timeLabels = {
-    daily: this.dailyTimes,
-    monthly: this.monthlyTimes,
-    yearly: this.yearlyTimes,
-    choosely: ""
-  };
-
-  public performanceChartLabels: string[] = this.dailyTimes;
+  mainLabels = [];
+  public performanceChartLabels: string[] = this.mainLabels;
   public performanceChartData: any[] = [];
 
-  public callsBarChartLabels: string[] = this.dailyTimes;
+  public callsBarChartLabels: string[] = this.mainLabels;
   public callsChartData: any[] = [];
 
-  public timesChartLabels: string[] = this.dailyTimes;
+  public timesChartLabels: string[] = this.mainLabels;
   public timesChartData: any[] = [];
 
   public chartClicked(e: any): void {
@@ -202,151 +221,79 @@ export class PerformanceL3Component implements OnInit {
     console.log(e);
   }
 
-  onActivate(event) {
-    //debugger;
-    if (event.type == "click") {
-      // this.parentSelected = true;
-      // this.selectedGroupExtensions = event.row.value.split(',');
-      // this.convertSelectedGroupExtentionsToInt();
-      // this.setRemainingExtensions();
-      // this.activeParentId =  event.row.id;
-      // this.itemsChanged = false;
-    }
-  }
-
-  activeRow: any;
-
-  onSelectGroup(selectedRows) {
-    this.selectedGroups = selectedRows["selected"];
-    this.selectedGroups.length;
-
-    this.updateCharts();
-  }
-
   public lineChartData: Array<any> = [];
-  public lineChartLabels: Array<any> = this.dailyTimes;
-  public lineChartColours: Array<any> = [
-    {
-      //
-      backgroundColor: "rgba(255, 161, 181, 0.1)",
-      borderColor: "rgba(255, 161, 181, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    },
-    {
-      //
-      backgroundColor: "rgba(77, 189, 116, 0.1)",
-      borderColor: "rgba(77, 189, 116, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    },
-    {
-      //
-      backgroundColor: "rgba(255, 193, 7, 0.1)",
-      borderColor: "rgba(255, 193, 7, 0.4)",
-      pointBackgroundColor: "rgba(77,83,96,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(77,83,96,1)"
-    },
-    {
-      //
-      backgroundColor: "rgba(32, 168, 216, 0.1)",
-      borderColor: "rgba(32, 168, 216, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    },
-
-    {
-      //
-      backgroundColor: "rgba(255, 161, 181, 0.1)",
-      borderColor: "rgba(255, 161, 181, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    },
-    {
-      //
-      backgroundColor: "rgba(77, 189, 116, 0.1)",
-      borderColor: "rgba(77, 189, 116, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    },
-    {
-      //
-      backgroundColor: "rgba(255, 193, 7, 0.1)",
-      borderColor: "rgba(255, 193, 7, 0.4)",
-      pointBackgroundColor: "rgba(77,83,96,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(77,83,96,1)"
-    },
-    {
-      //
-      backgroundColor: "rgba(32, 168, 216, 0.1)",
-      borderColor: "rgba(32, 168, 216, 0.4)",
-      pointBackgroundColor: "rgba(148,159,177,1)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    }
-  ];
+  public lineChartLabels: Array<any> = this.mainLabels;
 
   updateCharts() {
-    debugger;
-    let filterData = this.filters.getRawValue();
-    this.lineChartLabels = this.timeLabels[filterData.time];
-    this.callsBarChartLabels = this.timeLabels[filterData.time];
-    this.performanceChartLabels = this.timeLabels[filterData.time];
+    this.mainLabels = [];
 
-    if (filterData.selectedItems.length == 1) {
-      filterData["id"] = filterData.selectedItems[0]["item_id"];
-      this.getOneGroupData(filterData);
-    } else if (filterData.selectedItems.length > 1) {
-      this.getMultipleGroupData(filterData);
+    for (let i in this.filters.value.selectedSub2) {
+      this.mainLabels.push(this.filters.value.selectedSub2[i]["name"]);
     }
+    this.lineChartLabels = this.mainLabels;
+    
+    this.getOneGroupData();
   }
 
-  getOneGroupData(filterData) {
-    this.reportsServ.getGroupPerformance(filterData).subscribe(
+  getOneGroupData() {
+    let filterData = this.filters.getRawValue();
+
+    if (!filterData.selectedItems.length) return;
+    if (!filterData.selectedSub1.length) return;
+
+    filterData["idsub"] = [];
+    filterData["id"] = filterData.selectedItems[0]["id"];
+    for (let item in filterData.selectedSub1) {
+      filterData["idsub"].push(filterData.selectedSub1[item]["id"]);
+    }
+
+    filterData["idnumber"] = [];
+    for (let item in this.lines) {
+      filterData["idnumber"].push(this.lines[item]["id"]);
+    }
+
+    filterData["idnumber"]  = filterData["idnumber"].join(',');
+
+    filterData["idsub"] = filterData["idsub"].join(",");
+
+    if (filterData.time == "-1") {
+      (filterData.from = this.selectedDateFrom.value),
+        (filterData.to = this.selectedDateTo.value);
+    }
+
+    debugger;
+
+    filterData.time = parseInt(filterData.time);
+    this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
+        data = data["data"];
+
         this.lineChartData = [];
         this.callsChartData = [];
         this.performanceChartData = [];
 
         let allCalsData = [];
-        let answeredData = [];
-        let noAnsweredData = [];
         let performanceData = [];
         let timesData = [];
         let avgTimesData = [];
         let avgAll = [];
+
+        this.mainLabels = [];
         for (let index in data) {
-          allCalsData.push(data[index]["all"]);
-          answeredData.push(data[index]["answer"]);
-          noAnsweredData.push(data[index]["noanswer"]);
-          performanceData.push(data[index]["noanswer"]);
-          timesData.push(data[index]["time"]);
-          avgTimesData.push(data[index]["avg"]);
-          avgAll.push(400);
+          this.mainLabels.push(data[index]["name"]);
+
+          allCalsData.push(data[index]["data"]);
+          // answeredData.push(data[index]["answer"]);
+          // noAnsweredData.push(data[index]["noanswer"]);
+          // performanceData.push(data[index]["noanswer"]);
+          // timesData.push(data[index]["time"]);
+          // avgTimesData.push(data[index]["avg"]);
+          // avgAll.push(400);
         }
 
-        this.callsChartData = [
-          { data: allCalsData, label: "همه تماس ها" },
-          { data: answeredData, label: "پاسخ داده شده" },
-          { data: noAnsweredData, label: "پاسخ داده نشده" }
-        ];
+        this.callsBarChartLabels = this.mainLabels;
+        this.callsChartData = [{ data: allCalsData, label: "تعداد تماس ها" }];
 
-        debugger;
         this.timesChartData = [
           { data: timesData, label: "مدت زمان تماس" },
           { data: avgTimesData, label: "میانگین زمان تماس" },
@@ -356,16 +303,9 @@ export class PerformanceL3Component implements OnInit {
         let allCalls = this.showLineAllCalls
           ? { data: allCalsData, label: " همه تماس ها" }
           : { data: [], label: " همه تماس ها" };
-        let answerCalls = this.showAnsweredCalls
-          ? { data: answeredData, label: "پاسخ داده شده" }
-          : { data: [], label: "پاسخ داده شده" };
-        let noanswerCalls = this.showNoAnsweredCalls
-          ? { data: noAnsweredData, label: "پاسخ داده نشده" }
-          : { data: [], label: "پاسخ داده نشده" };
 
-        this.lineChartData = [allCalls, answerCalls, noanswerCalls];
+        this.lineChartData = [allCalls];
 
-        this.pieChartData = [];
         this.performanceChartData = [
           { data: performanceData, label: "عملکرد گروه" }
         ];
@@ -376,129 +316,8 @@ export class PerformanceL3Component implements OnInit {
     );
   }
 
-  getMultipleGroupData(filterData) {
-    let groupsId = {
-      id_group1: filterData.selectedItems[0]["item_id"],
-      id_group2: filterData.selectedItems[1]["item_id"]
-    };
-
-    
-
-    this.reportsServ.getGroupPerformance(filterData).subscribe(
-      dataAll => {
-        debugger;
-
-        let data = [dataAll, dataAll];//fake
-
-
-        this.lineChartData = [];
-        let lineChartDataTmp = [];
-        this.callsChartData = [];
-        let callsChartDataTmp = [];
-        this.performanceChartData = [];
-        let performanceChartDataTmp = [];
-
-        let timesChartDataTmp = [];
-
-        let allCalsData = [];
-        let answeredData = [];
-        let noAnsweredData = [];
-        let performanceData = [];
-        let timesData = [];
-        let avgTimesData = [];
-        let avgAll = [];
-
-        for (let i = 0; i < 2; i++) {
- 
-
-          for (let index in data[i]) {
-            allCalsData.push(data[i][index]["all"]);
-            answeredData.push(data[i][index]["answer"]);
-            noAnsweredData.push(data[i][index]["noanswer"]);
-            performanceData.push(data[i][index]["noanswer"]);
-            timesData.push(data[i][index]["time"]);
-            avgTimesData.push(data[i][index]["avg"]);
-            avgAll.push(400);
-          }
-
-          callsChartDataTmp.push([
-            { data: allCalsData, label: "همه تماس ها، گروه"+ i },
-            { data: answeredData, label: "پاسخ داده شده ، گروه"+ i},
-            { data: noAnsweredData, label: "پاسخ داده نشده ، گروه"+ i }
-          ]);
-
-          timesChartDataTmp = [{ data: timesData, label: "مدت زمان تماس، گروه"+ i }];
-
-         timesChartDataTmp = [
-            { data: timesData, label: "مدت زمان تماس، گروه"+ i },
-            { data: avgTimesData, label: "میانگین زمان تماس ، گروه"+ i },
-            { data: avgAll, label: "میانگین کل، گروه"+ i }
-          ];
-
-          let allCalls = this.showLineAllCalls
-            ? { data: allCalsData, label: " همه تماس ها، گروه"+ i }
-            : { data: [], label: " همه تماس ها، گروه"+ i };
-          let answerCalls = this.showAnsweredCalls
-            ? { data: answeredData, label: "پاسخ داده شده، گروه"+ i }
-            : { data: [], label: "پاسخ داده شده، گروه"+ i };
-          let noanswerCalls = this.showNoAnsweredCalls
-            ? { data: noAnsweredData, label: "پاسخ داده نشده، گروه"+ i }
-            : { data: [], label: "پاسخ داده نشده، گروه"+ i };
-
-          lineChartDataTmp = [allCalls, answerCalls, noanswerCalls];
-
-          
-          performanceChartDataTmp = [
-            { data: performanceData, label: "عملکرد گروه "+ i }
-          ];
-        }
-
-
-
-
-        debugger;
-        this.lineChartData = lineChartDataTmp;
-        this.performanceChartData = performanceChartDataTmp;
-        this.callsChartData = callsChartDataTmp;
-        this.timesChartLabels = timesChartDataTmp;
-
-      },
-      error => {
-        this.authServe.handdleAuthErrors(error);
-      }
-    );
-
-    ///////////////////////////////////calls///////////////////////////////
-    this.reportsServ.getCompareGroupsCalls(groupsId).subscribe(
-      data => {
-        debugger;
-
-        this.lineChartLabels = this.timeLabels[this.filters.value.time];
-        this.callsBarChartLabels = this.timeLabels[this.filters.value.time];
-
-        let allCalsData = [];
-        let answeredData = [];
-        let noAnsweredData = [];
-        let performanceData = [];
-
-        this.filters.value.selectedItems.forEach(item => {
-          allCalsData.push(item["all"]);
-          answeredData.push(item["answer"]);
-          noAnsweredData.push(item["noanswer"]);
-          performanceData.push(item["noanswer"]);
-        });
-
-        this.callsChartData = [
-          { data: allCalsData, label: "همه" },
-          { data: answeredData, label: "پاسخ داده شده" },
-          { data: noAnsweredData, label: "پاسخ داده نشده" }
-        ];
-      },
-      error => {
-        this.authServe.handdleAuthErrors(error);
-      }
-    );
+  onSelectDate() {
+    this.getOneGroupData();
   }
 
-  onSelectDate() {}
 }
