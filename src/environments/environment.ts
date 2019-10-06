@@ -6,7 +6,7 @@
 
 export const environment = {
   production: false,
-  apiUrl : 'http://localhost:3000/api',
-  //apiUrl : 'http://192.168.137.98:8076/api/v2',
+  //apiUrl : 'http://localhost:3000/api',
+  apiUrl : 'http://192.168.137.98:8076/api/v2',
   apiKey : { key : 'c1a821c0'}
 };
