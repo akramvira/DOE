@@ -120,7 +120,7 @@
         </div>
       </div>
     <div class="card-body row justify-content-center align-items-center direction-ltr text-center">
-          <div *ngFor="let item of remainingExtensions" class="col-2 btn btn-info m-1" 
+          <div *ngFor="let item of remainingExtensions" class="col-4 btn btn-info m-1" 
           (click)="addItemToSelectedParent($event, item)" title="{{item.number}}">
               {{ item.name? item.name : item.number }}
             </div>
