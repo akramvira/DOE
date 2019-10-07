@@ -229,7 +229,6 @@ export class DefaultLayoutComponent implements OnDestroy {
         this.navItems = tmpNavItems;
       },
       error => {
-        console.log("error", error);
         authenticationService.handdleAuthErrors(error);
       }
     );

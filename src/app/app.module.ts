@@ -56,6 +56,7 @@ import { ExcelService } from './_services/excel.service';
 import { BarChartComponent } from './views/admin/_components/bar-chart/bar-chart.component';
 import { DoughnutChartComponent } from './views/admin/_components/doughnut-chart/doughnut-chart.component';
 import { LineChartComponent } from './views/admin/_components/line-chart/line-chart.component';
+import { LoadingComponent } from './views/loading/loading.component';
 
 let productionMode = false;
 
@@ -88,7 +89,8 @@ let productionMode = false;
     P404Component,
     P403Component,
     P500Component,
-    LoginComponent
+    LoginComponent,
+    LoadingComponent
 
     
   ],

@@ -14,11 +14,13 @@ import { Toast, ToastrService } from 'ngx-toastr';
 export class AuthenticationService  {
 
   private currentUserSubject: BehaviorSubject<User>;
+  public currentUserMenuAccess : BehaviorSubject<any>;
   public currentUser: Observable<User>;
   public menues :any;
 
   constructor(private http: HttpClient, private router: Router, private toaster :ToastrService) {
     this.currentUserSubject = new BehaviorSubject<User>({token : localStorage.getItem('currentUser')});
+    //this.currentUserMenuAccess = new BehaviorSubject<any>([]);
     this.currentUser = this.currentUserSubject.asObservable();
 
   }
@@ -31,7 +33,7 @@ export class AuthenticationService  {
   }
 
   login(username: string, password: string) {
-
+    this.getUserMenues();
     return this.http.post<any>(`${environment.apiUrl}/login`, { username: username, password: password } )
       .pipe(map(user => {
         console.log(user);
@@ -86,8 +88,17 @@ export class AuthenticationService  {
   public getUserMenues(){
     let userToken = this.getLSToken();
     let option = this.getRequestOpions();
-    return this.http.get( environment.apiUrl + '/admin/menu',option); 
+    let res = this.http.get( environment.apiUrl + '/admin/menu',option);
+
+    res.subscribe((data)=>{
+      this.currentUserMenuAccess = new BehaviorSubject<any>(data['data']);
+    })
+    return  res;
     
+  }
+
+  getUsersMenuAccess(){
+   return  this.currentUserMenuAccess?  this.currentUserMenuAccess.value  : [];
   }
 
   public getRequestOpions(hasFile = false){

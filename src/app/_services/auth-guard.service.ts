@@ -11,6 +11,7 @@ import { Observable, of  } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthGuardService implements CanActivate{
+  loading = false;
 
   menues :any ;
   constructor(
@@ -21,13 +22,17 @@ export class AuthGuardService implements CanActivate{
                
               }
 
+              
   canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
-     
+
+   
+    this.loading =true;
     return this.authService.getUserMenues()
     .pipe(
       map(data=>{
+        
       let res = data['data'].includes(next.data.accessName);
-      console.log(data['data'], next.data.accessName,res);
+      
       if(res ){
         return true;
       }
