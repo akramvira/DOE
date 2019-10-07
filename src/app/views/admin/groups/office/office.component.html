@@ -98,7 +98,7 @@
       </div>
     </div>
     <div class="card-body direction-ltr text-center">
-        <div *ngFor="let item of selectedGroupExtensions" class="btn col-4 btn-success m-1"
+        <div *ngFor="let item of selectedGroupExtensions" class="btn col-6 btn-success m-1"
         (click)="removeFromSelectedParent($event, item)"  title="{{item.number}}">
         
         {{ item.name? item.name : item.number }}
