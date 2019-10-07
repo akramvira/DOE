@@ -33,7 +33,6 @@ export class OfficeComponent implements OnInit {
   ngOnInit() {
     this.webServ.getAllGroups().subscribe(
       data => {
-        debugger;
         data = data["data"];
         let groupesData = new Array();
         for (var i in data["groups"]) {
@@ -114,9 +113,9 @@ export class OfficeComponent implements OnInit {
     let $this = this;
 
     this.selectedGroupExtensions;
-    debugger;
+   
     this.remainingExtensions = this.allExtensions.filter(el => {
-      debugger;
+    
       return !$this.selectedGroupExtensions.includes(el);
     });
 
@@ -216,7 +215,7 @@ export class OfficeComponent implements OnInit {
     this.setRemainingExtensions(); // to refresh
     console.log(searhKey);
     let searchResult = this.remainingExtensions.filter(el => {
-      //debugger;
+     
 
       String(el).indexOf(searhKey) == 0;
     });
