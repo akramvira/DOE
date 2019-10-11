@@ -46,7 +46,14 @@ export class LineChartComponent implements OnInit {
       hover: {
         mode: "nearest",
         intersect: true
-      }
+      },
+      legend: {
+        labels: { 
+          fontFamily: 'IRANSans',
+          fontColor: 'black',
+          fontStyle: 'bold'
+        }
+      },
     };
     
   }

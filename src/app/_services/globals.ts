@@ -8,7 +8,7 @@ constructor(private authServ : AuthenticationService
 ){
 
   this.authServ.getUserMenues().subscribe((data)=>{
-    console.log('asdfsd',data);
+
     this.userMenues = data;
   })
 

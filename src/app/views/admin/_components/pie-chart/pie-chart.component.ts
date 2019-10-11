@@ -32,7 +32,15 @@ export class PieChartComponent implements OnInit {
     ;
   public chartOptions: any = {
     scaleShowVerticalLines: false,
-    responsive: true
+    responsive: true,
+    legend: {
+      labels: { 
+        fontFamily: 'IRANSans',
+        fontColor: 'black',
+        fontStyle: 'bold'
+      }
+    },
+
   };
   public chartType = "pie";
 

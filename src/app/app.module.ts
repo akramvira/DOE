@@ -44,21 +44,12 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
-
-import { HttpClientInMemoryWebApiModule } from "angular-in-memory-web-api";
-import {environment } from "../environments/environment.prod";
 import { Globals } from './_services/globals';
 import { P403Component } from './views/error/403.component';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
-import { SearchColumnComponent } from './components/search-column/search-column.component';
 import { ExcelService } from './_services/excel.service';
-import { BarChartComponent } from './views/admin/_components/bar-chart/bar-chart.component';
-import { DoughnutChartComponent } from './views/admin/_components/doughnut-chart/doughnut-chart.component';
-import { LineChartComponent } from './views/admin/_components/line-chart/line-chart.component';
 import { LoadingComponent } from './views/loading/loading.component';
-
-let productionMode = false;
 
 @NgModule({
   imports: [
