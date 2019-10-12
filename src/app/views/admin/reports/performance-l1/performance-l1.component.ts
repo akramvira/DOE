@@ -288,9 +288,10 @@ export class PerformanceL1Component implements OnInit {
           { data: timesData, label: "مدت زمان مکالمه" },
 
         ];
+      
         this.timesAvgChartData = [
-          { data: avgTimesData, label: "میانگین زمان تماس" },
-          { data: avgAll, label: "میانگین کل"  }
+          { data: avgTimesData, label: "میانگین زمان تماس" ,type:'line'},
+          { data: avgAll, label: "میانگین کل"  ,type:'line'}
         ];
 
         let allCalls = this.showLineAllCalls
@@ -303,12 +304,12 @@ export class PerformanceL1Component implements OnInit {
           { data: performanceData, label: "عملکرد گروه" }
         ];
 
-        this.loadingData = false;
+       this.loadingData = false;
         this.initingData = false;
 
       },
       error => {
-        this.loadingData = false;
+       this.loadingData = false;
         this.initingData = false;
         this.authServe.handdleAuthErrors(error);
       }

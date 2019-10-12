@@ -1,5 +1,14 @@
+<div>
+  <div class=" row mb-3 border-bottom pb-2">
+    <label class="form-text col-6 col-lg-3 col-xl-2 text-left" >نحوه دریافت اطلاعات : </label>
+    <select class="form-control  col-6 col-lg-3 col-xl-3 " [formControl]="type" (change)="saveDataType()">
+      <option value="file">بارگزاری اطلاعات از طریق فایل</option>
+      <option value="server">دریافت اطلاعات از سرور</option>
+    </select>
+  </div>
+</div>
 <tabset>
-  <tab>
+  <tab *ngIf="dataType.get.value!='file'">
     <ng-template tabHeading
       ><i class="icon-calculator"></i> تنظیمات اولیه سیستم</ng-template
     >
@@ -145,7 +154,9 @@
               </div>
 
               <div class="row" formGroupName="invatation">
-                <label class="col-sm-2 col-form-label">سرور سیستم فراخوان</label>
+                <label class="col-sm-2 col-form-label"
+                  >سرور سیستم فراخوان</label
+                >
                 <div class="col-10">
                   <div class="row">
                     <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
@@ -395,6 +406,76 @@
       </div>
     </div>
   </tab>
+  <tab *ngIf="dataType.get.value=='file'">
+    <ng-template tabHeading
+      ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template
+    >
+    <div class="row animated fadeIn border-bottom justify-content-center">
+      <div class=" col-12 col-md-6 col-lg-6  ">
+        <div class="card card-accent-success">
+          <div class="card-header">
+            ثبت فایل خروجی ایجاد شده جهت نمایش گزارشات
+          </div>
+          <div class="card-body">
+            <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
+              <div class="form-group ">
+                <div class="input-group">
+                  <label class="col-4 col-form-label">
+                    فایل اطلاعات سیستم:</label
+                  >
+                  <label for="data-file" class="btn btn-primary"
+                    >انتخاب...</label
+                  >
+
+                  <input
+                    type="file"
+                    class="form-control-file form-control hide is-invalid"
+                    formControlName="file"
+                    id="data-file"
+                    (change)="handleDataFileInput($event.target.files)"
+                  />
+                  <div *ngIf="datafileToUpload">
+                    {{ datafileToUpload.name }}
+                  </div>
+                  <div
+                    *ngIf="systemDataSubmitted && systemDataInfo.file.errors"
+                    class="invalid-feedback"
+                  >
+                    <div *ngIf="systemDataInfo.file.errors.required">
+                      فایلی انتخاب نشده است.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group form-actions text-left">
+                <button type="submit" class="btn  btn-success">
+                  ذخیره شود
+                  <app-spintick [showSpinner]="fileIsUploading"></app-spintick>
+                </button>
+              </div>
+              <progressbar
+                [hidden]="!fileIsUploading"
+                class="progress"
+                [value]="progress"
+                [max]="100"
+              ></progressbar>
+            </form>
+          </div>
+
+          <div class="text-center border-top p-4">
+            <button class="btn btn-danger" (click)="removeLastFileData()">
+              پاک کردن اطلاعات فایل قبلی
+              <app-spintick
+                [showSpinner]="fileIsRemoving"
+                [showTick]="false"
+              ></app-spintick>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </tab>
   <tab>
     <ng-template tabHeading
       ><i class="icon-basket-loaded"></i> تنظیمات لایسنس</ng-template
@@ -533,9 +614,7 @@
     </div>
   </tab>
   <tab>
-    <ng-template tabHeading
-      ><i class="fa da-list"></i> محاسبه قبوض</ng-template
-    >
+    <ng-template tabHeading><i class="fa da-list"></i> محاسبه قبوض</ng-template>
     <div class="row animated fadeIn border-bottom justify-content-center">
       <div class="col-12 col-md-10 col-lg-10 col-xl-6">
         <div class="card card-accent-success">
@@ -649,65 +728,9 @@
       </div>
     </div>
   </tab>
-
-  <tab>
-    <ng-template tabHeading
-    ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template
-  >
-  <div class="row animated fadeIn border-bottom justify-content-center">
-    <div class=" col-12 col-md-6 col-lg-6  ">
-      <div class="card card-accent-success">
-        <div class="card-header">
-          ثبت فایل خروجی ایجاد شده جهت نمایش گزارشات
-        </div>
-        <div class="card-body">
-          <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
-            <div class="form-group ">
-              <div class="input-group">
-                <label class="col-4 col-form-label"> فایل اطلاعات سیستم:</label>
-                <label for="data-file" class="btn btn-primary"
-                  >انتخاب...</label
-                >
-
-                <input
-                  type="file"
-                  class="form-control-file form-control hide is-invalid"
-                  formControlName="file"
-                  id="data-file"
-                  (change)="handleDataFileInput($event.target.files)"
-                />
-                <div *ngIf="datafileToUpload">{{ datafileToUpload.name }}</div>
-                <div
-                  *ngIf="systemDataSubmitted && systemDataInfo.file.errors"
-                  class="invalid-feedback"
-                >
-                  <div *ngIf="systemDataInfo.file.errors.required">
-                    فایلی انتخاب نشده است.
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="form-group form-actions text-left">
-              <button type="submit" class="btn  btn-success" >
-                ذخیره شود
-                <app-spintick [showSpinner]="fileIsUploading"></app-spintick>
-              </button>
-            </div>
-            <progressbar [hidden]="!fileIsUploading" class="progress" [value]="progress" [max]="100"></progressbar>
-          </form>
-        </div>
-
-        <div class="text-center border-top p-4">
-          <button class="btn btn-danger" (click)="removeLastFileData()">
-    پاک کردن اطلاعات فایل قبلی
-    <app-spintick [showSpinner]="fileIsRemoving" [showTick] ="false"></app-spintick>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </tab>
 </tabset>
 
-<app-loading text="در حال بارگزاری..." [showLoading]="fileIsUploading"></app-loading>
+<app-loading
+  text="در حال بارگزاری..."
+  [showLoading]="fileIsUploading"
+></app-loading>

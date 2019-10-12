@@ -13,7 +13,7 @@ export class LineChartComponent implements OnInit {
   chartHsteps = 50;
   ngOnInit() {
     
-    this.lineChartOptions == {
+    this.lineChartOptions = {
       animation: true,
       responsive: true,
       loneJoin: "miter",

@@ -26,15 +26,20 @@ export class SettingsService {
       console.log(data);
       return data;
     }));
-
-      // .pipe(map(result => {
-
-      //   console.log('return result', result);
-      //   console.log(result);
-        
-      //   return result;
-      // }));
   }
+
+  public updateType(data){
+    
+    let options = this.authServ.getRequestOpions();
+    return this.http.post<any>(`${environment.apiUrl}/admin/setting/type`, data, options )
+      .pipe(map(result => {
+        if (result) {
+          console.log(result);
+        }
+        return result;
+      }));
+  }
+
 
   public setSettingsRouteData(data){
     let options = this.authServ.getRequestOpions();

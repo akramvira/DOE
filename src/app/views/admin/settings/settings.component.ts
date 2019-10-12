@@ -1,4 +1,9 @@
-import { Component, OnInit, ChangeDetectorRef, ViewEncapsulation } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ChangeDetectorRef,
+  ViewEncapsulation
+} from "@angular/core";
 import { SettingsService } from "./_service/settings.service";
 import {
   FormControl,
@@ -17,7 +22,7 @@ import { FileUploadComponent } from "./file-upload/file-upload.component";
 @Component({
   selector: "app-settings",
   templateUrl: "./settings.component.html",
-  encapsulation:ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None
 })
 export class SettingsComponent implements OnInit {
   fb: FormBuilder;
@@ -30,7 +35,7 @@ export class SettingsComponent implements OnInit {
       password: new FormControl(""),
       port: new FormControl("")
     }),
-    invatation : new FormGroup({
+    invatation: new FormGroup({
       title: new FormControl(""),
       ip: new FormControl(""),
       username: new FormControl(""),
@@ -104,10 +109,13 @@ export class SettingsComponent implements OnInit {
     private fu: FileUploadComponent
   ) {}
 
+  dataType :FormControl = new FormControl('file');
+
   ngOnInit() {
-    this.settingService.getSettingsdata()
-    .subscribe(data => {
-      data=data['data'];
+    this.settingService.getSettingsdata().subscribe(data => {
+      data = data["data"];
+      debugger;
+      this.dataType.setValue(data['type']);
       this.settings.patchValue({
         ami: data["ami"],
         operatori: data["operatori"],
@@ -130,8 +138,6 @@ export class SettingsComponent implements OnInit {
       this.accessList = data["license"];
       this.license.patchValue(data);
     });
-
-    
   }
 
   onSubmitServers(event: Event) {
@@ -218,7 +224,6 @@ export class SettingsComponent implements OnInit {
 
   datafileToUpload: File = null;
   handleDataFileInput(files: FileList) {
- 
     this.datafileToUpload = files.item(0);
   }
 
@@ -252,58 +257,68 @@ export class SettingsComponent implements OnInit {
     }
   }
   progress = 0;
-  fileIsUploading :boolean;
-  fileIsRemoving :boolean;
+  fileIsUploading: boolean;
+  fileIsRemoving: boolean;
   systemDataSubmitted = false;
-  submitSystemData(){
+  submitSystemData() {
     this.systemDataSubmitted = true;
-    if(!this.systemData.invalid){
-
+    if (!this.systemData.invalid) {
       this.fileIsUploading = true;
-    const formData = new FormData();
-    formData.append("file", this.datafileToUpload);
+      const formData = new FormData();
+      formData.append("file", this.datafileToUpload);
 
-    this.settingService.uploadfile(formData  ).subscribe(
-      (event: HttpEvent<any>) => {
-      switch (event.type) {
-        case HttpEventType.Sent:
-          break;
-        case HttpEventType.ResponseHeader:
-          break;
-        case HttpEventType.UploadProgress:
-          this.progress = Math.round(event.loaded / event.total * 100);
-          break;
-        case HttpEventType.Response:
+      this.settingService.uploadfile(formData).subscribe(
+        (event: HttpEvent<any>) => {
+          switch (event.type) {
+            case HttpEventType.Sent:
+              break;
+            case HttpEventType.ResponseHeader:
+              break;
+            case HttpEventType.UploadProgress:
+              this.progress = Math.round((event.loaded / event.total) * 100);
+              break;
+            case HttpEventType.Response:
+              this.fileIsUploading = false;
+              this.toastr.success("پیغام سیستم", event["data"]);
+              setTimeout(() => {
+                this.progress = 0;
+              }, 1500);
+          }
+        },
+        error => {
           this.fileIsUploading = false;
-          this.toastr.success('پیغام سیستم',event['data']);
-          setTimeout(() => {
-            this.progress = 0;
-          }, 1500);
+          this.toastr.error(error.error.errors.file[0]);
         }
-        
-      },
-      error => {
-        this.fileIsUploading = false;
-        this.toastr.error(error.error.errors.file[0]);
-      }
-    );
-  }
+      );
+    }
   }
 
-
-  removeLastFileData(){
+  removeLastFileData() {
     this.fileIsRemoving = true;
     this.settingService.removeLastFileData().subscribe(
       data => {
-        this.fileIsRemoving=false;
-        this.toastr.success('پیغام سیستم', 'اطلاعات از پایگاه داده حذف شد.');
+        this.fileIsRemoving = false;
+        this.toastr.success("پیغام سیستم", "اطلاعات از پایگاه داده حذف شد.");
       },
       error => {
-        this.fileIsRemoving=false;
-        this.toastr.error('خطا در پاک کردن اطلاعات.');
+        this.fileIsRemoving = false;
+        this.toastr.error("خطا در پاک کردن اطلاعات.");
       }
     );
   }
+
+  saveDataType(){
+    this.settingService.updateType({type:this.dataType.value}).
+    subscribe(
+      data=>{
+        this.toastr.success(data.data);
+      },
+      error=>{
+        
+      }
+    )
+  }
+
   pingAmi() {
     this.settingService
       .pingAmi({

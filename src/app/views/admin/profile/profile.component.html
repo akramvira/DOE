@@ -4,11 +4,11 @@
             <div class="card">
                 <div class="card-header">اطلاعات شما</div>
                 <div class="card-body">
-                        <form [formGroup]=userData>
+                        <form [formGroup]=userData (ngSubmit)="onSubmitForm()">
                                 <div class="form-group">
                                   <div class="input-group">
                                     <div class="input-group-prepend">
-                                      <span class="input-group-text">نام  </span>
+                                      <span class="input-group-text">نام   </span>
                                     </div>
                                     <input type="text"  name="username3" class="form-control" formControlName=name >
                                     <div class="input-group-append">
@@ -19,9 +19,9 @@
                                 <div class="form-group">
                                   <div class="input-group">
                                     <div class="input-group-prepend">
-                                      <span class="input-group-text"> ایمیل</span>
+                                      <span class="input-group-text"> شماره تلفن</span>
                                     </div>
-                                    <input  class="form-control" >
+                                    <input  class="form-control" formControlName="phone" >
                                     <div class="input-group-append">
                                       <span class="input-group-text"><i class="fa fa-envelope"></i></span>
                                     </div>
@@ -32,13 +32,36 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text">شماره تماس</span>
                                     </div>
-                                    <input class="form-control">
+                                    <input class="form-control" formControlName="phone">
                                     <div class="input-group-append">
                                       <span class="input-group-text"><i class="fa fa-phone"></i></span>
                                     </div>
                                   </div>
                                 </div>
             
+                                <div class="form-group ">
+                                    <div class="input-group">
+                                      <div class="input-group-prepend">
+                                        <span class="input-group-text">پسورد</span>
+                                      </div>
+                                      <input class="form-control" formControlName="password">
+                                      <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="form-group ">
+                                      <div class="input-group">
+                                        <div class="input-group-prepend">
+                                          <span class="input-group-text">تکرار پسورد</span>
+                                        </div>
+                                        <input class="form-control" formControlName="confirmPassword">
+                                        <div class="input-group-append">
+                                          <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                                        </div>
+                                      </div>
+                                    </div>
+
                                 <div class="form-group border-bottom pb-2">
                                   <div class="input-group">
                                       <label class="col-sm-3 col-form-label"> تصویر پروفایل:</label>
@@ -53,7 +76,9 @@
                 
                 
                                 <div class="form-group form-actions text-left">
-                                  <button type="submit" class="btn  btn-success">ذخیره شود</button>
+                                  <button type="submit" class="btn  btn-success">ذخیره شود 
+                                    <app-spintick [loading]="submiting"></app-spintick>
+                                  </button>
                                 </div>
                               </form>
                 </div>
