@@ -70,6 +70,8 @@ export class SettingsService {
   public uploadfile(data) {
   
     let options = this.authServ.getRequestOpions(true);
+    options['reportProgress'] = true;
+    options['observe'] =  'events';
     return this.http.post(environment.apiUrl + '/admin/setting/uploadfile',data, options);
   }
 

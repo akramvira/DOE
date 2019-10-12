@@ -53,69 +53,25 @@
 
   <div class="row">
       <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 col-12">
-          <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="card card-accent-success">
-              <div class="card-header">
-                وضعیت Ram
-                <div class="card-header-actions">
-                  
-                </div>
-              </div>
-              <div class="card-body">
-                  <app-doughnut-chart
-                    [data]="ramDoughnutChartData"
-                    [labels]="ramDoughnutChartLabels"
-                    [colors] ="ramChartColors">
-                  </app-doughnut-chart>
-              </div>
-            </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="card card-accent-info">
-              <div class="card-header">
-                وضیعت Hard
-                <div class="card-header-actions">
-                  <a href="http://www.chartjs.org">
-                  </a>
-                </div>
-              </div>
-              <div class="card-body ">
-                <app-doughnut-chart 
-                  [data]="hardDoughnutChartData"
-                  [labels]="hardDoughnutChartLabels"
-                  [colors] ="hardChartColors">
-                </app-doughnut-chart>
-                <div class="col-12">
-                  <div class="row">
-                    <label class="col-6 badge">ظرفیت: {{Hard.capacity}}GB</label>
-                    <label class="col-6 badge">در دسترس: {{Hard.available}}GB</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-            </div>
-            </div>
             <div class="row">
-            <div class="col-lg-6 col-md-6 col-sm-12">
-              <div class="card card-accent-danger">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card card-accent-success">
                 <div class="card-header">
-                  وضعیت CPU
+                  وضعیت Ram
                   <div class="card-header-actions">
-                    <a href="http://www.chartjs.org">
-                    </a>
+                    
                   </div>
                 </div>
                 <div class="card-body">
-                    <app-doughnut-chart 
-                        [data]="cpuDoughnutChartData"
-                        [labels]="cpuDoughnutChartLabels"
-                        [colors] ="cpuChartColors">
-                  </app-doughnut-chart>
+                    <app-doughnut-chart
+                      [data]="ramDoughnutChartData"
+                      [labels]="ramDoughnutChartLabels"
+                      [colors] ="ramChartColors">
+                    </app-doughnut-chart>
                 </div>
               </div>
-            </div>
-            <div class="col-lg-6 col-md-6 col-sm-12">
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
             <div class="card card-accent-warning">
             <div class="card-header">
               وضعیت Swap
@@ -130,8 +86,52 @@
                 </app-doughnut-chart>
             </div>
           </div>
+              </div>
             </div>
-          </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="card card-accent-danger">
+                  <div class="card-header">
+                    وضعیت CPU
+                    <div class="card-header-actions">
+                      <a href="http://www.chartjs.org">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                      <app-doughnut-chart 
+                          [data]="cpuDoughnutChartData"
+                          [labels]="cpuDoughnutChartLabels"
+                          [colors] ="cpuChartColors">
+                    </app-doughnut-chart>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12">
+                  <div class="card card-accent-info">
+                  <div class="card-header">
+                    وضیعت Hard
+                    <div class="card-header-actions">
+                      <a href="http://www.chartjs.org">
+                      </a>
+                    </div>
+                  </div>
+                  <div class="card-body ">
+                    <app-doughnut-chart 
+                      [data]="hardDoughnutChartData"
+                      [labels]="hardDoughnutChartLabels"
+                      [colors] ="hardChartColors">
+                    </app-doughnut-chart>
+                    <div class="col-12">
+                      <div class="row">
+                        <label class="col-6 badge">ظرفیت: {{Hard.capacity}}GB</label>
+                        <label class="col-6 badge">در دسترس: {{Hard.available}}GB</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
     <div class="col-xl-6 col-lg-12 col-md-12 col-12">
       <div class="card">

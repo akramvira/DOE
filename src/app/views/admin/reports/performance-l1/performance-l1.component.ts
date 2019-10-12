@@ -66,8 +66,12 @@ export class PerformanceL1Component implements OnInit {
     format: "YYYY/MM/DD",
     theme: "dp-material",
     min: this.minDate,
-    max: this.maxDate
+    max: this.maxDate,
+    showGoToCurrent :true,
+    hideOnOutsideClick : true,
+    showNearMonthDays:true
   };
+
 
   ngOnInit() {
     this.dropdownSettings = {
@@ -249,6 +253,7 @@ export class PerformanceL1Component implements OnInit {
   }
 
   onSelectDate() {
+    debugger;
     this.getChartsData(this.filters.getRawValue());
   }
 }

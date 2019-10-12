@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import "chartjs-plugin-labels";
 import { ExcelService } from "../../../../_services/excel.service";
+import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 
 @Component({
   selector: "app-doughnut-chart",
@@ -18,6 +19,41 @@ export class DoughnutChartComponent implements OnInit {
     }
   ];
 
+  public chartOptions: any = {
+    scaleShowVerticalLines: true,
+
+    barRoundness: 3,
+    legend: {
+      labels: {
+        fontFamily: "IRANSans",
+        fontColor: "black",
+        fontStyle: "bold"
+      }
+    },
+      tooltips: {
+        fontFamily: "IRANSans",
+        fontColor: "black",
+        fontStyle: "bold",
+        enabled: false,
+        custom: CustomTooltips,
+       
+      },
+ 
+
+    plugins: {
+      labels: {
+        render: "percent",
+        precision: 2,
+        arc: true
+      },
+      formatter: function(value) {
+        if (isNaN(value)) {
+          return "";
+        }
+        return value;
+      }
+    }
+  };
   public doughnutChartType = "doughnut";
 
   ngOnInit() {}
@@ -41,8 +77,6 @@ export class DoughnutChartComponent implements OnInit {
       record[this.labels[index].replace(/\s/g, "_")] = this.data[index];
     }
     data.push(record);
-
-    debugger;
     this.exportAsXLSX(data, type);
   }
 

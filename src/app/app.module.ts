@@ -51,6 +51,7 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { ExcelService } from './_services/excel.service';
 import { LoadingComponent } from './views/loading/loading.component';
 
+
 @NgModule({
   imports: [
     BrowserModule,
@@ -70,7 +71,8 @@ import { LoadingComponent } from './views/loading/loading.component';
     ReactiveFormsModule,
     BrowserAnimationsModule,
     ModalModule,
-    ToastrModule.forRoot()
+    ToastrModule.forRoot(),
+    
     
 
   ],
@@ -81,7 +83,8 @@ import { LoadingComponent } from './views/loading/loading.component';
     P403Component,
     P500Component,
     LoginComponent,
-    LoadingComponent
+    LoadingComponent,
+    
 
     
   ],

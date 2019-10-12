@@ -11,6 +11,8 @@ import {
     FormGroup
  } from '@angular/forms';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { ProgressbarModule } from 'ngx-bootstrap';
+import { ComponentsModule } from '../_components/components/components.module';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     SettingsRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    TabsModule
+    TabsModule,
+    ProgressbarModule.forRoot(),
+    ComponentsModule
   ],
   schemas : [CUSTOM_ELEMENTS_SCHEMA],
   providers: [FileUploadComponent]

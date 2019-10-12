@@ -65,7 +65,7 @@
                             placeholder="تاریخ"
                             [formControl]="selectedDateFrom"
                             [dpDayPicker]="datePickerConfig"
-                            (onSelect)="onSelectDate()"
+                            (onSelect)="onSelectDate($event)"
                           />
                         </md-input-container>
                       </div>

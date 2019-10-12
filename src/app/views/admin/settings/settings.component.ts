@@ -11,7 +11,7 @@ import { first } from "rxjs/operators";
 import { from } from "rxjs";
 import { ToastrService } from "ngx-toastr";
 import { Router, ActivatedRoute } from "@angular/router";
-import { HttpEventType } from "@angular/common/http";
+import { HttpEventType, HttpEvent } from "@angular/common/http";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
 
 @Component({
@@ -251,8 +251,9 @@ export class SettingsComponent implements OnInit {
       );
     }
   }
-
-  fileIsUploading = false;
+  progress = 0;
+  fileIsUploading :boolean;
+  fileIsRemoving :boolean;
   systemDataSubmitted = false;
   submitSystemData(){
     this.systemDataSubmitted = true;
@@ -262,10 +263,24 @@ export class SettingsComponent implements OnInit {
     const formData = new FormData();
     formData.append("file", this.datafileToUpload);
 
-    this.settingService.uploadfile(formData).subscribe(
-      data => {
-        this.fileIsUploading = false;
-        this.toastr.success('پیغام سیستم',data['data']);
+    this.settingService.uploadfile(formData  ).subscribe(
+      (event: HttpEvent<any>) => {
+      switch (event.type) {
+        case HttpEventType.Sent:
+          break;
+        case HttpEventType.ResponseHeader:
+          break;
+        case HttpEventType.UploadProgress:
+          this.progress = Math.round(event.loaded / event.total * 100);
+          break;
+        case HttpEventType.Response:
+          this.fileIsUploading = false;
+          this.toastr.success('پیغام سیستم',event['data']);
+          setTimeout(() => {
+            this.progress = 0;
+          }, 1500);
+        }
+        
       },
       error => {
         this.fileIsUploading = false;
@@ -277,13 +292,14 @@ export class SettingsComponent implements OnInit {
 
 
   removeLastFileData(){
+    this.fileIsRemoving = true;
     this.settingService.removeLastFileData().subscribe(
       data => {
-        
+        this.fileIsRemoving=false;
         this.toastr.success('پیغام سیستم', 'اطلاعات از پایگاه داده حذف شد.');
       },
       error => {
-        
+        this.fileIsRemoving=false;
         this.toastr.error('خطا در پاک کردن اطلاعات.');
       }
     );
