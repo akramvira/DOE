@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from "@angular/core";
-
+import { CustomTooltips } from "@coreui/coreui-plugin-chartjs-custom-tooltips";
 import "chartjs-plugin-labels";
 import { ExcelService } from "../../../../_services/excel.service";
 
@@ -28,13 +28,23 @@ export class LineChartComponent implements OnInit {
         scales: {
           yAxes: [
             {
-              type: "linear",
+              type: 'time',
+              time: {
+                  unit: 'second'
+              },
               id: "left-y-axis",
               ticks: {
                 max: 100,
                 min: 100,
-                stepSize: 0.5
-              }
+                stepSize: 0.5,
+                fontFamily: "IRANSans",
+                fontColor: "black",
+                fontStyle: "bold",
+              },
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontSize: 13,
+              
             }
           ]
         }
@@ -45,7 +55,24 @@ export class LineChartComponent implements OnInit {
       },
       hover: {
         mode: "nearest",
-        intersect: true
+        intersect: true,
+        fontFamily: "IRANSans",
+        fontColor: "black",
+        fontStyle: "bold",
+        enabled: false,
+        custom: CustomTooltips,
+        callbacks: {
+          label: function(tooltipItem, data) {
+            console.log(data);
+            var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+            if (label) {
+              label += ": ";
+            }
+            label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
+            return label;
+          }
+        }
       },
       legend: {
         labels: { 
@@ -53,6 +80,58 @@ export class LineChartComponent implements OnInit {
           fontColor: 'black',
           fontStyle: 'bold'
         }
+      },
+      
+      plugins: {
+        labels: {
+          render: "value",
+          fontColor: ["green", "white", "red"],
+          precision: 2,
+          arc: true
+        },
+        formatter: function(value) {
+          if (isNaN(value)) {
+            return "";
+          }
+          return value;
+        }
+      },
+      scales: {
+        xAxes: [
+          {
+            type: 'time',
+                time: {
+                    unit: 'second'
+                },
+            ticks: {
+              beginAtZero: true,
+              //this will fix your problem with NaN
+              callback: function(label, index, labels, data) {
+    
+                console.log(label);
+                return label ? label : "";
+              },
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontSize: 13
+            },
+            barPercentage: 0.4
+          }
+        ],
+        yAxes: [
+          {
+            fontFamily: "IRANSans",
+            fontColor: "black",
+            fontStyle: "bold",
+  
+            ticks: {
+              beginAtZero: true,
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontSize: 13
+            }
+          }
+        ]
       },
     };
     

@@ -56,19 +56,18 @@ export class PerformanceL1Component implements OnInit {
   public allCallsData: Array<any> = [];
   public lineChartLabels: Array<any> = this.mainLabels;
 
-
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
+  minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
+  maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
 
   datePickerConfig = {
     format: "YYYY/MM/DD",
-    theme: "dp-material"
+    theme: "dp-material",
+    min: this.minDate,
+    max: this.maxDate
   };
-
-  
-
-
 
   ngOnInit() {
     this.dropdownSettings = {
@@ -115,15 +114,13 @@ export class PerformanceL1Component implements OnInit {
     this.updateCharts();
   }
 
-
-
   activeFilter(event) {
     let elem = event.target.element;
 
     this.filters.value.time;
   }
 
-
+  loadingData = false;
   selectedGroups: any = this.filters.value.selectedItems;
   showAnsweredCalls = true;
   showNoAnsweredCalls = true;
@@ -139,9 +136,6 @@ export class PerformanceL1Component implements OnInit {
     this.mainLabels = labels;
     this.updateCharts();
   }
-
- 
-
 
   onActivate(event) {
     //debugger;
@@ -188,6 +182,7 @@ export class PerformanceL1Component implements OnInit {
     }
 
     filterData.time = parseInt(filterData.time);
+    this.loadingData = true;
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
         data = data["data"];
@@ -207,7 +202,7 @@ export class PerformanceL1Component implements OnInit {
 
         this.mainLabels = [];
         for (let index in data) {
-          let itemChartData = data[index]['data'];
+          let itemChartData = data[index]["data"];
           this.mainLabels.push(data[index]["name"]);
 
           allCalsData.push(itemChartData["all"]);
@@ -220,7 +215,6 @@ export class PerformanceL1Component implements OnInit {
           avgAll.push(400);
         }
 
-
         this.allCallsData = [{ data: allCalsData, label: "تعداد تماس ها" }];
 
         this.callsDetailsData = [
@@ -231,7 +225,7 @@ export class PerformanceL1Component implements OnInit {
 
         this.timesChartData = [
           { data: timesData, label: "مدت زمان تماس" },
-          { data: avgTimesData, label: "میانگین زمان تماس" },
+          { data: avgTimesData, label: "میانگین زمان تماس", type: "line" },
           { data: avgAll, label: "میانگین کل" }
         ];
 
@@ -245,6 +239,8 @@ export class PerformanceL1Component implements OnInit {
         this.performanceChartData = [
           { data: performanceData, label: "عملکرد گروه" }
         ];
+
+        this.loadingData = false;
       },
       error => {
         this.authServe.handdleAuthErrors(error);
