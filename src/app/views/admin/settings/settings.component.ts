@@ -109,13 +109,13 @@ export class SettingsComponent implements OnInit {
     private fu: FileUploadComponent
   ) {}
 
-  dataType :FormControl = new FormControl('file');
+  type = new FormControl('file');
 
   ngOnInit() {
     this.settingService.getSettingsdata().subscribe(data => {
       data = data["data"];
       debugger;
-      this.dataType.setValue(data['type']);
+      this.type.setValue(data['type']);
       this.settings.patchValue({
         ami: data["ami"],
         operatori: data["operatori"],
@@ -308,7 +308,8 @@ export class SettingsComponent implements OnInit {
   }
 
   saveDataType(){
-    this.settingService.updateType({type:this.dataType.value}).
+    
+    this.settingService.updateType({type:this.type.value}).
     subscribe(
       data=>{
         this.toastr.success(data.data);

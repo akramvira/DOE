@@ -14,7 +14,7 @@ export class LineChartComponent implements OnInit {
   ngOnInit() {
     
     this.lineChartOptions = {
-      animation: true,
+      
       responsive: true,
       loneJoin: "miter",
       bezierCurve: true,
@@ -24,33 +24,6 @@ export class LineChartComponent implements OnInit {
         },
         line: {
           tension: 0
-        },
-        scales: {
-          yAxes: [
-            {
-              type: 'time',
-              time: {
-                  unit: 'second'
-              },
-              id: "left-y-axis",
-              ticks: {
-                beginAtZero:true,
-                stepSize: 0.5,
-                fontFamily: "IRANSans",
-                fontColor: "black",
-                fontStyle: "bold",
-                fontSize: 13,
-              }
-              
-            }
-          ]
-        },
-        legend: {
-          labels: { 
-            fontFamily: 'IRANSans',
-            fontColor: 'black',
-            fontStyle: 'bold'
-          }
         }
       },
       tooltips: {
@@ -101,42 +74,35 @@ export class LineChartComponent implements OnInit {
         }
       },
       scales: {
-        xAxes: [
+        yAxes: [
           {
-            type: 'time',
-                time: {
-                    unit: 'second'
-                },
+            id: "left-y-axis",
             ticks: {
-              beginAtZero: true,
-              //this will fix your problem with NaN
-              callback: function(label, index, labels, data) {
-    
-                console.log(label);
-                return label ? label : "";
-              },
+              beginAtZero:true,
               fontFamily: "IRANSans",
               fontColor: "black",
-              fontSize: 13
-            },
-            barPercentage: 0.4
+              fontSize: 13,
+            }
+            
           }
         ],
-        yAxes: [
+        xAxes : [
           {
             fontFamily: "IRANSans",
             fontColor: "black",
-            fontStyle: "bold",
-  
+
             ticks: {
-              beginAtZero: true,
+              beginAtZero:true,
+              stepSize: 0.5,
               fontFamily: "IRANSans",
               fontColor: "black",
-              fontSize: 13
+              fontSize: 13,
             }
           }
         ]
+
       },
+     
     };
     
   }

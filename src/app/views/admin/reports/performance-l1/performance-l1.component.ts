@@ -49,6 +49,9 @@ export class PerformanceL1Component implements OnInit {
   public timeAvgChartColors = [
     {
       backgroundColor: "#86c7f3"
+    },
+    {
+      backgroundColor: "#86c7f3"
     }
   ];
 
@@ -161,7 +164,7 @@ export class PerformanceL1Component implements OnInit {
           labels.push(this.filters.value.selectedItems[index]["item_text"]);
         }
         this.mainLabels = labels;
-        //this.updateCharts();
+        this.updateCharts();
         this.initingData = false;
         this.toaster.warning('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
       },
@@ -173,7 +176,6 @@ export class PerformanceL1Component implements OnInit {
     );
     
   
-    //this.updateCharts();
   }
 
   activeFilter(event) {
@@ -285,14 +287,17 @@ export class PerformanceL1Component implements OnInit {
         ];
 
         this.timesChartData = [
-          { data: timesData, label: "مدت زمان مکالمه" },
-
+          { data: timesData, label: "مدت زمان مکالمه" }
         ];
+
+       
       
         this.timesAvgChartData = [
-          { data: avgTimesData, label: "میانگین زمان تماس" ,type:'line'},
-          { data: avgAll, label: "میانگین کل"  ,type:'line'}
+          { data: avgTimesData, label: "میانگین زمان تماس" },
+          { data: avgAll, label: "میانگین کل" }
         ];
+
+        console.log(this.timesAvgChartData);
 
         let allCalls = this.showLineAllCalls
           ? { data: allCalsData, label: " همه تماس ها" }

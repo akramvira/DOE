@@ -1,14 +1,16 @@
 <div>
   <div class=" row mb-3 border-bottom pb-2">
     <label class="form-text col-6 col-lg-3 col-xl-2 text-left" >نحوه دریافت اطلاعات : </label>
-    <select class="form-control  col-6 col-lg-3 col-xl-3 " [formControl]="type" (change)="saveDataType()">
+    <select class="form-control  col-6 col-lg-3 col-xl-3 "
+     [formControl]="type" 
+     (change)="saveDataType()">
       <option value="file">بارگزاری اطلاعات از طریق فایل</option>
       <option value="server">دریافت اطلاعات از سرور</option>
     </select>
   </div>
 </div>
 <tabset>
-  <tab *ngIf="dataType.get.value!='file'">
+  <tab *ngIf="type.value !='file'">
     <ng-template tabHeading
       ><i class="icon-calculator"></i> تنظیمات اولیه سیستم</ng-template
     >
@@ -406,7 +408,7 @@
       </div>
     </div>
   </tab>
-  <tab *ngIf="dataType.get.value=='file'">
+  <tab *ngIf="type.value=='file'">
     <ng-template tabHeading
       ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template
     >
