@@ -14,7 +14,7 @@ export class BarChartComponent implements OnInit {
   ngOnInit() {}
 
   public chartClicked(e: any): void {
-    console.log(e);
+
   }
 
   public chartHovered(e: any): void {
@@ -62,7 +62,7 @@ export class BarChartComponent implements OnInit {
       custom: CustomTooltips,
       callbacks: {
         label: function(tooltipItem, data) {
-          console.log(data);
+    
           var label = data.datasets[tooltipItem.datasetIndex].label || "";
 
           if (label) {
@@ -80,7 +80,7 @@ export class BarChartComponent implements OnInit {
             beginAtZero: true,
             //this will fix your problem with NaN
             callback: function(label, index, labels, data) {
-              console.log(label);
+          
               return label ? label : "";
             },
             fontFamily: "IRANSans",

@@ -19,6 +19,8 @@ export class WebService {
 
   public getGroupPerformance(data) {
     let options = this.authServ.getRequestOpions();
+    options['reportProgress'] = true;
+    options['observe'] =  'events';
       return this.http.post(
         environment.apiUrl + "/admin/reports/chart/maingroup/filters",
         data,

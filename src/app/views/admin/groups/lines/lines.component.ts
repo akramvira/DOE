@@ -31,12 +31,14 @@ export class LinesComponent implements OnInit{
   editing = {};
 
   ngOnInit() {
+    this.toastr.warning('جهت ویرایش، روی نام یا شماره داخلی دو بار کلیک کنید!','پیغام سیستم');
     this.webServ.getAllGroups().subscribe(
       data => {
         data = data["data"];
+
         let groupesData = new Array();
-        for (var i in data["groups"]) {
-          groupesData.push(data["groups"][i]);
+        for (var i in data) {
+          groupesData.push(data[i]);
         }
         this.groups = groupesData;
         this.allExtensions = data["sub"];
@@ -51,26 +53,25 @@ export class LinesComponent implements OnInit{
   }
 
   updateValue(event, cell, rowIndex) {
-    console.log("inline editing rowIndex", rowIndex);
+  
     this.editing[rowIndex + "-" + cell] = false;
     this.groups[rowIndex][cell] = event.target.value;
     this.refreshParents();
-    console.log("UPDATED!", this.groups[rowIndex][cell]);
 
     let newName = this.groups[rowIndex][cell];
     let id = this.groups[rowIndex]["id"];
-
+debugger;
     this.webServ
       .updateGroup({
-        name: newName,
-        id: id,
-        value: this.selectedGroupExtensions.join(",")
+        name: this.groups[rowIndex]['name'],
+        number: this.groups[rowIndex]['number'],
+        id: id
       })
       .subscribe(
         data => {
           console.log(data);
           this.itemsChanged = false;
-          this.toastr.success("نام گروه با موفقیت تغییر یافت");
+          this.toastr.success("اطلاعات داخلی با موفقیت تغییر یافت.");
         },
         error => {
           console.log(error);
@@ -218,6 +219,7 @@ export class LinesComponent implements OnInit{
     this.selectedItemNameToDelete = this.groups[this.activeRow]["name"];
   }
   confirmDelete() {
+    debugger;
     this.webServ.deleteGroup(this.groups[this.activeRow]["id"]).subscribe(
       data => {
         console.log(data);

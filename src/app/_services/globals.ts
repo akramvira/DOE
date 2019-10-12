@@ -7,11 +7,6 @@ export class Globals{
 constructor(private authServ : AuthenticationService
 ){
 
-  this.authServ.getUserMenues().subscribe((data)=>{
-
-    this.userMenues = data;
-  })
-
 }
 }
 

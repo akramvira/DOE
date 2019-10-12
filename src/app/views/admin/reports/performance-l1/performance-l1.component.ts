@@ -6,6 +6,8 @@ import { AuthenticationService } from "../../../../_services/authentication.serv
 import { debug } from "util";
 import { WebService } from "./web.service";
 import { formControlBinding } from "@angular/forms/src/directives/reactive_directives/form_control_directive";
+import { ToastrService } from 'ngx-toastr';
+import { SharedService } from '../../../../_services/shared.service';
 @Component({
   selector: "app-performance-l1",
   templateUrl: "./performance-l1.component.html",
@@ -16,7 +18,9 @@ export class PerformanceL1Component implements OnInit {
 
   constructor(
     private webServ: WebService,
-    private authServe: AuthenticationService
+    private authServe: AuthenticationService,
+    private toaster : ToastrService,
+    private sharedService :SharedService
   ) {}
   groups = new Array();
   filters = new FormGroup({
@@ -26,8 +30,7 @@ export class PerformanceL1Component implements OnInit {
     disposition: new FormControl(0),
     selectedItems: new FormControl([])
   });
-  public pieChartLabels: string[] = [];
-  public pieChartData: number[] = [];
+
 
   public performanceBarChartColors = [
     {
@@ -43,17 +46,24 @@ export class PerformanceL1Component implements OnInit {
     }
   ];
 
+  public timeAvgChartColors = [
+    {
+      backgroundColor: "#86c7f3"
+    }
+  ];
+
   mainLabels = [];
   public performanceChartLabels: string[] = this.mainLabels;
-  public performanceChartData: any[] = [];
+  public performanceChartData: any[] = [{data:[],label:''}];
 
   public callsBarChartLabels: string[] = this.mainLabels;
-  public callsDetailsData: any[] = [];
+  public callsDetailsData: any[] =[{data:[],label:''}];
 
   public timesChartLabels: string[] = this.mainLabels;
-  public timesChartData: any[] = [];
+  public timesChartData: any[] =[{data:[],label:''}];
+  public timesAvgChartData: any[] = [{data:[],label:''}];
 
-  public allCallsData: Array<any> = [];
+  public allCallsData: Array<any> = [{data:[],label:''}];
   public lineChartLabels: Array<any> = this.mainLabels;
 
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
@@ -75,6 +85,47 @@ export class PerformanceL1Component implements OnInit {
   initingData :boolean = false;
 
   ngOnInit() {
+    
+    if(this.sharedService.minMaxTime.value){
+      this.minDate =this.sharedService.minMaxTime.value.min;
+      this.maxDate =this.sharedService.minMaxTime.value.max;
+
+      this.selectedDateFrom.setValue(this.minDate);
+      this.selectedDateTo.setValue(this.maxDate);
+
+      this.datePickerConfig = {
+        format: "YYYY/MM/DD",
+        theme: "dp-material",
+        min: this.minDate,
+        max: this.maxDate,
+        showGoToCurrent :true,
+        hideOnOutsideClick : true,
+        showNearMonthDays:true
+      };
+
+    }
+
+    this.sharedService.minMaxTime.subscribe(
+      data=>{
+        this.minDate =data['min'];
+        this.maxDate =data['max'];
+
+        this.selectedDateFrom.setValue(this.minDate);
+        this.selectedDateTo.setValue(this.maxDate);
+        
+        this.datePickerConfig = {
+          format: "YYYY/MM/DD",
+          theme: "dp-material",
+          min: this.minDate,
+          max: this.maxDate,
+          showGoToCurrent :true,
+          hideOnOutsideClick : true,
+          showNearMonthDays:true
+        };
+
+      }
+    );
+
     this.initingData = true;
     this.dropdownSettings = {
       singleSelection: false,
@@ -110,14 +161,19 @@ export class PerformanceL1Component implements OnInit {
           labels.push(this.filters.value.selectedItems[index]["item_text"]);
         }
         this.mainLabels = labels;
-        this.updateCharts();
+        //this.updateCharts();
+        this.initingData = false;
+        this.toaster.warning('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
       },
       error => {
+        this.initingData = false;
+        this.toaster.warning('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
         this.authServe.handdleAuthErrors(error);
       }
     );
-
-    this.updateCharts();
+    
+  
+    //this.updateCharts();
   }
 
   activeFilter(event) {
@@ -193,10 +249,6 @@ export class PerformanceL1Component implements OnInit {
       data => {
         data = data["data"];
 
-        this.allCallsData = [];
-        this.callsDetailsData = [];
-        this.performanceChartData = [];
-
         let allCalsData = [];
         let answeredData = [];
         let noAnsweredData = [];
@@ -212,13 +264,16 @@ export class PerformanceL1Component implements OnInit {
           this.mainLabels.push(data[index]["name"]);
 
           allCalsData.push(itemChartData["all"]);
+
           answeredData.push(itemChartData["answer"]);
           noAnsweredData.push(itemChartData["noanswer"]);
+          bussy.push(itemChartData["busy"]);
+
           performanceData.push(itemChartData["performane"]);
-          bussy.push(itemChartData["performane"]);
+
           timesData.push(itemChartData["time"]);
           avgTimesData.push(itemChartData["avg"]);
-          avgAll.push(400);
+          avgAll.push(itemChartData["avgall"]);
         }
 
         this.allCallsData = [{ data: allCalsData, label: "تعداد تماس ها" }];
@@ -230,9 +285,12 @@ export class PerformanceL1Component implements OnInit {
         ];
 
         this.timesChartData = [
-          { data: timesData, label: "مدت زمان تماس" },
-          { data: avgTimesData, label: "میانگین زمان تماس", type: "line" },
-          { data: avgAll, label: "میانگین کل", type: "line"  }
+          { data: timesData, label: "مدت زمان مکالمه" },
+
+        ];
+        this.timesAvgChartData = [
+          { data: avgTimesData, label: "میانگین زمان تماس" },
+          { data: avgAll, label: "میانگین کل"  }
         ];
 
         let allCalls = this.showLineAllCalls
@@ -241,7 +299,6 @@ export class PerformanceL1Component implements OnInit {
 
         this.allCallsData = [allCalls];
 
-        this.pieChartData = [];
         this.performanceChartData = [
           { data: performanceData, label: "عملکرد گروه" }
         ];

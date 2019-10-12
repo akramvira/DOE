@@ -446,8 +446,30 @@
           </div>
         </div>
       </div>
+
+      <div class="col-12" >
+        <div class="card">
+          <div class="card-header">
+        نمودار وضعیت میانگین مکالمات به میانگین کل
+            <div class="card-header-actions"></div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <app-line-chart
+                [datasets]="timesAvgChartData"
+                [labels]="mainLabels"
+                [colors]="timeAvgChartColors"
+                isTimeChart = 'true'
+              >
+              </app-line-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </div>
 
-<app-loading text="در حال دربافت اطلاعات..." [showLoading]="initingData"></app-loading>
+<app-loading text="در حال دریافت اطلاعات... " [showLoading]="initingData"></app-loading>

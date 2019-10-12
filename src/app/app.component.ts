@@ -9,6 +9,8 @@ import { Component, OnInit } from '@angular/core';
     NavigationCancel,
     NavigationError
   } from '@angular/router'
+import { AuthenticationService } from './_services/authentication.service';
+import { SharedService } from './_services/shared.service';
 
 @Component({
   // tslint:disable-next-line
@@ -17,10 +19,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+    private authServ : AuthenticationService,
+    private sharedService: SharedService) { }
   loading  = false;
   ngOnInit() {
-
+  
+    this.sharedService.setMinMaxDate();
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
@@ -31,10 +36,10 @@ export class AppComponent implements OnInit {
 
 
   navigationInterceptor(event: RouterEvent): void {
-    debugger; //app
+
     if (event instanceof NavigationStart) {
       this.loading = true
-      debugger;
+
     }
     if (event instanceof NavigationEnd) {
       this.loading = false

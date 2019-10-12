@@ -9,6 +9,8 @@ import {
   NavigationCancel,
   NavigationError
 } from '@angular/router'
+import { AuthenticationService } from '../../_services/authentication.service';
+import { SharedService } from '../../_services/shared.service';
 
 @Component({
   selector: 'app-admin',
@@ -17,7 +19,7 @@ import {
 })
 export class AdminComponent implements OnInit {
 
-  constructor() { }
+  constructor(private sharedService:SharedService) { }
 
   ngOnInit() {
   }

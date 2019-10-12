@@ -34,16 +34,13 @@ export class LineChartComponent implements OnInit {
               },
               id: "left-y-axis",
               ticks: {
-                max: 100,
-                min: 100,
+                beginAtZero:true,
                 stepSize: 0.5,
                 fontFamily: "IRANSans",
                 fontColor: "black",
                 fontStyle: "bold",
-              },
-              fontFamily: "IRANSans",
-              fontColor: "black",
-              fontSize: 13,
+                fontSize: 13,
+              }
               
             }
           ]

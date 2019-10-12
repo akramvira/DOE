@@ -23,6 +23,7 @@ export class DefaultLayoutComponent implements OnDestroy {
   private changes: MutationObserver;
   public element: HTMLElement;
   public isLoading = true;
+
   loading = false;
 
   constructor(
@@ -31,26 +32,32 @@ export class DefaultLayoutComponent implements OnDestroy {
     private router?: Router,
     private toaster?: ToastrService
   ) {
+
+
     this.router.events.subscribe((event: Event) => {
+ 
       switch (true) {
         case event instanceof NavigationStart: {
-          //this.loading = true;
+          this.isLoading = true;
           break;
         }
 
         case event instanceof NavigationEnd:
         case event instanceof NavigationCancel:
         case event instanceof NavigationError: {
-          this.loading = false;
+         // this.loading = false;
           break;
         }
         default: {
+          this.isLoading = false;
           break;
         }
       }
-    });
+    })
+    
+    ;
 
-    this.isLoading = false;
+    
 
     if (!localStorage.getItem("userToken")) router.navigate(["/login"]);
 

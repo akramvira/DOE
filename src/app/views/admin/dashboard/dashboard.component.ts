@@ -267,6 +267,7 @@ export class DashboardComponent implements OnInit {
       this.mainChartData3.push(65);
     }
   }
+
   ngOnInit(): void {
     const chartsTimer = interval(2000).subscribe(data => {
       if (this.dashboardestroid) chartsTimer.unsubscribe();
@@ -361,6 +362,7 @@ export class DashboardComponent implements OnInit {
         }
       );
     });
+
   }
 
   dashboardestroid: boolean = false;
