@@ -233,7 +233,8 @@
             </div>
           </div>
           <div class="col-12 col-lg-2 col-xl-2 border-left">
-            <button class="btn btn-success" (click)="updateCharts()"> اعمال فیلتر 
+            <button class="btn btn-success" [disabled]="loadingData" (click)="updateCharts()">
+              {{ loadingData? 'در حال دریافت اطلاعات': 'اعمال فیلتر ' }} 
               <i [hidden]= "loadingData" class="fa fa-check"></i >
               <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
           </div>
@@ -435,12 +436,12 @@
           </div>
           <div class="card-body">
             <div class="chart-wrapper" *ngIf="timesChartData.length>0">
-              <app-line-chart
+              <app-bar-chart
                 [datasets]="timesChartData"
                 [labels]="mainLabels"
                 [colors]="timeBarChartColors"
               >
-              </app-line-chart>
+              </app-bar-chart>
             </div>
           </div>
         </div>
@@ -448,3 +449,5 @@
     </div>
   </div>
 </div>
+
+<app-loading text="در حال دربافت اطلاعات..." [showLoading]="initingData"></app-loading>

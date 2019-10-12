@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { GroupsComponent } from './groups.component';
 import { AssistantComponent } from './assistant/assistant.component';
 import { OfficeComponent } from './office/office.component';
+import { LinesComponent } from './lines/lines.component';
 
 const routes: Routes = [
   {
@@ -15,6 +15,7 @@ const routes: Routes = [
       {path: '', redirectTo :'assistant', pathMatch:'full'},
       {path: 'assistant', component: AssistantComponent, data:{title:'مدیریت معاونت ها'}},
       {path: 'office', component: OfficeComponent, data:{title:'مدیریت ادارات'}},
+      {path: 'lines', component: LinesComponent, data:{title:'مدیریت داخلی ها'}},
       
     ]
   }

@@ -18,7 +18,13 @@
   </li>
 </ul>
 
-<div class="loading-overlay" *ngIf="loading">
+<div class="loading-overlay" >
     <!-- show something fancy here, here with Angular 2 Material's loading bar or circle -->
     <md-progress-bar mode="indeterminate"></md-progress-bar>
+
+    <div class = "overlay" style="background: rgba(0, 0, 0, 0.41)">
+        <div class="spinner-border text-primary" role="status">
+          </div>
+        <span class="text-white">در حال بارگزاری...</span>
+    </div> 
 </div>

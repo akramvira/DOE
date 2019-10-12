@@ -6,6 +6,7 @@ import { DoughnutChartComponent } from '../doughnut-chart/doughnut-chart.compone
 import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { SpintickComponent } from '../spintick/spintick.component';
+import { LoadingComponent } from '../loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { SpintickComponent } from '../spintick/spintick.component';
     LineChartComponent,
     BarChartComponent,
     PieChartComponent,
-    SpintickComponent
+    SpintickComponent,
+    LoadingComponent
   ],
   imports: [
     CommonModule,
@@ -24,7 +26,8 @@ import { SpintickComponent } from '../spintick/spintick.component';
     LineChartComponent,
     BarChartComponent,
     PieChartComponent,
-    SpintickComponent
+    SpintickComponent,
+    LoadingComponent
   ]
 })
 export class ComponentsModule { }

@@ -10,6 +10,7 @@ import { ExcelService } from "../../../../_services/excel.service";
 export class BarChartComponent implements OnInit {
   constructor(private excelService: ExcelService) {}
 
+  @Input() isTimeChart: boolean = false;
   ngOnInit() {}
 
   public chartClicked(e: any): void {
@@ -28,6 +29,20 @@ export class BarChartComponent implements OnInit {
   ];
   @Input() contentTitle: string = "";
   @Input() labels: Array<any> = [];
+
+  formatTime(secs) {
+    secs = parseInt(secs);
+    var hours = Math.floor(secs / (60 * 60));
+
+    var divisor_for_minutes = secs % (60 * 60);
+    var minutes = Math.floor(divisor_for_minutes / 60);
+
+    var divisor_for_seconds = divisor_for_minutes % 60;
+    var seconds = Math.ceil(divisor_for_seconds);
+
+    return hours + ":" + minutes;
+  }
+
   public chartOptions: any = {
     scaleShowVerticalLines: true,
 
@@ -39,25 +54,25 @@ export class BarChartComponent implements OnInit {
         fontStyle: "bold"
       }
     },
-      tooltips: {
-        fontFamily: "IRANSans",
-        fontColor: "black",
-        fontStyle: "bold",
-        enabled: false,
-        custom: CustomTooltips,
-        callbacks: {
-          label: function(tooltipItem, data) {
-            console.log(data);
-            var label = data.datasets[tooltipItem.datasetIndex].label || "";
+    tooltips: {
+      fontFamily: "IRANSans",
+      fontColor: "black",
+      fontStyle: "bold",
+      enabled: false,
+      custom: CustomTooltips,
+      callbacks: {
+        label: function(tooltipItem, data) {
+          console.log(data);
+          var label = data.datasets[tooltipItem.datasetIndex].label || "";
 
-            if (label) {
-              label += ": ";
-            }
-            label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
-            return label;
+          if (label) {
+            label += ": ";
           }
+          label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
+          return label;
         }
-      },
+      }
+    },
     scales: {
       xAxes: [
         {
@@ -65,7 +80,6 @@ export class BarChartComponent implements OnInit {
             beginAtZero: true,
             //this will fix your problem with NaN
             callback: function(label, index, labels, data) {
-  
               console.log(label);
               return label ? label : "";
             },
@@ -86,7 +100,11 @@ export class BarChartComponent implements OnInit {
             beginAtZero: true,
             fontFamily: "IRANSans",
             fontColor: "black",
-            fontSize: 13
+            fontSize: 13,
+            callback: function(label, index, labels) {
+              if (this.isTimeChart) return this.formatTime(label);
+              else return label;
+            }
           }
         }
       ]

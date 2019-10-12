@@ -72,8 +72,10 @@ export class PerformanceL1Component implements OnInit {
     showNearMonthDays:true
   };
 
+  initingData :boolean = false;
 
   ngOnInit() {
+    this.initingData = true;
     this.dropdownSettings = {
       singleSelection: false,
       idField: "item_id",
@@ -230,7 +232,7 @@ export class PerformanceL1Component implements OnInit {
         this.timesChartData = [
           { data: timesData, label: "مدت زمان تماس" },
           { data: avgTimesData, label: "میانگین زمان تماس", type: "line" },
-          { data: avgAll, label: "میانگین کل" }
+          { data: avgAll, label: "میانگین کل", type: "line"  }
         ];
 
         let allCalls = this.showLineAllCalls
@@ -245,15 +247,18 @@ export class PerformanceL1Component implements OnInit {
         ];
 
         this.loadingData = false;
+        this.initingData = false;
+
       },
       error => {
+        this.loadingData = false;
+        this.initingData = false;
         this.authServe.handdleAuthErrors(error);
       }
     );
   }
 
   onSelectDate() {
-    debugger;
     this.getChartsData(this.filters.getRawValue());
   }
 }

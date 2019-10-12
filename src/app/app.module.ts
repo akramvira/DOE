@@ -83,9 +83,6 @@ import { LoadingComponent } from './views/loading/loading.component';
     P403Component,
     P500Component,
     LoginComponent,
-    LoadingComponent,
-    
-
     
   ],
   providers: [{

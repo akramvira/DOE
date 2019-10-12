@@ -13,11 +13,10 @@ import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { Globals } from "../../_services/globals";
 import { ModalModule } from "ngx-bootstrap/modal";
 import { ChartsModule } from "ng2-charts";
-import { ProgressbarComponent } from "./_components/progressbar/progressbar.component";
 import { ComponentsModule } from './_components/components/components.module';
 
 @NgModule({
-  declarations: [AdminComponent, ProfileComponent, ProgressbarComponent],
+  declarations: [AdminComponent, ProfileComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

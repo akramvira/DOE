@@ -1,16 +1,17 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { ModalDirective } from "ngx-bootstrap";
+import { GroupsService } from "../_services/groups.service";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { ToastrService } from "ngx-toastr";
 import { Validators, FormControl } from "@angular/forms";
 import { WebService } from "./web.service";
 
 @Component({
-  selector: "app-assistant",
-  templateUrl: "./assistant.component.html",
-  styleUrls: ["./assistant.component.scss"]
+  selector: 'app-lines',
+  templateUrl: './lines.component.html',
+  styleUrls: ['./lines.component.scss']
 })
-export class AssistantComponent implements OnInit {
+export class LinesComponent implements OnInit{
   constructor(
     private webServ: WebService,
     private authServ: AuthenticationService,
@@ -88,19 +89,19 @@ export class AssistantComponent implements OnInit {
   }
 
   onActivate(event) {
-    if (event.type == "click") {
-      this.refreshParents();
-      this.parentSelected = true;
+    // if (event.type == "click") {
+    //   this.refreshParents();
+    //   this.parentSelected = true;
 
-      this.selectedGroupExtensions = JSON.parse(
-        JSON.stringify(event.row["sub"])
-      );
-      // this.convertSelectedGroupExtentionsToInt();
-      this.setRemainingExtensions();
-      this.activeParentId = event.row.id;
+    //   this.selectedGroupExtensions = JSON.parse(
+    //     JSON.stringify(event.row["sub"])
+    //   );
+    //   // this.convertSelectedGroupExtentionsToInt();
+    //   this.setRemainingExtensions();
+    //   this.activeParentId = event.row.id;
 
-      this.itemsChanged = false;
-    }
+    //   this.itemsChanged = false;
+    // }
   }
 
   setActiveRow(rowIndex) {
@@ -228,3 +229,4 @@ export class AssistantComponent implements OnInit {
     console.log(this.groups[this.activeRow]["title"]);
   }
 }
+
