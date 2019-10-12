@@ -239,6 +239,8 @@ export class OfficeComponent implements OnInit {
           this.groups[activeId]["name"] + '"  با موفقیت حذف شد.'
         );
         this.smallModal.hide();
+
+        this.refreshParents();
       },
       error => {
         this.toastr.error("اشکال در روند حذف اداره");

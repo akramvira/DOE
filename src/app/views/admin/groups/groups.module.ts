@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { GroupsRoutingModule } from "./groups-routing.module";
 import { GroupsComponent } from "./groups.component";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
-import { ReactiveFormsModule } from "@angular/forms";
+import { ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { ModalModule } from "ngx-bootstrap";
 import { AssistantComponent } from "./assistant/assistant.component";
 import { OfficeComponent } from "./office/office.component";
@@ -14,14 +14,16 @@ import { LinesComponent } from "./lines/lines.component";
     GroupsComponent,
     AssistantComponent,
     OfficeComponent,
-    LinesComponent
+    LinesComponent,
+
   ],
   imports: [
     CommonModule,
     GroupsRoutingModule,
     NgxDatatableModule,
+    ModalModule.forRoot(),
     ReactiveFormsModule,
-    ModalModule.forRoot()
+    FormsModule
   ],
 
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

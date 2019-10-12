@@ -3,20 +3,28 @@
     <div class="col-6">
       <div class="card card-accent-primary">
         <div class="card-header">  لیست داخلی ها </div>
-        <div class="col-12 text-left mt-1">
+
+
+        <form class="col-12 text-left mt-1" (ngSubmit)="submitNewItem($event)" >
             <div class="row text-center justify-content-center">
               <input class="form-control col-4 p-1 m-2" placeholder="نام داخلی" [hidden]="!addingNewGroup" [formControl]="newGroupName" >
-              <input class="form-control col-4 p-1 m-2" placeholder="شماره داخلی*" [hidden]="!addingNewGroup" [formControl]="newGroupName" >
+              <input class="form-control col-4 p-1 m-2" placeholder="شماره داخلی*" [hidden]="!addingNewGroup"
+               [formControl]="newGroupNumber" >
+               <label class="text-danger" *ngIf="newGroupNumber.value.error">
+                 شماره باید کمتر از 8 رقم باشد.
+               </label>
             </div>
             <div class="row text-center justify-content-center">
-              <button class="btn  " title="اضافه کردن داخلی جدید"
+              <button class="btn" type="submit" title="اضافه کردن داخلی جدید"
               [ngClass] = "{'btn-warning btn-pill':!addingNewGroup, 'btn-success col-3 m-1 p-0':addingNewGroup }"
-               (click)="addNewGroupClick()">{{ addingNewGroup? 'ثبت' : ' +اضافه کردن داخلی' }}</button>
+               >{{ addingNewGroup? 'ثبت' : ' +اضافه کردن داخلی' }}</button>
         
                <button class="col-3 m-1 btn btn-warning" [hidden]="!addingNewGroup" (click)="addingNewGroup=false" >لغو</button>
             </div>
-          </div>
-          <hr />
+        </form>
+        <hr />
+
+
         <div class="card-body">
             <ngx-datatable class="material border-bottom"
             [rows]="groups"

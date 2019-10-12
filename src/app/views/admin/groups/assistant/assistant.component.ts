@@ -217,14 +217,26 @@ export class AssistantComponent implements OnInit {
     this.selectedItemNameToDelete = this.groups[this.activeRow]["name"];
   }
   confirmDelete() {
+    var activeId = this.activeRow;
     this.webServ.deleteGroup(this.groups[this.activeRow]["id"]).subscribe(
       data => {
-        console.log(data);
+
+       
+        this.removeGroup(activeId);
+        this.toastr.success(
+          this.groups[activeId]["name"] + '"  با موفقیت حذف شد.'
+        );
+        this.smallModal.hide();
+        this.refreshParents();
       },
       error => {
-        console.log(error);
+        this.smallModal.hide();
+        this.authServ.handdleAuthErrors(error);
       }
     );
-    console.log(this.groups[this.activeRow]["title"]);
+  }
+
+  removeGroup(rowId) {
+    this.groups.splice(rowId, 1);
   }
 }

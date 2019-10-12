@@ -26,10 +26,14 @@ export class LinesComponent implements OnInit{
   itemsChanged: boolean = false;
   activeParentId: number;
   addingNewGroup: boolean = false;
-  newGroupName = new FormControl("", [Validators.required]);
+  newGroupName = new FormControl("");
+  newGroupNumber = new FormControl("", [Validators.required, Validators.max(8)]);
   activeRow: number;
   editing = {};
 
+  submitNewItem(){
+    this.addNewGroupClick();
+  }
   ngOnInit() {
     this.toastr.warning('جهت ویرایش، روی نام یا شماره داخلی دو بار کلیک کنید!','پیغام سیستم');
     this.webServ.getAllGroups().subscribe(
@@ -60,7 +64,7 @@ export class LinesComponent implements OnInit{
 
     let newName = this.groups[rowIndex][cell];
     let id = this.groups[rowIndex]["id"];
-debugger;
+
     this.webServ
       .updateGroup({
         name: this.groups[rowIndex]['name'],
@@ -181,22 +185,27 @@ debugger;
     if (this.addingNewGroup) {
       let newItemData = {
         name: this.newGroupName.value,
-        value: []
+        number: this.newGroupNumber.value
       };
 
       this.webServ.addGroup(newItemData).subscribe(
         data => {
+       debugger;
           this.toastr.success("گروه با موفقیت اضافه شد.");
-          this.groups.push(newItemData);
+          newItemData['id']=data['data']['id'];
+          this.groups.unshift(newItemData);
           this.refreshParents();
+          this.addingNewGroup = false;
+          this.newGroupName.setValue('');
+          this.newGroupNumber.setValue('');
         },
         error => {
-          console.log(error);
+          this.refreshParents();
+          this.authServ.handdleAuthErrors(error);
         }
       );
 
-      this.refreshParents();
-      this.addingNewGroup = false;
+    
     } else this.addingNewGroup = true;
   }
 
@@ -219,16 +228,27 @@ debugger;
     this.selectedItemNameToDelete = this.groups[this.activeRow]["name"];
   }
   confirmDelete() {
-    debugger;
+    var activeId = this.activeRow;
     this.webServ.deleteGroup(this.groups[this.activeRow]["id"]).subscribe(
       data => {
-        console.log(data);
+        debugger;
+        this.removeGroup(activeId);
+        this.toastr.success(
+          this.groups[activeId]["name"] + '"  با موفقیت حذف شد.'
+        );
+        this.smallModal.hide();
+
+        this.refreshParents();
       },
       error => {
-        console.log(error);
+        this.smallModal.hide();
+        this.authServ.handdleAuthErrors(error);
       }
     );
-    console.log(this.groups[this.activeRow]["title"]);
+  }
+
+  removeGroup(rowId) {
+    this.groups.splice(rowId, 1);
   }
 }
 

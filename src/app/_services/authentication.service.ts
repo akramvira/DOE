@@ -128,7 +128,6 @@ export class AuthenticationService  {
     // 401 is login but no access to  resource
     // expired 401
     
-    console.log('status:',error['status'])
     if(error['status'] >= 401 && error['status'] < 404 ){
       //user in not authorized
       this.toaster.clear();
@@ -142,7 +141,14 @@ export class AuthenticationService  {
     }
     else if(error['status'] == 422){
       this.toaster.clear();
-      this.toaster.warning('اطلاعات ارسالی صحیح نمی باشد');
+      let errorString = '';
+      debugger;
+      let errorsList = error.error.errors;
+
+      for(let i in errorsList){
+        errorString += '-'+errorsList[i].join(',') + ',';
+      }
+      this.toaster.error(errorString);
     }
     else if(error['status'] == 404){
       this.toaster.clear();
