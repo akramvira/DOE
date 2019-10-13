@@ -11,7 +11,104 @@ export class BarChartComponent implements OnInit {
   constructor(private excelService: ExcelService) {}
 
   @Input() isTimeChart: boolean = false;
-  ngOnInit() {}
+  ngOnInit() {
+
+    let isTimeChart = this.isTimeChart;
+    this.chartOptions ={
+      scaleShowVerticalLines: true,
+  
+      barRoundness: 3,
+      legend: {
+        labels: {
+          fontFamily: "IRANSans",
+          fontColor: "black",
+          fontStyle: "bold"
+        }
+      },
+      tooltips: {
+        fontFamily: "IRANSans",
+        fontColor: "black",
+        fontStyle: "bold",
+        enabled: false,
+        custom: CustomTooltips,
+        callbacks: {
+          label: function(tooltipItem, data) {
+      
+            if(isTimeChart){
+              var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+              if(isTimeChart)
+              return label+' : ' + new Date( tooltipItem.yLabel * 1000).toISOString().substr(11, 8);
+              else return label + ' ' + tooltipItem.yLabel;
+            }
+            else {
+              var label = data.datasets[tooltipItem.datasetIndex].label || "";
+  
+            if (label) {
+              label += ": ";
+            }
+            label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
+            return label;
+
+            }
+            
+          }
+        }
+      },
+      scales: {
+        xAxes: [
+          {
+            ticks: {
+              beginAtZero: true,
+              //this will fix your problem with NaN
+              callback: function(label, index, labels, data) {
+            
+                return label ? label : "";
+              },
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontSize: 13
+            },
+            barPercentage: 0.4
+          }
+        ],
+        yAxes: [
+          {
+            fontFamily: "IRANSans",
+            fontColor: "black",
+            fontStyle: "bold",
+  
+            ticks: {
+              beginAtZero: true,
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontSize: 13,
+              userCallback: function(item) {
+                if(isTimeChart)
+                return new Date(item * 1000).toISOString().substr(11, 8);
+                else return item;
+            },
+            }
+          }
+        ]
+      },
+  
+      plugins: {
+        labels: {
+          render: "value",
+          precision: 2,
+          arc: true
+        },
+        formatter: function(value) {
+          if (isNaN(value)) {
+            return "";
+          }
+          return value;
+        }
+      }
+    };
+  
+  }
 
   public chartClicked(e: any): void {
 
@@ -43,88 +140,7 @@ export class BarChartComponent implements OnInit {
     return hours + ":" + minutes;
   }
 
-  public chartOptions: any = {
-    scaleShowVerticalLines: true,
-
-    barRoundness: 3,
-    legend: {
-      labels: {
-        fontFamily: "IRANSans",
-        fontColor: "black",
-        fontStyle: "bold"
-      }
-    },
-    tooltips: {
-      fontFamily: "IRANSans",
-      fontColor: "black",
-      fontStyle: "bold",
-      enabled: false,
-      custom: CustomTooltips,
-      callbacks: {
-        label: function(tooltipItem, data) {
-    
-          var label = data.datasets[tooltipItem.datasetIndex].label || "";
-
-          if (label) {
-            label += ": ";
-          }
-          label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
-          return label;
-        }
-      }
-    },
-    scales: {
-      xAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-            //this will fix your problem with NaN
-            callback: function(label, index, labels, data) {
-          
-              return label ? label : "";
-            },
-            fontFamily: "IRANSans",
-            fontColor: "black",
-            fontSize: 13
-          },
-          barPercentage: 0.4
-        }
-      ],
-      yAxes: [
-        {
-          fontFamily: "IRANSans",
-          fontColor: "black",
-          fontStyle: "bold",
-
-          ticks: {
-            beginAtZero: true,
-            fontFamily: "IRANSans",
-            fontColor: "black",
-            fontSize: 13,
-            callback: function(label, index, labels) {
-              if (this.isTimeChart) return this.formatTime(label);
-              else return label;
-            }
-          }
-        }
-      ]
-    },
-
-    plugins: {
-      labels: {
-        render: "value",
-        precision: 2,
-        arc: true
-      },
-      formatter: function(value) {
-        if (isNaN(value)) {
-          return "";
-        }
-        return value;
-      }
-    }
-  };
-
+  public chartOptions: any ;
   @Input() colors: Array<any> = [
     {
       backgroundColor: [

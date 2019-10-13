@@ -48,11 +48,23 @@ export class PerformanceL1Component implements OnInit {
 
   public timeAvgChartColors = [
     {
-      backgroundColor: "#86c7f3"
+      //cpu
+      backgroundColor: "rgba(255, 161, 181, 0.2)",
+      borderColor: "rgba(255, 161, 181, 0.9)",
+      pointBackgroundColor: "rgba(255, 161, 181, 0.4)",
+      pointBorderColor: "rgba(255, 161, 181, 0.4)",
+      pointHoverBackgroundColor: "rgba(255, 161, 181, 0.4)",
+      pointHoverBorderColor: "rgba(148,159,177,0.8)"
     },
     {
-      backgroundColor: "#86c7f3"
-    }
+      // ram
+      backgroundColor: "rgba(77, 189, 116, 0)",
+      borderColor: "rgba(77, 189, 116, 0.9)",
+      pointBackgroundColor: "rgba(77, 189, 116, 0.4)",
+      pointBorderColor: "rgba(77, 189, 116, 0.4)",
+      pointHoverBackgroundColor: "rgba(77, 189, 116, 0.4)",
+      pointHoverBorderColor: "rgba(148,159,177,0.8)"
+    },
   ];
 
   mainLabels = [];
@@ -60,11 +72,12 @@ export class PerformanceL1Component implements OnInit {
   public performanceChartData: any[] = [{data:[],label:''}];
 
   public callsBarChartLabels: string[] = this.mainLabels;
-  public callsDetailsData: any[] =[{data:[],label:''}];
+  public callsDetailsData: any[] =[{data:[],label:''},{data:[],label:''},{data:[],label:''}];
 
   public timesChartLabels: string[] = this.mainLabels;
   public timesChartData: any[] =[{data:[],label:''}];
-  public timesAvgChartData: any[] = [{data:[],label:''}];
+  public timesAvgChartData: any[] = [{data:[],label:''},{data:[],label:''}];
+  loadTimeLabels = false;
 
   public allCallsData: Array<any> = [{data:[],label:''}];
   public lineChartLabels: Array<any> = this.mainLabels;
@@ -250,7 +263,6 @@ export class PerformanceL1Component implements OnInit {
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
         data = data["data"];
-
         let allCalsData = [];
         let answeredData = [];
         let noAnsweredData = [];
@@ -292,6 +304,7 @@ export class PerformanceL1Component implements OnInit {
 
        
       
+        this.loadTimeLabels =true;
         this.timesAvgChartData = [
           { data: avgTimesData, label: "میانگین زمان تماس" },
           { data: avgAll, label: "میانگین کل" }

@@ -11,9 +11,15 @@ import { ExcelService } from "../../../../_services/excel.service";
 export class LineChartComponent implements OnInit {
   constructor(private excelService: ExcelService) {}
   chartHsteps = 50;
+  @Input() isTimeChart = false;
+  
+ 
+
+
   ngOnInit() {
     
-    this.lineChartOptions = {
+   let isTimeChart = this.isTimeChart;
+    this.options = {
       
       responsive: true,
       loneJoin: "miter",
@@ -27,8 +33,23 @@ export class LineChartComponent implements OnInit {
         }
       },
       tooltips: {
+        fontFamily: "IRANSans",
+        fontColor: "black",
+        fontStyle: "bold",
+        enabled: false,
         mode: "index",
-        intersect: false
+        custom: CustomTooltips,
+        intersect: false,
+        callbacks: {
+          label: function(tooltipItem, data) {
+            
+            var label = data.datasets[tooltipItem.datasetIndex].label || '';
+
+            if(isTimeChart)
+            return label+' : ' + new Date( tooltipItem.yLabel * 1000).toISOString().substr(11, 8);
+            else return label + ' ' + tooltipItem.yLabel;
+          }
+        }
       },
       hover: {
         mode: "nearest",
@@ -40,7 +61,7 @@ export class LineChartComponent implements OnInit {
         custom: CustomTooltips,
         callbacks: {
           label: function(tooltipItem, data) {
-            console.log(data);
+          
             var label = data.datasets[tooltipItem.datasetIndex].label || "";
 
             if (label) {
@@ -82,6 +103,11 @@ export class LineChartComponent implements OnInit {
               fontFamily: "IRANSans",
               fontColor: "black",
               fontSize: 13,
+              userCallback: function(item) {
+                if(isTimeChart)
+                return new Date(item * 1000).toISOString().substr(11, 8);
+                else return item;
+            },
             }
             
           }
@@ -106,6 +132,8 @@ export class LineChartComponent implements OnInit {
     };
     
   }
+
+
 
   exportAsXLSX(data, type: string = "excel"): void {
     this.excelService.exportAsExcelFile(data, this.lineChartType, type);
@@ -156,8 +184,8 @@ export class LineChartComponent implements OnInit {
   lineChartMaxYAxes = 100;
 
   @Input() labels: Array<any> = new Array(this.chartHsteps).fill("");
-  public lineChartOptions: any ;
-  public lineChartColours: Array<any> = [
+  public options: any ;
+  @Input() colors: Array<any> = [
     {
       //cpu
       backgroundColor: "rgba(255, 161, 181, 0.2)",
