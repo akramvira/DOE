@@ -99,7 +99,7 @@ export class PerformanceL1Component implements OnInit {
   };
 
   initingData :boolean = false;
-
+  loadingData = false;
   //--------------------------------
 
   ngOnInit() {
@@ -199,13 +199,13 @@ export class PerformanceL1Component implements OnInit {
     this.filters.value.time;
   }
 
-  loadingData = false;
+ 
   selectedGroups: any = this.filters.value.selectedItems;
   showAnsweredCalls = true;
   showNoAnsweredCalls = true;
   showLineAllCalls = true;
 
-  
+
   onSelectAll(item) {}
   onItemSelect(item) {
     console.log(this.filters.value.selectedItems);

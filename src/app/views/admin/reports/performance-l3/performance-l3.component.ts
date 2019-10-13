@@ -41,18 +41,78 @@ export class PerformanceL3Component implements OnInit {
 
   activeFilter(event) {
     let elem = event.target.element;
-
     this.filters.value.time;
   }
+ ////--------Charts And shared data Section------------------
+ public performanceBarChartColors = [
+  {
+    backgroundColor: "#86c7f3"
+  }
+];
+public timeBarChartColors = [
+  {
+    backgroundColor: "#86c7f3"
+  },
+  {
+    backgroundColor: "#4dbd74"
+  }
+];
 
-  dateObject = moment("1398-11-22", "jYYYY,jMM,jDD");
-  selectedDateFrom = new FormControl("1398/01/01");
-  selectedDateTo = new FormControl("1398/01/01");
+public timeAvgChartColors = [
+  {
+    //cpu
+    backgroundColor: "rgba(255, 161, 181, 0.2)",
+    borderColor: "rgba(255, 161, 181, 0.9)",
+    pointBackgroundColor: "rgba(255, 161, 181, 0.4)",
+    pointBorderColor: "rgba(255, 161, 181, 0.4)",
+    pointHoverBackgroundColor: "rgba(255, 161, 181, 0.4)",
+    pointHoverBorderColor: "rgba(148,159,177,0.8)"
+  },
+  {
+    // ram
+    backgroundColor: "rgba(77, 189, 116, 0)",
+    borderColor: "rgba(77, 189, 116, 0.9)",
+    pointBackgroundColor: "rgba(77, 189, 116, 0.4)",
+    pointBorderColor: "rgba(77, 189, 116, 0.4)",
+    pointHoverBackgroundColor: "rgba(77, 189, 116, 0.4)",
+    pointHoverBorderColor: "rgba(148,159,177,0.8)"
+  },
+];
 
-  datePickerConfig = {
-    format: "YYYY/MM/DD",
-    theme: "dp-material"
-  };
+mainLabels = [];
+public performanceChartLabels: string[] = this.mainLabels;
+public performanceChartData: any[] = [{data:[],label:''}];
+
+public callsBarChartLabels: string[] = this.mainLabels;
+public callsDetailsData: any[] =[{data:[],label:''},{data:[],label:''},{data:[],label:''}];
+
+public timesChartLabels: string[] = this.mainLabels;
+public timesChartData: any[] =[{data:[],label:''}];
+public timesAvgChartData: any[] = [{data:[],label:''},{data:[],label:''}];
+loadTimeLabels = false;
+
+public allCallsData: Array<any> = [{data:[],label:''}];
+public lineChartLabels: Array<any> = this.mainLabels;
+
+dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
+minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
+maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
+selectedDateFrom = new FormControl("1398/01/01");
+selectedDateTo = new FormControl("1398/01/01");
+
+datePickerConfig = {
+  format: "YYYY/MM/DD",
+  theme: "dp-material",
+  min: this.minDate,
+  max: this.maxDate,
+  showGoToCurrent :true,
+  hideOnOutsideClick : true,
+  showNearMonthDays:true
+};
+
+initingData :boolean = false;
+loadingData = false;
+//--------------------------------
 
   selectedGroups: any = this.filters.value.selectedItems;
   showAnsweredCalls = true;
@@ -108,6 +168,7 @@ export class PerformanceL3Component implements OnInit {
   officeSelected(item) {
     this.updateLines();
   }
+
   ngOnInit() {
     this.asDropdownSettings = {
       singleSelection: false,
@@ -185,45 +246,6 @@ export class PerformanceL3Component implements OnInit {
     );
   }
 
-  public performanceBarChartOptions: any = {
-    scaleShowVerticalLines: false,
-    responsive: true
-  };
-  public performanceBarChartColors = [
-    {
-      backgroundColor: "#86c7f3"
-    }
-  ];
-  public timeBarChartColors = [
-    {
-      backgroundColor: "#86c7f3"
-    },
-    {
-      backgroundColor: "#4dbd74"
-    }
-  ];
-
-  mainLabels = [];
-  public performanceChartLabels: string[] = this.mainLabels;
-  public performanceChartData: any[] = [];
-
-  public callsBarChartLabels: string[] = this.mainLabels;
-  public callsChartData: any[] = [];
-
-  public timesChartLabels: string[] = this.mainLabels;
-  public timesChartData: any[] = [];
-
-  public chartClicked(e: any): void {
-    console.log(e);
-  }
-
-  public chartHovered(e: any): void {
-    console.log(e);
-  }
-
-  public lineChartData: Array<any> = [];
-  public lineChartLabels: Array<any> = this.mainLabels;
-
   updateCharts() {
     this.mainLabels = [];
 
@@ -261,18 +283,15 @@ export class PerformanceL3Component implements OnInit {
         (filterData.to = this.selectedDateTo.value);
     }
 
-    debugger;
 
     filterData.time = parseInt(filterData.time);
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
         data = data["data"];
-
-        this.lineChartData = [];
-        this.callsChartData = [];
-        this.performanceChartData = [];
-
         let allCalsData = [];
+        let answeredData = [];
+        let noAnsweredData = [];
+        let bussy = [];
         let performanceData = [];
         let timesData = [];
         let avgTimesData = [];
@@ -280,37 +299,61 @@ export class PerformanceL3Component implements OnInit {
 
         this.mainLabels = [];
         for (let index in data) {
+          let itemChartData = data[index]["data"];
           this.mainLabels.push(data[index]["name"]);
 
-          allCalsData.push(data[index]["data"]);
-          // answeredData.push(data[index]["answer"]);
-          // noAnsweredData.push(data[index]["noanswer"]);
-          // performanceData.push(data[index]["noanswer"]);
-          // timesData.push(data[index]["time"]);
-          // avgTimesData.push(data[index]["avg"]);
-          // avgAll.push(400);
+          allCalsData.push(itemChartData["all"]);
+
+          answeredData.push(itemChartData["answer"]);
+          noAnsweredData.push(itemChartData["noanswer"]);
+          bussy.push(itemChartData["busy"]);
+
+          performanceData.push(itemChartData["performane"]);
+
+          timesData.push(itemChartData["time"]);
+          avgTimesData.push(itemChartData["avg"]);
+          avgAll.push(itemChartData["avgall"]);
         }
 
-        this.callsBarChartLabels = this.mainLabels;
-        this.callsChartData = [{ data: allCalsData, label: "تعداد تماس ها" }];
+        this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
+
+        this.callsDetailsData = [
+          { data: answeredData, label: "تعداد تماس پاسخ داده شده" },
+          { data: noAnsweredData, label: "تعداد تماس پاسخ داده نشده" },
+          { data: bussy, label: "تعداد تماس های مشغول" }
+        ];
 
         this.timesChartData = [
-          { data: timesData, label: "مدت زمان تماس" },
-          { data: avgTimesData, label: "میانگین زمان تماس" },
-          { data: avgAll, label: "میانگین کل" }
+          { data: timesData, label: "مدت زمان مکالمه" }
         ];
+
+       
+      
+        this.loadTimeLabels =true;
+        this.timesAvgChartData = [
+          { data: avgTimesData, label: "میانگین زمان هر بخش" },
+          { data: avgAll, label: "میانگین زمان کل" }
+        ];
+
+        console.log(this.timesAvgChartData);
 
         let allCalls = this.showLineAllCalls
-          ? { data: allCalsData, label: " همه تماس ها" }
-          : { data: [], label: " همه تماس ها" };
+          ? { data: allCalsData, label: " تعداد کل تماس ها" }
+          : { data: [], label: " تعداد کل تماس ها" };
 
-        this.lineChartData = [allCalls];
+        this.allCallsData = [allCalls];
 
         this.performanceChartData = [
-          { data: performanceData, label: "عملکرد گروه" }
+          { data: performanceData, label: "عملکرد گروه(درصد)" }
         ];
+
+       this.loadingData = false;
+        this.initingData = false;
+
       },
       error => {
+       this.loadingData = false;
+        this.initingData = false;
         this.authServe.handdleAuthErrors(error);
       }
     );
