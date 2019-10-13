@@ -290,12 +290,12 @@ export class PerformanceL1Component implements OnInit {
           avgAll.push(itemChartData["avgall"]);
         }
 
-        this.allCallsData = [{ data: allCalsData, label: "تعداد تماس ها" }];
+        this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
 
         this.callsDetailsData = [
-          { data: noAnsweredData, label: "تماس پاسخ داده نشده" },
-          { data: noAnsweredData, label: "تماس پاسخ داده شده" },
-          { data: bussy, label: "مشغول" }
+          { data: answeredData, label: "تعداد تماس پاسخ داده شده" },
+          { data: noAnsweredData, label: "تعداد تماس پاسخ داده نشده" },
+          { data: bussy, label: "تعداد تماس های مشغول" }
         ];
 
         this.timesChartData = [
@@ -306,20 +306,20 @@ export class PerformanceL1Component implements OnInit {
       
         this.loadTimeLabels =true;
         this.timesAvgChartData = [
-          { data: avgTimesData, label: "میانگین زمان تماس" },
-          { data: avgAll, label: "میانگین کل" }
+          { data: avgTimesData, label: "میانگین زمان هر بخش" },
+          { data: avgAll, label: "میانگین زمان کل" }
         ];
 
         console.log(this.timesAvgChartData);
 
         let allCalls = this.showLineAllCalls
-          ? { data: allCalsData, label: " همه تماس ها" }
-          : { data: [], label: " همه تماس ها" };
+          ? { data: allCalsData, label: " تعداد کل تماس ها" }
+          : { data: [], label: " تعداد کل تماس ها" };
 
         this.allCallsData = [allCalls];
 
         this.performanceChartData = [
-          { data: performanceData, label: "عملکرد گروه" }
+          { data: performanceData, label: "عملکرد گروه(درصد)" }
         ];
 
        this.loadingData = false;

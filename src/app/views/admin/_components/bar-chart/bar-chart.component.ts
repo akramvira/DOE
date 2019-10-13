@@ -11,9 +11,11 @@ export class BarChartComponent implements OnInit {
   constructor(private excelService: ExcelService) {}
 
   @Input() isTimeChart: boolean = false;
+  @Input() isPercentChart: boolean = false;
   ngOnInit() {
 
     let isTimeChart = this.isTimeChart;
+    let isPercentChart = this.isPercentChart;
     this.chartOptions ={
       scaleShowVerticalLines: true,
   
@@ -41,13 +43,22 @@ export class BarChartComponent implements OnInit {
               return label+' : ' + new Date( tooltipItem.yLabel * 1000).toISOString().substr(11, 8);
               else return label + ' ' + tooltipItem.yLabel;
             }
+            else if(isPercentChart){
+              var label = data.datasets[tooltipItem.datasetIndex].label || "";
+  
+              if (label) {
+                label += ": ";
+              }
+              label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel+'%';
+              return label;
+            }
             else {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
   
-            if (label) {
-              label += ": ";
-            }
-            label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
+              if (label) {
+                label += ": ";
+              }
+              label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
             return label;
 
             }
@@ -86,6 +97,8 @@ export class BarChartComponent implements OnInit {
               userCallback: function(item) {
                 if(isTimeChart)
                 return new Date(item * 1000).toISOString().substr(11, 8);
+                else if(isPercentChart)
+                  return item +'%'
                 else return item;
             },
             }
@@ -97,13 +110,19 @@ export class BarChartComponent implements OnInit {
         labels: {
           render: "value",
           precision: 2,
-          arc: true
+          arc: true,
+          callback:(item)=>{console.log(item)}
         },
-        formatter: function(value) {
+        userCallback: function(value) {
+          console.log(value);
           if (isNaN(value)) {
             return "";
           }
-          return value;
+
+          if(isTimeChart)
+            return new Date( value * 1000).toISOString().substr(11, 8);
+          else if(isPercentChart) return value+'%';
+          else return value;
         }
       }
     };
@@ -143,129 +162,26 @@ export class BarChartComponent implements OnInit {
   public chartOptions: any ;
   @Input() colors: Array<any> = [
     {
-      backgroundColor: [
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)"
-      ],
-      borderColor: [
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)"
-      ],
+      backgroundColor:  "rgba(77, 189, 116, 0.5)"
+      ,
+      borderColor:  "rgba(77, 189, 116, 0.9)"
+      ,
       borderWidth: 1,
-      barRoundness: 1
     },
     {
-      backgroundColor: [
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)"
-      ],
-      borderColor: [
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)"
-      ],
+      backgroundColor:  "rgba(255, 99, 132, 0.5)"
+      ,
+      borderColor:  "rgba(255, 99, 132, 0.9)"
+      ,
+      borderWidth: 1,
+    },
+    {
+      backgroundColor: 
+        "rgba(255, 193, 7, 0.6)"
+      ,
+      borderColor: "rgba(255, 193, 7, 0.9)"
+      ,
       borderWidth: 1
-    },
-    {
-      backgroundColor: [
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)",
-        "rgba(255, 99, 132, 0.2)",
-        "rgba(54, 162, 235, 0.2)",
-        "rgba(255, 206, 86, 0.2)",
-        "rgba(75, 192, 192, 0.2)",
-        "rgba(153, 102, 255, 0.2)",
-        "rgba(255, 159, 64, 0.2)"
-      ],
-      borderColor: [
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)",
-        "rgba(255,99,132,1)",
-        "rgba(54, 162, 235, 1)",
-        "rgba(255, 206, 86, 1)",
-        "rgba(75, 192, 192, 1)",
-        "rgba(153, 102, 255, 1)",
-        "rgba(255, 159, 64, 1)"
-      ],
-      borderWidth: 1,
-      barRoundness: 1
     }
   ];
   public chartType = "bar";
