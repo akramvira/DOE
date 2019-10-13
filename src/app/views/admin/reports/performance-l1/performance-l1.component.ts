@@ -31,7 +31,7 @@ export class PerformanceL1Component implements OnInit {
     selectedItems: new FormControl([])
   });
 
-
+  ////--------Charts And shared data Section------------------
   public performanceBarChartColors = [
     {
       backgroundColor: "#86c7f3"
@@ -99,6 +99,8 @@ export class PerformanceL1Component implements OnInit {
   };
 
   initingData :boolean = false;
+
+  //--------------------------------
 
   ngOnInit() {
     
@@ -202,6 +204,8 @@ export class PerformanceL1Component implements OnInit {
   showAnsweredCalls = true;
   showNoAnsweredCalls = true;
   showLineAllCalls = true;
+
+  
   onSelectAll(item) {}
   onItemSelect(item) {
     console.log(this.filters.value.selectedItems);

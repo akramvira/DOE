@@ -419,7 +419,7 @@
             <div class="chart-wrapper col-12" *ngIf="performanceChartData.length>0">
               <app-bar-chart
                 [datasets]="performanceChartData"
-                [labels]="performanceChartLabels"
+                [labels]="mainLabels"
                 [colors]="timeBarChartColors"
                 [isPercentChart]="true"
               >
