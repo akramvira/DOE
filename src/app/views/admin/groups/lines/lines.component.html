@@ -5,7 +5,7 @@
         <div class="card-header">  لیست داخلی ها </div>
 
 
-        <form class="col-12 text-left mt-1" (ngSubmit)="submitNewItem($event)" >
+        <form class="col-12 text-left mt-1" (ngSubmit)="submitNewItem()" >
             <div class="row text-center justify-content-center">
               <input class="form-control col-4 p-1 m-2" placeholder="نام داخلی" [hidden]="!addingNewGroup" [formControl]="newGroupName" >
               <input class="form-control col-4 p-1 m-2" placeholder="شماره داخلی*" [hidden]="!addingNewGroup"
@@ -39,7 +39,7 @@
             [count]="12"
             [offset]="0"
             [limit]="10"
-            (page)="setPage($event)"
+            
             >
            
             <ngx-datatable-column

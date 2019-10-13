@@ -7,6 +7,7 @@ import { ChartsModule } from 'ng2-charts';
 import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { SpintickComponent } from '../spintick/spintick.component';
 import { LoadingComponent } from '../loading/loading.component';
+import { ProgressbarComponent } from '../progressbar/progressbar.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { LoadingComponent } from '../loading/loading.component';
     BarChartComponent,
     PieChartComponent,
     SpintickComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProgressbarComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +29,8 @@ import { LoadingComponent } from '../loading/loading.component';
     BarChartComponent,
     PieChartComponent,
     SpintickComponent,
-    LoadingComponent
+    LoadingComponent,
+    ProgressbarComponent
   ]
 })
 export class ComponentsModule { }

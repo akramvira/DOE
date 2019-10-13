@@ -49,7 +49,7 @@ import { P403Component } from './views/error/403.component';
 
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { ExcelService } from './_services/excel.service';
-import { LoadingComponent } from './views/loading/loading.component';
+
 import { ComponentsModule } from './views/admin/_components/components/components.module';
 
 
