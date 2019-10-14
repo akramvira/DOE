@@ -225,6 +225,7 @@ loadingData = false;
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
+      limitSelection: 1,
       allowSearchFilter: true
     };
 
