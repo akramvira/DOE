@@ -88,34 +88,25 @@ export class PerformanceL1Component implements OnInit {
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
 
-  datePickerConfig = {
-    format: "YYYY/MM/DD",
-    theme: "dp-material",
-    min: this.minDate,
-    max: this.maxDate,
-    showGoToCurrent :true,
-    hideOnOutsideClick : true,
-    showNearMonthDays:true
-  };
+  datePickerConfig = {};
 
   initingData :boolean = false;
   loadingData = false;
   //--------------------------------
 
-  ngOnInit() {
-    
+  setDate(){
     if(this.sharedService.minMaxTime.value){
-      this.minDate =this.sharedService.minMaxTime.value.start;
+      this.minDate =this.sharedService.minMaxTime.value.min;
       this.maxDate =this.sharedService.minMaxTime.value.max;
 
       this.selectedDateFrom.setValue(this.minDate);
       this.selectedDateTo.setValue(this.maxDate);
-
+      
       this.datePickerConfig = {
-        format: "YYYY/MM/DD",
+        format: "jYYYY/MM/DD",
         theme: "dp-material",
-        min: this.minDate,
-        max: this.maxDate,
+        min: moment(this.minDate, "jYYYY,jMM,jDD"),
+        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
         showGoToCurrent :true,
         hideOnOutsideClick : true,
         showNearMonthDays:true
@@ -125,17 +116,16 @@ export class PerformanceL1Component implements OnInit {
 
     this.sharedService.minMaxTime.subscribe(
       data=>{
-        this.minDate =data['start'];
-        this.maxDate =data['end'];
+        this.minDate =data['min'];
+        this.maxDate =data['max'];
 
         this.selectedDateFrom.setValue(this.minDate);
         this.selectedDateTo.setValue(this.maxDate);
-        
         this.datePickerConfig = {
-          format: "YYYY/MM/DD",
+          format: "jYYYY/MM/DD",
           theme: "dp-material",
-          min: this.minDate,
-          max: this.maxDate,
+          min: moment(this.minDate, "jYYYY,jMM,jDD"),
+          max: moment(this.maxDate, "jYYYY,jMM,jDD"),
           showGoToCurrent :true,
           hideOnOutsideClick : true,
           showNearMonthDays:true
@@ -143,6 +133,10 @@ export class PerformanceL1Component implements OnInit {
 
       }
     );
+  }
+  ngOnInit() {
+    
+    this.setDate();
 
     this.initingData = true;
     this.dropdownSettings = {

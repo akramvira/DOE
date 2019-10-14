@@ -5,6 +5,7 @@ import * as moment from "jalali-moment";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { debug } from "util";
 import { WebService } from "./web.service";
+import { SharedService } from '../../../../_services/shared.service';
 
 @Component({
   selector: "app-performance-l3",
@@ -18,7 +19,8 @@ export class PerformanceL3Component implements OnInit {
 
   constructor(
     private webServ: WebService,
-    private authServe: AuthenticationService
+    private authServe: AuthenticationService,
+    private sharedService :SharedService
   ) {}
   groups = new Array();
   filters = new FormGroup({
@@ -100,15 +102,7 @@ maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
 selectedDateFrom = new FormControl("1398/01/01");
 selectedDateTo = new FormControl("1398/01/01");
 
-datePickerConfig = {
-  format: "YYYY/MM/DD",
-  theme: "dp-material",
-  min: this.minDate,
-  max: this.maxDate,
-  showGoToCurrent :true,
-  hideOnOutsideClick : true,
-  showNearMonthDays:true
-};
+datePickerConfig = {};
 
 initingData :boolean = false;
 loadingData = false;
@@ -167,7 +161,50 @@ loadingData = false;
     this.updateLines();
   }
 
+  setDate(){
+    if(this.sharedService.minMaxTime.value){
+      this.minDate =this.sharedService.minMaxTime.value.min;
+      this.maxDate =this.sharedService.minMaxTime.value.max;
+
+      this.selectedDateFrom.setValue(this.minDate);
+      this.selectedDateTo.setValue(this.maxDate);
+      
+      this.datePickerConfig = {
+        format: "jYYYY/MM/DD",
+        theme: "dp-material",
+        min: moment(this.minDate, "jYYYY,jMM,jDD"),
+        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
+        showGoToCurrent :true,
+        hideOnOutsideClick : true,
+        showNearMonthDays:true
+      };
+
+    }
+
+    this.sharedService.minMaxTime.subscribe(
+      data=>{
+        this.minDate =data['min'];
+        this.maxDate =data['max'];
+
+        this.selectedDateFrom.setValue(this.minDate);
+        this.selectedDateTo.setValue(this.maxDate);
+        this.datePickerConfig = {
+          format: "jYYYY/MM/DD",
+          theme: "dp-material",
+          min: moment(this.minDate, "jYYYY,jMM,jDD"),
+          max: moment(this.maxDate, "jYYYY,jMM,jDD"),
+          showGoToCurrent :true,
+          hideOnOutsideClick : true,
+          showNearMonthDays:true
+        };
+
+      }
+    );
+  }
+
+
   ngOnInit() {
+    this.setDate();
     this.asDropdownSettings = {
       singleSelection: false,
       idField: "id",
