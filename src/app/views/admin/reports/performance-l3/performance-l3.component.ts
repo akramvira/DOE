@@ -152,12 +152,10 @@ loadingData = false;
 
     this.webServ.getNumbers(data).subscribe(
       data => {
- 
         this.lines = data["data"];
         this.filters.patchValue({
           selectedSub2 : this.lines
         })
-        this.updateCharts();
       },
       error => {
         this.authServe.handdleAuthErrors(error);
