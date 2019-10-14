@@ -5,6 +5,7 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { SharedService } from '../../_services/shared.service';
 
 
 @Component({
@@ -26,7 +27,8 @@ export class LoginComponent {
     private router: Router,
     private authenticationService: AuthenticationService,
     private alertService: AlertService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private sharedService: SharedService
   ) {
 
     // redirect to home if already logged in
@@ -75,6 +77,7 @@ export class LoginComponent {
         data => {
           this.toastr.clear();
           this.toastr.success('ادمین عزیز، خوش آمدید!' , 'ورود موفق!');
+          this.sharedService.setMinMaxDate();
           this.router.navigate(['/admin/dashboard']);
         },
         error => {
