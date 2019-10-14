@@ -3,7 +3,7 @@ import { ReportsService } from "../_service/reports.service";
 import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
 import { AuthenticationService } from "../../../../_services/authentication.service";
-import { debug } from "util";
+
 import { WebService } from "./web.service";
 @Component({
   selector: "app-performance-l2",
@@ -73,22 +73,29 @@ export class PerformanceL2Component implements OnInit {
       pointBorderColor: "rgba(77, 189, 116, 0.4)",
       pointHoverBackgroundColor: "rgba(77, 189, 116, 0.4)",
       pointHoverBorderColor: "rgba(148,159,177,0.8)"
-    },
+    }
   ];
 
   mainLabels = [];
   public performanceChartLabels: string[] = this.mainLabels;
-  public performanceChartData: any[] = [{data:[],label:''}];
+  public performanceChartData: any[] = [{ data: [], label: "" }];
 
   public callsBarChartLabels: string[] = this.mainLabels;
-  public callsDetailsData: any[] =[{data:[],label:''},{data:[],label:''},{data:[],label:''}];
+  public callsDetailsData: any[] = [
+    { data: [], label: "" },
+    { data: [], label: "" },
+    { data: [], label: "" }
+  ];
 
   public timesChartLabels: string[] = this.mainLabels;
-  public timesChartData: any[] =[{data:[],label:''}];
-  public timesAvgChartData: any[] = [{data:[],label:''},{data:[],label:''}];
+  public timesChartData: any[] = [{ data: [], label: "" }];
+  public timesAvgChartData: any[] = [
+    { data: [], label: "" },
+    { data: [], label: "" }
+  ];
   loadTimeLabels = false;
 
-  public allCallsData: Array<any> = [{data:[],label:''}];
+  public allCallsData: Array<any> = [{ data: [], label: "" }];
   public lineChartLabels: Array<any> = this.mainLabels;
 
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
@@ -102,12 +109,12 @@ export class PerformanceL2Component implements OnInit {
     theme: "dp-material",
     min: this.minDate,
     max: this.maxDate,
-    showGoToCurrent :true,
-    hideOnOutsideClick : true,
-    showNearMonthDays:true
+    showGoToCurrent: true,
+    hideOnOutsideClick: true,
+    showNearMonthDays: true
   };
 
-  initingData :boolean = false;
+  initingData: boolean = false;
   loadingData = false;
   //--------------------------------
 
@@ -125,7 +132,7 @@ export class PerformanceL2Component implements OnInit {
     });
     this.updateCharts();
   }
-  onDeSelectMain(){
+  onDeSelectMain() {
     this.offices = [];
     this.filters.patchValue({
       selectedSub1: []
@@ -133,7 +140,7 @@ export class PerformanceL2Component implements OnInit {
     return;
   }
 
-  onDeSelectSub1(item){
+  onDeSelectSub1(item) {
     this.updateCharts();
   }
 
@@ -196,23 +203,17 @@ export class PerformanceL2Component implements OnInit {
           selectedItems: [selectedMain],
           selectedSub1: this.offices
         });
-
-      
-        this.updateCharts();
       },
       error => {
         this.authServe.handdleAuthErrors(error);
       }
     );
-
-    this.updateCharts();
   }
 
   updateCharts() {
     this.mainLabels = [];
-    for(let i in this.filters.value.selectedSub1){
-      
-      this.mainLabels.push(this.filters.value.selectedSub1[i]['name']);
+    for (let i in this.filters.value.selectedSub1) {
+      this.mainLabels.push(this.filters.value.selectedSub1[i]["name"]);
     }
 
     this.getChartsData();
@@ -220,27 +221,24 @@ export class PerformanceL2Component implements OnInit {
 
   getChartsData() {
     let filterData = this.filters.getRawValue();
-    
 
     if (!filterData.selectedItems.length) return;
     if (!filterData.selectedSub1.length) return;
 
     filterData["idsub"] = [];
-    filterData["idmain"] = filterData.selectedItems[0]["id"]
+    filterData["id"] = filterData.selectedItems[0]["id"];
     for (let item in filterData.selectedSub1) {
       filterData["idsub"].push(filterData.selectedSub1[item]["id"]);
     }
 
     filterData["idsub"] = filterData["idsub"].join(",");
 
-
-
-
     if (filterData.time == "-1") {
       (filterData.from = this.selectedDateFrom.value),
         (filterData.to = this.selectedDateTo.value);
     }
 
+    this.loadingData=true;
     filterData.time = parseInt(filterData.time);
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
@@ -256,7 +254,6 @@ export class PerformanceL2Component implements OnInit {
 
         this.mainLabels = [];
         for (let index in data) {
-          
           let itemChartData = data[index]["data"];
           this.mainLabels.push(data[index]["name"]);
 
@@ -281,13 +278,9 @@ export class PerformanceL2Component implements OnInit {
           { data: bussy, label: "تعداد تماس های مشغول" }
         ];
 
-        this.timesChartData = [
-          { data: timesData, label: "مدت زمان مکالمه" }
-        ];
+        this.timesChartData = [{ data: timesData, label: "مدت زمان مکالمه" }];
 
-       
-      
-        this.loadTimeLabels =true;
+        this.loadTimeLabels = true;
         this.timesAvgChartData = [
           { data: avgTimesData, label: "میانگین زمان هر بخش" },
           { data: avgAll, label: "میانگین زمان کل" }
@@ -305,14 +298,11 @@ export class PerformanceL2Component implements OnInit {
           { data: performanceData, label: "عملکرد گروه(درصد)" }
         ];
 
-       this.loadingData = false;
+        this.loadingData = false;
         this.initingData = false;
-
-        
-
       },
       error => {
-       this.loadingData = false;
+        this.loadingData = false;
         this.initingData = false;
         this.authServe.handdleAuthErrors(error);
       }

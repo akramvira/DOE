@@ -285,6 +285,7 @@ loadingData = false;
 
 
     filterData.time = parseInt(filterData.time);
+    this.loadingData=true;
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
         data = data["data"];

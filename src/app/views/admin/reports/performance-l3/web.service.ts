@@ -20,7 +20,7 @@ export class WebService {
   public getGroupPerformance(data) {
     let options = this.authServ.getRequestOpions();
       return this.http.post(
-        environment.apiUrl + "/admin/reports/chart/maingroup/filters",
+        environment.apiUrl + "/admin/reports/chart/numbers/filters",
         data,
         options
       );

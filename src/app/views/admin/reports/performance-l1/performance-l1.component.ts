@@ -179,7 +179,7 @@ export class PerformanceL1Component implements OnInit {
           labels.push(this.filters.value.selectedItems[index]["item_text"]);
         }
         this.mainLabels = labels;
-        this.updateCharts();
+       // this.updateCharts();
         this.initingData = false;
         this.toaster.warning('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
       },
