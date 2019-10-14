@@ -105,7 +105,7 @@ export class PerformanceL1Component implements OnInit {
   ngOnInit() {
     
     if(this.sharedService.minMaxTime.value){
-      this.minDate =this.sharedService.minMaxTime.value.min;
+      this.minDate =this.sharedService.minMaxTime.value.start;
       this.maxDate =this.sharedService.minMaxTime.value.max;
 
       this.selectedDateFrom.setValue(this.minDate);
@@ -125,8 +125,8 @@ export class PerformanceL1Component implements OnInit {
 
     this.sharedService.minMaxTime.subscribe(
       data=>{
-        this.minDate =data['min'];
-        this.maxDate =data['max'];
+        this.minDate =data['start'];
+        this.maxDate =data['end'];
 
         this.selectedDateFrom.setValue(this.minDate);
         this.selectedDateTo.setValue(this.maxDate);
