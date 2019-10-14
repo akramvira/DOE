@@ -22,7 +22,6 @@
                     [settings]="asDropdownSettings"
                     (onSelect)="onItemSelect($event)"
                     (onDeSelect)="onDeSelectMain()"
-                    (onSelectAll)="updateCharts()"
                   >
                   </ng-multiselect-dropdown>
         
@@ -34,7 +33,6 @@
                   (onSelect)="officeSelected($event)"
                   (onDeSelect)="onDeSelectSub1($event)"
                   (onDeSelectAll)="onDeSelectSub1($event)"
-                  (onSelectAll)="updateCharts()"
                 >
                 </ng-multiselect-dropdown>
                 </div>

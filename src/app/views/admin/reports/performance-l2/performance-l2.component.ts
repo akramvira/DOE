@@ -117,14 +117,14 @@ export class PerformanceL2Component implements OnInit {
   showNoAnsweredCalls = true;
   showLineAllCalls = true;
   onSelectAll(item) {
-    this.updateCharts();
+  //  this.updateCharts();
   }
   onItemSelect(item) {
     this.offices = this.allSub1Data[item["id"]];
     this.filters.patchValue({
       selectedSub1: this.offices
     });
-    this.updateCharts();
+    //this.updateCharts();
   }
   onDeSelectMain() {
     this.offices = [];
@@ -135,11 +135,11 @@ export class PerformanceL2Component implements OnInit {
   }
 
   onDeSelectSub1(item) {
-    this.updateCharts();
+    //this.updateCharts();
   }
 
   officeSelected(item) {
-    this.getChartsData();
+   // this.getChartsData();
   }
 
   setDate(){
