@@ -6,7 +6,7 @@ import { HttpClient } from "@angular/common/http";
 @Injectable({
   providedIn: 'root'
 })
-export class WebService {
+export class WebService  {
   constructor(
     private http: HttpClient,
     private authServ: AuthenticationService
@@ -14,23 +14,26 @@ export class WebService {
 
   public getExtensionsAndGroups() {
     let options = this.authServ.getRequestOpions();
-    return this.http.get(environment.apiUrl + "/admin/reports", options);
+    return this.http.get(environment.apiUrl + "/admin/reports/departments", options);
   }
 
   public getGroupPerformance(data) {
     let options = this.authServ.getRequestOpions();
-
-    if (data.time != "choosely")
-      return this.http.get(
-        environment.apiUrl + "/admin/reports/group/" + data.time,
-        options
-      );
-    else
       return this.http.post(
-        environment.apiUrl + "/admin/reports/group/choosely",
+        environment.apiUrl + "/admin/reports/chart/numbers/filters",
         data,
         options
       );
+  
+  }
+
+  public getNumbers(data){
+    let options = this.authServ.getRequestOpions();
+    return this.http.post(
+      environment.apiUrl + "/admin/reports/departments/filteritems/getnumbers",
+      data,
+      options
+    );
   }
 
 }

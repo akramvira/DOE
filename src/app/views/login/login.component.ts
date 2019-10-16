@@ -81,8 +81,6 @@ export class LoginComponent {
           this.router.navigate(['/admin/dashboard']);
         },
         error => {
-          //this.alertService.error(error);
-          console.log(error);
           if(error.error.error != '')
           this.toastr.error(error.error.error, 'پیغام سیستم');
           this.loading = false;
