@@ -39,7 +39,7 @@ export class WebService {
   public getBills(data) {
     let options = this.authServ.getRequestOpions();
     return this.http.post(
-      environment.apiUrl + "/admin/reports/bill/groups",
+      environment.apiUrl + "/admin/reports/bill",
       data,
       options
     );
