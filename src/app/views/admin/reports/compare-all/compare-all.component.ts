@@ -13,14 +13,11 @@ import { SharedService } from "../../../../_services/shared.service";
   styleUrls: ["./compare-all.component.scss"]
 })
 export class CompareAllComponent implements OnInit {
-
-
   constructor(
     private webServ: WebService,
     private authServe: AuthenticationService,
     private sharedService: SharedService
   ) {}
-
 
   filters = new FormGroup({
     time: new FormControl(0),
@@ -30,21 +27,17 @@ export class CompareAllComponent implements OnInit {
   });
 
   activeFilter(event) {
-   // let elem = event.target.element;
-   // this.filters.value.time;
+    // let elem = event.target.element;
+    // this.filters.value.time;
   }
 
-  
   ngOnInit() {
     this.setDate();
     this.getAllLevelsData();
-    this.setDropdownsSettings();
-
+    this.updateDropdownsSetting();
   }
 
-
-  getAllLevelsData(){
-    
+  getAllLevelsData() {
     this.webServ.getExtensionsAndGroups().subscribe(
       data => {
         data = data["data"];
@@ -68,7 +61,7 @@ export class CompareAllComponent implements OnInit {
         }
 
         this.groups = mainData;
-        
+
         this.activeSub1_1 = this.allSub1Data[selectedMain["id"]];
 
         this.filters.patchValue({
@@ -84,8 +77,6 @@ export class CompareAllComponent implements OnInit {
     );
   }
 
-
-
   //---------------------selected items ----------------
   mainDropdownSettings = [];
   officeDropdownSettings = [];
@@ -94,10 +85,29 @@ export class CompareAllComponent implements OnInit {
   groups = new Array();
   allSub1Data: any = [];
 
-  updateDropdownsData(){
+  updateDropdownsData() {
+    this.updateDropdownsSetting();
 
+    //clear sub1 
+    this.activeSub1_1 = [];
+
+    this.selectedItem1.patchValue({
+      main: [],
+      sub1: [],
+      sub2: []
+    });
   }
-    //---------------------item 1 ----------------
+
+  //read data from array and join with , to send for Api
+  fetchData(data) {
+    let finalData = [];
+    for (let i in data) {
+      finalData.push(data[i]["id"]);
+    }
+
+    return finalData.join(",");
+  }
+  //---------------------item 1 ----------------
   selectedItem1 = new FormGroup({
     level: new FormControl("0"),
     main: new FormControl(),
@@ -106,29 +116,18 @@ export class CompareAllComponent implements OnInit {
   });
 
   getLevel(level) {
-    if(level == 1)
-    return this.selectedItem1.value.level;
-    else  return this.selectedItem1.value.level;
+    if (level == 1) return this.selectedItem1.value.level;
+    else return this.selectedItem1.value.level;
   }
 
-  activeSub1_1 =
-    this.filters.value.selectedMainItem &&
-    this.filters.value.selectedMainItem[0]
-      ? this.allSub1Data[this.filters.value.selectedMainItem[0]["id"]]
-      : [];
+  activeSub1_1 = [];
 
-  activeSub1_2 =
-  this.filters.value.selectedMainItem &&
-  this.filters.value.selectedMainItem[0]
-    ? this.allSub1Data[this.filters.value.selectedMainItem[0]["id"]]
-    : [];
+  activeSub1_2 =[];
 
   lines = [];
 
-
-  setDropdownsSettings() {
-
-    
+  officeSelected(item) {}
+  updateDropdownsSetting() {
     let mainSettings = {
       singleSelection: false,
       idField: "id",
@@ -137,58 +136,68 @@ export class CompareAllComponent implements OnInit {
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
-     
-      allowSearchFilter: true
-    }
+      noDataAvailablePlaceholderText : 'بدون اطلاعات',
 
-    let mainLimitSelections = [1,1]
-    let sub1LimitSelections = [1,1]
-    let sub12imitSelections = [1,1]
+      allowSearchFilter: true
+    };
+
+    let mainLimitSelections = [1, 1];
+    let sub1LimitSelections = [1, 1];
+    let sub2LimitSelections = [1, 1];
+
+    let unlimitted = 10000;
+    if (this.selectedItem1.value.level == 0) {
+      mainLimitSelections[0] = unlimitted;
+      sub1LimitSelections[0] = unlimitted;
+      sub2LimitSelections[0] = unlimitted;
+    } else if (this.selectedItem1.value.level == 1) {
+      mainLimitSelections[0] = 1;
+      sub1LimitSelections[0] = unlimitted;
+      sub2LimitSelections[0] = unlimitted;
+    } else {
+      mainLimitSelections[0] = 1;
+      sub1LimitSelections[0] = 1;
+      sub2LimitSelections[0] = unlimitted;
+    }
 
     this.mainDropdownSettings = [
       {
-      ...mainSettings,
-      limitSelection: mainLimitSelections[0]
+        ...mainSettings,
+        limitSelection: mainLimitSelections[0]
       },
       {
         ...mainSettings,
         limitSelection: mainLimitSelections[1]
-      },
-  ];
+      }
+    ];
 
     this.officeDropdownSettings = [
       {
-      ...mainSettings,
-      limitSelection: sub1LimitSelections[0]
+        ...mainSettings,
+        limitSelection: sub1LimitSelections[0]
       },
       {
         ...mainSettings,
         limitSelection: sub1LimitSelections[1]
-        }
-  ];
+      }
+    ];
 
     this.lineDropdownSettings = [
-    {
-      ...mainSettings,
-      limitSelection: sub12imitSelections[0]
-    },
-    {
-      ...mainSettings,
-      limitSelection: sub12imitSelections[1]
-    }
-  ];
-
-
-
-
-
-
+      {
+        ...mainSettings,
+        limitSelection: sub2LimitSelections[0]
+      },
+      {
+        ...mainSettings,
+        limitSelection: sub2LimitSelections[1]
+      }
+    ];
   }
 
   selectedGroups: any = this.filters.value.selectedMainItem;
 
   onSelectAll(item) {}
-  onItemSelect(item) {
+  onMain1Select(item) {
     this.activeSub1_1 = this.allSub1Data[item["id"]];
     this.filters.patchValue({
       selectedSub1: this.activeSub1_1
@@ -206,7 +215,6 @@ export class CompareAllComponent implements OnInit {
   onDeSelectSub1(item) {
     this.updateLines();
   }
-
 
   getSelectedItems() {
     let data = {
@@ -254,10 +262,6 @@ export class CompareAllComponent implements OnInit {
     //   }
     // );
   }
-
-
-  
-
 
   ////--------Charts And shared data Section------------------
   public performanceBarChartColors = [
@@ -317,6 +321,7 @@ export class CompareAllComponent implements OnInit {
   public allCallsData: Array<any> = [{ data: [], label: "" }];
   public lineChartLabels: Array<any> = this.mainLabels;
 
+  //------date
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
   minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
   maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
@@ -324,24 +329,6 @@ export class CompareAllComponent implements OnInit {
   selectedDateTo = new FormControl("1398/01/01");
 
   datePickerConfig = {};
-
-  initingData: boolean = false;
-  loadingData = false;
-  //--------------------------------
-
-
-
- 
-
-
-  setMainLabels() {
-    this.mainLabels = [];
-    this.mainLabels = [];for (let i in this.filters.value.selectedSub2) {
-      this.mainLabels.push(this.filters.value.selectedSub2[i]["name"]);
-    }
-  }
-
-
   setDate() {
     if (this.sharedService.minMaxTime.value) {
       this.minDate = this.sharedService.minMaxTime.value.min;
@@ -379,41 +366,42 @@ export class CompareAllComponent implements OnInit {
     });
   }
 
+  initingData: boolean = false;
+  loadingData = false;
+  //--------------------------------
 
+  setMainLabels() {
+    this.mainLabels = [];
 
+    if(this.selectedItem1.value.level)
+      this.mainLabels.push()
+  }
+
+ 
 
   updateCharts() {
-    
-
     this.setMainLabels();
-
     this.getOneGroupData();
   }
 
   getOneGroupData() {
     let filterData = this.filters.getRawValue();
 
-    if (!filterData.selectedMainItem.length) return;
-    if (!filterData.selectedSub1.length) return;
+    let selectedItem1 = this.selectedItem1.getRawValue();
+    if (!selectedItem1.main || !selectedItem1.main.length) return;
+    if (selectedItem1.level != 0 && !selectedItem1.sub1.length) return;
+    if (selectedItem1.level == 2 && !selectedItem1.sub2.length) return;
 
-    filterData["idsub"] = [];
-    filterData["id"] = filterData.selectedMainItem[0]["id"];
-    for (let item in filterData.selectedSub1) {
-      filterData["idsub"].push(filterData.selectedSub1[item]["id"]);
-    }
+    filterData["id"] = this.fetchData(selectedItem1.main);
+    filterData["idSub"] = this.fetchData(selectedItem1.sub1);
+    filterData["idnumber"] = this.fetchData(this.lines);
+    
 
-    filterData["idnumber"] = [];
-    for (let item in this.lines) {
-      filterData["idnumber"].push(this.lines[item]["id"]);
-    }
-
-    filterData["idnumber"] = filterData["idnumber"].join(",");
-
-    filterData["idsub"] = filterData["idsub"].join(",");
+    debugger;
 
     if (filterData.time == "-1") {
-      (filterData.from = this.selectedDateFrom.value),
-        (filterData.to = this.selectedDateTo.value);
+      filterData.from = this.selectedDateFrom.value;
+      filterData.to = this.selectedDateTo.value;
     }
 
     filterData.time = parseInt(filterData.time);
@@ -464,11 +452,7 @@ export class CompareAllComponent implements OnInit {
           { data: avgAll, label: "میانگین زمان کل" }
         ];
 
-        console.log(this.timesAvgChartData);
-
-        let allCalls = this.showLineAllCalls
-          ? { data: allCalsData, label: " تعداد کل تماس ها" }
-          : { data: [], label: " تعداد کل تماس ها" };
+        let allCalls =  { data: allCalsData, label: " تعداد کل تماس ها" };
 
         this.allCallsData = [allCalls];
 

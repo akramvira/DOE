@@ -1,16 +1,9 @@
 
 <div class="animated fadeIn row">
-        <div class="col-12">
-          <div
-            class=" text-left justify-content-end card card-info bg-gray-300 p-sm-2"
-            [ngClass]="{
-              'pt-4 pb-4 ': filters.value.time != '-1',
-              'pt-2 pb-2 ': filters.value.time == '-1'
-            }"
-          >
-           
+    <div class="col-12">
+          <div class=" text-left justify-content-end card m-0 card-info bg-gray-300 p-sm-2 ">
             <div class="text-center col-12 " [formGroup]="selectedItem1">
-              <div class="row text-center justify-content-center align-items-center">
+              <div class="row text-center">
                 <div class="col-12 col-lg-10 col-xl-10">
                       <div class="row">
                         <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
@@ -20,7 +13,7 @@
                                         <label class="input-group-text">نوع</label>
                                     </div>
                                     <select class="col form-control"
-                                            formControlName="level"
+                                        formControlName="level"
                                       (change)="updateDropdownsData()"
                                         >
                                         <option value="0">معاونت</option>
@@ -34,21 +27,21 @@
                                     [data]="groups"
                                     formControlName="main"
                                     [settings]="mainDropdownSettings[0]"
-                                    (onSelect)="onItemSelect($event)"
+                                    (onSelect)="onMain1Select($event)"
                                     (onDeSelect)="onDeSelectMain()"
                                     (onSelectAll)="updateLines()"
                                     (onDeSelectAll)="updateLines()"
-                                    
                                 >
                                 </ng-multiselect-dropdown>
                     
                                 <ng-multiselect-dropdown 
                                 *ngIf="selectedItem1.value.level != 0" 
                                  class="form-control col-3 p-0 "
+                                 [disables]="selectedItem1.value.main.length == 0"
                                     [placeholder]="'انتخاب اداره '"
                                     [data]="activeSub1_1"
                                     formControlName="sub1"
-                                    [settings]="officeDropdownSettings[1]"
+                                    [settings]="officeDropdownSettings[0]"
                                     (onSelect)="officeSelected($event)"
                                     (onDeSelect)="onDeSelectSub1($event)"
                                     (onDeSelectAll)="onDeSelectSub1($event)"
@@ -63,17 +56,15 @@
                                 [placeholder]="'انتخاب داخلی '"
                                 [data]="lines"
                                 formControlName="sub2"
-                                [settings]="lineDropdownSettings[2]"
+                                [settings]="lineDropdownSettings[0]"
                                 >
                                 </ng-multiselect-dropdown>
                             </div>
                       </div>
                       </div>
-                    </div>
-                  </div>
+                </div>
+              </div>
             </div>
-    
-    
           </div>
     </div>
 </div>
@@ -306,7 +297,7 @@
                 </div>
                 <div class="col-12 col-lg-2 col-xl-2 border-left">
                   <button class="btn btn-success" [disabled]="loadingData" (click)="updateCharts()">
-                    {{ loadingData? 'در حال دریافت اطلاعات': 'اعمال فیلتر ' }} 
+                    {{ loadingData? 'در حال دریافت اطلاعات': 'دریافت اطلاعات' }} 
                     <i [hidden]= "loadingData" class="fa fa-check"></i >
                     <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
                 </div>
@@ -423,7 +414,7 @@
       
           </div>
         </div>
-      </div>
+</div>
       
-      <app-loading text="در حال دریافت اطلاعات... " [showLoading]="initingData"></app-loading>
+<app-loading text="در حال دریافت اطلاعات... " [showLoading]="initingData"></app-loading>
       

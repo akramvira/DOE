@@ -99,14 +99,6 @@ export class ReportsService {
   }
 
 
-  public getGroupsBills(data) {
-    let options = this.authServ.getRequestOpions();
-    return this.http.post(
-      environment.apiUrl + "/admin/reports/bill/groups",
-      data,
-      options
-    );
-  }
 
   //calls details
   public getCallsDetails() {
