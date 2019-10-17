@@ -224,14 +224,14 @@ export class GroupsBillsComponent implements OnInit {
 
     let data = {
       level1: this.selectedItem1.value.level,
-      idmain1: this.selectedItem1.value.main,
-      idsub1: this.selectedItem1.value.sub1,
-      idnumber1: this.selectedItem1.value.sub2
+      idmain1: this.fetchData(this.selectedItem1.value.main),
+      idsub1: this.fetchData(this.selectedItem1.value.sub1)
     };
-debugger;
+
+    debugger;
     this.webSerice.getNumbers(data).subscribe(
       data => {
-        debugger;
+        
         this.lines = data["data"];
       },
       error => {
@@ -306,7 +306,7 @@ debugger;
     return finalData.join(",");
   }
   getBillsData() {
-  debugger;
+  
     let filterData = [];
     let selectedItem1 = this.selectedItem1.getRawValue();
     if (!selectedItem1.main || !selectedItem1.main.length) return;
@@ -323,7 +323,7 @@ debugger;
     filterData["to"] = this.selectedItem1.value.to || '';
     this.loadingData = true;
    
-    console.log(filterData);
+   debugger;
     this.webSerice.getBills(filterData).subscribe(
       data => {
       
@@ -331,7 +331,7 @@ debugger;
 
         let billsData = new Array();
         for (var i in data) {
-          //      debugger;
+          //      
          // if (i == "all") continue;
          // data["groupId"] = i;
 
@@ -347,7 +347,7 @@ debugger;
 
         }
 
-        debugger;
+        
         this.bills = billsData;
 
         this.page.pageNumber = 0;

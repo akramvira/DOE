@@ -24,6 +24,7 @@ import { PerformanceL1Component } from './performance-l1/performance-l1.componen
 import { PerformanceL2Component } from './performance-l2/performance-l2.component';
 import { PerformanceL3Component } from './performance-l3/performance-l3.component';
 import { CompareAllComponent } from './compare-all/compare-all.component';
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { CompareAllComponent } from './compare-all/compare-all.component';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     ComponentsModule,
+    NgxPrintModule,
     NgMultiSelectDropDownModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
