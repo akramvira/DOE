@@ -7,7 +7,6 @@ import { AllComponent } from "./performance-all/all.component";
 import { QueuesComponent } from "./queues/queues.component";
 import { CallsDetailsComponent } from "./calls-details/calls-details.component";
 import { GroupsBillsComponent } from "./bills-groups/groups-bills.component";
-import { LinesBillsComponent } from "./bills-lines/lines-bills.component";
 import { LinesComponent } from "./performance-lines/lines.component";
 import { ReportsComponent } from "./reports.component";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
@@ -33,7 +32,6 @@ import { CompareAllComponent } from './compare-all/compare-all.component';
     QueuesComponent,
     CallsDetailsComponent,
     GroupsBillsComponent,
-    LinesBillsComponent,
     LinesComponent,
     ReportsComponent,
     OperatorComponent,

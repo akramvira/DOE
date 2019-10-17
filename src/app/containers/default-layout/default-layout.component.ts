@@ -134,11 +134,6 @@ export class DefaultLayoutComponent implements OnDestroy {
               icon: "icon-layers",
               children: [
                 {
-                  name: "قبوض داخلی ها",
-                  url: "/admin/reports/lines-bills",
-                  icon: "icon-call-end fa-rotate-180"
-                },
-                {
                   name: "قبوض گروه ها",
                   url: "/admin/reports/groups-bills",
                   icon: "icon-people"
