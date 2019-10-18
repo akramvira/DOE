@@ -6,6 +6,7 @@ import { SysinfoService } from "../_services/sysinfo.service";
 
 import {CommonModule} from "@angular/common";
 import * as CanvasJS from 'canvasjs';
+import { AuthenticationService } from '../../../_services/authentication.service';
 
 @Component({
   templateUrl: 'dashboard.component.html'
@@ -444,7 +445,8 @@ export class DashboardComponent implements OnInit {
   public callsCountInQueue = 990;
 
 
-  constructor (private apiServ: SysinfoService
+  constructor (private apiServ: SysinfoService,
+    private authServe : AuthenticationService
                ){
     this.loading = true;
         //creating page
@@ -500,7 +502,7 @@ export class DashboardComponent implements OnInit {
 
         },
         error=>{
-          debugger;
+          this.authServe.handdleAuthErrors(error);
         }
       );
 

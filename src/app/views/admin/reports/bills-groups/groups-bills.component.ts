@@ -315,7 +315,7 @@ export class GroupsBillsComponent implements OnInit {
 
     filterData["level"] =selectedItem1.level;
     filterData["idmain"] = this.fetchData(selectedItem1.main);
-    filterData["idSub"] = this.fetchData(selectedItem1.sub1);
+    filterData["idsub"] = this.fetchData(selectedItem1.sub1);
     filterData["idnumber"] = this.fetchData(this.lines);
 
     filterData["time"] = this.selectedItem1.value.time;

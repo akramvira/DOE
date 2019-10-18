@@ -9,10 +9,12 @@
     </select>
   </div>
 </div>
+
+
 <tabset>
+
   <tab *ngIf="type.value !='file'">
-    <ng-template tabHeading
-      ><i class="icon-calculator"></i> تنظیمات اولیه سیستم</ng-template
+    <ng-template tabHeading ><i class="icon-calculator"></i> تنظیمات اولیه سیستم</ng-template
     >
 
     <div class="row animated fadeIn mt-4">
@@ -282,136 +284,11 @@
           </div>
         </div>
       </div>
-
-      <div class=" col-12 col-md-12 col-lg-12 ">
-        <div class="card card-accent-success">
-          <div class="card-header">
-            دیگر اطلاعات سیستم
-          </div>
-          <div class="card-body">
-            <form
-              class="row"
-              [formGroup]="settings"
-              (ngSubmit)="setSettingsRouteData($event)"
-            >
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">countco</span>
-                  </div>
-                  <input class="form-control" formControlName="countco" />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"> counte1 </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    autocomplete="email"
-                    formControlName="counte1"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"> counte1 </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    autocomplete="email"
-                    formControlName="counte1"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"> queue_number </span>
-                  </div>
-                  <input class="form-control" formControlName="queue_number" />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      prepend_outbound_from
-                    </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    formControlName="prepend_outbound_from"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"> prepend_outbound_to </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    autocomplete="email"
-                    formControlName="prepend_outbound_to"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"> did_inbound_from </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    autocomplete="email"
-                    formControlName="did_inbound_from"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text"> did_inbound_to </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    formControlName="did_inbound_to"
-                  />
-                </div>
-              </div>
-              <div class="form-group col-sm-6">
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text">
-                      prefix_outbound_transfer
-                    </span>
-                  </div>
-                  <input
-                    class="form-control"
-                    autocomplete="email"
-                    formControlName="prefix_outbound_transfer"
-                  />
-                </div>
-              </div>
-
-              <div class="form-group form-actions col-sm-12 text-left">
-                <button type="submit" class="btn  btn-primary">
-                  ذخیره شود
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
   </tab>
+
   <tab *ngIf="type.value=='file'">
-    <ng-template tabHeading
-      ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template
-    >
+    <ng-template tabHeading ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template>
     <div class="row animated fadeIn border-bottom justify-content-center">
       <div class=" col-12 col-md-6 col-lg-6  ">
         <div class="card card-accent-success">
@@ -466,22 +343,18 @@
           </div>
 
           <div class="text-center border-top p-4">
-            <button class="btn btn-danger" (click)="removeLastFileData()">
-              پاک کردن اطلاعات فایل قبلی
-              <app-spintick
-                [showSpinner]="fileIsRemoving"
-                [showTick]="false"
-              ></app-spintick>
+            <button class="btn btn-danger" (click)="removeAllDataModal.show()">
+             حذف اطلاعات دیتابیس
+
             </button>
           </div>
         </div>
       </div>
     </div>
-  </tab>
+ </tab>
+
   <tab>
-    <ng-template tabHeading
-      ><i class="icon-basket-loaded"></i> تنظیمات لایسنس</ng-template
-    >
+    <ng-template tabHeading ><i class="icon-basket-loaded"></i> تنظیمات لایسنس</ng-template>
 
     <div class="row animated fadeIn border-bottom justify-content-center">
       <div class=" col-12 col-md-6 col-lg-6  ">
@@ -615,6 +488,8 @@
       </div>
     </div>
   </tab>
+
+
   <tab>
     <ng-template tabHeading><i class="fa da-list"></i> محاسبه قبوض</ng-template>
     <div class="row animated fadeIn border-bottom justify-content-center">
@@ -624,7 +499,7 @@
             لیست تعرفه ها
           </div>
           <div class="card-body">
-            <form [formGroup]="bills">
+            <form [formGroup]="bills" (ngSubmit)="submitBills()">
               <div class="form-group">
                 <div class="input-group">
                   <div class="input-group-prepend">
@@ -633,7 +508,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    formControlName="bill1"
+                    formControlName="pulse"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text"
@@ -652,7 +527,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    formControlName="bill2"
+                    formControlName="co"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text"
@@ -665,13 +540,13 @@
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text">
-                      هزینه هر دقیقه مکالمه غیر شهری</span
+                      هزینه هر دقیقه مکالمه بین شهری</span
                     >
                   </div>
                   <input
                     type="number"
                     class="form-control"
-                    formControlName="bill3"
+                    formControlName="betweenco"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text"
@@ -691,7 +566,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    formControlName="bill4"
+                    formControlName="mobile"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text"
@@ -709,7 +584,7 @@
                   <input
                     type="number"
                     class="form-control"
-                    formControlName="bill5"
+                    formControlName="abonmah"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text"
@@ -730,9 +605,170 @@
       </div>
     </div>
   </tab>
+
+  <tab>
+      <ng-template tabHeading><i class="icon-basket-loaded"></i>دیگر اطلاعات سیستم</ng-template
+    >
+    <div class="row animated fadeIn border-bottom justify-content-center">
+        <div class=" col-12 col-md-12 col-lg-12 ">
+            <div class="card card-accent-success">
+              <div class="card-header">
+                دیگر اطلاعات سیستم
+              </div>
+              <div class="card-body">
+                <form
+                  class="row"
+                  [formGroup]="otherData"
+                  (ngSubmit)="submitOtherData($event)"
+                >
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">countco</span>
+                      </div>
+                      <input class="form-control" formControlName="countco" />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> counte1 </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        autocomplete="email"
+                        formControlName="counte1"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> counte1 </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        autocomplete="email"
+                        formControlName="counte1"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> queue_number </span>
+                      </div>
+                      <input class="form-control" formControlName="queue_number" />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          prepend_outbound_from
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        formControlName="prepend_outbound_from"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> prepend_outbound_to </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        autocomplete="email"
+                        formControlName="prepend_outbound_to"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> did_inbound_from </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        autocomplete="email"
+                        formControlName="did_inbound_from"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text"> did_inbound_to </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        formControlName="did_inbound_to"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group col-sm-6">
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">
+                          prefix_outbound_transfer
+                        </span>
+                      </div>
+                      <input
+                        class="form-control"
+                        autocomplete="email"
+                        formControlName="prefix_outbound_transfer"
+                      />
+                    </div>
+                  </div>
+    
+                  <div class="form-group form-actions col-sm-12 text-left">
+                    <button type="submit" class="btn  btn-primary">
+                      ذخیره شود
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+    </div>
+  </tab>
 </tabset>
 
 <app-loading
   text="در حال بارگزاری..."
   [showLoading]="fileIsUploading"
 ></app-loading>
+
+<div  bsModal  #removeAllDataModal ="bs-modal" class="modal fade" tabindex="-1" 
+role="dialog" aria-labelledby="myModalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+         
+          <button type="button" class="close" (click)="removeAllModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title">حذف کل اطلاعات</h4>
+        </div>
+        <div class="modal-body">
+          <p>آیا از حذف کل اطلاعات دیتابیس مطمئنید؟ </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary mr-2" (click)="removeAllModal.hide()">انصراف</button>
+          <button type="button" class="btn btn-danger"
+           (click)="removeLastFileData()"
+           
+           >
+        {{!fileIsRemoving? 'ّبله، حذف شود':  'در حال حذف اطلاعات '}}
+           <app-spintick
+           [showSpinner]="fileIsRemoving"
+           [showTick]="false"
+         ></app-spintick></button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->

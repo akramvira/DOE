@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   ChangeDetectorRef,
-  ViewEncapsulation
+  ViewEncapsulation,
+  ViewChild
 } from "@angular/core";
 import { SettingsService } from "./_service/settings.service";
 import {
@@ -18,6 +19,7 @@ import { ToastrService } from "ngx-toastr";
 import { Router, ActivatedRoute } from "@angular/router";
 import { HttpEventType, HttpEvent } from "@angular/common/http";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
+import { ModalDirective } from 'ngx-bootstrap';
 
 @Component({
   selector: "app-settings",
@@ -25,13 +27,15 @@ import { FileUploadComponent } from "./file-upload/file-upload.component";
   encapsulation: ViewEncapsulation.None
 })
 export class SettingsComponent implements OnInit {
+  @ViewChild("removeAllDataModal") public removeAllDataModal: ModalDirective;
+
   fb: FormBuilder;
   //Tab 1 data
   settings = new FormGroup({
     ami: new FormGroup({
       title: new FormControl(""),
       ip: new FormControl(""),
-      username: new FormControl("akram"),
+      username: new FormControl(""),
       password: new FormControl(""),
       port: new FormControl("")
     }),
@@ -57,6 +61,10 @@ export class SettingsComponent implements OnInit {
       password: new FormControl(""),
       port: new FormControl("")
     }),
+   
+  });
+
+  otherData= new FormGroup({
     countco: new FormControl(""),
     counte1: new FormControl(""),
     queue_number: new FormControl(""),
@@ -93,11 +101,11 @@ export class SettingsComponent implements OnInit {
 
   //Tab 3 Data
   bills = new FormGroup({
-    bill1: new FormControl(""),
-    bill2: new FormControl(""),
-    bill3: new FormControl(""),
-    bill4: new FormControl(""),
-    bill5: new FormControl("")
+    pulse: new FormControl(""),
+    mobile: new FormControl(""),
+    co: new FormControl(""),
+    betweenco: new FormControl(""),
+    abonmah: new FormControl("")
   });
 
   licenseAcceses: any;
@@ -114,7 +122,6 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.settingService.getSettingsdata().subscribe(data => {
       data = data["data"];
-      debugger;
       this.type.setValue(data['type']);
       this.settings.patchValue({
         ami: data["ami"],
@@ -138,6 +145,21 @@ export class SettingsComponent implements OnInit {
       this.accessList = data["license"];
       this.license.patchValue(data);
     });
+
+    this.settingService.getBillsData().subscribe(data => {
+    
+      this.bills.patchValue({
+        ...data["data"]
+      });
+    });
+
+    this.settingService.getOtherData().subscribe(data => {
+    
+      this.otherData.patchValue({
+        ...data["data"]
+      });
+    });
+
   }
 
   onSubmitServers(event: Event) {
@@ -227,6 +249,17 @@ export class SettingsComponent implements OnInit {
     this.datafileToUpload = files.item(0);
   }
 
+  submitOtherData() {
+      this.settingService.setOtherData(this.otherData.getRawValue()).subscribe(
+        event => {
+          debugger;
+        },
+        error => {
+//          this.authServe.()
+        }
+      );
+    
+  }
   submitLicense() {
     this.licenseSubmitted = true;
     if (!this.license.invalid) {
@@ -293,6 +326,23 @@ export class SettingsComponent implements OnInit {
     }
   }
 
+  submitBills(){
+    let bills = this.bills.getRawValue();
+    this.settingService.setBillsData(bills).subscribe(
+      data=>{
+        this.toastr.success('اطلاعات قبوض با موفقیت به روز رسانی شد.');
+        if(data['data']['abonmah']){
+          this.bills.patchValue({
+            ...data['data']
+          });
+        }
+      },
+      error=>{
+        this.toastr.error('مشکلی در روند به روز رسانی اطلاعات پیش آمده است. لطفا دوباره تلاش کنید.');
+      }
+    )
+
+  }
   removeLastFileData() {
     this.fileIsRemoving = true;
     this.settingService.removeLastFileData().subscribe(

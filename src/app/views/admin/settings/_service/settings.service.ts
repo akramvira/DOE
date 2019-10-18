@@ -18,10 +18,25 @@ export class SettingsService {
     let options = this.authServ.getRequestOpions();
     return this.http.get(environment.apiUrl + '/admin/setting',options );
   }
+  public getOtherData(){
+    let options = this.authServ.getRequestOpions();
+    return this.http.get(environment.apiUrl + '/admin/setting/otherdata',options );
+  }
+
+  public setOtherData(data){
+
+    let options = this.authServ.getRequestOpions();
+    return this.http.post<any>(`${environment.apiUrl}/admin/setting/otherdata`, data ,options )
+    .pipe(map(data => {
+      console.log(data);
+      return data;
+    }));
+  }
+
   public setSettingsData(data){
 
     let options = this.authServ.getRequestOpions();
-    return this.http.put<any>(`${environment.apiUrl}/admin/setting/save`, data ,options )
+    return this.http.post<any>(`${environment.apiUrl}/admin/setting/save`, data ,options )
     .pipe(map(data => {
       console.log(data);
       return data;
@@ -58,6 +73,16 @@ export class SettingsService {
     let options = this.authServ.getRequestOpions();
     return this.http.get(environment.apiUrl + '/admin/setting/license', options);
   }
+
+  public getBillsData(){
+    let options = this.authServ.getRequestOpions();
+    return this.http.get(environment.apiUrl + '/admin/setting/bill', options);
+  }
+  public setBillsData(data){
+    let options = this.authServ.getRequestOpions();
+    return this.http.post(environment.apiUrl + '/admin/setting/bill',data, options);
+  }
+
   public setLincenseData(data){
     let options = this.authServ.getRequestOpions(true);
     return this.http.post(environment.apiUrl + '/admin/setting/license',data, options);
@@ -66,7 +91,6 @@ export class SettingsService {
 
 
   public pingAmi(data){
-    debugger;
     let options = this.authServ.getRequestOpions(true);
     return this.http.post(environment.apiUrl + '/admin/setting/connection',data, options);
   }
@@ -84,4 +108,6 @@ export class SettingsService {
     let options = this.authServ.getRequestOpions(true);
     return this.http.get(environment.apiUrl + '/admin/setting/deleteall', options);
   }
+
+
 }
