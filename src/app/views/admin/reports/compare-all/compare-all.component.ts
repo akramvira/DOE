@@ -164,12 +164,12 @@ export class CompareAllComponent implements OnInit {
     let select1Value1 = this.select1.getSelectedValue();
     let select1Value2 = this.select2.getSelectedValue();
 
-
+debugger;
     if (filterData.time == "-1") {
       filterData.from = this.selectedDateFrom.value;
       filterData.to = this.selectedDateTo.value;
     }
-    if(!select1Value1 || !select1Value1){
+    if(!select1Value1 || !select1Value2){
       if(!select1Value1)
         this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
       if(!select1Value2)

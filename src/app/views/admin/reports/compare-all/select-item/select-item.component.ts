@@ -208,10 +208,14 @@ export class SelectItemComponent implements OnInit {
   public getSelectedValue(){
 
     let filterData = [];
+    debugger;
     let selectedItem1 = this.selectedItem1.getRawValue();
-    if (selectedItem1.level ==0 && !selectedItem1.main) return;
-    if ((selectedItem1.level == 0 || selectedItem1.level == 1  ) && !selectedItem1.sub1) return;
-    if (selectedItem1.level == 2 && !selectedItem1.sub2) return;
+    if (selectedItem1.level ==0 && (!selectedItem1.main || !selectedItem1.main.length )) return;
+    if (selectedItem1.level == 1 && 
+      (!selectedItem1.main||!selectedItem1.main.length ) && 
+      (!selectedItem1.sub1||!selectedItem1.sub1.length )) return;
+      
+    if (selectedItem1.level == 2 && (!selectedItem1.sub2 || !selectedItem1.sub2.length)) return;
 
     filterData["id"] = this.fetchData(selectedItem1.main);
     filterData["idSub"] = this.fetchData(selectedItem1.sub1);
@@ -220,7 +224,6 @@ export class SelectItemComponent implements OnInit {
 
     if(filterData["level"] == 0)
         filterData["label"] = selectedItem1.main[0]['name'];
-
     else if(filterData["level"] == 1)
       filterData["label"] = selectedItem1.sub1[0]['name'];
     else 
