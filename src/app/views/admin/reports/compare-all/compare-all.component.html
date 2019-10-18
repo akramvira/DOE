@@ -5,24 +5,22 @@
           <div class=" text-left justify-content-end card m-0 card-info bg-gray-300 p-sm-2 ">
             <div class="text-center col-12 " >
               <div class="row text-center">
-                <div class="col-12 col-lg-10 col-xl-10">
-                      <div class="row">
-                        <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
-                            <app-select-item 
-                            #select1
-                            [data]='groups'
-                            >
-                            </app-select-item>
-                      </div>
-                      </div>
+                    <div class="col-12">
+                        <app-select-item 
+                        #select1
+                        label='مورد اول '
+                        [data]='groups'
+                        >
+                        </app-select-item>
                 </div>
               </div>
             </div>
             <div class="text-center col-12 " >
                 <div class="row text-center">
-                  <div class="col-12 col-lg-10 col-xl-10">
+                  <div class="col-12">
                         <app-select-item 
                         #select2
+                        label='مورد دوم'
                         [data]='groups'
                         >
                         </app-select-item>
@@ -44,7 +42,7 @@
            
             <div class="text-center col-12 " [formGroup]="filters">
               <div class="row text-center justify-content-center align-items-center">
-                <div class="col-12 col-lg-10 col-xl-10">
+                <div class="col-12 ">
                   <div class="row">
                     <div class="col-6">
                       <div class="row">

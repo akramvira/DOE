@@ -15,6 +15,7 @@ export class SelectItemComponent implements OnInit {
   ) {}
 
   @Input() data: any;
+  @Input() label: string;
   ngOnInit() {
     this.getAllLevelsData();
     this.updateDropdownsSetting();

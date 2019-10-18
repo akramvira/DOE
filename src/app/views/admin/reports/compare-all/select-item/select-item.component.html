@@ -1,5 +1,8 @@
 <div class="row" [formGroup]="selectedItem1">
+        <label class="col-1">{{label}}</label>
     <div class="input-group col-xl-2">
+         
+
         <div class="input-group-prepend">
             <label class="input-group-text">نوع</label>
         </div>
@@ -12,7 +15,7 @@
             <option value="2">داخلی </option>
         </select>
     </div>
-              
+  
     <ng-multiselect-dropdown   class="form-control col-3 p-0 "
         [placeholder]="'انتخاب معاونت '"
         [data]="groups"
@@ -41,7 +44,7 @@
 
     <ng-multiselect-dropdown  
     *ngIf="selectedItem1.value.level ==2" 
-    class="form-control col-4 p-0 "
+    class="form-control col-3 p-0 "
     [placeholder]="'انتخاب داخلی '"
     [data]="lines"
     formControlName="sub2"
