@@ -75,7 +75,7 @@
 
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
       <div class="card-header row">
-        تماس های ورودی
+        نمودار تعداد تماس های ورودی
         <div class="card-header-actions"></div>
       </div>
       <div class="card-body">
@@ -85,7 +85,6 @@
               <app-bar-chart
               class="col-12"
                 [datasets]="barChartDataIn"
-                [labels]="barChartLabels"
                 [contentTitle]="'نموادار تماس های کل سیستم'"
               >
               </app-bar-chart>
@@ -96,7 +95,7 @@
     </div>
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
       <div class="card-header row">
-        تماس های خروجی
+        نمودار تعداد تماس های خروجی
         <div class="card-header-actions"></div>
       </div>
       <div class="card-body">
@@ -105,8 +104,8 @@
             <div class="row">
               <app-bar-chart class="col-12"
                 [datasets]="barChartDataOut"
-                [labels]="barChartLabels"
                 [contentTitle]="'نموادار تماس های کل سیستم'"
+                labels= "['تعداد تماس ها']"
               >
               </app-bar-chart>
               
@@ -119,7 +118,7 @@
 
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
       <div class="card-header row">
-      تماس های ورودی 
+      تماس های ورودی (درصد)
         <div class="card-header-actions"></div>
       </div>
       <div class="card-body">
@@ -128,7 +127,8 @@
             <div class="chart-wrapper col-12">
               <app-doughnut-chart
                 [data]="inDetailsPercent"
-                [labels]="detailPercentLabels"
+                [labels]="detailPercentLabelsIn"
+                [colors]="inPercentsColors"
               >
               </app-doughnut-chart>
             </div>
@@ -139,7 +139,7 @@
 
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
         <div class="card-header row">
-        تماس های خروجی 
+        تماس های خروجی (درصد)
           <div class="card-header-actions"></div>
         </div>
         <div class="card-body">
@@ -148,7 +148,8 @@
               <div class="chart-wrapper col-12">
                 <app-doughnut-chart
                   [data]="outDetailsPercent"
-                  [labels]="detailPercentLabels"
+                  [labels]="detailPercentLabelsOut"
+                  [colors]="inPercentsColors"
                 >
                 </app-doughnut-chart>
               </div>
@@ -170,7 +171,6 @@
                 <app-bar-chart
               class="col-12"
                 [datasets]="barChartDataTimeIn"
-                [labels]="barChartLabels"
                 [contentTitle]="'نموادار تماس های کل سیستم'"
               >
               </app-bar-chart>
@@ -192,8 +192,8 @@
                   <app-bar-chart
                   class="col-12"
                     [datasets]="barChartDataTimeIn"
-                    [labels]="barChartLabels"
                     [contentTitle]="'نموادار تماس های کل سیستم'"
+                  
                   >
                   </app-bar-chart>
               </div>

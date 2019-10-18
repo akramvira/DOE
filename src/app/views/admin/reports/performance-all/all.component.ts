@@ -24,10 +24,16 @@ export class AllComponent implements OnInit {
     }
   ];
 
+  public inPercentsColors = [
+    {
+      backgroundColor: ["#a5deb9", "#f86c6b", '#ffda6a']
+    }
+  ];
+  
   public inPerformanceData: number[] = [1, 100];
 
-  public inDetailsPercent: number[] = [0,0,100];
-  public outDetailsPercent: number[] = [0,0,100];
+  public inDetailsPercent: number[] = [0,0,0.1];
+  public outDetailsPercent: number[] = [0,0,0.1];
 
   allData: any = [];
   globData: any = [];
@@ -108,7 +114,7 @@ export class AllComponent implements OnInit {
         ];
 
         this.inDetailsPercent = [data["in"]['panswer'], data["in"]['pnoanswer'], data["in"]['pbusy']];
-        this.outDetailsPercent = [data["out"]['panswer'], data["out"]['pnoanswer'], data["out"]['pbusy']];
+        this.outDetailsPercent = [data["out"]['pbetweenco'], data["out"]['pco'], data["out"]['pmobile']];
 
         this.barChartDataTimeOut = [
           { data: [data['in']["time"]], label: "مدت زمان کل مکالمات" },
@@ -144,7 +150,8 @@ export class AllComponent implements OnInit {
     responsive: true
   };
   public barChartLabels: string[] = ["عملکرد کل سیستم"];
-  public detailPercentLabels: string[] = ['تماس های ورودی','تماس های خروجی','تماس های مشغول'];
+  public detailPercentLabelsIn: string[] = [' پاسخ داده شده',' پاسخ داده نشده',' مشغول'];
+  public detailPercentLabelsOut: string[] = [' بین شهری',' شهری',' موبایل'];
   public barChartType = "bar";
   public barChartLegend = true;
 

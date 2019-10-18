@@ -181,9 +181,18 @@ export class BarChartComponent implements OnInit {
       borderColor: "rgba(255, 193, 7, 0.9)"
       ,
       borderWidth: 1
+    },
+    {
+      backgroundColor: 
+        "rgba(255, 100, 50, 0.6)"
+      ,
+      borderColor: "rgba(255, 193, 7, 0.9)"
+      ,
+      borderWidth: 1
     }
   ];
-  public chartType = "bar";
+
+  @Input() chartType = "bar";
 
   export(type: string = "excel") {
     let tmpData: any = JSON.parse(JSON.stringify(this.datasets));
