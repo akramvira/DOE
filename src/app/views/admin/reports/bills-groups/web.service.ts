@@ -39,6 +39,8 @@ export class WebService {
 
   public getBills(data) {
     let options = this.authServ.getRequestOpions();
+ 
+console.log(data);
     return this.http.post(
       environment.apiUrl + "/admin/reports/bill",
       data,

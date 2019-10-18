@@ -307,14 +307,14 @@ export class GroupsBillsComponent implements OnInit {
   }
   getBillsData() {
   
-    let filterData = [];
+    let filterData = {};
     let selectedItem1 = this.selectedItem1.getRawValue();
     if (!selectedItem1.main || !selectedItem1.main.length) return;
     if (selectedItem1.level != 0 && !selectedItem1.sub1.length) return;
     if (selectedItem1.level == 2 && !selectedItem1.sub2.length) return;
 
     filterData["level"] =selectedItem1.level;
-    filterData["id"] = this.fetchData(selectedItem1.main);
+    filterData["idmain"] = this.fetchData(selectedItem1.main);
     filterData["idSub"] = this.fetchData(selectedItem1.sub1);
     filterData["idnumber"] = this.fetchData(this.lines);
 
@@ -323,6 +323,7 @@ export class GroupsBillsComponent implements OnInit {
     filterData["to"] = this.selectedItem1.value.to || '';
     this.loadingData = true;
    
+ 
    
     this.webSerice.getBills(filterData).subscribe(
       data => {
@@ -335,6 +336,8 @@ export class GroupsBillsComponent implements OnInit {
           //      
          // if (i == "all") continue;
          // data["groupId"] = i;
+
+         if(i == 'from' || i == 'to') continue;
          dataCount++;
          let itemData = [];
          itemData['id']= data[i]['id'];
@@ -363,6 +366,7 @@ export class GroupsBillsComponent implements OnInit {
         this.loadingData = false;
       },
       error => {
+        this.loadingData = false;
         this.authService.handdleAuthErrors(error);
       }
     );
