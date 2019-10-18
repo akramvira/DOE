@@ -196,6 +196,9 @@ debugger;
     this.loadingData = true;
 
     console.log(filterData);
+    
+    this.resetCharts();
+
    
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
@@ -266,6 +269,31 @@ debugger;
     );
   }
 
+  resetCharts(){
+    this.allCallsData = [{ data: [], label: "تعداد کل تماس ها" }];
+
+    this.callsDetailsData = [
+      { data: [], label: "تعداد تماس پاسخ داده شده" },
+      { data: [], label: "تعداد تماس پاسخ داده نشده" },
+      { data: [], label: "تعداد تماس های مشغول" }
+    ];
+
+    this.timesChartData = [{ data: [], label: "مدت زمان مکالمه" }];
+
+    this.loadTimeLabels = true;
+    this.timesAvgChartData = [
+      { data: [], label: "میانگین زمان هر بخش" },
+      { data: [], label: "میانگین زمان کل" }
+    ];
+
+    let allCalls =  { data: [], label: " تعداد کل تماس ها" };
+
+    this.allCallsData = [allCalls];
+
+    this.performanceChartData = [
+      { data: [], label: "عملکرد گروه(درصد)" }
+    ];
+  }
   onSelectDate() {
     this.getOneGroupData();
   }
