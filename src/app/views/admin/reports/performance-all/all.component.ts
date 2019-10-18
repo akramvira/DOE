@@ -111,13 +111,13 @@ export class AllComponent implements OnInit {
         this.outDetailsPercent = [data["out"]['panswer'], data["out"]['pnoanswer'], data["out"]['pbusy']];
 
         this.barChartDataTimeOut = [
-          { data: [data["time"]], label: "مدت زمان کل مکالمات" },
-          { data:  [data["avg"]], label: " مدت زمان میانگین مکالمات" },
+          { data: [data['in']["time"]], label: "مدت زمان کل مکالمات" },
+          { data:  [data['in']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
         this.barChartDataTimeOut = [
-          { data: [data["time"]], label: "مدت زمان کل مکالمات" },
-          { data:  [data["avg"]], label: " مدت زمان میانگین مکالمات" },
+          { data: [data['out']["time"]], label: "مدت زمان کل مکالمات" },
+          { data:  [data['out']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
         this.inPerformanceData = [
