@@ -20,6 +20,14 @@ export class UsersService {
     return this.http.get(environment.apiUrl + "/admin/users", options);
   }
 
+  public addUser(data) {
+    let options = this.authServ.getRequestOpions();
+    return this.http.post(
+      environment.apiUrl + "/admin/users",
+      data,
+      options
+    );
+  }
   //roles
   public getAllRoles() {
     let options = this.authServ.getRequestOpions();

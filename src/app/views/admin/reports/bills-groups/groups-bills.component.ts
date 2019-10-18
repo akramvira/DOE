@@ -133,7 +133,6 @@ export class GroupsBillsComponent implements OnInit {
     filterData['idsub'] =selectedItem['idSub'];
     filterData['idnumber'] =selectedItem['idnumber'];
 
-debugger;
     this.loadingData = true;
    
  

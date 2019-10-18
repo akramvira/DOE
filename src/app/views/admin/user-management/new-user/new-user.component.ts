@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ViewEncapsulation } from '@angular/core';
 import { UsersService } from '../_services/users.service';
+import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from '../../../../_services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-user',
@@ -33,7 +36,11 @@ export class NewUserComponent implements OnInit {
     
   });
 
-  constructor(private userServ : UsersService) { }
+  constructor(private userServ : UsersService,
+    private toaster : ToastrService,
+    private authService : AuthenticationService,
+    private router : Router
+    ) { }
 
   ngOnInit() {
     this.userServ.getAllRoles().subscribe(
@@ -44,7 +51,7 @@ export class NewUserComponent implements OnInit {
         debugger;
           for( let id in roles  ){
            
-            allRoles.push({item_id: id , item_text : roles[id]['title'] });
+            allRoles.push({id: id , text : roles[id]['title'] });
           }
           this.dropdownList = allRoles;
           debugger;
@@ -52,37 +59,49 @@ export class NewUserComponent implements OnInit {
       (error)=>{
         console.log(error);
 
-      })
-    // this.dropdownList = [
-    //   { item_id: '1', item_text: 'مقام مدیر' },
-    //   { item_id: '2', item_text: ' مقام مدیر درجه 2' },
-    //   { item_id: '3', item_text: 'مقام مدیر بخش فرماندهی' },
-    //   { item_id: '4', item_text: 'مدیر بخش بازاریابی' },
-    //   { item_id: '5', item_text: 'مدیر بخش مدیریت کارفرمایان' },
-    //   { item_id: '6', item_text: 'مقام مربوط به دیگر بخش ها' },
-    // ];
-    // this.selectedItems = [
-    //   { item_id: '1', item_text: 'مقام مدیر' }
-    // ];
-    
+      });
+      
     this.dropdownSettings = {
       singleSelection: false,
-      idField: 'item_id',
-      textField: 'item_text',
+      idField: "id",
+      textField: "name",
       selectAllText: 'انتخاب همه',
       unSelectAllText: 'حذف همه موارد',
       searchPlaceholderText: 'جستجو',
       itemsShowLimit: 3,
+      limitSelection : 1,
       allowSearchFilter: true
     };
   }
 
+  fetchData(data) {
+    let finalData = [];
+    for (let i in data) {
+      finalData.push(data[i]["id"]);
+    }
+
+    return finalData.join(",");
+  }
+
   onItemSelect(){}
   onSelectAll(event){}
-  onSubmit(userType : string){
-    this.userData.patchValue({level: userType});
+  onSubmit(){
 
-    console.log(this.userData.getRawValue());
+    let userData = this.userData.getRawValue();
+    debugger;
+    userData['role'] = this.fetchData(userData['role']);
+
+    this.userServ.addUser(userData).subscribe(
+      data=>{
+        debugger;
+        this.toaster.success('کاربر جدید اضافه شد.');
+        this.router.navigate(['/admin/users-management/users']);
+      },
+      error=>{
+        this.authService.handdleAuthErrors(error);
+      }
+    )
+    
   }
 
   notSelectedRoles = [];

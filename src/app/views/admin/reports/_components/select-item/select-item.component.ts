@@ -201,14 +201,16 @@ export class SelectItemComponent implements OnInit {
   onMain1Select(item) {
     this.activeSub1_1 = this.allSub1Data[item["id"]];
     this.selectedItem1.patchValue({
-      sub1: []
+      sub1: [],
+      sub2:[]
     });
     this.updateLines();
   }
   onDeSelectMain() {
     this.activeSub1_1 = [];
     this.selectedItem1.patchValue({
-      sub1: []
+      sub1: [],
+      sub2:[]
     });
     return;
   }

@@ -9,7 +9,7 @@
       اطلاعات کاربر جدید
             </div>
             <div class="card-body">
-              <form [formGroup]=userData  (ngSubmit)="onSubmit('operator')">
+              <form [formGroup]=userData  (ngSubmit)="onSubmit()">
 
                 <div class="form-group card-accent-success  bg-info">
               
@@ -18,7 +18,7 @@
                     <div class="input-group-prepend">
                       <span class="input-group-text"> نوع کاربر </span>
                     </div>
-                    <select class="form-control bg-info"   formControlName=role >
+                    <select class="form-control bg-info"   formControlName=level >
                       <option value="operator" selected>اپراتور</option>
                       <option value="admin">ادمین</option>
                     </select>
@@ -35,8 +35,8 @@
                           <span class="input-group-text"> وضعیت کاربر </span>
                         </div>
                         <select class="form-control"  formControlName=active >
-                          <option>فعال</option>
-                          <option>غیر فعال</option>
+                          <option value=0 >فعال</option>
+                          <option value=1 >غیر فعال</option>
                         </select>
                         <div class="input-group-append">
                           <span class="input-group-text"><i class="fa fa-envelope"></i></span>
@@ -78,7 +78,7 @@
                     <ng-multiselect-dropdown
                       [placeholder]="'انتخاب مقام'"
                       [data]="dropdownList"
-                   
+                      formControlName="role"
                       [settings]="dropdownSettings"
                       (onSelect)="onItemSelect()"
                       (onSelectAll)="onSelectAll($event)"
@@ -97,7 +97,7 @@
 
 
                 <!-- operator section -->
-                <div [hidden]="userData.value.role == 'admin'">
+                <div [hidden]="userData.value.level == 'admin'">
                 <div class="form-group" >
                     <div class="input-group">
                       <div class="input-group-prepend">
