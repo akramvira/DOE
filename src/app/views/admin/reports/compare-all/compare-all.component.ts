@@ -8,6 +8,7 @@ import { WebService } from "./web.service";
 import { formControlBinding } from "@angular/forms/src/directives/reactive_directives/form_control_directive";
 import { SharedService } from "../../../../_services/shared.service";
 import { SelectItemComponent } from './select-item/select-item.component';
+import { Toast, ToastrService } from 'ngx-toastr';
 @Component({
   selector: "app-compare-all",
   templateUrl: "./compare-all.component.html",
@@ -17,7 +18,8 @@ export class CompareAllComponent implements OnInit {
   constructor(
     private webServ: WebService,
     private authServe: AuthenticationService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private toaster: ToastrService
   ) {}
 
   filters = new FormGroup({
@@ -154,7 +156,6 @@ export class CompareAllComponent implements OnInit {
  
 
   updateCharts() {
-
     this.getOneGroupData();
   }
 
@@ -163,11 +164,18 @@ export class CompareAllComponent implements OnInit {
     let select1Value1 = this.select1.getSelectedValue();
     let select1Value2 = this.select2.getSelectedValue();
 
+
     if (filterData.time == "-1") {
       filterData.from = this.selectedDateFrom.value;
       filterData.to = this.selectedDateTo.value;
     }
-    if(!select1Value1 || !select1Value1)return;
+    if(!select1Value1 || !select1Value1){
+      if(!select1Value1)
+        this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
+      if(!select1Value2)
+        this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
+      return;
+    }
 
   
     filterData['level1']= select1Value1['level'];

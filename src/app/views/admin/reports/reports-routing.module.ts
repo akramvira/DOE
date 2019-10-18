@@ -24,7 +24,7 @@ const routes: Routes = [
           {path: 'performance-l1', component:PerformanceL1Component, data:{title:'عملکرد معاونت ها'}},
           {path: 'performance-l2', component:PerformanceL2Component, data:{title:'عملکرد ادارات '}},
           {path: 'performance-l3', component:PerformanceL3Component, data:{title:'عملکرد داخلی ها '}},
-          {path: 'comapre-all', component:CompareAllComponent, data:{title:'عملکرد مقایسه کلی '}},
+          {path: 'comapre-all', component:CompareAllComponent, data:{title:' مقایسه کلی '}},
           
           {path: 'lines', component:LinesComponent, data:{title:'عملکرد داخلی ها'}},
           {path: 'groups', component:GroupsComponent, data:{title:'گروه ها'}},

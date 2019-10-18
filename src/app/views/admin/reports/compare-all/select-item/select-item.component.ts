@@ -80,6 +80,11 @@ export class SelectItemComponent implements OnInit {
       sub1: [],
       sub2: []
     });
+
+    if(this.selectedItem1.value.level == 2)//lines
+    {
+      this.updateLines();
+    }
   }
 
   //read data from array and join with , to send for Api
@@ -200,15 +205,16 @@ export class SelectItemComponent implements OnInit {
   }
 
   public getSelectedValue(){
+
     let filterData = [];
     let selectedItem1 = this.selectedItem1.getRawValue();
-    if (!selectedItem1.main || !selectedItem1.main.length) return;
-    if (selectedItem1.level != 0 && !selectedItem1.sub1.length) return;
-    if (selectedItem1.level == 2 && !selectedItem1.sub2.length) return;
+    if (selectedItem1.level ==0 && !selectedItem1.main) return;
+    if ((selectedItem1.level == 0 || selectedItem1.level == 1  ) && !selectedItem1.sub1) return;
+    if (selectedItem1.level == 2 && !selectedItem1.sub2) return;
 
     filterData["id"] = this.fetchData(selectedItem1.main);
     filterData["idSub"] = this.fetchData(selectedItem1.sub1);
-    filterData["idnumber"] = this.fetchData(this.lines);
+    filterData["idnumber"] = this.fetchData(selectedItem1.sub);
     filterData["level"] = this.selectedItem1.value.level;
 
     if(filterData["level"] == 0)
