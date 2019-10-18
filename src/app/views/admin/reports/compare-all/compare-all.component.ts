@@ -167,24 +167,33 @@ export class CompareAllComponent implements OnInit {
       filterData.from = this.selectedDateFrom.value;
       filterData.to = this.selectedDateTo.value;
     }
+    if(!select1Value1 || !select1Value1)return;
+
+  
     filterData['level1']= select1Value1['level'];
     filterData['idmain1']= select1Value1['id'];
     filterData['idsub1'] =select1Value1['idSub'];
     filterData['idnumber1'] =select1Value2['idnumber'];
 
-    filterData['level1']= select1Value2['level'];
-    filterData['idmain1']= select1Value2['id'];
-    filterData['idsub1'] =select1Value2['idSub'];
-    filterData['idnumber1'] =select1Value2['idnumber'];
+    filterData['level2']= select1Value2['level'];
+    filterData['idmain2']= select1Value2['id'];
+    filterData['idsub2'] =select1Value2['idSub'];
+    filterData['idnumber2'] =select1Value2['idnumber'];
 
     
+    this.mainLabels =[select1Value1['label'],select1Value2['label']];
+
+
     filterData.time = parseInt(filterData.time);
     this.loadingData = true;
 
     console.log(filterData);
+   
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
-        debugger;
+     
+      
+
         data = data["data"];
         let allCalsData = [];
         let answeredData = [];
@@ -195,10 +204,10 @@ export class CompareAllComponent implements OnInit {
         let avgTimesData = [];
         let avgAll = [];
 
-        this.mainLabels = ['dddddddd','dggggg'];
+
         for (let index in data) {
           let itemChartData = data[index]["data"];
-          this.mainLabels.push(data[index]["name"]);
+       //   this.mainLabels.push(data[index]["name"]);
 
           allCalsData.push(itemChartData["all"]);
 
@@ -213,7 +222,7 @@ export class CompareAllComponent implements OnInit {
           avgAll.push(itemChartData["avgall"]);
         }
 
-        this.mainLabels = [...this.mainLabels];
+       
         this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
 
         this.callsDetailsData = [

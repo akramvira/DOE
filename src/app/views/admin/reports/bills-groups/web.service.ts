@@ -28,6 +28,7 @@ export class WebService {
   }
 
   public getNumbers(data){
+    
     let options = this.authServ.getRequestOpions();
     return this.http.post(
       environment.apiUrl + "/admin/reports/departments/filteritems/getnumbers",

@@ -53,7 +53,7 @@ export class SelectItemComponent implements OnInit {
         this.activeSub1_1 = this.allSub1Data[selectedMain["id"]];
         this.activeSub1_2 = this.allSub1Data[selectedMain["id"]];
 
-        this.updateLines1();
+      
       },
       error => {
         this.authServe.handdleAuthErrors(error);
@@ -62,9 +62,9 @@ export class SelectItemComponent implements OnInit {
   }
 
   //---------------------selected items ----------------
-  mainDropdownSettings = [];
-  officeDropdownSettings = [];
-  lineDropdownSettings = [];
+  mainDropdownSettings = {};
+  officeDropdownSettings = {};
+  lineDropdownSettings = {};
 
   groups = new Array();
   allSub1Data: any = [];
@@ -114,8 +114,7 @@ export class SelectItemComponent implements OnInit {
   activeSub1_1 = [];
   activeSub1_2 = [];
 
-  lines1 = [];
-  lines2 = [];
+  lines = [];
 
   updateDropdownsSetting() {
     let mainSettings = {
@@ -127,61 +126,13 @@ export class SelectItemComponent implements OnInit {
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
       noDataAvailablePlaceholderText: "بدون اطلاعات",
-
+      limitSelection : 1,
       allowSearchFilter: true
     };
 
-    let mainLimitSelections = [1, 1];
-    let sub1LimitSelections = [1, 1];
-    let sub2LimitSelections = [1, 1];
-
-    let unlimitted = 10000;
-    if (this.selectedItem1.value.level == 0) {
-      mainLimitSelections[0] = unlimitted;
-      sub1LimitSelections[0] = unlimitted;
-      sub2LimitSelections[0] = unlimitted;
-    } else if (this.selectedItem1.value.level == 1) {
-      mainLimitSelections[0] = 1;
-      sub1LimitSelections[0] = unlimitted;
-      sub2LimitSelections[0] = unlimitted;
-    } else {
-      mainLimitSelections[0] = 1;
-      sub1LimitSelections[0] = 1;
-      sub2LimitSelections[0] = unlimitted;
-    }
-
-    this.mainDropdownSettings = [
-      {
-        ...mainSettings,
-        limitSelection: mainLimitSelections[0]
-      },
-      {
-        ...mainSettings,
-        limitSelection: mainLimitSelections[1]
-      }
-    ];
-
-    this.officeDropdownSettings = [
-      {
-        ...mainSettings,
-        limitSelection: sub1LimitSelections[0]
-      },
-      {
-        ...mainSettings,
-        limitSelection: sub1LimitSelections[1]
-      }
-    ];
-
-    this.lineDropdownSettings = [
-      {
-        ...mainSettings,
-        limitSelection: sub2LimitSelections[0]
-      },
-      {
-        ...mainSettings,
-        limitSelection: sub2LimitSelections[1]
-      }
-    ];
+    this.lineDropdownSettings = 
+    this.mainDropdownSettings = 
+    this.officeDropdownSettings = mainSettings;
   }
 
   selectedGroups: any = this.selectedItem1.value.main;
@@ -192,7 +143,7 @@ export class SelectItemComponent implements OnInit {
     this.selectedItem1.patchValue({
       sub1: []
     });
-    this.updateLines1();
+    this.updateLines();
   }
   onDeSelectMain() {
     this.activeSub1_1 = [];
@@ -203,7 +154,7 @@ export class SelectItemComponent implements OnInit {
   }
 
   onDeSelectSub1(item) {
-    this.updateLines1();
+    this.updateLines();
   }
 
   getSelectedItems() {
@@ -225,23 +176,22 @@ export class SelectItemComponent implements OnInit {
   }
 
   activeSub1_1elected(item) {
-    //this.updateLines1);
+    //this.updateLines);
   }
 
-  updateLines1() {
+  updateLines() {
     let sub1 = [];
-
     let data = {
       level1: this.selectedItem1.value.level,
       idmain1: this.fetchData(this.selectedItem1.value.main),
       idsub1: this.fetchData(this.selectedItem1.value.sub1)
     };
-
+  
     if (data.level1 == 2)
       // line select
       this.webServ.getNumbers(data).subscribe(
         data => {
-          this.lines1 = data["data"];
+          this.lines = data["data"];
         },
         error => {
           this.authServe.handdleAuthErrors(error);
@@ -258,11 +208,16 @@ export class SelectItemComponent implements OnInit {
 
     filterData["id"] = this.fetchData(selectedItem1.main);
     filterData["idSub"] = this.fetchData(selectedItem1.sub1);
-    filterData["idnumber"] = this.fetchData(this.lines1);
+    filterData["idnumber"] = this.fetchData(this.lines);
     filterData["level"] = this.selectedItem1.value.level;
-    
 
+    if(filterData["level"] == 0)
+        filterData["label"] = selectedItem1.main[0]['name'];
 
+    else if(filterData["level"] == 1)
+      filterData["label"] = selectedItem1.sub1[0]['name'];
+    else 
+    filterData["label"] = selectedItem1.sub2[0]['name'];
 
     return filterData;
   }

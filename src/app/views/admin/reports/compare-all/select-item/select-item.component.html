@@ -17,11 +17,9 @@
         [placeholder]="'انتخاب معاونت '"
         [data]="groups"
         formControlName="main"
-        [settings]="mainDropdownSettings[0]"
+        [settings]="mainDropdownSettings"
         (onSelect)="onMain1Select($event)"
         (onDeSelect)="onDeSelectMain()"
-        (onSelectAll)="updateLines()"
-        (onDeSelectAll)="updateLines()"
     >
     </ng-multiselect-dropdown>
 
@@ -32,9 +30,10 @@
         [placeholder]="'انتخاب اداره '"
         [data]="activeSub1_1"
         formControlName="sub1"
-        [settings]="officeDropdownSettings[0]"
+        [settings]="officeDropdownSettings"
         (onDeSelect)="onDeSelectSub1($event)"
         (onDeSelectAll)="onDeSelectSub1($event)"
+        (onSelect)="updateLines()"
         (onSelectAll)="updateLines()"
         (onDeSelectAll)="updateLines()"
     >
@@ -46,7 +45,7 @@
     [placeholder]="'انتخاب داخلی '"
     [data]="lines"
     formControlName="sub2"
-    [settings]="lineDropdownSettings[0]"
+    [settings]="lineDropdownSettings"
     >
     </ng-multiselect-dropdown>
 </div>
