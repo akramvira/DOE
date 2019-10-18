@@ -7,7 +7,7 @@ import { debug } from "util";
 import { WebService } from "./web.service";
 import { formControlBinding } from "@angular/forms/src/directives/reactive_directives/form_control_directive";
 import { SharedService } from "../../../../_services/shared.service";
-import { SelectItemComponent } from './select-item/select-item.component';
+import { SelectItemComponent } from '../_components/select-item/select-item.component';
 import { Toast, ToastrService } from 'ngx-toastr';
 @Component({
   selector: "app-compare-all",

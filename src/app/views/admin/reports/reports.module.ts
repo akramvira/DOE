@@ -25,7 +25,7 @@ import { PerformanceL2Component } from './performance-l2/performance-l2.componen
 import { PerformanceL3Component } from './performance-l3/performance-l3.component';
 import { CompareAllComponent } from './compare-all/compare-all.component';
 import {NgxPrintModule} from 'ngx-print';
-import { SelectItemComponent } from './compare-all/select-item/select-item.component';
+import { SelectItemComponent } from './_components/select-item/select-item.component';
 
 @NgModule({
   declarations: [
