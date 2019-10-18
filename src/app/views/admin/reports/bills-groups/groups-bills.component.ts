@@ -223,12 +223,12 @@ export class GroupsBillsComponent implements OnInit {
     let sub1 = [];
 
     let data = {
-      level1: this.selectedItem1.value.level,
-      idmain1: this.fetchData(this.selectedItem1.value.main),
-      idsub1: this.fetchData(this.selectedItem1.value.sub1)
+      level: this.selectedItem1.value.level,
+      idmain: this.fetchData(this.selectedItem1.value.main),
+      idsub: this.fetchData(this.selectedItem1.value.sub1)
     };
 
-   if(data.level1 == 2) // line select
+   if(data.level == 2) // line select
     this.webSerice.getNumbers(data).subscribe(
       data => {
         

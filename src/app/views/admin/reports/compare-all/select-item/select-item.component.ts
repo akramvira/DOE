@@ -188,12 +188,12 @@ export class SelectItemComponent implements OnInit {
   updateLines() {
     let sub1 = [];
     let data = {
-      level1: this.selectedItem1.value.level,
-      idmain1: this.fetchData(this.selectedItem1.value.main),
-      idsub1: this.fetchData(this.selectedItem1.value.sub1)
+      level: this.selectedItem1.value.level,
+      idmain: this.fetchData(this.selectedItem1.value.main),
+      idsub: this.fetchData(this.selectedItem1.value.sub1)
     };
   
-    if (data.level1 == 2)
+    if (data.level == 2)
       // line select
       this.webServ.getNumbers(data).subscribe(
         data => {
@@ -214,7 +214,7 @@ export class SelectItemComponent implements OnInit {
     if (selectedItem1.level == 1 && 
       (!selectedItem1.main||!selectedItem1.main.length ) && 
       (!selectedItem1.sub1||!selectedItem1.sub1.length )) return;
-      
+
     if (selectedItem1.level == 2 && (!selectedItem1.sub2 || !selectedItem1.sub2.length)) return;
 
     filterData["id"] = this.fetchData(selectedItem1.main);
