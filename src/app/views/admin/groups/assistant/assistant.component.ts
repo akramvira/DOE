@@ -60,11 +60,11 @@ export class AssistantComponent implements OnInit {
     let id = this.groups[rowIndex]["id"];
 
     this.webServ
-      .updateGroup({
-        name: newName,
-        id: id,
-        value: this.selectedGroupExtensions.join(",")
-      })
+    .updateGroup({
+      name: newName,
+      id: id,
+      sub: this.fetchData(this.selectedGroupExtensions)
+    })
       .subscribe(
         data => {
           console.log(data);
@@ -148,11 +148,20 @@ export class AssistantComponent implements OnInit {
       }
   }
 
+  fetchData(data) {
+    let finalData = [];
+    for (let i in data) {
+      finalData.push(data[i]["id"]);
+    }
+
+    return finalData.join(",");
+  }
   updateParentItems() {
     this.webServ
       .updateGroup({
         id: this.activeParentId,
-        value: this.selectedGroupExtensions.join(",")
+        name: this.groups[this.activeRow]["name"] ,
+        sub: this.fetchData(this.selectedGroupExtensions)
       })
       .subscribe(
         data => {

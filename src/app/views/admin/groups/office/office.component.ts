@@ -65,7 +65,7 @@ export class OfficeComponent implements OnInit {
       .updateGroup({
         name: newName,
         id: id,
-        value: this.selectedGroupExtensions.join(",")
+        sub: this.fetchData(this.selectedGroupExtensions)
       })
       .subscribe(
         data => {
@@ -152,6 +152,14 @@ export class OfficeComponent implements OnInit {
       }
   }
 
+  fetchData(data) {
+    let finalData = [];
+    for (let i in data) {
+      finalData.push(data[i]["id"]);
+    }
+
+    return finalData.join(",");
+  }
   updateParentItems() {
     let ids = [];
 
@@ -161,10 +169,11 @@ export class OfficeComponent implements OnInit {
     var activeId = this.activeRow;
 
     this.webServ
-      .updateGroup({
-        id: this.activeParentId,
-        sub: ids.join(',')
-      })
+    .updateGroup({
+      id: this.activeParentId,
+      name: this.groups[this.activeRow]["name"] ,
+      sub: this.fetchData(this.selectedGroupExtensions)
+    })
       .subscribe(
         data => {
           console.log(data);
