@@ -173,7 +173,7 @@ export class CompareAllComponent implements OnInit {
       if(!select1Value1)
         this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
       if(!select1Value2)
-        this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
+        this.toaster.warning('مورد دوم مقایسه انتخاب نشده است');
       return;
     }
 

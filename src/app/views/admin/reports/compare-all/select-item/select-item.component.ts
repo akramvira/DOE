@@ -214,7 +214,7 @@ export class SelectItemComponent implements OnInit {
 
     filterData["id"] = this.fetchData(selectedItem1.main);
     filterData["idSub"] = this.fetchData(selectedItem1.sub1);
-    filterData["idnumber"] = this.fetchData(selectedItem1.sub);
+    filterData["idnumber"] = this.fetchData(selectedItem1.sub2);
     filterData["level"] = this.selectedItem1.value.level;
 
     if(filterData["level"] == 0)
