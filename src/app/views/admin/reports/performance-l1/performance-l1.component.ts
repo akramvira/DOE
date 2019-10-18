@@ -238,7 +238,7 @@ export class PerformanceL1Component implements OnInit {
     this.lineChartLabels = this.mainLabels;
     this.callsBarChartLabels = this.mainLabels;
     this.performanceChartLabels = this.mainLabels;
-    this.resetCharts();
+  
     this.getChartsData(filterData);
   }
 
