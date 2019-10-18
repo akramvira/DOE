@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef } from "@angular/core";
 
 import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
@@ -7,6 +7,7 @@ import { debug } from "util";
 import { WebService } from "./web.service";
 import { formControlBinding } from "@angular/forms/src/directives/reactive_directives/form_control_directive";
 import { SharedService } from "../../../../_services/shared.service";
+import { SelectItemComponent } from './select-item/select-item.component';
 @Component({
   selector: "app-compare-all",
   templateUrl: "./compare-all.component.html",
@@ -31,238 +32,16 @@ export class CompareAllComponent implements OnInit {
     // this.filters.value.time;
   }
 
+  @ViewChild('select1') select1 : SelectItemComponent;
+  @ViewChild('select2') select2 : SelectItemComponent;
+
   ngOnInit() {
     this.setDate();
-    this.getAllLevelsData();
-    this.updateDropdownsSetting();
+
   }
 
-  getAllLevelsData() {
-    this.webServ.getExtensionsAndGroups().subscribe(
-      data => {
-        data = data["data"];
-        this.filters.patchValue({
-          selectedMainItem: 0
-        });
-        let mainData = new Array();
-        let selectedMain = 0;
-        for (var i in data) {
-          if (!selectedMain) selectedMain = data[i];
-
-          mainData.push({
-            id: data[i]["id"],
-            name: data[i]["name"],
-            item_id: data[i]["id"],
-            item_text: data[i]["name"]
-          });
-
-          this.allSub1Data[data[i]["id"]] = [];
-          this.allSub1Data[data[i]["id"]] = data[i]["sub"];
-        }
-
-        this.groups = mainData;
-
-        this.activeSub1_1 = this.allSub1Data[selectedMain["id"]];
-
-        this.filters.patchValue({
-          selectedMainItem: [selectedMain],
-          selectedSub1: this.activeSub1_1
-        });
-
-        this.updateLines();
-      },
-      error => {
-        this.authServe.handdleAuthErrors(error);
-      }
-    );
-  }
-
-  //---------------------selected items ----------------
-  mainDropdownSettings = [];
-  officeDropdownSettings = [];
-  lineDropdownSettings = [];
-
-  groups = new Array();
-  allSub1Data: any = [];
-
-  updateDropdownsData() {
-    this.updateDropdownsSetting();
-
-    //clear sub1 
-    this.activeSub1_1 = [];
-
-    this.selectedItem1.patchValue({
-      main: [],
-      sub1: [],
-      sub2: []
-    });
-  }
-
-  //read data from array and join with , to send for Api
-  fetchData(data) {
-    let finalData = [];
-    for (let i in data) {
-      finalData.push(data[i]["id"]);
-    }
-
-    return finalData.join(",");
-  }
-  //---------------------item 1 ----------------
-  selectedItem1 = new FormGroup({
-    level: new FormControl("0"),
-    main: new FormControl(),
-    sub1: new FormControl(),
-    sub2: new FormControl()
-  });
-
-  getLevel(level) {
-    if (level == 1) return this.selectedItem1.value.level;
-    else return this.selectedItem1.value.level;
-  }
-
-  activeSub1_1 = [];
-
-  activeSub1_2 =[];
-
-  lines = [];
-
-  officeSelected(item) {}
-  updateDropdownsSetting() {
-    let mainSettings = {
-      singleSelection: false,
-      idField: "id",
-      textField: "name",
-      selectAllText: "انتخاب همه",
-      unSelectAllText: "حذف همه موارد",
-      searchPlaceholderText: "جستجو",
-      itemsShowLimit: 1,
-      noDataAvailablePlaceholderText : 'بدون اطلاعات',
-
-      allowSearchFilter: true
-    };
-
-    let mainLimitSelections = [1, 1];
-    let sub1LimitSelections = [1, 1];
-    let sub2LimitSelections = [1, 1];
-
-    let unlimitted = 10000;
-    if (this.selectedItem1.value.level == 0) {
-      mainLimitSelections[0] = unlimitted;
-      sub1LimitSelections[0] = unlimitted;
-      sub2LimitSelections[0] = unlimitted;
-    } else if (this.selectedItem1.value.level == 1) {
-      mainLimitSelections[0] = 1;
-      sub1LimitSelections[0] = unlimitted;
-      sub2LimitSelections[0] = unlimitted;
-    } else {
-      mainLimitSelections[0] = 1;
-      sub1LimitSelections[0] = 1;
-      sub2LimitSelections[0] = unlimitted;
-    }
-
-    this.mainDropdownSettings = [
-      {
-        ...mainSettings,
-        limitSelection: mainLimitSelections[0]
-      },
-      {
-        ...mainSettings,
-        limitSelection: mainLimitSelections[1]
-      }
-    ];
-
-    this.officeDropdownSettings = [
-      {
-        ...mainSettings,
-        limitSelection: sub1LimitSelections[0]
-      },
-      {
-        ...mainSettings,
-        limitSelection: sub1LimitSelections[1]
-      }
-    ];
-
-    this.lineDropdownSettings = [
-      {
-        ...mainSettings,
-        limitSelection: sub2LimitSelections[0]
-      },
-      {
-        ...mainSettings,
-        limitSelection: sub2LimitSelections[1]
-      }
-    ];
-  }
-
-  selectedGroups: any = this.filters.value.selectedMainItem;
-
-  onSelectAll(item) {}
-  onMain1Select(item) {
-    this.activeSub1_1 = this.allSub1Data[item["id"]];
-    this.filters.patchValue({
-      selectedSub1: this.activeSub1_1
-    });
-    this.updateLines();
-  }
-  onDeSelectMain() {
-    this.activeSub1_1 = [];
-    this.filters.patchValue({
-      selectedSub1: []
-    });
-    return;
-  }
-
-  onDeSelectSub1(item) {
-    this.updateLines();
-  }
-
-  getSelectedItems() {
-    let data = {
-      level1: 1,
-      idmain1: 1,
-      idsub1: 1,
-      idnumber1: 1,
-
-      level2: 1,
-      idmain2: 1,
-      idsub2: 1,
-      idnumber2: 1,
-      time: "",
-      from: "",
-      inorout: "",
-      type: ""
-    };
-  }
-
-  activeSub1_1elected(item) {
-    //this.updateLines();
-  }
-
-  updateLines() {
-    let sub1 = [];
-    return;
-    for (let i in this.filters.value.selectedSub1) {
-      sub1.push(this.filters.value.selectedSub1[i]["id"]);
-    }
-
-    let data = {
-      id: this.filters.value.selectedMainItem[0]["id"],
-      idsub: sub1.join(",")
-    };
-
-    // this.webServ.getNumbers(data).subscribe(
-    //   data => {
-    //     this.lines = data["data"];
-    //     this.filters.patchValue({
-    //       selectedSub2 : this.lines
-    //     })
-    //   },
-    //   error => {
-    //     this.authServe.handdleAuthErrors(error);
-    //   }
-    // );
-  }
-
+  
+  
   ////--------Charts And shared data Section------------------
   public performanceBarChartColors = [
     {
@@ -370,44 +149,42 @@ export class CompareAllComponent implements OnInit {
   loadingData = false;
   //--------------------------------
 
-  setMainLabels() {
-    this.mainLabels = [];
 
-    if(this.selectedItem1.value.level)
-      this.mainLabels.push()
-  }
 
  
 
   updateCharts() {
-    this.setMainLabels();
+
     this.getOneGroupData();
   }
 
   getOneGroupData() {
     let filterData = this.filters.getRawValue();
-
-    let selectedItem1 = this.selectedItem1.getRawValue();
-    if (!selectedItem1.main || !selectedItem1.main.length) return;
-    if (selectedItem1.level != 0 && !selectedItem1.sub1.length) return;
-    if (selectedItem1.level == 2 && !selectedItem1.sub2.length) return;
-
-    filterData["id"] = this.fetchData(selectedItem1.main);
-    filterData["idSub"] = this.fetchData(selectedItem1.sub1);
-    filterData["idnumber"] = this.fetchData(this.lines);
-    
-
-    debugger;
+    let select1Value1 = this.select1.getSelectedValue();
+    let select1Value2 = this.select2.getSelectedValue();
 
     if (filterData.time == "-1") {
       filterData.from = this.selectedDateFrom.value;
       filterData.to = this.selectedDateTo.value;
     }
+    filterData['level1']= select1Value1['level'];
+    filterData['idmain1']= select1Value1['id'];
+    filterData['idsub1'] =select1Value1['idSub'];
+    filterData['idnumber1'] =select1Value2['idnumber'];
 
+    filterData['level1']= select1Value2['level'];
+    filterData['idmain1']= select1Value2['id'];
+    filterData['idsub1'] =select1Value2['idSub'];
+    filterData['idnumber1'] =select1Value2['idnumber'];
+
+    
     filterData.time = parseInt(filterData.time);
     this.loadingData = true;
+
+    console.log(filterData);
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
+        debugger;
         data = data["data"];
         let allCalsData = [];
         let answeredData = [];
@@ -418,7 +195,7 @@ export class CompareAllComponent implements OnInit {
         let avgTimesData = [];
         let avgAll = [];
 
-        this.mainLabels = [];
+        this.mainLabels = ['dddddddd','dggggg'];
         for (let index in data) {
           let itemChartData = data[index]["data"];
           this.mainLabels.push(data[index]["name"]);
@@ -436,6 +213,7 @@ export class CompareAllComponent implements OnInit {
           avgAll.push(itemChartData["avgall"]);
         }
 
+        this.mainLabels = [...this.mainLabels];
         this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
 
         this.callsDetailsData = [

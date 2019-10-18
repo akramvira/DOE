@@ -228,7 +228,7 @@ export class GroupsBillsComponent implements OnInit {
       idsub1: this.fetchData(this.selectedItem1.value.sub1)
     };
 
-    debugger;
+   if(data.level1 == 2) // line select
     this.webSerice.getNumbers(data).subscribe(
       data => {
         
@@ -323,18 +323,19 @@ export class GroupsBillsComponent implements OnInit {
     filterData["to"] = this.selectedItem1.value.to || '';
     this.loadingData = true;
    
-   debugger;
+   
     this.webSerice.getBills(filterData).subscribe(
       data => {
       
         data = data['data'];
+        let dataCount = 0;
 
         let billsData = new Array();
         for (var i in data) {
           //      
          // if (i == "all") continue;
          // data["groupId"] = i;
-
+         dataCount++;
          let itemData = [];
          itemData['id']= data[i]['id'];
          itemData['name']=data[i]['name'];
@@ -357,7 +358,7 @@ export class GroupsBillsComponent implements OnInit {
 
         this.page.pageNumber = 1;
         this.page.size = 10;
-        this.page.totalElements = 100;
+        this.page.totalElements = dataCount;
         this.page.totalPages = 10;
         this.loadingData = false;
       },

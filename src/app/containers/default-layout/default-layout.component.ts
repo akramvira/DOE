@@ -129,16 +129,9 @@ export class DefaultLayoutComponent implements OnDestroy {
               ]
             },
             {
-              name: "قبوض",
-
+              name: "قبوض ",
+              url: "/admin/reports/groups-bills",
               icon: "icon-layers",
-              children: [
-                {
-                  name: "قبوض گروه ها",
-                  url: "/admin/reports/groups-bills",
-                  icon: "icon-people"
-                }
-              ]
             },
 
             {
