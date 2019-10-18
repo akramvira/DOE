@@ -66,20 +66,6 @@
                   >
                   </app-doughnut-chart>
                 </div>
-
-                <div class="col-12" *ngIf="allData['in']">
-                  <div class="row">
-                    <div class="col-12 p-2 mt-1 badge badge-secondary" >
-                      همه تماس ها : {{ allData["in"]["all"] }}
-                    </div>
-                    <div class="col-12 p-2 mt-1 badge badge-success">
-                      تماس های پاسخ داده شده : {{ allData["in"]["answer"] }}
-                    </div>
-                    <div class="col-12 p-2 mt-1 badge badge-danger">
-                      تماس های پاسخ داده نشده : {{ allData["in"]["noanswer"] }}
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </div>
@@ -103,17 +89,6 @@
                 [contentTitle]="'نموادار تماس های کل سیستم'"
               >
               </app-bar-chart>
-              <div class="col-12">
-                 
-                <div class="row" *ngIf="allData['in']">
-                  <div class="col-12 p-2 mt-1 badge badge-secondary">
-                    کل مدت زمان مکالمات: {{ allData["in"]["all"] }}
-                  </div>
-                  <div class="col-12 p-2 mt-1 badge badge-success">
-                    میانگین مدت زمان مکالمات: {{ allData["in"]["avg"] }}
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -134,20 +109,100 @@
                 [contentTitle]="'نموادار تماس های کل سیستم'"
               >
               </app-bar-chart>
-              <div class="col-12">
-                <div class="row" *ngIf="allData['out']">
-                  <div class="col-12 p-2 mt-1 badge badge-secondary">
-                    کل مدت زمان مکالمات: {{ allData["out"]["all"] }}
-                  </div>
-                  <div class="col-12 p-2 mt-1 badge badge-success">
-                    میانگین مدت زمان مکالمات: {{ allData["out"]["avg"] }}
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </div>
         </div>
       </div>
     </div>
+
+
+    <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+      <div class="card-header row">
+      تماس های ورودی 
+        <div class="card-header-actions"></div>
+      </div>
+      <div class="card-body">
+        <div class="col-12">
+          <div class="row">
+            <div class="chart-wrapper col-12">
+              <app-doughnut-chart
+                [data]="inDetailsPercent"
+                [labels]="detailPercentLabels"
+                [colors]="inPerformanceColors"
+              >
+              </app-doughnut-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+        <div class="card-header row">
+        تماس های خروجی 
+          <div class="card-header-actions"></div>
+        </div>
+        <div class="card-body">
+          <div class="col-12">
+            <div class="row">
+              <div class="chart-wrapper col-12">
+                <app-doughnut-chart
+                  [data]="outDetailsPercent"
+                  [labels]="detailPercentLabels"
+                  [colors]="inPerformanceColors"
+                >
+                </app-doughnut-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      
+    <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+      <div class="card-header row">
+      تماس های ورودی 
+        <div class="card-header-actions"></div>
+      </div>
+      <div class="card-body">
+        <div class="col-12">
+          <div class="row">
+            <div class="chart-wrapper col-12">
+                <app-bar-chart
+              class="col-12"
+                [datasets]="barChartDataTimeIn"
+                [labels]="barChartLabels"
+                [contentTitle]="'نموادار تماس های کل سیستم'"
+              >
+              </app-bar-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+        <div class="card-header row">
+        تماس های خروجی 
+          <div class="card-header-actions"></div>
+        </div>
+        <div class="card-body">
+          <div class="col-12">
+            <div class="row">
+              <div class="chart-wrapper col-12">
+                  <app-bar-chart
+                  class="col-12"
+                    [datasets]="barChartDataTimeIn"
+                    [labels]="barChartLabels"
+                    [contentTitle]="'نموادار تماس های کل سیستم'"
+                  >
+                  </app-bar-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
   </div>
 </div>

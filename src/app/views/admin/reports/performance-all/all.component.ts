@@ -17,7 +17,7 @@ export class AllComponent implements OnInit {
     private sharedService: SharedService
   ) {}
 
-  public inPerformanceLabel: string[] = ["عملکرد کلی سیستم", " "];
+  public inPerformanceLabel: string[] ;
   public inPerformanceColors = [
     {
       backgroundColor: ["#20a8d8", "#eeeeee"]
@@ -25,6 +25,9 @@ export class AllComponent implements OnInit {
   ];
 
   public inPerformanceData: number[] = [1, 100];
+
+  public inDetailsPercent: number[] = [0,0,100];
+  public outDetailsPercent: number[] = [0,0,100];
 
   allData: any = [];
   globData: any = [];
@@ -94,11 +97,27 @@ export class AllComponent implements OnInit {
       data => {
         data = data["data"];
         this.allData = data;
+
+        debugger;
+
         this.barChartDataIn = [
           { data: [data["in"]["all"]], label: "کل تماس ها" },
           { data: [data["in"]["answer"]], label: " پاسخ داده شده" },
           { data: [data["in"]["noanswer"]], label: " پاسخ داده نشده" },
           { data: [data["in"]["busy"]], label: " مشغول" }
+        ];
+
+        this.inDetailsPercent = [data["in"]['panswer'], data["in"]['pnoanswer'], data["in"]['pbusy']];
+        this.outDetailsPercent = [data["out"]['panswer'], data["out"]['pnoanswer'], data["out"]['pbusy']];
+
+        this.barChartDataTimeOut = [
+          { data: [data["time"]], label: "مدت زمان کل مکالمات" },
+          { data:  [data["avg"]], label: " مدت زمان میانگین مکالمات" },
+        ];
+
+        this.barChartDataTimeOut = [
+          { data: [data["time"]], label: "مدت زمان کل مکالمات" },
+          { data:  [data["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
         this.inPerformanceData = [
@@ -125,6 +144,7 @@ export class AllComponent implements OnInit {
     responsive: true
   };
   public barChartLabels: string[] = ["عملکرد کل سیستم"];
+  public detailPercentLabels: string[] = ['تماس های ورودی','تماس های خروجی','تماس های مشغول'];
   public barChartType = "bar";
   public barChartLegend = true;
 
@@ -134,11 +154,19 @@ export class AllComponent implements OnInit {
     { data: [0], label: " پاسخ داده نشده" },
     { data: [0], label: "مشغول" }
   ];
+  public barChartDataTimeIn: any[] = [
+    { data: [0], label: "مدت زمان کل مکالمات" },
+    { data: [0], label: " مدت زمان میانگین مکالمات" },
+  ];
 
   public barChartDataOut: any[] = [
     { data: [0], label: "کل تماس ها" },
     { data: [0], label: "شهری" },
     { data: [0], label: "بین شهری" },
     { data: [0], label: "موبایل" }
+  ];
+  public barChartDataTimeOut: any[] = [
+    { data: [0], label: "مدت زمان کل مکالمات" },
+    { data: [0], label: " مدت زمان میانگین مکالمات" },
   ];
 }
