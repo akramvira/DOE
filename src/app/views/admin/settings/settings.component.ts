@@ -40,7 +40,7 @@ export class SettingsComponent implements OnInit {
       password: new FormControl(""),
       port: new FormControl("")
     }),
-    invatation: new FormGroup({
+    invitation: new FormGroup({
       title: new FormControl(""),
       ip: new FormControl(""),
       username: new FormControl(""),
@@ -125,23 +125,15 @@ export class SettingsComponent implements OnInit {
     this.settingService.getSettingsdata().subscribe(data => {
       data = data["data"];
       this.type.setValue(data['type']);
+
       this.settings.patchValue({
         ami: data["ami"],
         operatori: data["operatori"],
         server: data["server"],
-        invatation: data["invatation"],
-
-        countco: data["countco"],
-        counte1: data["counte1"],
-        queue_number: data["queue_number"],
-        prepend_outbound_from: data["prepend_outbound_from"],
-        prepend_outbound_to: data["prepend_outbound_to"],
-        did_inbound_from: data["did_inbound_from"],
-        did_inbound_to: data["did_inbound_to"],
-        prefix_outbound_transfer: data["prefix_outbound_transfer"]
+        invitation: data["invitation"]
       });
 
-      this.pingAmi();
+      
     });
     this.settingService.getLincenseData().subscribe(data => {
       this.accessList = data["license"];

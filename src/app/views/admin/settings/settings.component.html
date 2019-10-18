@@ -157,7 +157,7 @@
                 </div>
               </div>
 
-              <div class="row" formGroupName="invatation">
+              <div class="row" formGroupName="invitation">
                 <label class="col-sm-2 col-form-label"
                   >سرور سیستم فراخوان</label
                 >
@@ -745,17 +745,18 @@
 <div  bsModal  #removeAllDataModal ="bs-modal" class="modal fade" tabindex="-1" 
 role="dialog" aria-labelledby="myModalLabel" 
 aria-hidden="true">
-    <div class="modal-dialog modal-sm modal-danger" role="document">
+    <div class="modal-dialog modal-md modal-danger" role="document">
       <div class="modal-content">
         <div class="modal-header">
-         
-          <button type="button" class="close" (click)="removeAllModal.hide()" aria-label="Close">
+            <h4 class="modal-title col-11">حذف کل اطلاعات</h4>
+          <button type="button" class="close " (click)="removeAllModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
-          <h4 class="modal-title">حذف کل اطلاعات</h4>
+       
         </div>
         <div class="modal-body">
           <p>آیا از حذف کل اطلاعات دیتابیس مطمئنید؟ </p>
+          <p>در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم حذف خواهد شد.</p>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary mr-2" (click)="removeAllModal.hide()">انصراف</button>
@@ -763,7 +764,7 @@ aria-hidden="true">
            (click)="removeLastFileData()"
            
            >
-        {{!fileIsRemoving? 'ّبله، حذف شود':  'در حال حذف اطلاعات '}}
+        {{!fileIsRemoving? 'بله حذف شود':  'در حال حذف اطلاعات '}}
            <app-spintick
            [showSpinner]="fileIsRemoving"
            [showTick]="false"
