@@ -193,7 +193,7 @@
                 </div>
             </div>
                 
-            <div class="col-12" *ngIf="callsChartData.length > 0">
+            <div class="col-12 " *ngIf="callsChartData.length > 0">
                 <div class="card">
                     <div class="card-header">
                         نمودار میله ای  <span [hidden]="filters.value.selectedItems.length == 1 "> مقایسه ای </span>پاسخ گویی تماس ها 
@@ -232,7 +232,7 @@
                 </div>
             </div>
             
-            <div class="col-12" *ngIf="performanceChartData.length > 0 ">
+            <div class="col-12 " *ngIf="performanceChartData.length > 0 ">
                 <div class="card">
                     <div class="card-header">
                         نمودار میله ای عملکرد گروه
@@ -251,9 +251,7 @@
                 </div>
             </div>
             
-
-
-            <div class="col-12" *ngIf="timesChartData.length > 0">
+            <div class="col-12 " *ngIf="timesChartData.length > 0">
                 <div class="card">
                     <div class="card-header">
                         نمودار  <span [hidden]="filters.value.selectedItems.length == 1 "> مقایسه ای </span>مدت زمان پاسخ گویی تماس ها
@@ -275,7 +273,6 @@
             </div>
 
 
-    
         </div>
     </div>
     <!-- <div class="col-10 alert alert-secondary text-center" 
