@@ -20,6 +20,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { HttpEventType, HttpEvent } from "@angular/common/http";
 import { FileUploadComponent } from "./file-upload/file-upload.component";
 import { ModalDirective } from 'ngx-bootstrap';
+import { AuthenticationService } from '../../../_services/authentication.service';
 
 @Component({
   selector: "app-settings",
@@ -114,7 +115,8 @@ export class SettingsComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private cd: ChangeDetectorRef,
-    private fu: FileUploadComponent
+    private fu: FileUploadComponent,
+    private authService : AuthenticationService
   ) {}
 
   type = new FormControl('file');
@@ -181,8 +183,7 @@ export class SettingsComponent implements OnInit {
           this.toastr.success("اطلاعات ذخیره شد.", "نتیجه ذخیره!");
         },
         error => {
-          console.log(error);
-          this.toastr.error(error.error.error, "پیغام سیستم");
+          this.authService.handdleAuthErrors(error);
         }
       );
     event.preventDefault();
@@ -197,7 +198,7 @@ export class SettingsComponent implements OnInit {
           this.toastr.success("اطلاعات ذخیره شد.", "نتیجه ذخیره!");
         },
         error => {
-          this.toastr.error(error.error.error, "پیغام سیستم");
+          this.authService.handdleAuthErrors(error);
         }
       );
     event.preventDefault();
@@ -255,7 +256,7 @@ export class SettingsComponent implements OnInit {
           debugger;
         },
         error => {
-//          this.authServe.()
+          this.authService.handdleAuthErrors(error);
         }
       );
     
@@ -284,7 +285,7 @@ export class SettingsComponent implements OnInit {
           // }
         },
         error => {
-          console.log(error);
+          this.authService.handdleAuthErrors(error);
         }
       );
     }
@@ -320,7 +321,7 @@ export class SettingsComponent implements OnInit {
         },
         error => {
           this.fileIsUploading = false;
-          this.toastr.error(error.error.errors.file[0]);
+          this.authService.handdleAuthErrors(error);
         }
       );
     }
@@ -338,6 +339,7 @@ export class SettingsComponent implements OnInit {
         }
       },
       error=>{
+        this.authService.handdleAuthErrors(error);
         this.toastr.error('مشکلی در روند به روز رسانی اطلاعات پیش آمده است. لطفا دوباره تلاش کنید.');
       }
     )
@@ -352,7 +354,7 @@ export class SettingsComponent implements OnInit {
       },
       error => {
         this.fileIsRemoving = false;
-        this.toastr.error("خطا در پاک کردن اطلاعات.");
+        this.authService.handdleAuthErrors(error);
       }
     );
   }
@@ -365,6 +367,7 @@ export class SettingsComponent implements OnInit {
         this.toastr.success(data.data);
       },
       error=>{
+        this.authService.handdleAuthErrors(error);
         
       }
     )
@@ -385,6 +388,7 @@ export class SettingsComponent implements OnInit {
         },
         error => {
           this.pingStatus = -1;
+          this.authService.handdleAuthErrors(error);
           this.toastr.error(error.error.error, "دسترسی به سرور ami ممکن نیست");
         }
       );
