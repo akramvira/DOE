@@ -153,8 +153,6 @@ export class CompareAllComponent implements OnInit {
 
 
 
- 
-
   updateCharts() {
     this.getOneGroupData();
   }
@@ -164,7 +162,6 @@ export class CompareAllComponent implements OnInit {
     let select1Value1 = this.select1.getSelectedValue();
     let select1Value2 = this.select2.getSelectedValue();
 
-debugger;
     if (filterData.time == "-1") {
       filterData.from = this.selectedDateFrom.value;
       filterData.to = this.selectedDateTo.value;
@@ -181,7 +178,7 @@ debugger;
     filterData['level1']= select1Value1['level'];
     filterData['idmain1']= select1Value1['id'];
     filterData['idsub1'] =select1Value1['idSub'];
-    filterData['idnumber1'] =select1Value2['idnumber'];
+    filterData['idnumber1'] =select1Value1['idnumber'];
 
     filterData['level2']= select1Value2['level'];
     filterData['idmain2']= select1Value2['id'];

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from "@angular/core";
 import { WebService } from "./web.service";
 import { AuthenticationService } from "../../../../../_services/authentication.service";
 import { FormControl, FormGroup } from "@angular/forms";
+import { isObject } from 'ngx-bootstrap/chronos/utils/type-checks';
 
 @Component({
   selector: "app-select-item",
@@ -122,7 +123,59 @@ export class SelectItemComponent implements OnInit {
 
   lines = [];
 
+  @Input() isMultipleSelectionPossible = false;
+
   updateDropdownsSetting() {
+
+    if(this.isMultipleSelectionPossible){
+      let mainSettings = {
+        singleSelection: false,
+        idField: "id",
+        textField: "name",
+        selectAllText: "انتخاب همه",
+        unSelectAllText: "حذف همه موارد",
+        searchPlaceholderText: "جستجو",
+        itemsShowLimit: 1,
+        noDataAvailablePlaceholderText: "بدون اطلاعات",
+  
+        allowSearchFilter: true
+      };
+  
+      let mainLimitSelections: number;
+      let sub1LimitSelections: number;
+      let sub2LimitSelections: number;
+  
+      let unlimitted = 10000;
+      if (this.selectedItem1.value.level == 0) {
+        mainLimitSelections = unlimitted;
+        sub1LimitSelections = unlimitted;
+        sub2LimitSelections = unlimitted;
+      } else if (this.selectedItem1.value.level == 1) {
+        mainLimitSelections = 1;
+        sub1LimitSelections = unlimitted;
+        sub2LimitSelections = unlimitted;
+      } else {
+        mainLimitSelections = 1;
+        sub1LimitSelections = 1;
+        sub2LimitSelections = unlimitted;
+      }
+  
+      this.mainDropdownSettings = {
+        ...mainSettings,
+        limitSelection: mainLimitSelections
+      };
+  
+      this.officeDropdownSettings = {
+        ...mainSettings,
+        limitSelection: sub1LimitSelections
+      };
+  
+      this.lineDropdownSettings = {
+        ...mainSettings,
+        limitSelection: sub2LimitSelections
+      };
+    }
+    else{
     let mainSettings = {
       singleSelection: false,
       idField: "id",
@@ -139,6 +192,7 @@ export class SelectItemComponent implements OnInit {
     this.lineDropdownSettings = 
     this.mainDropdownSettings = 
     this.officeDropdownSettings = mainSettings;
+  }
   }
 
   selectedGroups: any = this.selectedItem1.value.main;

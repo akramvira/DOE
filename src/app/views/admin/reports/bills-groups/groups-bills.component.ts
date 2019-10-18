@@ -5,6 +5,8 @@ import { FormControl, FormGroup } from "@angular/forms";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { WebService } from "./web.service";
 import { SharedService } from "../../../../_services/shared.service";
+import { SelectItemComponent } from '../_components/select-item/select-item.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-groups-bills",
@@ -13,52 +15,23 @@ import { SharedService } from "../../../../_services/shared.service";
   encapsulation: ViewEncapsulation.None
 })
 export class GroupsBillsComponent implements OnInit {
-  groups = new Array();
+ 
   bills: any;
   page = new Page();
+
+  @ViewChild('selectItem') selectItem : SelectItemComponent;
 
   constructor(
     private reportsServ: ReportsService,
     private authService: AuthenticationService,
     private webSerice: WebService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private toaster : ToastrService
   ) {}
-  getAllLevelsData() {
-    this.webSerice.getExtensionsAndGroups().subscribe(
-      data => {
-        data = data["data"];
-        let mainData = new Array();
-        let selectedMain = 0;
-
-        for (var i in data) {
-          if (!selectedMain) selectedMain = data[i];
-
-          mainData.push({
-            id: data[i]["id"],
-            name: data[i]["name"],
-            item_id: data[i]["id"],
-            item_text: data[i]["name"]
-          });
-
-          this.allSub1Data[data[i]["id"]] = [];
-          this.allSub1Data[data[i]["id"]] = data[i]["sub"];
-        }
-        this.groups = mainData;
-
-        this.activeSub1_1 = this.allSub1Data[selectedMain["id"]];
-        this.updateLines();
-      },
-      error => {
-        this.authService.handdleAuthErrors(error);
-      }
-    );
-  }
 
   ngOnInit() {
     this.setDate();
-    this.updateDropdownsSetting();
-    this.getAllLevelsData();
-    this.getBillsData();
+    
   }
   onActivate(event) {}
 
@@ -75,15 +48,14 @@ export class GroupsBillsComponent implements OnInit {
     // });
   }
 
-  officeSelected() {
-    this.updateLines();
-  }
+
   //------date
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
   minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
   maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
+  time = new FormControl("0");
 
   datePickerConfig = {};
   setDate() {
@@ -136,195 +108,35 @@ export class GroupsBillsComponent implements OnInit {
   setActiveRow() {}
 
   loadingData = false;
-  //---------------------selected items ----------------
-  mainDropdownSettings = {};
-  officeDropdownSettings = {};
-  lineDropdownSettings = {};
 
-  allSub1Data: any = [];
-
-  updateDropdownsData() {
-    this.updateDropdownsSetting();
-    this.activeSub1_1 = [];
-
-    this.selectedItem1.patchValue({
-      main: [],
-      sub1: [],
-      sub2: []
-    });
-  }
-  //---------------------item 1 ----------------
-  selectedItem1 = new FormGroup({
-    level: new FormControl("0"),
-    main: new FormControl(),
-    sub1: new FormControl(),
-    sub2: new FormControl(),
-    time: new FormControl(0),
-    from: new FormControl(),
-    to: new FormControl()
-  });
-
-  getLevel(level) {
-    if (level == 1) return this.selectedItem1.value.level;
-    else return this.selectedItem1.value.level;
-  }
-
-  activeSub1_1 = [];
-
-  activeSub1_2 = [];
-
-  lines = [];
-
-  selectedGroups: any = this.selectedItem1.value.main;
-
-  onSelectAll(item) {}
-  onItemSelect(item) {
-    this.activeSub1_1 = this.allSub1Data[item["id"]];
-    this.selectedItem1.patchValue({
-      sub1: this.activeSub1_1
-    });
-    this.updateLines();
-  }
-  onDeSelectMain() {
-    this.activeSub1_1 = [];
-    this.selectedItem1.patchValue({
-      sub1: []
-    });
-    return;
-  }
-
-  onDeSelectSub1(item) {
-    this.updateLines();
-  }
-
-  getSelectedItems() {
-    let data = {
-      level1: 1,
-      idmain1: 1,
-      idsub1: 1,
-      idnumber1: 1,
-
-      level2: 1,
-      idmain2: 1,
-      idsub2: 1,
-      idnumber2: 1,
-      time: "",
-      from: "",
-      inorout: "",
-      type: ""
-    };
-  }
-
-  activeSub1_1elected(item) {
-    //this.updateLines();
-  }
-
-  updateLines() {
-    let sub1 = [];
-
-    let data = {
-      level: this.selectedItem1.value.level,
-      idmain: this.fetchData(this.selectedItem1.value.main),
-      idsub: this.fetchData(this.selectedItem1.value.sub1)
-    };
-
-   if(data.level == 2) // line select
-    this.webSerice.getNumbers(data).subscribe(
-      data => {
-        
-        this.lines = data["data"];
-      },
-      error => {
-        this.authService.handdleAuthErrors(error);
-      }
-    );
-  }
-
-  onMainSelect(item) {
-    this.activeSub1_1 = this.allSub1Data[item["id"]];
-    this.selectedItem1.patchValue({
-      sub: this.activeSub1_1
-    });
-    this.updateLines();
-  }
-  updateDropdownsSetting() {
-    let mainSettings = {
-      singleSelection: false,
-      idField: "id",
-      textField: "name",
-      selectAllText: "انتخاب همه",
-      unSelectAllText: "حذف همه موارد",
-      searchPlaceholderText: "جستجو",
-      itemsShowLimit: 1,
-      noDataAvailablePlaceholderText: "بدون اطلاعات",
-
-      allowSearchFilter: true
-    };
-
-    let mainLimitSelections: number;
-    let sub1LimitSelections: number;
-    let sub2LimitSelections: number;
-
-    let unlimitted = 10000;
-    if (this.selectedItem1.value.level == 0) {
-      mainLimitSelections = unlimitted;
-      sub1LimitSelections = unlimitted;
-      sub2LimitSelections = unlimitted;
-    } else if (this.selectedItem1.value.level == 1) {
-      mainLimitSelections = 1;
-      sub1LimitSelections = unlimitted;
-      sub2LimitSelections = unlimitted;
-    } else {
-      mainLimitSelections = 1;
-      sub1LimitSelections = 1;
-      sub2LimitSelections = unlimitted;
-    }
-
-    this.mainDropdownSettings = {
-      ...mainSettings,
-      limitSelection: mainLimitSelections
-    };
-
-    this.officeDropdownSettings = {
-      ...mainSettings,
-      limitSelection: sub1LimitSelections
-    };
-
-    this.lineDropdownSettings = {
-      ...mainSettings,
-      limitSelection: sub2LimitSelections
-    };
-  }
-
-  //read data from array and join with , to send for Api
-  fetchData(data) {
-    let finalData = [];
-    for (let i in data) {
-      finalData.push(data[i]["id"]);
-    }
-
-    return finalData.join(",");
-  }
   getBillsData() {
   
     let filterData = {};
-    let selectedItem1 = this.selectedItem1.getRawValue();
-    if (!selectedItem1.main || !selectedItem1.main.length) return;
-    if (selectedItem1.level != 0 && !selectedItem1.sub1.length) return;
-    if (selectedItem1.level == 2 && !selectedItem1.sub2.length) return;
+    debugger;;
+    
+    filterData["time"] = this.time.value;
+    filterData["from"] = this.selectedDateFrom.value || '';
+    filterData["to"] = this.selectedDateTo.value || '';
 
-    filterData["level"] =selectedItem1.level;
-    filterData["idmain"] = this.fetchData(selectedItem1.main);
-    filterData["idsub"] = this.fetchData(selectedItem1.sub1);
-    filterData["idnumber"] = this.fetchData(this.lines);
+    let selectedItem = this.selectItem.getSelectedValue();
+  
+    if (this.time.value == "-1") {
+      filterData['from'] = this.selectedDateFrom.value;
+      filterData['to'] = this.selectedDateTo.value;
+    }
+    if(!selectedItem)
+      this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
+    
+      
+    filterData['level']= selectedItem['level'];
+    filterData['idmain']= selectedItem['id'];
+    filterData['idsub'] =selectedItem['idSub'];
+    filterData['idnumber'] =selectedItem['idnumber'];
 
-    filterData["time"] = this.selectedItem1.value.time;
-    filterData["from"] = this.selectedItem1.value.from || '';
-    filterData["to"] = this.selectedItem1.value.to || '';
+debugger;
     this.loadingData = true;
    
  
-   
     this.webSerice.getBills(filterData).subscribe(
       data => {
       
