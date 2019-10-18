@@ -197,7 +197,7 @@ debugger;
 
     console.log(filterData);
     
-    this.resetCharts();
+   
 
    
     this.webServ.getGroupPerformance(filterData).subscribe(
