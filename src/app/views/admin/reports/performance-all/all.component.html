@@ -86,6 +86,7 @@
               class="col-12"
                 [datasets]="barChartDataIn"
                 [contentTitle]="'نموادار تماس های کل سیستم'"
+                [labels]= "['تعداد تماس ها']"
               >
               </app-bar-chart>
             </div>
@@ -170,8 +171,10 @@
             <div class="chart-wrapper col-12">
                 <app-bar-chart
               class="col-12"
-                [datasets]="barChartDataTimeIn"
+                [datasets]="barChartDataTimeOut"
                 [contentTitle]="'نموادار تماس های کل سیستم'"
+                [labels]= "['مدت زمان مکالمات']"
+                [isTimeChart]="true"
               >
               </app-bar-chart>
             </div>
@@ -191,9 +194,10 @@
               <div class="chart-wrapper col-12">
                   <app-bar-chart
                   class="col-12"
-                    [datasets]="barChartDataTimeIn"
+                    [datasets]="barChartDataTimeOut"
                     [contentTitle]="'نموادار تماس های کل سیستم'"
-                  
+                    [labels]= "['مدت زمان مکالمات']"
+                    [isTimeChart]="true"
                   >
                   </app-bar-chart>
               </div>

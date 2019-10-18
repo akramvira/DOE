@@ -32,8 +32,8 @@ export class AllComponent implements OnInit {
   
   public inPerformanceData: number[] = [1, 100];
 
-  public inDetailsPercent: number[] = [0,0,0.1];
-  public outDetailsPercent: number[] = [0,0,0.1];
+  public inDetailsPercent: number[] = [1,0,0];
+  public outDetailsPercent: number[] = [1,0,0];
 
   allData: any = [];
   globData: any = [];
@@ -116,16 +116,17 @@ export class AllComponent implements OnInit {
         this.inDetailsPercent = [data["in"]['panswer'], data["in"]['pnoanswer'], data["in"]['pbusy']];
         this.outDetailsPercent = [data["out"]['pbetweenco'], data["out"]['pco'], data["out"]['pmobile']];
 
-        this.barChartDataTimeOut = [
+        this.barChartDataTimeIn = [
           { data: [data['in']["time"]], label: "مدت زمان کل مکالمات" },
           { data:  [data['in']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
         this.barChartDataTimeOut = [
-          { data: [data['out']["time"]], label: "مدت زمان کل مکالمات" },
-          { data:  [data['out']["avg"]], label: " مدت زمان میانگین مکالمات" },
+          { data: [data['in']["time"]], label: "مدت زمان کل مکالمات" },
+          { data:  [data['in']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
+        debugger;
         this.inPerformanceData = [
           data["in"]["performance"],
           100 - data["in"]["performance"]
@@ -152,8 +153,7 @@ export class AllComponent implements OnInit {
   public barChartLabels: string[] = ["عملکرد کل سیستم"];
   public detailPercentLabelsIn: string[] = [' پاسخ داده شده',' پاسخ داده نشده',' مشغول'];
   public detailPercentLabelsOut: string[] = [' بین شهری',' شهری',' موبایل'];
-  public barChartType = "bar";
-  public barChartLegend = true;
+
 
   public barChartDataIn: any[] = [
     { data: [0], label: "کل تماس ها" },

@@ -73,7 +73,7 @@ export class DoughnutChartComponent implements OnInit {
     let tmpLineChartData = JSON.parse(JSON.stringify(this.data));
     let record = {};
     for (let index in this.labels) {
-      debugger;
+      
       record[this.labels[index].replace(/\s/g, "_")] = this.data[index];
     }
     data.push(record);
