@@ -245,7 +245,7 @@ export class SettingsComponent implements OnInit {
   submitOtherData() {
       this.settingService.setOtherData(this.otherData.getRawValue()).subscribe(
         event => {
-          debugger;
+          this.toastr.success('اطلاعات با موفقیت ذخیره شد.');
         },
         error => {
           this.authService.handdleAuthErrors(error);
@@ -301,7 +301,10 @@ export class SettingsComponent implements OnInit {
             case HttpEventType.ResponseHeader:
               break;
             case HttpEventType.UploadProgress:
-              this.progress = Math.round((event.loaded / event.total) * 100);
+              this.progress = Math.round((event.loaded / event.total) * 100) > 90 ? 
+              90 
+              : Math.round((event.loaded / event.total) * 100);
+              
               break;
             case HttpEventType.Response:
               this.fileIsUploading = false;
