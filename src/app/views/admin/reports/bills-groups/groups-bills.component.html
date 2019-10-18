@@ -239,22 +239,7 @@
             </ng-template>
           </ngx-datatable-column>
 
-          <ngx-datatable-column name="abonmah" [width]="100">
-            <ng-template
-              let-column="column"
-              let-sort="sortFn"
-              ngx-datatable-header-template
-            >
-              <span (click)="sort()">آبونمان</span>
-            </ng-template>
-            <ng-template
-              let-value="value"
-              let-rowIndex="rowIndex"
-              ngx-datatable-cell-template
-            >
-              <span> {{ value | number }} ریال </span>
-            </ng-template>
-          </ngx-datatable-column>
+         
 
           <ngx-datatable-column name="co" [width]="100">
               <ng-template
@@ -273,6 +258,22 @@
               </ng-template>
             </ngx-datatable-column>
 
+          <ngx-datatable-column name="abonmah" [width]="100">
+              <ng-template
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                <span (click)="sort()">آبونمان</span>
+              </ng-template>
+              <ng-template
+                let-value="value"
+                let-rowIndex="rowIndex"
+                ngx-datatable-cell-template
+              >
+                <span> {{ value | number }} ریال </span>
+              </ng-template>
+          </ngx-datatable-column>
           <ngx-datatable-column name="sum" [width]="100">
             <ng-template
               let-column="column"
