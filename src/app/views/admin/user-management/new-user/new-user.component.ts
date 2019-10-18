@@ -18,7 +18,7 @@ export class NewUserComponent implements OnInit {
   dropdownSettings = {};
 
   userData = new FormGroup({
-    active : new FormControl(''),
+    active : new FormControl('0'),
     name : new FormControl(''),
     username :  new FormControl(''),
     password :  new FormControl(''),
@@ -60,11 +60,11 @@ export class NewUserComponent implements OnInit {
         console.log(error);
 
       });
-      
+
     this.dropdownSettings = {
       singleSelection: false,
       idField: "id",
-      textField: "name",
+      textField: "text",
       selectAllText: 'انتخاب همه',
       unSelectAllText: 'حذف همه موارد',
       searchPlaceholderText: 'جستجو',
