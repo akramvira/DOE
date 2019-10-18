@@ -304,10 +304,11 @@ export class SettingsComponent implements OnInit {
               this.progress = Math.round((event.loaded / event.total) * 100) > 90 ? 
               90 
               : Math.round((event.loaded / event.total) * 100);
-              
+
               break;
             case HttpEventType.Response:
               this.fileIsUploading = false;
+              this.progress =100;
               this.toastr.success("پیغام سیستم", event["data"]);
               setTimeout(() => {
                 this.progress = 0;
