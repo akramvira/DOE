@@ -122,8 +122,8 @@ export class AllComponent implements OnInit {
         ];
 
         this.barChartDataTimeOut = [
-          { data: [data['in']["time"]], label: "مدت زمان کل مکالمات" },
-          { data:  [data['in']["avg"]], label: " مدت زمان میانگین مکالمات" },
+          { data: [data['out']["time"]], label: "مدت زمان کل مکالمات" },
+          { data:  [data['out']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
         debugger;
