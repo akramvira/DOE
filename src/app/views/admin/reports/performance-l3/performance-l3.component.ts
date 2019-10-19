@@ -7,6 +7,7 @@ import { debug } from "util";
 import { WebService } from "./web.service";
 import { SharedService } from '../../../../_services/shared.service';
 import { DaterangeComponent } from '../_components/daterange/daterange.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-performance-l3",
@@ -21,7 +22,8 @@ export class PerformanceL3Component implements OnInit {
   constructor(
     private webServ: WebService,
     private authServe: AuthenticationService,
-    private sharedService :SharedService
+    private sharedService :SharedService,
+    private toaster: ToastrService
   ) {}
   groups = new Array();
   filters = new FormGroup({
@@ -254,8 +256,19 @@ loadingData = false;
   getOneGroupData() {
     let filterData = this.filters.getRawValue();
 
-    if (!filterData.selectedItems.length) return;
-    if (!filterData.selectedSub1.length) return;
+    if (!filterData.selectedSub2.length) {
+      this.toaster.warning('لطفا داخلی مورد نظر را انتخاب کنید.');
+      return;
+    }
+
+    if (!(
+      (filterData.selectedItems.length && filterData.selectedSub1.length)||
+      (!filterData.selectedItems.length && !filterData.selectedSub1.length)
+    )) {
+      this.toaster.warning('لطفا معاونت و اداره را انتخاب کنید');
+      return;
+    }
+
 
     filterData["idsub"] = [];
     filterData["id"] = filterData.selectedItems[0]["id"];
