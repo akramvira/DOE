@@ -45,72 +45,7 @@ public serviceLevelbarChartData: any[] = [{data:[], label:''}];
 
   ngOnInit() {
     
-    let data = {
-      from : this.daterange.selectedDateFrom.value,
-      to : this.daterange.selectedDateTo.value
-    }
-      this.reportServ.gerChartsData(data).subscribe(
-        (data)=>{
-
-          data=data['data'];
-
-          let noanswer = [];
-          let answer = [];
-          let busy = [];
-          let performance = [];
-          let time = [];
-          let ringTime = [];
-
-          let arrayData = [];
-          for(let i in data ){
-            this.queueId.setValue(data[i]['id']);
-            this.mainLabels.push(data[i]['name'] );
-            arrayData.push({ id: data[i]['id'],
-             name:data[i]['name'] ,
-             ...data[i]['data'], agents: data[i]['agents'] });
-
-            noanswer.push(data[i]['data']['noanswer']);
-            answer.push(data[i]['data']['answer']);
-            busy.push(data[i]['data']['busy']);
-            performance.push(data[i]['data']['performance']);
-            time.push(data[i]['data']['time']);
-            ringTime.push(data[i]['data']['ringTime']);
-
-          }
-
-          this.queueData = arrayData;
-        //this.setPage(data); 
-
-        debugger;   
-        
-
-        //time chart-----------------------------------
-        this.timesBarChartData=[];
-        this.timesBarChartData = [
-          {data:ringTime, label: 'مدت زمان انتظار'},
-          {data:time, label: 'مدت زمان مکالمه'},
-          ];
-
-
-        //answer no answer data--------------------
-        this.callsBarChartData = [
-          {data:answer, label: 'تعداد تماس های پاسخ داده شده'},
-          {data:noanswer, label: 'تعداد تماس های پاسخ داده نشده'},
-          {data:busy, label: 'تعداد تماس های مشغول'},
-          ];
-
-
-        //---performance----------------------------------
-        this.serviceLevelbarChartData = [
-          {data:performance, label: 'درصد سرویس دهی'},
-          ];
-      },
-      (error)=>{
-        this.authServ.handdleAuthErrors(error);
-      }
-      );
-
-
+this.getGeneralChartData();
   }
   @ViewChild('queuesTable') table: any;
 
@@ -136,7 +71,6 @@ public serviceLevelbarChartData: any[] = [{data:[], label:''}];
   //pagination
 
   setPage(pageInfo){
-    debugger;
     this.page.pageNumber = pageInfo.offset+1;
 
     this.filterData();
@@ -187,13 +121,6 @@ public serviceLevelbarChartData: any[] = [{data:[], label:''}];
 
 
   this.filterData();
-
-  // const filteredData = this.tempData.filter(function(d) {
-  //   return d[columnName].toLowerCase().indexOf(val) !== -1 || !val;
-  // });
-
-  // this.data= filteredData;
-  // this.myTable.offset = 0;
   }
 
   
@@ -212,9 +139,71 @@ set setData(filteredData){
 }
 
 
+getGeneralChartData(){
+  let data = {
+    from : this.daterange.selectedDateFrom.value,
+    to : this.daterange.selectedDateTo.value
+  }
+    this.reportServ.gerChartsData(data).subscribe(
+      (data)=>{
+
+        data=data['data'];
+
+        let noanswer = [];
+        let answer = [];
+        let busy = [];
+        let performance = [];
+        let time = [];
+        let ringTime = [];
+
+        let arrayData = [];
+        for(let i in data ){
+          this.queueId.setValue(data[i]['id']);
+          this.mainLabels.push(data[i]['name'] );
+          arrayData.push({ id: data[i]['id'],
+           name:data[i]['name'] ,
+           ...data[i]['data'], agents: data[i]['agents'] });
+
+          noanswer.push(data[i]['data']['noanswer']);
+          answer.push(data[i]['data']['answer']);
+          busy.push(data[i]['data']['busy']);
+          performance.push(data[i]['data']['performance']);
+          time.push(data[i]['data']['time']);
+          ringTime.push(data[i]['data']['ringTime']);
+
+        }
+
+        this.queueData = arrayData;
+      //this.setPage(data); 
+
+      
+
+      //time chart-----------------------------------
+      this.timesBarChartData=[];
+      this.timesBarChartData = [
+        {data:ringTime, label: 'مدت زمان انتظار'},
+        {data:time, label: 'مدت زمان مکالمه'},
+        ];
 
 
+      //answer no answer data--------------------
+      this.callsBarChartData = [
+        {data:answer, label: 'تعداد تماس های پاسخ داده شده'},
+        {data:noanswer, label: 'تعداد تماس های پاسخ داده نشده'},
+        {data:busy, label: 'تعداد تماس های مشغول'},
+        ];
 
+
+      //---performance----------------------------------
+      this.serviceLevelbarChartData = [
+        {data:performance, label: 'درصد سرویس دهی'},
+        ];
+    },
+    (error)=>{
+      this.authServ.handdleAuthErrors(error);
+    }
+    );
+}
 
 
 detailsLabels = [];
@@ -271,9 +260,6 @@ submitDetailedChartsFilter(){
       this.detailsLabels = detailsLabels;
       //this.queueData = arrayData;
     //this.setPage(data); 
-
-    debugger;   
-    
 
     //time chart-----------------------------------
     this.timesBarChartDataDetails=[];

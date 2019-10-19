@@ -263,6 +263,7 @@ loadingData = false;
       return;
     }
 
+
     if (!(
       (filterData.selectedItems.length && filterData.selectedSub1.length)||
       (!filterData.selectedItems.length && !filterData.selectedSub1.length)
@@ -273,7 +274,7 @@ loadingData = false;
 
 
     filterData["idsub"] = [];
-    filterData["id"] = filterData.selectedItems[0]["id"];
+    filterData["id"] = filterData.selectedItems? filterData.selectedItems[0]["id"]: '';
     for (let item in filterData.selectedSub1) {
       filterData["idsub"].push(filterData.selectedSub1[item]["id"]);
     }
