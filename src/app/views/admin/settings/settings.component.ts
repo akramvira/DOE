@@ -29,6 +29,7 @@ import { AuthenticationService } from '../../../_services/authentication.service
 })
 export class SettingsComponent implements OnInit {
   @ViewChild("removeAllDataModal") public removeAllDataModal: ModalDirective;
+  @ViewChild("removeAllQDataModal") public removeAllQDataModal: ModalDirective;
 
   fb: FormBuilder;
   //Tab 1 data
@@ -236,7 +237,7 @@ export class SettingsComponent implements OnInit {
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
   }
-
+  fileType :FormControl = new FormControl(0);
   datafileToUpload: File = null;
   handleDataFileInput(files: FileList) {
     this.datafileToUpload = files.item(0);
@@ -293,7 +294,7 @@ export class SettingsComponent implements OnInit {
       const formData = new FormData();
       formData.append("file", this.datafileToUpload);
 
-      this.settingService.uploadfile(formData).subscribe(
+      this.settingService.uploadfile(formData, this.fileType.value).subscribe(
         (event: HttpEvent<any>) => {
           switch (event.type) {
             case HttpEventType.Sent:
@@ -341,11 +342,14 @@ export class SettingsComponent implements OnInit {
     )
 
   }
+
+
   removeLastFileData() {
     this.fileIsRemoving = true;
     this.settingService.removeLastFileData().subscribe(
       data => {
         this.fileIsRemoving = false;
+        this.removeAllDataModal.hide();
         this.toastr.success("پیغام سیستم", "اطلاعات از پایگاه داده حذف شد.");
       },
       error => {
@@ -355,6 +359,20 @@ export class SettingsComponent implements OnInit {
     );
   }
 
+  removeLastQFileData() {
+    this.fileIsRemoving = true;
+    this.settingService.removeLastQFileData().subscribe(
+      data => {
+        this.removeAllQDataModal.hide();
+        this.fileIsRemoving = false;
+        this.toastr.success("پیغام سیستم", "اطلاعات از پایگاه داده حذف شد.");
+      },
+      error => {
+        this.fileIsRemoving = false;
+        this.authService.handdleAuthErrors(error);
+      }
+    );
+  }
   saveDataType(){
     
     this.settingService.updateType({type:this.type.value}).

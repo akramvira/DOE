@@ -96,17 +96,27 @@ export class SettingsService {
   }
 
 
-  public uploadfile(data) {
+  public uploadfile(data, filetype ) {
   
     let options = this.authServ.getRequestOpions(true);
     options['reportProgress'] = true;
     options['observe'] =  'events';
+
+    if(filetype == 0)
     return this.http.post(environment.apiUrl + '/admin/setting/uploadfile',data, options);
+    else 
+    return this.http.post(environment.apiUrl + '/admin/setting/queuefile',data, options);
+
   }
 
   public removeLastFileData(){
     let options = this.authServ.getRequestOpions(true);
     return this.http.get(environment.apiUrl + '/admin/setting/deleteall', options);
+  }
+
+  public removeLastQFileData(){
+    let options = this.authServ.getRequestOpions(true);
+    return this.http.get(environment.apiUrl + '/admin/setting/deletequeue', options);
   }
 
 

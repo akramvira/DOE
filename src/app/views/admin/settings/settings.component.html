@@ -293,17 +293,52 @@
       <div class=" col-12 col-md-6 col-lg-6  ">
         <div class="card card-accent-success">
           <div class="card-header">
-            ثبت فایل خروجی ایجاد شده جهت نمایش گزارشات
+              ورود فایل اطلاعاتی گزارشات و صف ها (.csv)
           </div>
           <div class="card-body">
             <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
               <div class="form-group ">
                 <div class="input-group">
-                  <label class="col-4 col-form-label">
+
+                  <label class="col-4 col-form-label" for = "file1">
                     فایل اطلاعات سیستم:</label
                   >
+                  <div  class="col-12 btn-group btn-group-toggle mb-2"  data-toggle="buttons" >
+
+                      <label
+                        class="btn btn-foursquare  p-2 "
+                        [ngClass]="{ active: fileType.value == '0' }"
+                        for="id1"
+                        >
+                        <input
+                          type="radio"
+                          value="0"
+                          [formControl]="fileType"
+                          id="id1"
+                          autocomplete="off"
+                        />
+                        فایل اطلاعات سیستم
+                      </label>
+                      <label
+                        class="btn btn-foursquare  p-2 "
+                        [ngClass]="{ active: fileType.value == '1' }"
+                        for="id2"
+                      >
+                        <input
+                          type="radio"
+                          value="1"
+                          [formControl]="fileType"
+                          id="id2"
+                          autocomplete="off"
+                        />
+                      فایل اطلاعات صف ها
+                      </label>
+            
+                    </div>
+
+
                   <label for="data-file" class="btn btn-primary"
-                    >انتخاب...</label
+                    >انتخاب فایل csv ...</label
                   >
 
                   <input
@@ -344,9 +379,11 @@
 
           <div class="text-center border-top p-4">
             <button class="btn btn-danger" (click)="removeAllDataModal.show()">
-             حذف اطلاعات دیتابیس
-
+             حذف اطلاعات دیتابیس گزارشات
             </button>
+            <button class="btn btn-danger" (click)="removeAllQDataModal.show()">
+                حذف اطلاعات دیتابیس صف ها
+               </button>
           </div>
         </div>
       </div>
@@ -748,20 +785,52 @@ aria-hidden="true">
     <div class="modal-dialog modal-md modal-danger" role="document">
       <div class="modal-content">
         <div class="modal-header">
-            <h4 class="modal-title col-11">حذف کل اطلاعات</h4>
-          <button type="button" class="close " (click)="removeAllModal.hide()" aria-label="Close">
+            <h4 class="modal-title col-11">حذف کل اطلاعات گزارشات</h4>
+          <button type="button" class="close " (click)="removeAllDataModal.hide()" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
        
         </div>
         <div class="modal-body">
-          <p>آیا از حذف کل اطلاعات دیتابیس مطمئنید؟ </p>
+          <p>آیا از حذف کل اطلاعات دیتابیس گزارشات مطمئنید؟ </p>
           <p>در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم حذف خواهد شد.</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary mr-2" (click)="removeAllModal.hide()">انصراف</button>
+          <button type="button" class="btn btn-secondary mr-2" (click)="removeAllDataModal.hide()">انصراف</button>
           <button type="button" class="btn btn-danger"
            (click)="removeLastFileData()"
+           
+           >
+        {{!fileIsRemoving? 'بله حذف شود':  'در حال حذف اطلاعات '}}
+           <app-spintick
+           [showSpinner]="fileIsRemoving"
+           [showTick]="false"
+         ></app-spintick></button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <div  bsModal  #removeAllQDataModal ="bs-modal" class="modal fade" tabindex="-1" 
+role="dialog" aria-labelledby="myModalLabel" 
+aria-hidden="true">
+    <div class="modal-dialog modal-md modal-danger" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+            <h4 class="modal-title col-11"> حذف کل اطلاعات صف ها</h4>
+          <button type="button" class="close " (click)="removeAllQDataModal.hide()" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+       
+        </div>
+        <div class="modal-body">
+          <p>آیا از حذف کل اطلاعات دیتابیس صف ها مطمئنید؟ </p>
+          <p>در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم حذف خواهد شد.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary mr-2" (click)="removeAllQDataModal.hide()">انصراف</button>
+          <button type="button" class="btn btn-danger"
+           (click)="removeLastQFileData()"
            
            >
         {{!fileIsRemoving? 'بله حذف شود':  'در حال حذف اطلاعات '}}

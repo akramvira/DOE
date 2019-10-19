@@ -157,9 +157,12 @@ getGeneralChartData(){
         let ringTime = [];
 
         let arrayData = [];
+        let mainLabels = [];
         for(let i in data ){
           this.queueId.setValue(data[i]['id']);
-          this.mainLabels.push(data[i]['name'] );
+          if(!this.mainLabels.length)
+          mainLabels.push(data[i]['name'] );
+
           arrayData.push({ id: data[i]['id'],
            name:data[i]['name'] ,
            ...data[i]['data'], agents: data[i]['agents'] });
@@ -173,6 +176,7 @@ getGeneralChartData(){
 
         }
 
+        this.mainLabels = mainLabels;
         this.queueData = arrayData;
       //this.setPage(data); 
 
