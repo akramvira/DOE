@@ -205,7 +205,6 @@
                 ngx-datatable-cell-template
               >
                 <span title="{{ value }}">
-                    {{ value }}
                   <i
                     class="fa fa-user fa-2x "
                     [ngClass]="{
@@ -233,6 +232,14 @@
             </ngx-datatable-column>
 
             <ngx-datatable-column name="role" [width]="80">
+                <ng-template
+                let-row="row"
+                let-column="column"
+                let-sort="sortFn"
+                ngx-datatable-header-template
+              >
+                <span (click)="sort()">مقام</span>
+              </ng-template>
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <!-- <pre>{{value | json}}</pre> -->
                 <span class="badge badge-primary" >
