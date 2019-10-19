@@ -121,8 +121,10 @@ loadingData = false;
   onDeSelectMain() {
     this.offices = [];
     this.filters.patchValue({
-      selectedSub1: []
+      selectedSub1: [],
+      selectedSub2: []
     });
+    this.updateLines();
     return;
   }
 
