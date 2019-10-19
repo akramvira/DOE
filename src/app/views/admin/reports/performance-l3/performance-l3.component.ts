@@ -136,7 +136,7 @@ loadingData = false;
     }
 
     let data = {
-      id: this.filters.value.selectedItems[0]["id"],
+      idmain: this.filters.value.selectedItems[0]["id"],
       idsub: sub1.join(",")
     };
 
