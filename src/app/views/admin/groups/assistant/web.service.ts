@@ -29,9 +29,9 @@ export class WebService {
     return this.http.put(environment.apiUrl + '/admin/groups/main/'+data['id'], data,  options);
   }
   
-  public deleteGroup(data){
+  public deleteGroup(id){
     let options = this.authServ.getRequestOpions();
-    return this.http.delete(environment.apiUrl + '/admin/groups/main/'+data['id'],  options);
+    return this.http.delete(environment.apiUrl + '/admin/groups/main/'+id,  options);
   }
   
 

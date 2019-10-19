@@ -115,7 +115,6 @@ export class OfficeComponent implements OnInit {
     this.selectedGroupExtensions;
    
     this.remainingExtensions = this.allExtensions.filter(el => {
-    
       return !$this.selectedGroupExtensions.includes(el);
     });
 
@@ -148,6 +147,7 @@ export class OfficeComponent implements OnInit {
           this.selectedGroupExtensions.indexOf(subItem),
           1
         );
+        this.allExtensions.push(subItem);
         this.setRemainingExtensions();
       }
   }

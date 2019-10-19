@@ -60,11 +60,11 @@ export class AssistantComponent implements OnInit {
     let id = this.groups[rowIndex]["id"];
 
     this.webServ
-    .updateGroup({
-      name: newName,
-      id: id,
-      sub: this.fetchData(this.selectedGroupExtensions)
-    })
+      .updateGroup({
+        name: newName,
+        id: id,
+        sub: this.fetchData(this.selectedGroupExtensions)
+      })
       .subscribe(
         data => {
           console.log(data);
@@ -104,6 +104,7 @@ export class AssistantComponent implements OnInit {
   }
 
   setActiveRow(rowIndex) {
+  
     this.activeRow = rowIndex;
   }
 
@@ -120,14 +121,13 @@ export class AssistantComponent implements OnInit {
 
   convertSelectedGroupExtentionsToInt() {
     let $this = this;
-    this.selectedGroupExtensions.forEach(function(e, i) {
-      $this.selectedGroupExtensions[i] = parseInt(
-        $this.selectedGroupExtensions[i]
-      );
+    this.remainingExtensions = this.allExtensions.filter(el => {
+      return !$this.selectedGroupExtensions.includes(el);
     });
   }
 
   addItemToSelectedParent(event, subItem) {
+    debugger;
     if (this.parentSelected)
       if (!this.selectedGroupExtensions.includes(subItem)) {
         this.itemsChanged = true;
@@ -144,6 +144,8 @@ export class AssistantComponent implements OnInit {
           this.selectedGroupExtensions.indexOf(subItem),
           1
         );
+        this.allExtensions.push(subItem);
+
         this.setRemainingExtensions();
       }
   }
@@ -160,7 +162,7 @@ export class AssistantComponent implements OnInit {
     this.webServ
       .updateGroup({
         id: this.activeParentId,
-        name: this.groups[this.activeRow]["name"] ,
+        name: this.groups[this.activeRow]["name"],
         sub: this.fetchData(this.selectedGroupExtensions)
       })
       .subscribe(
@@ -229,8 +231,6 @@ export class AssistantComponent implements OnInit {
     var activeId = this.activeRow;
     this.webServ.deleteGroup(this.groups[this.activeRow]["id"]).subscribe(
       data => {
-
-       
         this.removeGroup(activeId);
         this.toastr.success(
           this.groups[activeId]["name"] + '"  با موفقیت حذف شد.'

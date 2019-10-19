@@ -31,6 +31,7 @@
           <ng-template let-value="value"   let-row="row" 
             let-rowIndex="rowIndex"  ngx-datatable-cell-template>
               <span
+              style="display:block"
               title="برای ویرایش دوبار کلیک کنید!"
               (dblclick)="editing[rowIndex + '-name'] = true"
               (click)="setActiveRow(rowIndex)"
@@ -97,12 +98,16 @@
           </div>
       </div>
     </div>
-    <div class="card-body direction-ltr text-center">
-        <div *ngFor="let item of selectedGroupExtensions" class="btn col-4 btn-success m-1"
+    <div class="card-body direction-ltr text-center p-0">
+      <div class="col-12">
+      <div class="row direction-ltr justify-content-center text-center">
+        <div *ngFor="let item of selectedGroupExtensions" class="btn col-5 btn-success m-1"
         (click)="removeFromSelectedParent($event, item)"  title="{{item.number}}">
         {{ item.name? item.name : item.number }}
           </div>
             {{selectedGroupExtensions? '' : 'معاونتی انتخاب نشده است.' }}
+      </div>
+      </div>
     </div>
     <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
   </div>
