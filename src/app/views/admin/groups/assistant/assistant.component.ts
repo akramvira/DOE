@@ -231,10 +231,11 @@ export class AssistantComponent implements OnInit {
     var activeId = this.activeRow;
     this.webServ.deleteGroup(this.groups[this.activeRow]["id"]).subscribe(
       data => {
-        this.removeGroup(activeId);
+       
         this.toastr.success(
           this.groups[activeId]["name"] + '"  با موفقیت حذف شد.'
         );
+        this.removeGroup(activeId);
         this.smallModal.hide();
         this.refreshParents();
       },

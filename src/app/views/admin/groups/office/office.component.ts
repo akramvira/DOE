@@ -243,12 +243,12 @@ export class OfficeComponent implements OnInit {
     var activeId = this.activeRow;
     this.webServ.deleteGroup(this.groups[activeId]["id"]).subscribe(
       data => {
-        this.removeGroup(activeId);
+        
         this.toastr.success(
           this.groups[activeId]["name"] + '"  با موفقیت حذف شد.'
         );
         this.smallModal.hide();
-
+        this.removeGroup(activeId);
         this.refreshParents();
       },
       error => {
