@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ViewEncapsulation } from '@angular/core';
 import { UsersService } from '../_services/users.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../../../_services/authentication.service';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-new-user',
@@ -17,8 +18,17 @@ export class NewUserComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
 
+  @Input() isEditMode = false;
+  public setUserValues(data){
+    let role = this.dropdownList.filter(item=>{ if(item['id'] == data['idrole'])return true; });
+
+   data['role']= role;
+    this.userData.patchValue(data);
+  }
+
   userData = new FormGroup({
-    active : new FormControl('0'),
+    id:new FormControl('0'),
+    active : new FormControl('1'),
     name : new FormControl(''),
     username :  new FormControl(''),
     password :  new FormControl(''),
@@ -48,16 +58,14 @@ export class NewUserComponent implements OnInit {
         
         let roles = data['roles'];
         let allRoles =[];
-        debugger;
           for( let id in roles  ){
-           
             allRoles.push({id: id , text : roles[id]['title'] });
           }
           this.dropdownList = allRoles;
-          debugger;
+ 
       },
       (error)=>{
-        console.log(error);
+        this.authService.handdleAuthErrors(error);
 
       });
 
@@ -72,6 +80,8 @@ export class NewUserComponent implements OnInit {
       limitSelection : 1,
       allowSearchFilter: true
     };
+
+
   }
 
   fetchData(data) {
@@ -83,24 +93,40 @@ export class NewUserComponent implements OnInit {
     return finalData.join(",");
   }
 
+  @Output() onSubmitUser :EventEmitter<boolean>= new EventEmitter();
+
   onItemSelect(){}
   onSelectAll(event){}
   onSubmit(){
-
     let userData = this.userData.getRawValue();
-    debugger;
     userData['role'] = this.fetchData(userData['role']);
 
-    this.userServ.addUser(userData).subscribe(
-      data=>{
-        debugger;
-        this.toaster.success('کاربر جدید اضافه شد.');
-        this.router.navigate(['/admin/users-management/users']);
-      },
-      error=>{
-        this.authService.handdleAuthErrors(error);
-      }
-    )
+
+    if(!this.isEditMode){
+      this.userServ.addUser(userData).subscribe(
+        data=>{
+          this.onSubmitUser.emit(true);
+           this.toaster.success('کاربر جدید اضافه شد.');
+          this.router.navigate(['/admin/users-management/users']);
+        },
+        error=>{
+          this.onSubmitUser.emit(false);
+          this.authService.handdleAuthErrors(error);
+        }
+      )
+    }
+    else {
+      this.userServ.updateUser(userData).subscribe(
+        data=>{
+          this.toaster.success('اطلاعات کاربر تغییر یافت');
+          this.router.navigate(['/admin/users-management/users']);
+        },
+        error=>{
+          this.authService.handdleAuthErrors(error);
+        }
+      )
+    }
+   
     
   }
 

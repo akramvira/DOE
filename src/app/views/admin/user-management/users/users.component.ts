@@ -4,6 +4,7 @@ import { ModalDirective } from "ngx-bootstrap";
 import { AuthenticationService } from "../../../../_services/authentication.service";
 import { ToastrService } from "ngx-toastr";
 import { FormGroup, FormControl } from "@angular/forms";
+import { NewUserComponent } from '../new-user/new-user.component';
 
 @Component({
   selector: "app-users",
@@ -23,14 +24,15 @@ export class UsersComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.usersServ.getAllUsers()
-    .subscribe(data => {
-      
-      data = data['data'];
-      this.users = data["users"];
-      
-      this.mainData = this.users;
-    });
+    this.getUsers();
+  }
+getUsers(){
+  this.usersServ.getAllUsers()
+  .subscribe(data => {
+
+    data = data['data'];
+    this.users = data["users"];
+    this.mainData = this.users;
     this.page.pageNumber = 0;
     this.page.size = 20;
 
@@ -38,17 +40,19 @@ export class UsersComponent implements OnInit {
 
     this.page.pageNumber = 1;
     this.page.size = 10;
-    this.page.totalElements = 100;
+    this.page.totalElements = this.mainData.length;
     this.page.totalPages = 10;
-  }
+  });
 
+  
+}
   tempData: any;
 
   filters: any = [];
 
   mainData: any;
   FilterData(event) {
-    debugger;
+
     this.tempData = JSON.parse(JSON.stringify(this.mainData));
     let columnName = event.currentTarget.id;
 
@@ -129,31 +133,24 @@ export class UsersComponent implements OnInit {
   selecteRole(event) {}
 
   @ViewChild("editModal") public editModal: ModalDirective;
+  @ViewChild("editUserCmp") public editUserCmp: NewUserComponent;
+
+  
+  userUpdated(){
+    //refresh list
+    this.getUsers();
+    this.editModal.hide();
+  }
   selectedItemNameToEdit: any;
   showEditModal(rowIndex) {
-    this.editModal.show();
     this.activeRow = rowIndex;
+    this.editUserCmp.setUserValues(this.users[this.activeRow]);
+    this.editModal.show();
+   
     this.selectedItemNameToEdit = this.users[this.activeRow]["name"];
-debugger;
-    this.userData.patchValue(this.users[this.activeRow]);
+    //this.userData.patchValue(this.users[this.activeRow]);
   }
-  userData = new FormGroup({
-    active: new FormControl(""),
-    name: new FormControl(""),
-    username: new FormControl(""),
-    password: new FormControl(""),
-    confirmpassword: new FormControl(""),
-    level: new FormControl("operator"),
-    role: new FormControl(""),
-
-    //Operator related fields
-    phonenumber: new FormControl(""),
-    numQueue1: new FormControl(""),
-    numPark: new FormControl(""),
-    numHold: new FormControl(""),
-    numRedial: new FormControl(""),
-    conferance: new FormControl("")
-  });
+ 
 
   confirmEdit() {}
 }

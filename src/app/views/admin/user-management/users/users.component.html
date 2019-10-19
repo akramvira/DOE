@@ -185,7 +185,9 @@
                     ' badge-success': value == '1',
                     ' badge-secondary': value == '0'
                   }"
-                  >{{ value == "1" ? "فعال" : "غیرفعال" }}</span
+                  >
+                {{value}}
+                  {{ value == "0" ? "فعال" : "غیرفعال" }}</span
                 >
               </ng-template>
             </ngx-datatable-column>
@@ -205,6 +207,7 @@
                 ngx-datatable-cell-template
               >
                 <span title="{{ value }}">
+                    {{ value }}
                   <i
                     class="fa fa-user fa-2x "
                     [ngClass]="{
@@ -345,6 +348,7 @@
   <div class="modal-dialog modal-lg modal-primary" role="document">
     <div class="modal-content">
       <div class="modal-header">
+          <h4 class="modal-title col-10">"{{ selectedItemNameToEdit }}" ویرایش کابر</h4>
         <button
           type="button"
           class="close"
@@ -353,262 +357,15 @@
         >
           <span aria-hidden="true">&times;</span>
         </button>
-        <h4 class="modal-title">"{{ selectedItemNameToEdit }}" ویرایش کابر</h4>
+       
       </div>
       <div class="modal-body">
         <div class="animated fadeIn row border-bottom justify-content-center">
           <div class="col-10">
-            <div class="card card-accent-success">
-              <div class="card-header">
-                اطلاعات کاربر جدید
-              </div>
-              <div class="card-body">
-                <form [formGroup]="userData" (ngSubmit)="onSubmit()">
-                  <div class="form-group card-accent-success  bg-info">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> نوع کاربر </span>
-                      </div>
-                      <select
-                        class="form-control bg-info"
-                        formControlName="role"
-                      >
-                        <option value="operator" selected>اپراتور</option>
-                        <option value="admin">ادمین</option>
-                      </select>
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-user"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> وضعیت کاربر </span>
-                      </div>
-                      <select class="form-control" formControlName="active">
-                        <option>فعال</option>
-                        <option>غیر فعال</option>
-                      </select>
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-envelope"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          نام و نام خانوادگی</span
-                        >
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="name"
-                      />
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-user"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">نام کاربری</span>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control"
-                        formControlName="username"
-                      />
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-user"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="row">
-                      <div class="col-12">
-                        <div
-                          class="btn btn-sm mb-1 btn-success"
-                          *ngFor="let item of selectedRoles"
-                        >
-                          {{ item.title }}
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> مقام </span>
-                      </div>
-
-                      <select
-                        class="form-control"
-                        formControlName="role"
-                        (change)="selecteRole($event)"
-                      >
-                        <option
-                          *ngFor="let item of notSelectedRoles"
-                          [value]="item.id"
-                          >{{ item.title }}</option
-                        >
-                      </select>
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-envelope"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- operator section -->
-                  <div [hidden]="userData.value.role == 'admin'">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">شماره تلفن</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="phonenumber"
-                        />
-                        <div class="input-group-append">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">شماره صف </span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="numQueue1"
-                        />
-                        <div class="input-group-append">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text"> شماره پارک</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="numPark"
-                        />
-                        <div class="input-group-append">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">شماره انتظار </span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="numHold"
-                        />
-                        <div class="input-group-append">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">شماره تکرار مجدد</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="numRedial"
-                        />
-                        <div class="input-group-append">
-                          <span class="input-group-text"
-                            ><i class="fa fa-user"></i
-                          ></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">کلمه عبور</span>
-                      </div>
-                      <input
-                        type="password"
-                        class="form-control"
-                        formControlName="password"
-                      />
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-asterisk"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">تکرار کلمه عبور</span>
-                      </div>
-                      <input
-                        type="password"
-                        class="form-control"
-                        formControlName="confirmpassword"
-                      />
-                      <div class="input-group-append">
-                        <span class="input-group-text"
-                          ><i class="fa fa-asterisk"></i
-                        ></span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="form-group form-actions text-center">
-                    <button type="submit" class="btn btn-sm btn-success">
-                      ذخیره شود
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+            <app-new-user
+             #editUserCmp isEditMode='true'
+             (onSubmitUser)="userUpdated()"
+             ></app-new-user>
           </div>
         </div>
         <div class="modal-footer">
