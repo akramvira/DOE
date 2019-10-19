@@ -97,7 +97,9 @@
                 <input
                   type="text"
                   class="form-control-sm border"
+                  formControlName = "name"
                   id="name"
+                  (change)="doFilter()"
                   style="width:60%"
                   placeholder="Filter.."
                 />
@@ -140,6 +142,7 @@
                   class="form-control-sm border"
                   id="username"
                   style="width:60%"
+                  formControlName = "username"
                   placeholder="Filter.."
                 />
               </ng-template>

@@ -154,7 +154,9 @@ getUsers(){
     //this.userData.patchValue(this.users[this.activeRow]);
   }
  
-
+  doFilter(){
+    
+  }
   confirmEdit() {}
 }
 
