@@ -104,7 +104,8 @@ export class OperatorComponent implements OnInit  {
         this.phoneNumber = data['phonenumber'];
         this.data_login = data['data_login'];
         this.data_logout = data['data_logout'];
-        data = data["data"]['data'];
+        
+        data = data["data"];
         this.barChartDataIn = [
           { data: [data["in"]["all"]], label: "کل تماس ها" },
           { data: [data["in"]["answer"]], label: " پاسخ داده شده" },
@@ -112,6 +113,7 @@ export class OperatorComponent implements OnInit  {
           { data: [data["in"]["busy"]], label: " مشغول" }
         ];
 
+   
         this.inDetailsPercent = [data["in"]['panswer'], data["in"]['pnoanswer'], data["in"]['pbusy']];
         this.outDetailsPercent = [data["out"]['pbetweenco'], data["out"]['pco'], data["out"]['pmobile']];
 

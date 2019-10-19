@@ -16,6 +16,7 @@ export class BarChartComponent implements OnInit {
 
     let isTimeChart = this.isTimeChart;
     let isPercentChart = this.isPercentChart;
+    let stepSize = this.isPercentChart? 10 : 1;
     this.chartOptions ={
       scaleShowVerticalLines: true,
   
@@ -89,7 +90,7 @@ export class BarChartComponent implements OnInit {
             fontColor: "black",
             fontStyle: "bold",
             ticks: {
-              stepSize: 1,
+              stepSize: stepSize,
               beginAtZero: true,
               fontFamily: "IRANSans",
               fontColor: "black",
