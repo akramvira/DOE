@@ -1,147 +1,117 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { UsersService } from '../../user-management/_services/users.service';
-import { ReportsService } from '../_service/reports.service';
-import { ToastrService } from 'ngx-toastr';
-import { AuthenticationService } from '../../../../_services/authentication.service';
-import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { FormControl, FormGroup } from '@angular/forms';
-import * as moment from 'jalali-moment';
-import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
-import { DaterangeComponent } from '../_components/daterange/daterange.component';
+import { Component, OnInit, ViewChild } from "@angular/core";
+import { UsersService } from "../../user-management/_services/users.service";
+import { ReportsService } from "../_service/reports.service";
+import { ToastrService } from "ngx-toastr";
+import { AuthenticationService } from "../../../../_services/authentication.service";
+import { DatatableComponent } from "@swimlane/ngx-datatable";
+import { FormControl, FormGroup } from "@angular/forms";
+import * as moment from "jalali-moment";
+import { formGroupNameProvider } from "@angular/forms/src/directives/reactive_directives/form_group_name";
+import { DaterangeComponent } from "../_components/daterange/daterange.component";
 
 @Component({
-  selector: 'app-calls-details',
-  templateUrl: './calls-details.component.html',
-  styleUrls: ['./calls-details.component.scss']
+  selector: "app-calls-details",
+  templateUrl: "./calls-details.component.html",
+  styleUrls: ["./calls-details.component.scss"]
 })
 export class CallsDetailsComponent implements OnInit {
   page = new Page();
   //rows = new Array<CorporateEmployee>();
-  
-    data : any[];
-    storedData :any = []
-  
-  constructor(  
-    private reportServ : ReportsService,
-    private authServ : AuthenticationService,
-    private toastr: ToastrService ) { 
-    
-  }
+
+  data: any[];
+  storedData: any = [];
+
+  constructor(
+    private reportServ: ReportsService,
+    private authServ: AuthenticationService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
-      this.reportServ.getCallsDetails().subscribe(
-        (data)=>{
-          console.log(data);
-          this.showData(data);
-        //this.setPage(data); 
+    this.reportServ.getCallsDetails().subscribe(
+      data => {
+        console.log(data);
+        this.showData(data);
       },
-      (error)=>{
+      error => {
         this.authServ.handdleAuthErrors(error);
       }
-      );
-
-  
-
+    );
   }
 
-  showData(data){
-    this.data = data['data'];
-    this.storedData = data['data'];
-  
-    this.page.pageNumber = 1;
-    this.page.size = data['per_page'];
-    this.page.totalElements= data['total'] ;
-    this.page.totalPages= data['last_page'];
-  }
-
-
-  filterData(){
+  showData(data, page = 0) {
     
-  //   this.tempData = JSON.parse(JSON.stringify(this.storedData));
-  // let columnName = event.currentTarget.id;
-  
-  // const val = event.target.value.toLowerCase();
+    this.data = data["data"];
+    this.storedData = data["data"];
 
-  // this.filter[columnName] = val;
+    this.page.pageNumber = page;
+    this.page.size = data["per_page"];
+    this.page.totalElements = data["total"];
+    this.page.totalPages = data["last_page"];
+  }
 
+  filterData() {
+    this.loadingData = true;
 
-
-  // const filteredData = this.tempData.filter(function(d) {
-  //   return d[columnName].toLowerCase().indexOf(val) !== -1 || !val;
-  // });
-
-  // this.data= filteredData;
-  // this.myTable.offset = 0;
-
- this.loadingData=true;
-
-  let data = this.filtersData.getRawValue();
-  data.from = this.daterange.selectedDateFrom.value;
-  data.to =  this.daterange.selectedDateTo.value;
-  
-      
+    let data = this.filtersData.getRawValue();
+    data.from = this.daterange.selectedDateFrom.value;
+    data.to = this.daterange.selectedDateTo.value;
 
     this.reportServ.filterCallsDetails(data).subscribe(
-      (data)=>{
-      this.showData(data);
-      this.loadingData=false;
+      data => {
+        this.showData(data);
+        this.loadingData = false;
       },
-      (error)=>{
+      error => {
         this.authServ.handdleAuthErrors(error);
-        this.loadingData=false;
-      });
+        this.loadingData = false;
+      }
+    );
   }
-  
-
 
   //pagination
   loadingData = false;
-  setPage(pageInfo){
-    debugger;
-    this.page.pageNumber = pageInfo.offset+1;
+  setPage(pageInfo) {
+     pageInfo.offset
 
-    this.filterData();
-    //this.page.size= pageInfo[''];
-   // this.page.totalElements=100;
-   // this.page.totalPages=10;
-
-    //this.serverResultsService.getResults(this.page).subscribe(pagedData => {
-      //this.page = {size:2,};//pagedData.page;
-      //this.users = 4;//pagedData.data;
-   // });
+    let data = this.filtersData.getRawValue();
+    data.from = this.daterange.selectedDateFrom.value;
+    data.to = this.daterange.selectedDateTo.value;
+    data.page = pageInfo.offset+1;
+    this.loadingData = true;
+    this.reportServ.filterCallsDetails(data).subscribe(
+      pagedData => {
+        this.loadingData = false;
+        this.showData(pagedData,pageInfo.offset);
+      },
+      error => {
+        this.authServ.handdleAuthErrors(error);
+        this.loadingData = false;
+      }
+    );
   }
- 
 
   @ViewChild(DatatableComponent) myTable: DatatableComponent;
-  tempData : any = [];
+  tempData: any = [];
 
- 
+  filtersData = new FormGroup({
+    disposition: new FormControl("all"),
+    src: new FormControl(""),
+    dst: new FormControl(""),
+    dest: new FormControl(""),
+    sort: new FormControl([])
+  });
 
-  filtersData =new FormGroup({
-    disposition : new FormControl('all'),
-    src : new FormControl(''),
-    dst : new FormControl(''),
-    dest : new FormControl(''),
-    sort  : new FormControl([]),
-  })
+  @ViewChild("daterange") daterange: DaterangeComponent;
 
+  get getData() {
+    return this.storedData;
+  }
 
-  @ViewChild('daterange') daterange :DaterangeComponent;
-
-
-
-
-
-get getData(){
-  return this.storedData;
+  set setData(filteredData) {
+    this.data = filteredData;
+  }
 }
-  
-set setData(filteredData){
-  this.data = filteredData;
-}
-}
-
-
 
 class Page {
   //The number of elements in the page

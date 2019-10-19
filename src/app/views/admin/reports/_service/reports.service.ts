@@ -106,12 +106,22 @@ export class ReportsService {
     return this.http.get(environment.apiUrl + "/admin/reports/cdr", options);
   }
   public filterCallsDetails(data) {
+
     let options = this.authServ.getRequestOpions();
-    return this.http.post(
-      environment.apiUrl + "/admin/reports/cdr",
-      data,
-      options
-    );
+    if(!data.page){
+      return this.http.post(
+        environment.apiUrl + "/admin/reports/cdr",
+        data,
+        options
+      );
+    }
+    else{
+      return this.http.post(
+        environment.apiUrl + "/admin/reports/cdr/?page="+data.page,
+        data,
+        options
+      );
+    }
   }
 
   //operator

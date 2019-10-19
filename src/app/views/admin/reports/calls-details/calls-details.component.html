@@ -62,7 +62,7 @@
             class="material expandable"
             [rows]="data"
             [columnMode]="'force'"
-            [headerHeight]="80"
+            [headerHeight]="50"
             [footerHeight]="50"
             [rowHeight]="'auto'"
             [externalPaging]="true"
@@ -101,7 +101,7 @@
                 let-sort="sortFn"
                 ngx-datatable-header-template
               >
-                <span>وضعیت </span>
+                <span (click)="sort($event)">وضعیت </span>
               </ng-template>
               <ng-template
                 let-row="row"
