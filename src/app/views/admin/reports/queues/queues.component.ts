@@ -228,7 +228,8 @@ submitDetailedChartsFilter(){
   let data = {
   from : this.filter.from = this.daterangeDetailsChart.selectedDateFrom.value,
   to : this.filter.to = this.daterangeDetailsChart.selectedDateTo.value,
-  id: this.queueId.value
+  id: this.queueId.value,
+  time: -1
   }
 
 
@@ -245,10 +246,13 @@ submitDetailedChartsFilter(){
       let ringTime = [];
 
       let arrayData = [];
+     
+     let detailsLabels = [];
       
       for(let i in data ){
         
-        this.detailsLabels.push(data[i]['name'] );
+        detailsLabels.push(data[i]['name'] );
+        
         arrayData.push({ id: data[i]['id'],
          name:data[i]['name'] ,
          ...data[i]['data'], agents: data[i]['agents'] });
@@ -262,7 +266,10 @@ submitDetailedChartsFilter(){
 
       }
 
-      this.queueData = arrayData;
+      //console.log(detailsLabels);
+
+      this.detailsLabels = detailsLabels;
+      //this.queueData = arrayData;
     //this.setPage(data); 
 
     debugger;   

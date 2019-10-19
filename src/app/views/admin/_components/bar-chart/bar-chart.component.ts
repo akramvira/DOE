@@ -89,6 +89,7 @@ export class BarChartComponent implements OnInit {
             fontColor: "black",
             fontStyle: "bold",
             ticks: {
+              stepSize: 1,
               beginAtZero: true,
               fontFamily: "IRANSans",
               fontColor: "black",
