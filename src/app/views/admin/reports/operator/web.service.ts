@@ -21,8 +21,6 @@ export class WebService {
     );
   }
   public getOperatorData(data) {
-
-    debugger;
     let options = this.authServ.getRequestOpions();
     return this.http.post(
       environment.apiUrl + "/admin/report/operators/performance/" + data['id'],

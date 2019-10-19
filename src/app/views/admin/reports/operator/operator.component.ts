@@ -127,7 +127,6 @@ export class OperatorComponent implements OnInit  {
           { data:  [data['out']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
-        debugger;
         this.inPerformanceData = [
           data["in"]["performance"],
           100 - data["in"]["performance"]
@@ -149,6 +148,9 @@ export class OperatorComponent implements OnInit  {
       }
     );
   }
+
+
+
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
