@@ -249,14 +249,17 @@
 
             <ngx-datatable-column name="updated_at" [width]="80">
               <ng-template
+              let-row="row"
                 let-column="column"
                 let-sort="sortFn"
                 ngx-datatable-header-template
               >
                 <span (click)="sort()">آخرین به روز رسانی</span>
               </ng-template>
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value }}
+              <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+                <span class="badge">
+                {{ row['updated_at'] }}
+              </span>
               </ng-template>
             </ngx-datatable-column>
 

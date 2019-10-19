@@ -137,9 +137,12 @@ getUsers(){
   @ViewChild("editUserCmp") public editUserCmp: NewUserComponent;
 
   
-  userUpdated(){
-    this.getUsers();
-    this.editModal.hide();
+  userUpdated(result:boolean){
+    if(result){
+      this.getUsers();
+      this.editModal.hide();
+    }
+
   }
   selectedItemNameToEdit: any;
   showEditModal(rowIndex) {
