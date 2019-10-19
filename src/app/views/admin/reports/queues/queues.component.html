@@ -191,7 +191,7 @@
           <app-daterange #daterange></app-daterange>
         </div>
       </div>
-        <div class="col-12 col-lg-6 col-xl-6">
+        <div class="col-12 col-lg-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
                     نمودار وضعیت تماس ها
@@ -199,24 +199,16 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="chart-wrapper">
-                        <canvas 
-                        baseChart 
-                        *ngIf="callsBarChartLabels"
-                        class="chart"
-                        [datasets]="callsBarChartData"
-                        [labels]="callsBarChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
-                    </div>
+                  <app-bar-chart
+                  [datasets]="callsBarChartData"
+                  [labels]="mainLabels"
+                  ></app-bar-chart>
+                    
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-lg-6 col-xl-6">
+        <div class="col-12 col-lg-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
   نمودار مدت زمان انتظار و مکالمه
@@ -224,133 +216,121 @@
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="chart-wrapper">
-                        <canvas 
-                        *ngIf="timesBarChartLabels"
-                        baseChart 
-                        class="chart"
-                        [datasets]="timesBarChartData"
-                        [labels]="timesBarChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
-                    </div>
+                    <app-bar-chart
+                    [datasets]="timesBarChartData"
+                    [labels]="mainLabels"
+                    isTimeChart='true'
+                    ></app-bar-chart>
+                    
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-lg-6 col-xl-6">
+        <div class="col-12 col-lg-12 col-xl-12">
             <div class="card">
                 <div class="card-header">
-  نمودار میزان سرویس دهی در صف ها
+  نمودار میزان عملکرد(درصد)
                     <div class="card-header-actions">
                     </div>
                 </div>
                 <div class="card-body">
-                    <div class="chart-wrapper">
-                        <canvas 
-                        baseChart class="chart"
-                        *ngIf="serviceLevelBarChartLabels"
-                        [datasets]="serviceLevelbarChartData"
-                        [labels]="serviceLevelBarChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
-                    </div>
+                    <app-bar-chart
+                    [datasets]="serviceLevelbarChartData"
+                    [labels]="mainLabels"
+                    isPercentChart='true'
+                    ></app-bar-chart>
                 </div>
             </div>
         </div>
-
 
     </div>
   </tab>
+
+
+
+
+
+
   <tab>
       <ng-template tabHeading><i class="fa da-list"></i>  نمودار جزیی صف ها</ng-template>
-    <div class=" animated fadeIn row border-bottom justify-content-center">
-      <div class="col-5">
-        <div class="row">
-          <app-daterange></app-daterange>
-        </div>
-      </div>
-        <div class="col-12 col-lg-6 col-xl-6">
-            <div class="card">
-                <div class="card-header">
-                    نمودار وضعیت تماس ها
-                    <div class="card-header-actions">
+      <div class=" animated fadeIn row border-bottom justify-content-center">
+        <div class="col-12 pb-2" >
+          <div class="row">
+            <div class="col-3">
+                <app-daterange #daterangeDetailsChart></app-daterange>
+            </div>
+            <div class="col-4">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text">انتخاب صف</label>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart-wrapper">
-                        <canvas 
-                        baseChart 
-                        *ngIf="callsBarChartLabels"
-                        class="chart"
-                        [datasets]="callsBarChartData"
-                        [labels]="callsBarChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                    <select
+                      class="col form-control"
+                      [formControl]="queueId"
+                    >
+                    <option *ngFor="let item of queueData" value="{{item.id}}" >
+                      {{item.name}}
+                    </option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col-12 col-xl-2">
+              <button class="btn btn-success" (click)="submitDetailedChartsFilter()">دریافت اطلاعات</button>
+            </div>
+          </div>
+        </div>
+            <div class="col-12 col-lg-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        نمودار وضعیت تماس ها
+                        <div class="card-header-actions">
+                        </div>
+                    </div>
+                    <div class="card-body">
+                      <app-bar-chart
+                      [datasets]="callsBarChartDataDetails"
+                      [labels]="mainLabels"
+                      ></app-bar-chart>
+                        
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-12 col-lg-6 col-xl-6">
-            <div class="card">
-                <div class="card-header">
-  نمودار مدت زمان انتظار و مکالمه
-                    <div class="card-header-actions">
+    
+            <div class="col-12 col-lg-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+      نمودار مدت زمان انتظار و مکالمه
+                        <div class="card-header-actions">
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart-wrapper">
-                        <canvas 
-                        *ngIf="timesBarChartLabels"
-                        baseChart 
-                        class="chart"
-                        [datasets]="timesBarChartData"
-                        [labels]="timesBarChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                    <div class="card-body">
+                        <app-bar-chart
+                        [datasets]="timesBarChartDataDetails"
+                        [labels]="mainLabels"
+                        isTimeChart='true'
+                        ></app-bar-chart>
+                        
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="col-12 col-lg-6 col-xl-6">
-            <div class="card">
-                <div class="card-header">
-  نمودار میزان سرویس دهی در صف ها
-                    <div class="card-header-actions">
+    
+            <div class="col-12 col-lg-12 col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+      نمودار میزان عملکرد(درصد)
+                        <div class="card-header-actions">
+                        </div>
                     </div>
-                </div>
-                <div class="card-body">
-                    <div class="chart-wrapper">
-                        <canvas 
-                        baseChart class="chart"
-                        *ngIf="serviceLevelBarChartLabels"
-                        [datasets]="serviceLevelbarChartData"
-                        [labels]="serviceLevelBarChartLabels"
-                        [options]="barChartOptions"
-                        [legend]="barChartLegend"
-                        [chartType]="barChartType"
-                        (chartHover)="chartHovered($event)"
-                        (chartClick)="chartClicked($event)"></canvas>
+                    <div class="card-body">
+                        <app-bar-chart
+                        [datasets]="serviceLevelbarChartDataDetails"
+                        [labels]="mainLabels"
+                        isPercentChart='true'
+                        ></app-bar-chart>
                     </div>
                 </div>
             </div>
+    
         </div>
-
-
-    </div>
   </tab>
 </tabset>

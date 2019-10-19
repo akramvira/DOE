@@ -7,6 +7,7 @@ import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { FormControl } from '@angular/forms';
 import * as moment from 'jalali-moment';
 import { DaterangeComponent } from '../_components/daterange/daterange.component';
+import { WebService } from './web.service';
 
 @Component({
   selector: 'app-queues',
@@ -18,34 +19,29 @@ export class QueuesComponent implements OnInit{
   page = new Page();
   //rows = new Array<CorporateEmployee>();
   
-public barChartOptions: any = {
-  scaleShowVerticalLines: false,
-  responsive: true
-};
-public timesBarChartLabels: any[] ;
-public serviceLevelBarChartLabels: any[] ;
-public callsBarChartLabels: any[] ;
-public barChartType = 'bar';
-public barChartLegend = true;
 
-public timesBarChartData: any[] = [];
-public callsBarChartData: any[] = [];
-public serviceLevelbarChartData: any[] = [];
 
-    queueData : any[];
-    storedData :any = []
-  
+public timesBarChartData: any[] = [{data:[],label:''},{data:[],label:''}];
+public callsBarChartData: any[] = [{data:[],label:''},{data:[],label:''},{data:[],label:''}];
+public serviceLevelbarChartData: any[] = [{data:[], label:''}];
+
+  queueData : any[];
+  storedData :any = []
+
   constructor(  
-    private reportServ : ReportsService,
+    private reportServ : WebService,
     private authServ : AuthenticationService,
     private toastr: ToastrService ) { 
     
   }
 
+  queueId = new FormControl();
   chartCallsData : any;
   chartTimeData : any;
   chartServiceLevelData : any;
   @ViewChild('daterange') daterange :DaterangeComponent;
+
+  mainLabels = [];
 
   ngOnInit() {
     
@@ -55,77 +51,59 @@ public serviceLevelbarChartData: any[] = [];
     }
       this.reportServ.gerChartsData(data).subscribe(
         (data)=>{
-          debugger;
+
           data=data['data'];
+
+          let noanswer = [];
+          let answer = [];
+          let busy = [];
+          let performance = [];
+          let time = [];
+          let ringTime = [];
+
           let arrayData = [];
           for(let i in data ){
+            this.queueId.setValue(data[i]['id']);
+            this.mainLabels.push(data[i]['name'] );
             arrayData.push({ id: data[i]['id'],
              name:data[i]['name'] ,
              ...data[i]['data'], agents: data[i]['agents'] });
+
+            noanswer.push(data[i]['data']['noanswer']);
+            answer.push(data[i]['data']['answer']);
+            busy.push(data[i]['data']['busy']);
+            performance.push(data[i]['data']['performance']);
+            time.push(data[i]['data']['time']);
+            ringTime.push(data[i]['data']['ringTime']);
+
           }
 
           this.queueData = arrayData;
         //this.setPage(data); 
 
-
+        debugger;   
+        
 
         //time chart-----------------------------------
-        this.chartTimeData = data;
-        let chartData = [
-          {data:[], label: 'مدت زمان انتظار'},
-          {data:[], label: 'مدت زمان مکالمه'},
+        this.timesBarChartData=[];
+        this.timesBarChartData = [
+          {data:ringTime, label: 'مدت زمان انتظار'},
+          {data:time, label: 'مدت زمان مکالمه'},
           ];
-        let chartLabels = [];
-
-        for(let item in this.chartTimeData ){
-          chartLabels.push(item);
-          chartData[0].data.push( parseInt(this.chartTimeData[item]['holdtime']));
-          chartData[1].data.push(  parseInt(this.chartTimeData[item]['talktime']));
-        }
-
-        this.timesBarChartLabels = chartLabels
-        this.timesBarChartData = chartData;
-
-        ///--/time chart-----------------------------------
-
 
 
         //answer no answer data--------------------
-          
-        this.chartCallsData = data;
-
-         chartData = [
-          {data:[], label: 'پاسخ داده شده'},
-          {data:[], label: 'پاسخ داده نشده'},
+        this.callsBarChartData = [
+          {data:answer, label: 'تعداد تماس های پاسخ داده شده'},
+          {data:noanswer, label: 'تعداد تماس های پاسخ داده نشده'},
+          {data:busy, label: 'تعداد تماس های مشغول'},
           ];
-         chartLabels = [];
-
-        for(let item in this.chartCallsData ){
-          chartLabels.push(item);
-          chartData[0].data.push( parseInt(this.chartCallsData[item]['answered']));
-          chartData[1].data.push(  parseInt(this.chartCallsData[item]['unanswered']));
-        }
-        this.callsBarChartLabels = chartLabels
-        this.callsBarChartData = chartData;
-        //-----------------------------------
-
 
 
         //---performance----------------------------------
-         chartData = [
-          {data:[], label: 'درصد سرویس دهی'},
+        this.serviceLevelbarChartData = [
+          {data:performance, label: 'درصد سرویس دهی'},
           ];
-         chartLabels = [];
-
-        for(let item in data ){
-          chartLabels.push(item);
-          chartData[0].data.push( parseInt(data[item]));
-        }
-        
-
-        this.serviceLevelBarChartLabels = chartLabels
-        this.serviceLevelbarChartData = chartData;
-        //---//performance----------------------------------
       },
       (error)=>{
         this.authServ.handdleAuthErrors(error);
@@ -230,6 +208,7 @@ get getData(){
   
 set setData(filteredData){
   this.queueData = filteredData;
+  
 }
 
 
@@ -237,6 +216,84 @@ set setData(filteredData){
 
 
 
+
+
+public timesBarChartDataDetails: any[] = [{data:[],label:''},{data:[],label:''}];
+public callsBarChartDataDetails: any[] = [{data:[],label:''},{data:[],label:''},{data:[],label:''}];
+public serviceLevelbarChartDataDetails: any[] = [{data:[], label:''}];
+//--------------details chart -------------
+
+@ViewChild('daterangeDetailsChart') daterangeDetailsChart :DaterangeComponent;
+submitDetailedChartsFilter(){
+  let data = {
+  from : this.filter.from = this.daterangeDetailsChart.selectedDateFrom.value,
+  to : this.filter.to = this.daterangeDetailsChart.selectedDateTo.value,
+  id: this.queueId.value
+  }
+
+
+  this.reportServ.gerChartsDetailsData(data).subscribe(
+    (data)=>{
+
+      data=data['data'];
+
+      let noanswer = [];
+      let answer = [];
+      let busy = [];
+      let performance = [];
+      let time = [];
+      let ringTime = [];
+
+      let arrayData = [];
+      for(let i in data ){
+        this.queueId.setValue(data[i]['id']);
+        this.mainLabels.push(data[i]['name'] );
+        arrayData.push({ id: data[i]['id'],
+         name:data[i]['name'] ,
+         ...data[i]['data'], agents: data[i]['agents'] });
+
+        noanswer.push(data[i]['data']['noanswer']);
+        answer.push(data[i]['data']['answer']);
+        busy.push(data[i]['data']['busy']);
+        performance.push(data[i]['data']['performance']);
+        time.push(data[i]['data']['time']);
+        ringTime.push(data[i]['data']['ringTime']);
+
+      }
+
+      this.queueData = arrayData;
+    //this.setPage(data); 
+
+    debugger;   
+    
+
+    //time chart-----------------------------------
+    this.timesBarChartDataDetails=[];
+    this.timesBarChartDataDetails = [
+      {data:ringTime, label: 'مدت زمان انتظار'},
+      {data:time, label: 'مدت زمان مکالمه'},
+      ];
+
+
+    //answer no answer data--------------------
+    this.callsBarChartDataDetails = [
+      {data:answer, label: 'تعداد تماس های پاسخ داده شده'},
+      {data:noanswer, label: 'تعداد تماس های پاسخ داده نشده'},
+      {data:busy, label: 'تعداد تماس های مشغول'},
+      ];
+
+
+    //---performance----------------------------------
+    this.serviceLevelbarChartDataDetails = [
+      {data:performance, label: 'درصد سرویس دهی'},
+      ];
+  },
+  (error)=>{
+    this.authServ.handdleAuthErrors(error);
+  }
+  );
+
+}
 
 
 }
