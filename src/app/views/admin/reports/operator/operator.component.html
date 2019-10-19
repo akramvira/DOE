@@ -1,186 +1,190 @@
-<div class=" animated fadeIn row border-bottom justify-content-center">
-    <div class="col-12 col-md-6 col-lg-3 col-xl-2 text-center">
-      <div class="row">
-        <div class="col-12 col-md-8 col-lg-6 col-xl-12">
-          <div class="card card-accent-primary">
-                  <div class="card-header">  اپراتور ها </div>
-                  <div class="card-body">
-                      <ngx-datatable 
-                      class="material border-bottom"
-                      [rows]="operators"
-                      [headerHeight]="50"
-                      
-                      [rowHeight]="'auto'"
-                      [selectionType]="'single'"
-                      [columnMode]="'force'"  
-                      style="width: 100%"
-                      (activate)="onActivate($event)"
-                      >
-                      
-                      <ngx-datatable-column
-                      [sortable]="true"
-                      [canAutoResize]="false"
-                      [draggable]="false"
-                      [resizeable]="false"
-                      name="name"
-                      >
-                      <ng-template let-column="column" let-sort="sortFn" class="p-0" ngx-datatable-header-template>
-                        <input 
-                        class="row  form-control-sm border col m-0"
-                        (keyup)='FilterData($event)'
-                        id="name"
-                        
-                        type="text"
-                        placeholder="جستجو..."
-                        />
-                        <small class=" text-center cursor-pointer m-1" (click)="sort()" >مرتب سازی</small>
-                      </ng-template>
-                      <ng-template let-value="value"   let-row="row" 
-                          let-rowIndex="rowIndex"  ngx-datatable-cell-template>
-                          <span (click)="setActiveRow(rowIndex)" class="cursor-pointer">
-                          {{value}}
-                          </span>
-                          
-                      </ng-template>
-                  </ngx-datatable-column>
-              
-              
-                  </ngx-datatable>
-              </div>
-          </div> 
-        </div>
-      </div>
-    </div>
-    <div class="col-12 col-md-6 col-lg-3 col-xl-2" *ngIf="targetOperator">
-        
-        <div class="list-group text-center">
-            <button class="list-group-item list-group-item-action active row" type="button">اطلاعات <b>{{targetOperator.name}}</b></button>
-            <button class="list-group-item list-group-item-action row" type="button"><label class="col-12">شماره تلفن:</label><b>{{targetOperator.phonenumber}}</b></button>
-            <button class="list-group-item list-group-item-action row" type="button"><label class="col-12">زمان ورود:</label><b>{{targetOperator.date_login}}</b></button>
-            <button class="list-group-item list-group-item-action row" type="button" ><label>زمان خروج:</label><b>{{targetOperator.date_logout}}</b></button>
-          </div>
-    </div>
-    <div class="col-12 col-md-12 col-lg-3 col-xl-8">
-        <div class=" card animated  fadeIn row justify-content-center">
-            <div class="card-header" [formGroup]="timeFilter">
-              <div class="row">
-                    <label>فیلتر: </label>
-                  <div class="col-10">
-                      <div class="row">
-                            <div class=" col-xl-3 btn btn-group">
-                                <button class="btn btn-primary" (click)="timeType = 'fully'; filterData()" [ngClass]="{'active': timeType == 'fully' }" >کلی</button>
-                                <button class="btn btn-primary" (click)="timeType = 'monthly'; filterData()" [ngClass]="{'active': timeType == 'monthly' }" >ماهانه</button>
-                                <button class="btn btn-primary" (click)="timeType = 'choosely'" [ngClass]="{'active': timeType == 'choosely' }">انتخابی</button>
-                            </div>
-                            <div class="col-xl-9" *ngIf="timeType =='choosely'">
-                                <div class="row">
-                                    <div class="col-5">
-                                        از تاریخ:
-                                        <md-input-container
-                                            class="date-filter">
-                                            <input 
-                                            class="form-control-sm border"
-                                                mdInput 
-                                                name="someName" 
-                                                dir="rtl"
-                                                mode="day"
-                                                theme="dp-material"
-                                                placeholder=""
-                                                formControlName="from"
-                                                [dpDayPicker]="datePickerConfig"
-                                                (onSelect) = "onSelectDateFrom()"
-                                                />
-                                        </md-input-container>
-                                    </div>
-                                    <div class="col-5">
-                                        تا تاریخ:
-                                        <md-input-container
-                                        class="date-filter">
-                                            <input 
-                                            class="form-control-sm border"
-                                            mdInput 
-                                            name="someName" 
-                                            dir="rtl"
-                                            mode="day"
-                                            theme="dp-material"
-                                            placeholder=""
-                                            formControlName="to"
-                                            [dpDayPicker]="datePickerConfig"
-                                            (onSelect) = "onSelectDateTo()"
-                                            />
-                                        </md-input-container>
-                                    </div>
-                                    <div class="col-2">
-                                        <button class="btn btn-primary" (click)="filterChartsByTime()">اعمال</button>
-                                    </div>
-                                </div>
-                            </div>
-                      </div>
-                  </div>
-                  
-          
-              </div>
-            </div>
-          <div class="card-body row">
-              <div class="col-12 col-lg-6 col-xl-6">
-                <div class="card">
-                    <div class="card-header">
-                    عملکرد اپراتور 
-                        <div class="card-header-actions">
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="chart-wrapper col-12">
-                                    <canvas baseChart class="chart"
-                                    [data]="pieChartData"
-                                    [labels]="pieChartLabels"
-                                
-                                    [chartType]="pieChartType"
-                                    (chartHover)="chartHovered($event)"
-                                    (chartClick)="chartClicked($event)">
-                                    </canvas>
-                                </div>
-            
-                                <div class="col-12">
-                                    <div class="row" *ngIf="targetOperator">
-                                        <div class="col-12 p-2 mt-1 badge badge-secondary">همه تماس ها: {{targetOperator.detail.all}}</div>
-                                        <div class="col-12 p-2 mt-1 badge badge-success">تماس های پاسخ داده شده   {{targetOperator.detail.answer}}</div>
-                                        <div class="col-12 p-2 mt-1 badge badge-danger">تماس های پاسخ داده نشده  {{targetOperator.detail.noanswer}}</div>                                    
-                                    </div>
-                                </div>
-                        </div>
-                        </div>
-                    </div>
-                    </div>
-              </div>
-            
-              <div class="col-12 col-lg-6 col-xl-6">
-                  <div class="card">
-                      <div class="card-header">
-                          تماس ها
-                          <div class="card-header-actions">
-                          </div>
-                      </div>
-                      <div class="card-body">
-                          <div class="chart-wrapper">
-                              <canvas baseChart class="chart"
-                              [datasets]="barChartData"
-                              [labels]="barChartLabels"
-                              [options]="barChartOptions"
-                              [legend]="barChartLegend"
-                              [chartType]="barChartType"
-                              (chartHover)="chartHovered($event)"
-                              (chartClick)="chartClicked($event)">
-                            </canvas>
-                          </div>
-                      </div>
-                  </div>
+<div class="animated fadeIn">
+        <div class="row justify-content-center align-items-center text-center card card-info bg-gray-300 p-sm-2">
+        <div class="col-12 col-md-8  col-lg-5 col-xl-6  ">
+                <div class="bg-gray-200 p-1 rounded row justify-content-center align-items-center">
+                    <ng-multiselect-dropdown   class="form-control col-3 p-0 "
+                        [placeholder]="'انتخاب اپراتور '"
+                        [data]="operators"
+                        [formControl]="operatorSelect"
+                        [settings]="mainDropdownSettings"
+                    >
+                    </ng-multiselect-dropdown>
+
+                    <app-daterange #daterange></app-daterange>
+
+                    <button class="btn btn-primary col-5 mt-2" [disabled]="loadingData"
+                        (click)="updateCharts()">
+                        {{ loadingData? 'در حال دریافت اطلاعات': ' دریافت اطلاعات ' }} 
+                        <i [hidden]= "loadingData" class="fa fa-check"></i >
+                        <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
+                </div>
+                <div class="bg-gray-200 p-1 rounded row justify-content-center align-items-center">
+                    شماره تماس: {{phoneNumber}}
+                    تاریخ ورود: {{data_login}}
+                    تاریخ خروج: {{data_logout}}
+                    
                 </div>
             </div>
+        </div>
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <div class="row justify-content-center">
+            <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+              <div class="card-header row">
+                عملکرد اپراتور در پاسخ گویی تماس های ورودی
+                <div class="card-header-actions"></div>
+              </div>
+              <div class="card-body">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="chart-wrapper col-12">
+                      <app-doughnut-chart
+                        [data]="inPerformanceData"
+                        [labels]="inPerformanceLabel"
+                        [colors]="inPerformanceColors"
+                      >
+                      </app-doughnut-chart>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-
+        </div>
+    
+        <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+          <div class="card-header row">
+            نمودار تعداد تماس های ورودی
+            <div class="card-header-actions"></div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <div class="col-12">
+                <div class="row">
+                  <app-bar-chart
+                  class="col-12"
+                    [datasets]="barChartDataIn"
+                    
+                    [labels]= "['تعداد تماس ها']"
+                  >
+                  </app-bar-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+          <div class="card-header row">
+            نمودار تعداد تماس های خروجی
+            <div class="card-header-actions"></div>
+          </div>
+          <div class="card-body">
+            <div class="chart-wrapper">
+              <div class="col-12">
+                <div class="row">
+                  <app-bar-chart class="col-12"
+                    [datasets]="barChartDataOut"
+                    
+                    [labels]= "['تعداد تماس ها']"
+                  >
+                  </app-bar-chart>
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+    
+        <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+          <div class="card-header row">
+          تماس های ورودی (درصد)
+            <div class="card-header-actions"></div>
+          </div>
+          <div class="card-body">
+            <div class="col-12">
+              <div class="row">
+                <div class="chart-wrapper col-12">
+                  <app-doughnut-chart
+                    [data]="inDetailsPercent"
+                    [labels]="detailPercentLabelsIn"
+                    [colors]="inPercentsColors"
+                  >
+                  </app-doughnut-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+            <div class="card-header row">
+            تماس های خروجی (درصد)
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="col-12">
+                <div class="row">
+                  <div class="chart-wrapper col-12">
+                    <app-doughnut-chart
+                      [data]="outDetailsPercent"
+                      [labels]="detailPercentLabelsOut"
+                      [colors]="inPercentsColors"
+                    >
+                    </app-doughnut-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+    
+          
+        <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+          <div class="card-header row">
+          مدت زمان مکالمات در تماس های ورودی
+            <div class="card-header-actions"></div>
+          </div>
+          <div class="card-body">
+            <div class="col-12">
+              <div class="row">
+                <div class="chart-wrapper col-12">
+                    <app-bar-chart
+                  class="col-12"
+                    [datasets]="barChartDataTimeIn"
+                    
+                    [labels]= "['مدت زمان مکالمات']"
+                    [isTimeChart]="true"
+                  >
+                  </app-bar-chart>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+            <div class="card-header row">
+                مدت زمان مکالمات در تماس های خروجی
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="col-12">
+                <div class="row">
+                  <div class="chart-wrapper col-12">
+                      <app-bar-chart
+                      class="col-12"
+                        [datasets]="barChartDataTimeOut"
+                        
+                        [labels]= "['مدت زمان مکالمات']"
+                        [isTimeChart]="true"
+                      >
+                      </app-bar-chart>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+    
+      </div>
 </div>
-
+    
