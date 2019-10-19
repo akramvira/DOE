@@ -182,13 +182,11 @@
                 <span
                   class="badge"
                   [ngClass]="{
-                    ' badge-success': value == '1',
-                    ' badge-secondary': value == '0'
+                    ' badge-secondary': value == 0,
+                    ' badge-success': value == 1
                   }"
                   >
-                {{value}}
-                  {{ value == "0" ? "فعال" : "غیرفعال" }}</span
-                >
+                  {{ value == "0" ? "غیر فعال" : "فعال" }}</span>
               </ng-template>
             </ngx-datatable-column>
 
@@ -234,16 +232,15 @@
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="roles" [width]="80">
+            <ngx-datatable-column name="role" [width]="80">
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <!-- <pre>{{value | json}}</pre> -->
-                <span class="badge badge-primary" *ngFor="let item of value">{{
-                  item.name
-                }}</span>
+                <span class="badge badge-primary" >
+                  {{value}}</span>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="updatedAt" [width]="80">
+            <ngx-datatable-column name="updated_at" [width]="80">
               <ng-template
                 let-column="column"
                 let-sort="sortFn"

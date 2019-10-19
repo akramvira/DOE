@@ -33,6 +33,7 @@ getUsers(){
     data = data['data'];
     this.users = data["users"];
     this.mainData = this.users;
+    
     this.page.pageNumber = 0;
     this.page.size = 20;
 

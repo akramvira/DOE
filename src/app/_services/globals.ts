@@ -8,6 +8,18 @@ constructor(private authServ : AuthenticationService
 ){
 
 }
+
+static fetchData(data, keysIsId) {
+  let finalData = [];
+  for (let i in data) {
+    debugger;
+    if(keysIsId)
+      finalData.push(i);
+    else finalData.push(data[i]["id"]);
+  }
+
+  return finalData.join(",");
+}
 }
 
 

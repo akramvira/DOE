@@ -157,8 +157,8 @@ export class AuthenticationService {
       this.toaster.error(errorString);
     } else if (error["status"] == 404) {
       this.toaster.clear();
-      //this.toaster.success("این بخش در ورژن های بعدی ارائه خواهد شد...");
-      this.router.navigate(['/404']);
+      this.toaster.warning("درخواست نا معتبر می باشد.");
+     // this.router.navigate(['/404']);
     }
 
     //console.clear();

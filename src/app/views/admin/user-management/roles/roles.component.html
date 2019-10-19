@@ -103,7 +103,7 @@
             {{item.value }}
           </div>
 
-            {{selectedRoleAccesses.length != 0 ? '' : '.مقامی انتخاب نشده است' }}
+            {{selectedRoleAccesses.length != 0 ? '' : activeRow? 'بدون دسترسی' : '.مقامی انتخاب نشده است' }}
     </div>
     <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
   </div>
