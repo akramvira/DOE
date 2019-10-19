@@ -177,6 +177,16 @@ export class ReportsService {
       options
     );
   }
+  public gerChartsData(data) {
+    let options = this.authServ.getRequestOpions();
+    return this.http.post(
+      environment.apiUrl + "/admin/reports/queues/charts",
+      data,
+      options
+    );
+  }
+
+ 
 
   public getQueuesCharTime() {
     let options = this.authServ.getRequestOpions();

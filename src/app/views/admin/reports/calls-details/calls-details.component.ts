@@ -55,6 +55,22 @@ export class CallsDetailsComponent implements OnInit {
 
   filterData(){
     
+  //   this.tempData = JSON.parse(JSON.stringify(this.storedData));
+  // let columnName = event.currentTarget.id;
+  
+  // const val = event.target.value.toLowerCase();
+
+  // this.filter[columnName] = val;
+
+
+
+  // const filteredData = this.tempData.filter(function(d) {
+  //   return d[columnName].toLowerCase().indexOf(val) !== -1 || !val;
+  // });
+
+  // this.data= filteredData;
+  // this.myTable.offset = 0;
+  
     this.filter.from = this.selectedDateFrom.value;
     this.filter.to = this.selectedDateTo.value;
       
@@ -111,27 +127,7 @@ export class CallsDetailsComponent implements OnInit {
     src:'',
     disposition:'',
   }
-  FilterData(event) {
-    
-  this.tempData = JSON.parse(JSON.stringify(this.storedData));
-  let columnName = event.currentTarget.id;
-  
-  const val = event.target.value.toLowerCase();
 
-  this.filter[columnName] = val;
-
-
-  this.filterData();
-
-  // const filteredData = this.tempData.filter(function(d) {
-  //   return d[columnName].toLowerCase().indexOf(val) !== -1 || !val;
-  // });
-
-  // this.data= filteredData;
-  // this.myTable.offset = 0;
-  }
-
-  
 
 onSelectDate(){
   this.filterData();

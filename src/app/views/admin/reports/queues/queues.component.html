@@ -1,8 +1,11 @@
-<div class=" animated fadeIn row border-bottom justify-content-center">
+<tabset>
+  <tab>
+      <ng-template tabHeading><i class="fa da-list"></i> اطلاعات صف ها </ng-template>
+  <div class=" animated fadeIn row border-bottom justify-content-center">
     <div class="col-12">
       <div class="card card-accent-success">
         <div class="card-header">
-          اطلاعات ریز مکالمات سیستم
+          ریز اطلاعات صف ها
         </div>
         <div class="card-body">
   
@@ -29,16 +32,16 @@
             >
             <div class="col-10">
               <div class="row">
-                <div class="col-12 col-md-6 xol-lg-6 col-xl-2" *ngFor="let item of row.member">
-                  <strong><i class="fa fa-user text-black-50 mr-1"></i>شماره تلفن</strong>
-                  :{{item.number}}</div>
+                <div class="col-12 col-md-6 xol-lg-6 col-xl-2" *ngFor="let item of row.agents">
+                  <strong><i class="fa fa-user text-black-50 mr-1"></i></strong>
+                  {{item.name}}({{item.number}})</div>
               </div>
             </div>
             </ng-template>
           </ngx-datatable-row-detail>
 
 
-            <ngx-datatable-column name="id" [width]="80">
+            <ngx-datatable-column name="id" [width]="50">
               <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
                 <span class>شماره</span>
               </ng-template>
@@ -51,88 +54,98 @@
               </ng-template>
             </ngx-datatable-column>
 
-            
-  
-              <ngx-datatable-column name="holdtime" [width]="80">
+            <ngx-datatable-column name="name" [width]="80">
                 <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                    <span> متوسط زمان انتظار  </span>
+                    <span> عنوان صف </span>
                 </ng-template>
                 <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
                     {{value}}
                 </ng-template>
               </ngx-datatable-column>
+
+              <ngx-datatable-column name="ringtime" [width]="80">
+                <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                    <span> متوسط زمان انتظار  </span>
+                </ng-template>
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="text-center">
+                      {{value}}
+                    </div>
+                  </ng-template>
+              </ngx-datatable-column>
   
               
-              <ngx-datatable-column name="talktime" [width]="100">
+              <ngx-datatable-column name="time" [width]="100">
                   <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
                     <span (click)="sort()">متوسط زمان ‍‍‍پاسخ</span>
                   
                   <app-search-column filterText="src" columnName="src"></app-search-column>
                   </ng-template>
-                  <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                      <span>
+                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                      <div class="text-center">
                         {{value}}
-                      </span>
+                      </div>
                     </ng-template>
-                  </ng-template>
                 </ngx-datatable-column>
 
   
-            <ngx-datatable-column name="answered" [width]="100">
+            <ngx-datatable-column name="answer" [width]="100">
                 <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                  <span (click)="sort()">پاسخ داده شده</span>
+                  <span (click)="sort()">تعداد پاسخ داده شده</span>
                 </ng-template>
-                <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                    <span>
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="text-center">
                       {{value}}
-                    </span>
+                    </div>
                   </ng-template>
-                </ng-template>
               </ngx-datatable-column>
   
   
-            <ngx-datatable-column name="unanswered" [width]="100">
+            <ngx-datatable-column name="noanswer" [width]="100">
                 <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                  <span (click)="sort()">پاسخ داده نشده</span>
+                  <span (click)="sort()">تعداد پاسخ داده نشده</span>
                 </ng-template>
-                <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                  <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                    <span>
+                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                    <div class="text-center">
                       {{value}}
-                    </span>
+                    </div>
                   </ng-template>
-                </ng-template>
               </ngx-datatable-column>
 
-            <ngx-datatable-column name="servicelevel" [width]="100">
+              <ngx-datatable-column name="busy" [width]="100">
+                  <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+                    <span (click)="sort()">تعداد مشغول</span>
+                  </ng-template>
+                    <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                      <div class="text-center">
+                        {{value}}
+                      </div>
+                    </ng-template>
+                </ngx-datatable-column>
+
+            <ngx-datatable-column name="performane" [width]="80">
               <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-                <span (click)="sort()">سطح سرویس دهی</span>
+                <span (click)="sort()">عملکرد</span>
               </ng-template>
-              <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                  <span>
+              <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <div class="text-center">
                     {{value}}
-                  </span>
-                </ng-template>
+                  </div>
               </ng-template>
             </ngx-datatable-column>
 
-            <ngx-datatable-column name="strategy" [width]="100">
+            <ngx-datatable-column name="strategy" [width]="50">
               <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
                 <span (click)="sort()">روش پاسخ</span>
               </ng-template>
-              <ng-template let-value="value" let-rowIndex="rowIndex" ngx-datatable-cell-template>
-                <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
-                  <span>
+              <ng-template let-value="value" let-row="row" ngx-datatable-cell-template>
+                  <div class="text-center">
                     {{value}}
-                  </span>
+                  </div>
                 </ng-template>
-              </ng-template>
             </ngx-datatable-column>
       
-            <ngx-datatable-column name="calls" [width]="80">
+            <ngx-datatable-column name="calls" [width]="100">
               <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
                 <span class>تعداد در صف</span>
               </ng-template>
@@ -168,81 +181,176 @@
       </div>
     </div>
   </div>
+</tab>
 
-  <div class=" animated fadeIn row border-bottom justify-content-center">
-      <div class="col-12 col-lg-6 col-xl-6">
-          <div class="card">
-              <div class="card-header">
-                  نمودار وضعیت تماس ها
-                  <div class="card-header-actions">
-                  </div>
-              </div>
-              <div class="card-body">
-                  <div class="chart-wrapper">
-                      <canvas 
-                      baseChart 
-                      *ngIf="callsBarChartLabels"
-                      class="chart"
-                      [datasets]="callsBarChartData"
-                      [labels]="callsBarChartLabels"
-                      [options]="barChartOptions"
-                      [legend]="barChartLegend"
-                      [chartType]="barChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-                  </div>
-              </div>
-          </div>
+  <tab>
+      <ng-template tabHeading><i class="fa da-list"></i> نمودار  کلی صف ها </ng-template>
+    <div class=" animated fadeIn row border-bottom justify-content-center">
+      <div class="col-5">
+        <div class="row">
+          <app-daterange #daterange></app-daterange>
+        </div>
       </div>
+        <div class="col-12 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    نمودار وضعیت تماس ها
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas 
+                        baseChart 
+                        *ngIf="callsBarChartLabels"
+                        class="chart"
+                        [datasets]="callsBarChartData"
+                        [labels]="callsBarChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <div class="col-12 col-lg-6 col-xl-6">
-          <div class="card">
-              <div class="card-header">
-نمودار مدت زمان انتظار و مکالمه
-                  <div class="card-header-actions">
-                  </div>
-              </div>
-              <div class="card-body">
-                  <div class="chart-wrapper">
-                      <canvas 
-                      *ngIf="timesBarChartLabels"
-                      baseChart 
-                      class="chart"
-                      [datasets]="timesBarChartData"
-                      [labels]="timesBarChartLabels"
-                      [options]="barChartOptions"
-                      [legend]="barChartLegend"
-                      [chartType]="barChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-                  </div>
-              </div>
-          </div>
+        <div class="col-12 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+  نمودار مدت زمان انتظار و مکالمه
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas 
+                        *ngIf="timesBarChartLabels"
+                        baseChart 
+                        class="chart"
+                        [datasets]="timesBarChartData"
+                        [labels]="timesBarChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+  نمودار میزان سرویس دهی در صف ها
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas 
+                        baseChart class="chart"
+                        *ngIf="serviceLevelBarChartLabels"
+                        [datasets]="serviceLevelbarChartData"
+                        [labels]="serviceLevelBarChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+  </tab>
+  <tab>
+      <ng-template tabHeading><i class="fa da-list"></i>  نمودار جزیی صف ها</ng-template>
+    <div class=" animated fadeIn row border-bottom justify-content-center">
+      <div class="col-5">
+        <div class="row">
+          <app-daterange></app-daterange>
+        </div>
       </div>
+        <div class="col-12 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+                    نمودار وضعیت تماس ها
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas 
+                        baseChart 
+                        *ngIf="callsBarChartLabels"
+                        class="chart"
+                        [datasets]="callsBarChartData"
+                        [labels]="callsBarChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-      <div class="col-12 col-lg-6 col-xl-6">
-          <div class="card">
-              <div class="card-header">
-نمودار میزان سرویس دهی در صف ها
-                  <div class="card-header-actions">
-                  </div>
-              </div>
-              <div class="card-body">
-                  <div class="chart-wrapper">
-                      <canvas 
-                      baseChart class="chart"
-                      *ngIf="serviceLevelBarChartLabels"
-                      [datasets]="serviceLevelbarChartData"
-                      [labels]="serviceLevelBarChartLabels"
-                      [options]="barChartOptions"
-                      [legend]="barChartLegend"
-                      [chartType]="barChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"></canvas>
-                  </div>
-              </div>
-          </div>
-      </div>
+        <div class="col-12 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+  نمودار مدت زمان انتظار و مکالمه
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas 
+                        *ngIf="timesBarChartLabels"
+                        baseChart 
+                        class="chart"
+                        [datasets]="timesBarChartData"
+                        [labels]="timesBarChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6 col-xl-6">
+            <div class="card">
+                <div class="card-header">
+  نمودار میزان سرویس دهی در صف ها
+                    <div class="card-header-actions">
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="chart-wrapper">
+                        <canvas 
+                        baseChart class="chart"
+                        *ngIf="serviceLevelBarChartLabels"
+                        [datasets]="serviceLevelbarChartData"
+                        [labels]="serviceLevelBarChartLabels"
+                        [options]="barChartOptions"
+                        [legend]="barChartLegend"
+                        [chartType]="barChartType"
+                        (chartHover)="chartHovered($event)"
+                        (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
-  </div>
+    </div>
+  </tab>
+</tabset>

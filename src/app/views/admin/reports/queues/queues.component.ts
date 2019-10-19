@@ -6,6 +6,7 @@ import { AuthenticationService } from '../../../../_services/authentication.serv
 import { DatatableComponent } from '@swimlane/ngx-datatable';
 import { FormControl } from '@angular/forms';
 import * as moment from 'jalali-moment';
+import { DaterangeComponent } from '../_components/daterange/daterange.component';
 
 @Component({
   selector: 'app-queues',
@@ -44,103 +45,93 @@ public serviceLevelbarChartData: any[] = [];
   chartCallsData : any;
   chartTimeData : any;
   chartServiceLevelData : any;
+  @ViewChild('daterange') daterange :DaterangeComponent;
 
   ngOnInit() {
     
-      this.reportServ.getQueuesData().subscribe(
+    let data = {
+      from : this.daterange.selectedDateFrom.value,
+      to : this.daterange.selectedDateTo.value
+    }
+      this.reportServ.gerChartsData(data).subscribe(
         (data)=>{
-
+          debugger;
+          data=data['data'];
           let arrayData = [];
-          for(let item in data ){
-            
-            arrayData.push({ id: item , ...data[item] });
+          for(let i in data ){
+            arrayData.push({ id: data[i]['id'],
+             name:data[i]['name'] ,
+             ...data[i]['data'], agents: data[i]['agents'] });
           }
 
           this.queueData = arrayData;
         //this.setPage(data); 
-      },
-      (error)=>{
-        this.authServ.handdleAuthErrors(error);
-      }
-      );
 
-      this.reportServ.getQueuesCharTime().subscribe(
-        (data)=>{
-          console.log(data);
 
-          this.chartTimeData = data;
 
-          let chartData = [
-            {data:[], label: 'مدت زمان انتظار'},
-            {data:[], label: 'مدت زمان مکالمه'},
-            ];
-          let chartLabels = [];
+        //time chart-----------------------------------
+        this.chartTimeData = data;
+        let chartData = [
+          {data:[], label: 'مدت زمان انتظار'},
+          {data:[], label: 'مدت زمان مکالمه'},
+          ];
+        let chartLabels = [];
 
-          for(let item in this.chartTimeData ){
-            chartLabels.push(item);
-            chartData[0].data.push( parseInt(this.chartTimeData[item]['holdtime']));
-            chartData[1].data.push(  parseInt(this.chartTimeData[item]['talktime']));
-          }
+        for(let item in this.chartTimeData ){
+          chartLabels.push(item);
+          chartData[0].data.push( parseInt(this.chartTimeData[item]['holdtime']));
+          chartData[1].data.push(  parseInt(this.chartTimeData[item]['talktime']));
+        }
 
-          this.timesBarChartLabels = chartLabels
-          this.timesBarChartData = chartData;
-        //this.setPage(data); 
-      },
-      (error)=>{
-        this.authServ.handdleAuthErrors(error);
-      }
-      );
-  
-      this.reportServ.getQueuesChartCalls().subscribe(
-        (data)=>{
-          console.log(data);
+        this.timesBarChartLabels = chartLabels
+        this.timesBarChartData = chartData;
+
+        ///--/time chart-----------------------------------
+
+
+
+        //answer no answer data--------------------
           
-          this.chartCallsData = data;
+        this.chartCallsData = data;
 
-          let chartData = [
-            {data:[], label: 'پاسخ داده شده'},
-            {data:[], label: 'پاسخ داده نشده'},
-            ];
-          let chartLabels = [];
+         chartData = [
+          {data:[], label: 'پاسخ داده شده'},
+          {data:[], label: 'پاسخ داده نشده'},
+          ];
+         chartLabels = [];
 
-          for(let item in this.chartCallsData ){
-            chartLabels.push(item);
-            chartData[0].data.push( parseInt(this.chartCallsData[item]['answered']));
-            chartData[1].data.push(  parseInt(this.chartCallsData[item]['unanswered']));
-          }
-          this.callsBarChartLabels = chartLabels
-          this.callsBarChartData = chartData;
-        //this.setPage(data); 
+        for(let item in this.chartCallsData ){
+          chartLabels.push(item);
+          chartData[0].data.push( parseInt(this.chartCallsData[item]['answered']));
+          chartData[1].data.push(  parseInt(this.chartCallsData[item]['unanswered']));
+        }
+        this.callsBarChartLabels = chartLabels
+        this.callsBarChartData = chartData;
+        //-----------------------------------
+
+
+
+        //---performance----------------------------------
+         chartData = [
+          {data:[], label: 'درصد سرویس دهی'},
+          ];
+         chartLabels = [];
+
+        for(let item in data ){
+          chartLabels.push(item);
+          chartData[0].data.push( parseInt(data[item]));
+        }
+        
+
+        this.serviceLevelBarChartLabels = chartLabels
+        this.serviceLevelbarChartData = chartData;
+        //---//performance----------------------------------
       },
       (error)=>{
         this.authServ.handdleAuthErrors(error);
       }
       );
 
-      this.reportServ.getQueuesServicelevel().subscribe(
-        (data)=>{
-          console.log(data);
-
-          let chartData = [
-            {data:[], label: 'درصد سرویس دهی'},
-            ];
-          let chartLabels = [];
-
-          for(let item in data ){
-            chartLabels.push(item);
-            chartData[0].data.push( parseInt(data[item]));
-          }
-          
-
-          this.serviceLevelBarChartLabels = chartLabels
-          this.serviceLevelbarChartData = chartData;
-
-        //this.setPage(data); 
-      },
-      (error)=>{
-        this.authServ.handdleAuthErrors(error);
-      }
-      );
 
   }
   @ViewChild('queuesTable') table: any;
