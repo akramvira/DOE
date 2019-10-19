@@ -7,6 +7,7 @@ import { AuthenticationService } from "../../../../_services/authentication.serv
 import { WebService } from "./web.service";
 import { SharedService } from '../../../../_services/shared.service';
 import { DaterangeComponent } from '../_components/daterange/daterange.component';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: "app-performance-l2",
   templateUrl: "./performance-l2.component.html",
@@ -19,7 +20,8 @@ export class PerformanceL2Component implements OnInit {
   constructor(
     private webServ: WebService,
     private authServe: AuthenticationService,
-    private sharedService : SharedService
+    private sharedService : SharedService,
+    private toaster : ToastrService
   ) {}
   groups = new Array();
   filters = new FormGroup({
@@ -229,6 +231,12 @@ export class PerformanceL2Component implements OnInit {
     if (filterData.time == "-1") {
       (filterData.from = this.dateRange.selectedDateFrom.value),
         (filterData.to = this.dateRange.selectedDateTo.value);
+    }
+
+    if(!filterData["idsub"] || !filterData["id"] )
+    {
+      this.toaster.warning('لطفا معاونت و اداره مورد نظر خود را انتخاب کنید.');
+      return;
     }
 
     this.loadingData=true;

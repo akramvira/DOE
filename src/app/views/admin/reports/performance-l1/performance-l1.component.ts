@@ -202,14 +202,13 @@ export class PerformanceL1Component implements OnInit {
 
   onSelectAll(item) {}
   onItemSelect(item) {
-    console.log(this.filters.value.selectedItems);
 
     let labels = [];
     for (let index in this.filters.value.selectedItems) {
       labels.push(this.filters.value.selectedItems[index]["item_text"]);
     }
     this.mainLabels = labels;
-    this.updateCharts();
+    //this.updateCharts();
   }
 
   onActivate(event) {
@@ -230,7 +229,7 @@ export class PerformanceL1Component implements OnInit {
     this.selectedGroups = selectedRows["selected"];
     this.selectedGroups.length;
 
-    this.updateCharts();
+   // this.updateCharts();
   }
 
   updateCharts() {
@@ -256,6 +255,10 @@ export class PerformanceL1Component implements OnInit {
         (filterData.to = this.selectedDateTo.value);
     }
 
+    if(!filterData["id"]) {
+      this.toaster.warning('لطفا یک معاونت انتخاب کنید.');
+      return;
+    }
     filterData.time = parseInt(filterData.time);
     this.loadingData = true;
     this.webServ.getGroupPerformance(filterData).subscribe(
