@@ -138,7 +138,6 @@ getUsers(){
 
   
   userUpdated(){
-    //refresh list
     this.getUsers();
     this.editModal.hide();
   }

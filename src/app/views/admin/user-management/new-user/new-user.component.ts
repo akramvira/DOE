@@ -20,10 +20,12 @@ export class NewUserComponent implements OnInit {
 
   @Input() isEditMode = false;
   public setUserValues(data){
+    let dataToPatch = [];
     let role = this.dropdownList.filter(item=>{ if(item['id'] == data['idrole'])return true; });
+    dataToPatch = JSON.parse(JSON.stringify(data));
+    dataToPatch['role']= role;
 
-   data['role']= role;
-    this.userData.patchValue(data);
+    this.userData.patchValue(dataToPatch);
   }
 
   userData = new FormGroup({
@@ -105,12 +107,10 @@ export class NewUserComponent implements OnInit {
     if(!this.isEditMode){
       this.userServ.addUser(userData).subscribe(
         data=>{
-          this.onSubmitUser.emit(true);
            this.toaster.success('کاربر جدید اضافه شد.');
           this.router.navigate(['/admin/users-management/users']);
         },
         error=>{
-          this.onSubmitUser.emit(false);
           this.authService.handdleAuthErrors(error);
         }
       )
@@ -118,10 +118,12 @@ export class NewUserComponent implements OnInit {
     else {
       this.userServ.updateUser(userData).subscribe(
         data=>{
+          this.onSubmitUser.emit(true);
           this.toaster.success('اطلاعات کاربر تغییر یافت');
           this.router.navigate(['/admin/users-management/users']);
         },
         error=>{
+          this.onSubmitUser.emit(false);
           this.authService.handdleAuthErrors(error);
         }
       )
