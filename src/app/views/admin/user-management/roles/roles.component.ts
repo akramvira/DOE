@@ -177,14 +177,17 @@ export class RolesComponent implements OnInit {
           this.toastr.success("مقام با موفقیت اضافه شد.");
           this.roles.push(newItemData);
           this.refreshParents();
+          
+          this.addingNewRole = false;
         },
         error => {
-          console.log(error);
+          this.addingNewRole = false;
+          this.authServ.handdleAuthErrors(error)
+
         }
       );
 
-      this.refreshParents();
-      this.addingNewRole = false;
+
     } else this.addingNewRole = true;
   }
 
@@ -210,10 +213,13 @@ export class RolesComponent implements OnInit {
   @ViewChild('removeRuleModal') removeModal : ModalDirective;
 
   confirmDelete() {
-    debugger;
+    let activeRowId = this.activeRow;
+
     this.RoleServ.deleteRole(this.roles[this.activeRow]["id"]).subscribe(
       data => {
+        
         this.toastr.success('مقام با موفقیت حذف شد.');
+        this.roles.splice( activeRowId,1);
         this.removeModal.hide();
       },
       error => {
