@@ -4,8 +4,10 @@ import { ReportsService } from '../_service/reports.service';
 import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from '../../../../_services/authentication.service';
 import { DatatableComponent } from '@swimlane/ngx-datatable';
-import { FormControl } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import * as moment from 'jalali-moment';
+import { formGroupNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
+import { DaterangeComponent } from '../_components/daterange/daterange.component';
 
 @Component({
   selector: 'app-calls-details',
@@ -70,12 +72,16 @@ export class CallsDetailsComponent implements OnInit {
 
   // this.data= filteredData;
   // this.myTable.offset = 0;
+
+  debugger;
+
+  let data = this.filtersData.getRawValue();
+  data.from = this.daterange.selectedDateFrom.value;
+  data.to =  this.daterange.selectedDateTo.value;
   
-    this.filter.from = this.selectedDateFrom.value;
-    this.filter.to = this.selectedDateTo.value;
       
 
-    this.reportServ.filterCallsDetails(this.filter).subscribe(
+    this.reportServ.filterCallsDetails(data).subscribe(
       (data)=>{
       this.showData(data);
       },
@@ -104,34 +110,23 @@ export class CallsDetailsComponent implements OnInit {
 
   @ViewChild(DatatableComponent) myTable: DatatableComponent;
   tempData : any = [];
-  dateObject = moment('1395-11-22','jYYYY,jMM,jDD');
-  selectedDateFrom = new FormControl('');
-  selectedDateTo = new FormControl('');
-  disposition = new FormControl('all');
-  src = new FormControl('');
-  dest = new FormControl('');
 
-  datePickerConfig = {
-    format: 'jYYYY/MM/DD',
-    theme: 'dp-material',
-    unSelectOnClick : true,
-    showGoToCurrent :true,
-    drops : 'left'
-}
+ 
+
+  filtersData =new FormGroup({
+    disposition : new FormControl('all'),
+    src : new FormControl(''),
+    dst : new FormControl(''),
+    dest : new FormControl(''),
+    sort  : new FormControl([]),
+  })
 
 
-  filter = {
-    from: this.selectedDateFrom.value,
-    to:this.selectedDateTo.value,
-    dst:'',
-    src:'',
-    disposition:'',
-  }
+  @ViewChild('daterange') daterange :DaterangeComponent;
 
 
-onSelectDate(){
-  this.filterData();
-}
+
+
 
 get getData(){
   return this.storedData;
