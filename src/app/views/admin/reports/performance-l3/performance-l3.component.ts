@@ -112,7 +112,7 @@ loadingData = false;
   onItemSelect(item) {
     this.offices = this.allSub1Data[item["id"]];
     this.filters.patchValue({
-      selectedSub1: this.offices
+      selectedSub1: []
     });
     this.updateLines();
   }
@@ -144,7 +144,7 @@ loadingData = false;
       data => {
         this.lines = data["data"];
         this.filters.patchValue({
-          selectedSub2 : this.lines
+          selectedSub2 : []
         })
       },
       error => {
@@ -203,7 +203,7 @@ loadingData = false;
       data => {
         data = data["data"];
         this.filters.patchValue({
-          selectedItems: 0
+          selectedItems: []
         });
         let groupesData = new Array();
         let selectedMain = 0;
@@ -226,11 +226,11 @@ loadingData = false;
         this.offices = this.allSub1Data[selectedMain["id"]];
 
         this.filters.patchValue({
-          selectedItems: [selectedMain],
-          selectedSub1: this.offices
+          selectedItems: [],
+          selectedSub1: []
         });
 
-        this.updateLines();
+        //this.updateLines();
       },
       error => {
         this.authServe.handdleAuthErrors(error);

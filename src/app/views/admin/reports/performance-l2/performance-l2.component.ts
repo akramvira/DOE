@@ -118,7 +118,7 @@ export class PerformanceL2Component implements OnInit {
   onItemSelect(item) {
     this.offices = this.allSub1Data[item["id"]];
     this.filters.patchValue({
-      selectedSub1: this.offices
+      selectedSub1: []
     });
     //this.updateCharts();
   }
@@ -170,7 +170,7 @@ export class PerformanceL2Component implements OnInit {
       data => {
         data = data["data"];
         this.filters.patchValue({
-          selectedItems: 0
+          selectedItems: []
         });
         let groupesData = new Array();
         let selectedMain = 0;
@@ -193,8 +193,8 @@ export class PerformanceL2Component implements OnInit {
         this.offices = this.allSub1Data[selectedMain["id"]];
 
         this.filters.patchValue({
-          selectedItems: [selectedMain],
-          selectedSub1: this.offices
+          selectedItems: [],
+          selectedSub1: []
         });
       },
       error => {

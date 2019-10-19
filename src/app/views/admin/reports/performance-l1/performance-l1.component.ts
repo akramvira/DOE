@@ -165,7 +165,7 @@ export class PerformanceL1Component implements OnInit {
         this.groups = groupesData;
 
         this.filters.patchValue({
-          selectedItems: groupesData
+          selectedItems: []
         });
 
         let labels = [];
