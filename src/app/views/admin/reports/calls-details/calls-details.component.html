@@ -41,8 +41,11 @@
 
             />
 
-            <button class="ml-2 btn btn-primary form-control-sm" (click)="filterData()">
-              اعمال فیلتر</button>
+            <button class="ml-2 btn btn-primary form-control-sm"[disabled]="loadingData"
+                         (click)="updateCharts()">
+                            {{ loadingData? 'در حال دریافت اطلاعات': '  اعمال فیلتر ' }} 
+                            <i [hidden]= "loadingData" class="fa fa-check"></i >
+                            <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
           </div>
 
           

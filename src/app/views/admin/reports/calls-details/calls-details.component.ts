@@ -73,7 +73,7 @@ export class CallsDetailsComponent implements OnInit {
   // this.data= filteredData;
   // this.myTable.offset = 0;
 
-  debugger;
+ this.loadingData=true;
 
   let data = this.filtersData.getRawValue();
   data.from = this.daterange.selectedDateFrom.value;
@@ -84,14 +84,18 @@ export class CallsDetailsComponent implements OnInit {
     this.reportServ.filterCallsDetails(data).subscribe(
       (data)=>{
       this.showData(data);
+      this.loadingData=false;
       },
-      (error)=>{});
+      (error)=>{
+        this.authServ.handdleAuthErrors(error);
+        this.loadingData=false;
+      });
   }
   
 
 
   //pagination
-
+  loadingData = false;
   setPage(pageInfo){
     debugger;
     this.page.pageNumber = pageInfo.offset+1;
