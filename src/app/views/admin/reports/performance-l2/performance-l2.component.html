@@ -64,40 +64,7 @@
                     [hidden]="filters.value.time != '-1'"
                   >
                     <div class="bg-gray-200 p-1 rounded">
-                      <div class=" col-12">
-                        <span>از تاریخ:</span>
-                        <md-input-container class="date-filter">
-                          <input
-                            class="form-control-sm p-0 border"
-                            mdInput
-                            name="someName"
-                            dir="rtl"
-                            mode="day"
-                            theme="dp-material"
-                            placeholder="تاریخ"
-                            [formControl]="selectedDateFrom"
-                            [dpDayPicker]="datePickerConfig"
-                            (onSelect)="onSelectDate()"
-                          />
-                        </md-input-container>
-                      </div>
-                      <div class=" col-12 ">
-                        <span>تا تاریخ:</span>
-                        <md-input-container class="date-filter">
-                          <input
-                            class="form-control-sm p-0 border"
-                            mdInput
-                            name="someName"
-                            dir="rtl"
-                            mode="day"
-                            theme="dp-material"
-                            placeholder="تاریخ"
-                            [formControl]="selectedDateTo"
-                            [dpDayPicker]="datePickerConfig"
-                            (onSelect)="onSelectDate()"
-                          />
-                        </md-input-container>
-                      </div>
+                      <app-daterange #daterange></app-daterange>
                     </div>
                   </div>
                  <!--/date-->

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ViewChild } from "@angular/core";
 import { ReportsService } from "../_service/reports.service";
 import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
@@ -6,6 +6,7 @@ import { AuthenticationService } from "../../../../_services/authentication.serv
 
 import { WebService } from "./web.service";
 import { SharedService } from '../../../../_services/shared.service';
+import { DaterangeComponent } from '../_components/daterange/daterange.component';
 @Component({
   selector: "app-performance-l2",
   templateUrl: "./performance-l2.component.html",
@@ -100,13 +101,6 @@ export class PerformanceL2Component implements OnInit {
   public allCallsData: Array<any> = [{ data: [], label: "" }];
   public lineChartLabels: Array<any> = this.mainLabels;
 
-  dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
-  minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
-  maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
-  selectedDateFrom = new FormControl("1398/01/01");
-  selectedDateTo = new FormControl("1398/01/01");
-
-  datePickerConfig = {};
 
   initingData: boolean = false;
   loadingData = false;
@@ -116,6 +110,8 @@ export class PerformanceL2Component implements OnInit {
   showAnsweredCalls = true;
   showNoAnsweredCalls = true;
   showLineAllCalls = true;
+  @ViewChild('daterange') dateRange : DaterangeComponent;
+  
   onSelectAll(item) {
   //  this.updateCharts();
   }
@@ -142,50 +138,8 @@ export class PerformanceL2Component implements OnInit {
    // this.getChartsData();
   }
 
-  setDate(){
-    if(this.sharedService.minMaxTime.value){
-      this.minDate =this.sharedService.minMaxTime.value.min;
-      this.maxDate =this.sharedService.minMaxTime.value.max;
-
-      this.selectedDateFrom.setValue(this.minDate);
-      this.selectedDateTo.setValue(this.maxDate);
-      
-      this.datePickerConfig = {
-        format: "jYYYY/MM/DD",
-        theme: "dp-material",
-        min: moment(this.minDate, "jYYYY,jMM,jDD"),
-        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
-        showGoToCurrent :true,
-        hideOnOutsideClick : true,
-        showNearMonthDays:true
-      };
-
-    }
-
-    this.sharedService.minMaxTime.subscribe(
-      data=>{
-        this.minDate =data['min'];
-        this.maxDate =data['max'];
-
-        this.selectedDateFrom.setValue(this.minDate);
-        this.selectedDateTo.setValue(this.maxDate);
-        this.datePickerConfig = {
-          format: "jYYYY/MM/DD",
-          theme: "dp-material",
-          min: moment(this.minDate, "jYYYY,jMM,jDD"),
-          max: moment(this.maxDate, "jYYYY,jMM,jDD"),
-          showGoToCurrent :true,
-          hideOnOutsideClick : true,
-          showNearMonthDays:true
-        };
-
-      }
-    );
-  }
-
 
   ngOnInit() {
-    this.setDate();
 
     this.asDropdownSettings = {
       singleSelection: false,
@@ -273,8 +227,8 @@ export class PerformanceL2Component implements OnInit {
     filterData["idsub"] = filterData["idsub"].join(",");
 
     if (filterData.time == "-1") {
-      (filterData.from = this.selectedDateFrom.value),
-        (filterData.to = this.selectedDateTo.value);
+      (filterData.from = this.dateRange.selectedDateFrom.value),
+        (filterData.to = this.dateRange.selectedDateTo.value);
     }
 
     this.loadingData=true;
