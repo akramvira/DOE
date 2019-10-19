@@ -43,7 +43,6 @@ export class CallsDetailsComponent implements OnInit {
   }
 
   showData(data){
-    debugger;
     this.data = data['data'];
     this.storedData = data['data'];
   
