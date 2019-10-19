@@ -66,4 +66,22 @@ export class UsersService {
       options
     );
   }
+
+
+  public updateUser(data) {
+    let options = this.authServ.getRequestOpions();
+    return this.http.put(
+      environment.apiUrl + "/admin/users/" + data["id"],
+      data,
+      options
+    );
+  }
+
+  public deleteUser(id) {
+    let options = this.authServ.getRequestOpions();
+    return this.http.delete(
+      environment.apiUrl + "/admin/users/" + id,
+      options
+    );
+  }
 }

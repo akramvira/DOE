@@ -28,6 +28,7 @@ export class UsersComponent implements OnInit {
       
       data = data['data'];
       this.users = data["users"];
+      
       this.mainData = this.users;
     });
     this.page.pageNumber = 0;
@@ -108,7 +109,7 @@ export class UsersComponent implements OnInit {
   }
   confirmDelete() {
     debugger;
-    this.usersServ.deleteRole(this.users[this.activeRow]["id"]).subscribe(
+    this.usersServ.deleteUser(this.users[this.activeRow]["id"]).subscribe(
       data => {
         this.toastr.success("کاربر مورد نظر با موفقیت حذف شد.");
       },
@@ -133,7 +134,7 @@ export class UsersComponent implements OnInit {
     this.editModal.show();
     this.activeRow = rowIndex;
     this.selectedItemNameToEdit = this.users[this.activeRow]["name"];
-
+debugger;
     this.userData.patchValue(this.users[this.activeRow]);
   }
   userData = new FormGroup({
