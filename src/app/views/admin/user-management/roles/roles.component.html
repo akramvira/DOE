@@ -1,5 +1,5 @@
 <div class="row animated fadeIn mt-4">
-  <div class="col-12 col-md-6 col-lg-6 col-xl-2 ">
+  <div class="col-12 col-md-6 col-lg-6 col-xl-3 ">
     <div class="card card-accent-primary">
       <div class="card-header">  لیست مقام ها </div>
       <div class="card-body">
@@ -21,14 +21,14 @@
         [draggable]="false"
         [resizeable]="false"
         name="name"
-        [width]="100"
+        [width]="200"
         >
           <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
             <span >نام مقام</span>
           </ng-template>
           <ng-template let-value="value"   let-row="row" 
             let-rowIndex="rowIndex"  ngx-datatable-cell-template>
-              <span
+              <span class="col-12"
               title="برای ویرایش دوبار کلیک کنید!"
               (dblclick)="editing[rowIndex + '-name'] = true"
               (click)="setActiveRow(rowIndex)"
@@ -108,7 +108,7 @@
     <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
   </div>
 </div>
-<div class="col-12 col-md-6 col-lg-6 col-xl-6">
+<div class="col-12 col-md-6 col-lg-6 col-xl-5">
   <div class="card card-accent-success">
       <div class="card-header p-1  ">
           <div class="col-12">
