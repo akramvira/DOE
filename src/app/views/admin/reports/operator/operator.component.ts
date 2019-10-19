@@ -24,7 +24,7 @@ export class OperatorComponent implements OnInit  {
     private toaster: ToastrService
   ) {}
 
-  public inPerformanceLabel: string[] ;
+  public inPerformanceLabel: string[] = ['عملکرد'] ;
   public inPerformanceColors = [
     {
       backgroundColor: ["#20a8d8", "#eeeeee"]
