@@ -2,45 +2,10 @@
     <div class="row justify-content-center align-items-center text-center card card-info bg-gray-300 p-sm-2">
             <div class="col-12 col-md-8  col-lg-5 col-xl-5  ">
                     <div class="bg-gray-200 p-1 rounded row justify-content-center align-items-center">
-                        <div class=" col-12">
-                            <span>از تاریخ:</span>
-                            <md-input-container
-                                class="date-filter">
-                                <input 
-                                class="form-control-sm p-0 border"
-                                mdInput 
-                                name="someName" 
-                                dir="rtl"
-                                mode="day"
-                                theme="dp-material"
-                                placeholder="تاریخ"
-                                [formControl]="selectedDateFrom"
-                                [dpDayPicker]="datePickerConfig"
-                                
-                                />
-                            </md-input-container>
-                        </div>
-                        <div class=" col-12 ">
-                            <span>تا تاریخ:</span>
-                            <md-input-container
-                            class="date-filter">
-                            <input 
-                            class="form-control-sm p-0 border"
-                            mdInput 
-                            name="someName" 
-                            dir="rtl"
-                            mode="day"
-                            theme="dp-material"
-                            placeholder="تاریخ"
-                            [formControl]="selectedDateTo"
-                            [dpDayPicker]="datePickerConfig"
-                            
-                            />
-                            </md-input-container>
-                        </div>
+                      <app-daterange #daterange></app-daterange>
 
                         <button class="btn btn-primary col-8 mt-2" [disabled]="loadingData"
-                         (click)="onSelectDate()">
+                         (click)="updateCharts()">
                             {{ loadingData? 'در حال دریافت اطلاعات': ' دریافت اطلاعات ' }} 
                             <i [hidden]= "loadingData" class="fa fa-check"></i >
                             <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>

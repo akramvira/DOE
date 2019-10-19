@@ -1,0 +1,38 @@
+  <div class=" col-12">
+      <span>از تاریخ:</span>
+      <md-input-container
+          class="date-filter">
+          <input 
+          class="form-control-sm p-0 border"
+          mdInput 
+          name="someName" 
+          dir="rtl"
+          mode="day"
+          readonly="true"
+          theme="dp-material"
+          placeholder="تاریخ"
+          [formControl]="selectedDateFrom"
+          [dpDayPicker]="datePickerConfig"
+          
+          />
+      </md-input-container>
+  </div>
+  <div class=" col-12 ">
+      <span>تا تاریخ:</span>
+      <md-input-container
+      class="date-filter">
+      <input 
+      class="form-control-sm p-0 border"
+      mdInput 
+      name="someName" 
+      dir="rtl"
+      mode="day"
+      readonly="true"
+      theme="dp-material"
+      placeholder="تاریخ"
+      [formControl]="selectedDateTo"
+      [dpDayPicker]="datePickerConfig"
+      
+      />
+      </md-input-container>
+  </div>

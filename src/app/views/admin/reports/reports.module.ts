@@ -26,6 +26,7 @@ import { PerformanceL3Component } from './performance-l3/performance-l3.componen
 import { CompareAllComponent } from './compare-all/compare-all.component';
 import {NgxPrintModule} from 'ngx-print';
 import { SelectItemComponent } from './_components/select-item/select-item.component';
+import { DaterangeComponent } from './_components/daterange/daterange.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { SelectItemComponent } from './_components/select-item/select-item.compo
     PerformanceL2Component,
     PerformanceL3Component,
     CompareAllComponent,
-    SelectItemComponent
+    SelectItemComponent,
+    DaterangeComponent
   ],
   imports: [
     CommonModule,
