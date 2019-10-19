@@ -230,7 +230,7 @@ loadingData = false;
           selectedSub1: []
         });
 
-        //this.updateLines();
+        this.updateLines();
       },
       error => {
         this.authServe.handdleAuthErrors(error);

@@ -19,7 +19,7 @@ export class OfficeComponent implements OnInit {
   ) {}
 
   groups = new Array();
-  allExtensions: [];
+  allExtensions:any[];
   selectedGroupExtensions: any = [];
   remainingExtensions: any;
   parentSelected: boolean = false;

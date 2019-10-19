@@ -18,7 +18,7 @@ export class AssistantComponent implements OnInit {
   ) {}
 
   groups = new Array();
-  allExtensions: [];
+  allExtensions:any[];
   selectedGroupExtensions: any = [];
   remainingExtensions: any;
   parentSelected: boolean = false;
