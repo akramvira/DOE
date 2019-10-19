@@ -81,8 +81,7 @@ export class LoginComponent {
           this.router.navigate(['/admin/dashboard']);
         },
         error => {
-          if(error.error.error != '')
-          this.toastr.error(error.error.error, 'پیغام سیستم');
+        this.authenticationService.handdleAuthErrors(error);
           this.loading = false;
         });
   }

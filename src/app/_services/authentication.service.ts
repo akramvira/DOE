@@ -132,7 +132,7 @@ export class AuthenticationService {
     // 401 is login but no access to  resource
     // expired 401
 
-    if (error["status"] >= 401 && error["status"] < 404) {
+    if (error["status"] == 401) {
       //user in not authorized
       this.toaster.clear();
       // this.toaster.error('شما از سیستم خارج شدید.');
@@ -141,7 +141,7 @@ export class AuthenticationService {
     } else if (
       error["status"] == 500 ||
       error["status"] == 502 ||
-      error["status"] == 0
+      error["status"] == 0 
     ) {
       this.toaster.clear();
       this.toaster.error( "خطایی در سمت سرور رخ داده است.","پیغام سیستم");
@@ -159,6 +159,14 @@ export class AuthenticationService {
       this.toaster.clear();
       this.toaster.warning("درخواست نا معتبر می باشد.");
      // this.router.navigate(['/404']);
+    }else if (error["status"] == 400) {
+      this.toaster.clear();
+      this.toaster.warning("نام یا نام کاربری اشتباه است.");
+     // this.router.navigate(['/404']);
+    }
+    else{
+      this.toaster.clear();
+      this.toaster.warning("درخواست نا معتبر می باشد. کد خطا:"+ error['status']);
     }
 
     //console.clear();
