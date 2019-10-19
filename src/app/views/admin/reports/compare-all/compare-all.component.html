@@ -8,9 +8,10 @@
                     <div class="col-12">
                         <app-select-item 
                         #select1
-                        label='مورد اول '
+                        label='مورد اول :'
                         >
                         </app-select-item>
+                        
                 </div>
               </div>
             </div>
@@ -19,7 +20,7 @@
                   <div class="col-12">
                         <app-select-item 
                         #select2
-                        label='مورد دوم'
+                        label='مورد دوم :'
                         >
                         </app-select-item>
                   </div>
@@ -28,354 +29,354 @@
           </div>
     </div>
 </div>
-<div class="animated fadeIn row">
-        <div class="col-12">
-          <div
-            class=" text-left justify-content-end card card-info bg-gray-300 p-sm-2"
-            [ngClass]="{
-              'pt-4 pb-4 ': filters.value.time != '-1',
-              'pt-2 pb-2 ': filters.value.time == '-1'
-            }"
-          >
-           
-            <div class="text-center col-12 " [formGroup]="filters">
-              <div class="row text-center justify-content-center align-items-center">
-                <div class="col-12 ">
+<div class="animated fadeIn row  ">
+    <div class="col-12 ">
+      <div
+        class=" text-left justify-content-center align-items-center card card-info bg-gray-300 p-sm-2 border-light border-top"
+        [ngClass]="{
+          'pt-4 pb-4 ': filters.value.time != '-1',
+          'pt-2 pb-2 ': filters.value.time == '-1'
+        }"
+      >
+        
+        <div class="text-center col-12 col-xl-8" [formGroup]="filters">
+          <div class="row text-center justify-content-center align-items-center">
+            <div class="col-12 ">
+              <div class="row">
+                <div class="col-6">
                   <div class="row">
-                    <div class="col-6">
-                      <div class="row">
-                        <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
-    
-                      </div>
-                        <!--date-->
-                        <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-12"
-                          [ngClass]="{
-                            ' col-xl-3': filters.value.time != '-1',
-                            ' col-xl-2': filters.value.time == '-1'
-                          }"
-                        >
-                          <div class="input-group">
-                            <div class="input-group-prepend">
-                              <label class="input-group-text">بازه زمانی</label>
-                            </div>
-                            <select
-                              class="col form-control"
-                              
-                              formControlName="time"
-                            >
-                              <option value="0">همه زمان ها</option>
-                              <option value="1">یک روز اخیر</option>
-                              <option value="30">یک ماه اخیر </option>
-                              <option value="365"> یک سال اخیر</option>
-                              <option value="-1">انتخابی...</option>
-                            </select>
-                          </div>
+                    <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
+
+                  </div>
+                    <!--date-->
+                    <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-12"
+                      [ngClass]="{
+                        ' col-xl-3': filters.value.time != '-1',
+                        ' col-xl-2': filters.value.time == '-1'
+                      }"
+                    >
+                      <div class="input-group">
+                        <div class="input-group-prepend">
+                          <label class="input-group-text">بازه زمانی</label>
                         </div>
-                        <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-12"
-                          [hidden]="filters.value.time != '-1'"
+                        <select
+                          class="col form-control"
+                          
+                          formControlName="time"
                         >
-                          <div class="bg-gray-200 p-1 rounded">
-                            <div class="row">
-                              <div class=" col-12 col-xl-6">
-                                <span>از تاریخ:</span>
-                                <md-input-container class="date-filter">
-                                  <input
-                                    class="form-control-sm p-0 border"
-                                    mdInput
-                                    name="someName"
-                                    dir="rtl"
-                                    mode="day"
-                                    theme="dp-material"
-                                    placeholder="تاریخ"
-                                    [formControl]="selectedDateFrom"
-                                    [dpDayPicker]="datePickerConfig"
-                                    (onSelect)="onSelectDate()"
-                                  />
-                                </md-input-container>
-                              </div>
-                              <div class=" col-12 col-xl-6">
-                                <span>تا تاریخ:</span>
-                                <md-input-container class="date-filter">
-                                  <input
-                                    class="form-control-sm p-0 border"
-                                    mdInput
-                                    name="someName"
-                                    dir="rtl"
-                                    mode="day"
-                                    theme="dp-material"
-                                    placeholder="تاریخ"
-                                    [formControl]="selectedDateTo"
-                                    [dpDayPicker]="datePickerConfig"
-                                    (onSelect)="onSelectDate()"
-                                  />
-                                </md-input-container>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                       <!--/date-->
+                          <option value="0">همه زمان ها</option>
+                          <option value="1">یک روز اخیر</option>
+                          <option value="30">یک ماه اخیر </option>
+                          <option value="365"> یک سال اخیر</option>
+                          <option value="-1">انتخابی...</option>
+                        </select>
                       </div>
                     </div>
-      
-                   <div class="col-6">
-                      <div class="row">
-                          <div class="col-12 col-xl-12">
-                              <div class="row mb-lg-2 mb-md-2 mb-sm-2 ">
-                                  <div  class="col-12 btn-group btn-group-toggle mb-2"
-                                    data-toggle="buttons"
-                                  >
-                                    <label
-                                      class="btn btn-foursquare  p-2 "
-                                      [ngClass]="{ active: filters.value.inorout == 'in' }"
-                                      for="in"
-                                    >
-                                      <input
-                                        type="radio"
-                                        value="in"
-                                        formControlName="inorout"
-                                        id="in"
-                                        (change)="
-                                          filters.value.inorout = 'in'; 
-                                        "
-                                        autocomplete="off"
-                                      />
-                                      ورودی
-                                    </label>
-                                    <label
-                                      class="btn btn-foursquare  p-2 "
-                                      [ngClass]="{ active: filters.value.inorout == 'out' }"
-                                      for="out"
-                                    >
-                                      <input
-                                        type="radio"
-                                        value="out"
-                                        formControlName="inorout"
-                                        id="out"
-                                        autocomplete="off"
-                                        (change)="
-                                          filters.value.inorout = 'out'; 
-                                        "
-                                      />
-                                      خروجی
-                                    </label>
-                                  </div>
-                                  <div  class="col-12 col-xl-12"
-                                  [ngClass]="{
-                                    ' col-xl-4': filters.value.time != '-1',
-                                    ' col-xl-3': filters.value.time == '-1'
-                                  }"
+                    <div class="col-12 mb-md-2 mb-sm-2 mb-lg-2 col-xl-12"
+                      [hidden]="filters.value.time != '-1'"
+                    >
+                      <div class="bg-gray-200 p-1 rounded">
+                        <div class="row">
+                          <div class=" col-12 col-xl-6">
+                            <span>از تاریخ:</span>
+                            <md-input-container class="date-filter">
+                              <input
+                                class="form-control-sm p-0 border"
+                                mdInput
+                                name="someName"
+                                dir="rtl"
+                                mode="day"
+                                theme="dp-material"
+                                placeholder="تاریخ"
+                                [formControl]="selectedDateFrom"
+                                [dpDayPicker]="datePickerConfig"
+                                (onSelect)="onSelectDate()"
+                              />
+                            </md-input-container>
+                          </div>
+                          <div class=" col-12 col-xl-6">
+                            <span>تا تاریخ:</span>
+                            <md-input-container class="date-filter">
+                              <input
+                                class="form-control-sm p-0 border"
+                                mdInput
+                                name="someName"
+                                dir="rtl"
+                                mode="day"
+                                theme="dp-material"
+                                placeholder="تاریخ"
+                                [formControl]="selectedDateTo"
+                                [dpDayPicker]="datePickerConfig"
+                                (onSelect)="onSelectDate()"
+                              />
+                            </md-input-container>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/date-->
+                  </div>
+                </div>
+  
+                <div class="col-6">
+                  <div class="row">
+                      <div class="col-12 col-xl-12">
+                          <div class="row mb-lg-2 mb-md-2 mb-sm-2 ">
+                              <div  class="col-12 btn-group btn-group-toggle mb-2"
+                                data-toggle="buttons"
+                              >
+                                <label
+                                  class="btn btn-foursquare  p-2 "
+                                  [ngClass]="{ active: filters.value.inorout == 'in' }"
+                                  for="in"
                                 >
-                                  <div class="row">
-                                    <div
-                                      class="col-12 btn-group btn-group-toggle"
-                                      data-toggle="buttons"
-                                    >
-                                      <label
-                                        class="btn btn-primary active  p-1 "
-                                        [ngClass]="{ active: filters.value.type == '0' }"
-                                        for="type0"
-                                      >
-                                        <input
-                                          type="radio"
-                                          value="0"
-                                          id="type0"
-                                          formControlName="type"
-                                          autocomplete="off"
-                                          (change)="filters.value.type = '0'; "
-                                          checked
-                                        />
-                                        همه
-                                      </label>
-                                      <label
-                                        class="btn btn-primary  p-1 "
-                                        [ngClass]="{ active: filters.value.type == '1' }"
-                                        for="type1"
-                                      >
-                                        <input
-                                          type="radio"
-                                          value="1"
-                                          id="type1"
-                                          formControlName="type"
-                                          autocomplete="off"
-                                          (change)="filters.value.type = '1'; "
-                                        />
-                                        داخلی
-                                      </label>
-                                      <label
-                                        class="btn btn-primary"
-                                        [ngClass]="{ active: filters.value.type == '2' }"
-                                        for="type2"
-                                      >
-                                        <input
-                                          type="radio"
-                                          value="2"
-                                          id="type2"
-                                          formControlName="type"
-                                          autocomplete="off"
-                                          (change)="filters.value.type = '2'; "
-                                        />
-                                        شهری
-                                      </label>
-                                      <label
-                                        class="btn btn-primary"
-                                        [ngClass]="{ active: filters.value.type == '3' }"
-                                        for="type3"
-                                      >
-                                        <input
-                                          type="radio"
-                                          value="3"
-                                          id="type3"
-                                          formControlName="type"
-                                          autocomplete="off"
-                                          (change)="filters.value.type = '3'; "
-                                        />
-                                        بین شهری
-                                      </label>
-                                      <label
-                                        class="btn btn-primary"
-                                        [ngClass]="{ active: filters.value.type == '4' }"
-                                        for="type4"
-                                      >
-                                        <input
-                                          type="radio"
-                                          value="4"
-                                          id="type4"
-                                          formControlName="type"
-                                          autocomplete="off"
-                                          (change)="filters.value.type = '4'; "
-                                        />
-                                        موبایل
-                                      </label>
-                                    </div>
-                                  </div>
-                              
+                                  <input
+                                    type="radio"
+                                    value="in"
+                                    formControlName="inorout"
+                                    id="in"
+                                    (change)="
+                                      filters.value.inorout = 'in'; 
+                                    "
+                                    autocomplete="off"
+                                  />
+                                  ورودی
+                                </label>
+                                <label
+                                  class="btn btn-foursquare  p-2 "
+                                  [ngClass]="{ active: filters.value.inorout == 'out' }"
+                                  for="out"
+                                >
+                                  <input
+                                    type="radio"
+                                    value="out"
+                                    formControlName="inorout"
+                                    id="out"
+                                    autocomplete="off"
+                                    (change)="
+                                      filters.value.inorout = 'out'; 
+                                    "
+                                  />
+                                  خروجی
+                                </label>
+                              </div>
+                              <div  class="col-12 col-xl-12"
+                              [ngClass]="{
+                                ' col-xl-4': filters.value.time != '-1',
+                                ' col-xl-3': filters.value.time == '-1'
+                              }"
+                            >
+                              <div class="row">
+                                <div
+                                  class="col-12 btn-group btn-group-toggle"
+                                  data-toggle="buttons"
+                                >
+                                  <label
+                                    class="btn btn-primary active  p-1 "
+                                    [ngClass]="{ active: filters.value.type == '0' }"
+                                    for="type0"
+                                  >
+                                    <input
+                                      type="radio"
+                                      value="0"
+                                      id="type0"
+                                      formControlName="type"
+                                      autocomplete="off"
+                                      (change)="filters.value.type = '0'; "
+                                      checked
+                                    />
+                                    همه
+                                  </label>
+                                  <label
+                                    class="btn btn-primary  p-1 "
+                                    [ngClass]="{ active: filters.value.type == '1' }"
+                                    for="type1"
+                                  >
+                                    <input
+                                      type="radio"
+                                      value="1"
+                                      id="type1"
+                                      formControlName="type"
+                                      autocomplete="off"
+                                      (change)="filters.value.type = '1'; "
+                                    />
+                                    داخلی
+                                  </label>
+                                  <label
+                                    class="btn btn-primary"
+                                    [ngClass]="{ active: filters.value.type == '2' }"
+                                    for="type2"
+                                  >
+                                    <input
+                                      type="radio"
+                                      value="2"
+                                      id="type2"
+                                      formControlName="type"
+                                      autocomplete="off"
+                                      (change)="filters.value.type = '2'; "
+                                    />
+                                    شهری
+                                  </label>
+                                  <label
+                                    class="btn btn-primary"
+                                    [ngClass]="{ active: filters.value.type == '3' }"
+                                    for="type3"
+                                  >
+                                    <input
+                                      type="radio"
+                                      value="3"
+                                      id="type3"
+                                      formControlName="type"
+                                      autocomplete="off"
+                                      (change)="filters.value.type = '3'; "
+                                    />
+                                    بین شهری
+                                  </label>
+                                  <label
+                                    class="btn btn-primary"
+                                    [ngClass]="{ active: filters.value.type == '4' }"
+                                    for="type4"
+                                  >
+                                    <input
+                                      type="radio"
+                                      value="4"
+                                      id="type4"
+                                      formControlName="type"
+                                      autocomplete="off"
+                                      (change)="filters.value.type = '4'; "
+                                    />
+                                    موبایل
+                                  </label>
                                 </div>
                               </div>
+                          
+                            </div>
                           </div>
                       </div>
-                    </div>
-                   
                   </div>
                 </div>
-                <div class="border-light border-top col-11 mt-1 pt-1">
-                  <button class="btn btn-success" [disabled]="loadingData" (click)="updateCharts()">
-                    {{ loadingData? 'در حال دریافت اطلاعات': 'دریافت اطلاعات' }} 
-                    <i [hidden]= "loadingData" class="fa fa-check"></i >
-                    <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
-                </div>
+                
               </div>
             </div>
-    
-    
-          </div>
-      
-          <div class="row justify-content-center">
-            <div class="col-12  col-lg-6  col-xl-6" >
-              <div class="card">
-                <div class="card-header">
-                  نمودار تعداد کل تماس ها
-                  <div class="card-header-actions"></div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                    <div class="col-12">
-                      <div class="chart-wrapper mt-3 mx-3 " *ngIf="allCallsData.length >0 ">
-                        <app-bar-chart
-                          [datasets]="allCallsData"
-                          [labels]="mainLabels"
-                        >
-                        </app-bar-chart>
-                      </div>
-                    </div>
-              
-                  </div>
-                </div>
-              </div>
+            <div class="border-light border-top col-11 mt-1 pt-1">
+              <button class="btn btn-success" [disabled]="loadingData" (click)="updateCharts()">
+                {{ loadingData? 'در حال دریافت اطلاعات': 'دریافت اطلاعات' }} 
+                <i [hidden]= "loadingData" class="fa fa-check"></i >
+                <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
             </div>
-      
-            <div class="col-12  col-lg-6  col-xl-6" >
-              <div class="card">
-                <div class="card-header">
-                 نمودار تعداد تماس های پاسخ داده شده، پاسخ داده نشده و مشغول
-                  <div class="card-header-actions"></div>
-                </div>
-                <div class="card-body">
-                  <div class="chart-wrapper" *ngIf="callsDetailsData.length>0">
-                    <app-bar-chart
-                      [datasets]="callsDetailsData"
-                      [labels]="mainLabels"
-                    >
-                    </app-bar-chart>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-      
-      
-            <div class="col-12  col-lg-6  col-xl-6" >
-              <div class="card">
-                <div class="card-header">
-                  نمودار عملکرد داخلی ها
-                </div>
-                <div class="card-body row">
-                  <div class="chart-wrapper col-12" *ngIf="performanceChartData.length>0">
-                    <app-bar-chart
-                      [datasets]="performanceChartData"
-                      [labels]="mainLabels"
-                      [colors]="timeBarChartColors"
-                      [isPercentChart]="true"
-                    >
-                    </app-bar-chart>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-            <div class="col-12  col-lg-6  col-xl-6" >
-              <div class="card">
-                <div class="card-header">
-                 نمودار مدت زمان مکالمه داخلی ها
-                  <div class="card-header-actions"></div>
-                </div>
-                <div class="card-body">
-                  <div class="chart-wrapper" *ngIf="timesChartData.length>0">
-                    <app-bar-chart
-                      [datasets]="timesChartData"
-                      [labels]="mainLabels"
-                      [colors]="timeBarChartColors"
-                      isTimeChart = "true"
-                    >
-                    </app-bar-chart>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-            <div class="col-12  col-lg-6  col-xl-6" >
-              <div class="card">
-                <div class="card-header">
-              نمودار وضعیت میانگین مکالمات به میانگین کل
-                  <div class="card-header-actions"></div>
-                </div>
-                <div class="card-body">
-                  <div class="chart-wrapper">
-                    <app-line-chart
-                    *ngIf="timesAvgChartData.length > 0"
-                      [datasets]="timesAvgChartData"
-                      [labels]="mainLabels"
-                      [colors]="timeAvgChartColors"
-                      isTimeChart = "true"
-                    >
-                    </app-line-chart>
-                  </div>
-                </div>
-              </div>
-            </div>
-      
-      
           </div>
         </div>
+
+
+      </div>
+  
+      <div class="row justify-content-center">
+        <div class="col-12  col-lg-6  col-xl-6" >
+          <div class="card">
+            <div class="card-header">
+              نمودار تعداد کل تماس ها
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="row">
+                <div class="col-12">
+                  <div class="chart-wrapper mt-3 mx-3 " *ngIf="allCallsData.length >0 ">
+                    <app-bar-chart
+                      [datasets]="allCallsData"
+                      [labels]="mainLabels"
+                    >
+                    </app-bar-chart>
+                  </div>
+                </div>
+          
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-12  col-lg-6  col-xl-6" >
+          <div class="card">
+            <div class="card-header">
+              نمودار تعداد تماس های پاسخ داده شده، پاسخ داده نشده و مشغول
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper" *ngIf="callsDetailsData.length>0">
+                <app-bar-chart
+                  [datasets]="callsDetailsData"
+                  [labels]="mainLabels"
+                >
+                </app-bar-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+  
+        <div class="col-12  col-lg-6  col-xl-6" >
+          <div class="card">
+            <div class="card-header">
+              نمودار عملکرد داخلی ها
+            </div>
+            <div class="card-body row">
+              <div class="chart-wrapper col-12" *ngIf="performanceChartData.length>0">
+                <app-bar-chart
+                  [datasets]="performanceChartData"
+                  [labels]="mainLabels"
+                  [colors]="timeBarChartColors"
+                  [isPercentChart]="true"
+                >
+                </app-bar-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-12  col-lg-6  col-xl-6" >
+          <div class="card">
+            <div class="card-header">
+              نمودار مدت زمان مکالمه داخلی ها
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper" *ngIf="timesChartData.length>0">
+                <app-bar-chart
+                  [datasets]="timesChartData"
+                  [labels]="mainLabels"
+                  [colors]="timeBarChartColors"
+                  isTimeChart = "true"
+                >
+                </app-bar-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-12  col-lg-6  col-xl-6" >
+          <div class="card">
+            <div class="card-header">
+          نمودار وضعیت میانگین مکالمات به میانگین کل
+              <div class="card-header-actions"></div>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrapper">
+                <app-line-chart
+                *ngIf="timesAvgChartData.length > 0"
+                  [datasets]="timesAvgChartData"
+                  [labels]="mainLabels"
+                  [colors]="timeAvgChartColors"
+                  isTimeChart = "true"
+                >
+                </app-line-chart>
+              </div>
+            </div>
+          </div>
+        </div>
+  
+  
+      </div>
+    </div>
 </div>
       
 <app-loading text="در حال دریافت اطلاعات... " [showLoading]="initingData"></app-loading>

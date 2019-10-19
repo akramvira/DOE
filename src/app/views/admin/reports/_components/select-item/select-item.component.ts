@@ -15,9 +15,18 @@ export class SelectItemComponent implements OnInit {
     private authServe: AuthenticationService
   ) {}
 
+  id1: string;
+  id2: string;
+  id3: string;
+
   @Input() data: any;
   @Input() label: string;
   ngOnInit() {
+   
+    this.id1 =   '_' + Math.random().toString(36).substr(2, 9);
+    this.id2 =   '_' + (Math.random()+1).toString(36).substr(2, 9);
+    this.id3 =   '_' + (Math.random()+2).toString(36).substr(2, 9);
+
     this.getAllLevelsData();
     this.updateDropdownsSetting();
   }

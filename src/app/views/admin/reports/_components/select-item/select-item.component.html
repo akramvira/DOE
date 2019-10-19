@@ -1,19 +1,59 @@
 <div class="row" [formGroup]="selectedItem1">
-        <label class="col-1">{{label}}</label>
+        <label class="col-1 form-text">{{label}}</label>
     <div class="input-group col-xl-2">
-         
+       
 
-        <div class="input-group-prepend">
-            <label class="input-group-text">نوع</label>
-        </div>
-        <select class="col form-control"
+        <div  class="col-12 btn-group btn-group-toggle mb-2"  data-toggle="buttons" >
+
+        <label
+          class="btn btn-foursquare  p-2 "
+          [ngClass]="{ active: selectedItem1.value.level == '0' }"
+          [for]="id1"
+          >
+          <input
+            type="radio"
+            value="0"
             formControlName="level"
-          (change)="updateDropdownsData1()"
-            >
-            <option value="0">معاونت</option>
-            <option value="1">اداره</option>
-            <option value="2">داخلی </option>
-        </select>
+            [id]="id1"
+            (change)="updateDropdownsData1()"
+            autocomplete="off"
+          />
+          معاونت
+        </label>
+        <label
+          class="btn btn-foursquare  p-2 "
+          [ngClass]="{ active: selectedItem1.value.level == '1' }"
+          [for]="id2"
+        >
+          <input
+            type="radio"
+            value="1"
+            formControlName="level"
+            [id]="id2"
+            autocomplete="off"
+            (change)="updateDropdownsData1()"
+          />
+          اداره
+        </label>
+
+        
+        <label
+          class="btn btn-foursquare  p-2 "
+          [ngClass]="{ active: selectedItem1.value.level == '2' }"
+          [for]="id3"
+        >
+          <input
+            type="radio"
+            value="2"
+            formControlName="level"
+            [id]="id3"
+            autocomplete="off"
+            (change)="updateDropdownsData1()"
+          />
+          {{uid}}
+          داخلی
+        </label>
+      </div>
     </div>
   
     <ng-multiselect-dropdown   class="form-control col-3 p-0 "
