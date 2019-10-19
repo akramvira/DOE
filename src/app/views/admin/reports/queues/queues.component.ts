@@ -217,10 +217,10 @@ set setData(filteredData){
 
 
 
-
-public timesBarChartDataDetails: any[] = [{data:[],label:''},{data:[],label:''}];
-public callsBarChartDataDetails: any[] = [{data:[],label:''},{data:[],label:''},{data:[],label:''}];
-public serviceLevelbarChartDataDetails: any[] = [{data:[], label:''}];
+detailsLabels = [];
+ timesBarChartDataDetails: any[] = [{data:[],label:''},{data:[],label:''}];
+ callsBarChartDataDetails: any[] = [{data:[],label:''},{data:[],label:''},{data:[],label:''}];
+ serviceLevelbarChartDataDetails: any[] = [{data:[], label:''}];
 //--------------details chart -------------
 
 @ViewChild('daterangeDetailsChart') daterangeDetailsChart :DaterangeComponent;
@@ -245,9 +245,10 @@ submitDetailedChartsFilter(){
       let ringTime = [];
 
       let arrayData = [];
+      
       for(let i in data ){
-        this.queueId.setValue(data[i]['id']);
-        this.mainLabels.push(data[i]['name'] );
+        
+        this.detailsLabels.push(data[i]['name'] );
         arrayData.push({ id: data[i]['id'],
          name:data[i]['name'] ,
          ...data[i]['data'], agents: data[i]['agents'] });
