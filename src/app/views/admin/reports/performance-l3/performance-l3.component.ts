@@ -135,8 +135,10 @@ loadingData = false;
       sub1.push(this.filters.value.selectedSub1[i]["id"]);
     }
 
+
     let data = {
-      idmain: this.filters.value.selectedItems[0]["id"],
+      idmain: (this.filters.value.selectedItems[0]&&this.filters.value.selectedItems[0]["id"])?
+      this.filters.value.selectedItems[0]['id']: '',
       idsub: sub1.join(",")
     };
 
