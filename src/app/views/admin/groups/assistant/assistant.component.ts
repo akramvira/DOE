@@ -249,6 +249,7 @@ ngOnInit() {
         this.removeGroup(activeId);
         this.smallModal.hide();
          this.getAllData();
+		 this.selectedGroupExtensions=[];
       },
       error => {
         this.smallModal.hide();

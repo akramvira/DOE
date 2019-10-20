@@ -256,6 +256,7 @@ export class OfficeComponent implements OnInit {
         this.smallModal.hide();
         this.removeGroup(activeId);
          this.getAllData();
+		 this.selectedGroupExtensions = [];
       },
       error => {
         this.toastr.error("اشکال در روند حذف اداره");

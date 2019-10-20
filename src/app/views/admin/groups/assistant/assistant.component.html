@@ -1,6 +1,6 @@
 
 <div class="row animated fadeIn mt-4">
-  <div class="col-2">
+  <div class="col-12 col-xl-3">
     <div class="card card-accent-primary">
       <div class="card-header">  لیست معاونت ها </div>
       <div class="card-body">
@@ -15,14 +15,34 @@
           (activate)="onActivate($event)"
           >
          
+		 <ngx-datatable-column
+		   
+		 [sortable]="true"
+		 [canAutoResize]="false"
+		 [draggable]="false"
+		 [resizeable]="false"
+		 name="edit"
+		 [width]="50"
+		 >
+     <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+         <span >حذف</span>
+       </ng-template>
+       <ng-template let-value="value"   let-row="row" 
+         let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+        <span class="btn btn-sm btn-danger" data-toggle="modal" (click)="showRemoveModal(rowIndex)">
+          <i class="fa fa-trash"></i>
+        </span>
 
+       </ng-template>
+  </ngx-datatable-column>
+		 
        <ngx-datatable-column
        
         [sortable]="true"
         [canAutoResize]="false"
         [draggable]="false"
         [resizeable]="false"
-        [width]="100"
+        [width]="120"
         name="name"
         >
         <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
@@ -49,26 +69,9 @@
             />
           </ng-template>
      </ngx-datatable-column>
-     <ngx-datatable-column
-       
-     [sortable]="true"
-     [canAutoResize]="false"
-     [draggable]="false"
-     [resizeable]="false"
-     name="edit"
-     [width]="50"
-     >
-     <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-         <span >حذف</span>
-       </ng-template>
-       <ng-template let-value="value"   let-row="row" 
-         let-rowIndex="rowIndex"  ngx-datatable-cell-template>
-        <span class="btn btn-sm btn-danger" data-toggle="modal" (click)="showRemoveModal(rowIndex)">
-          <i class="fa fa-trash"></i>
-        </span>
+	 
+	 
 
-       </ng-template>
-  </ngx-datatable-column>
 
     </ngx-datatable>
 
@@ -88,7 +91,7 @@
   </div>
 
   
-<div class="col-4">
+<div class="col-12 col-xl-4">
   <div class="card card-accent-danger">
     <div class="card-header p-1  ">
         <div class="col-12">
@@ -112,7 +115,7 @@
     <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
   </div>
 </div>
-<div class="col-6">
+<div class="col-12 col-xl-5">
   <div class="card card-accent-success">
       <div class="card-header p-1  ">
           <div class="col-12">
