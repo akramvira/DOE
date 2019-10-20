@@ -235,6 +235,13 @@ submitDetailedChartsFilter(){
   time: -1
   }
 
+  this.mainLabels = [];
+  let labels  = [];
+  labels.push(this.queueData[data.id]['name']);
+  
+  
+  this.mainLabels = labels;
+
 
   this.reportServ.gerChartsDetailsData(data).subscribe(
     (data)=>{
