@@ -238,7 +238,9 @@ submitDetailedChartsFilter(){
   this.mainLabels = [];
   let labels  = [];
   debugger;
-  labels.push(this.queueData[this.queueId.value]['name']);
+  
+  let itemSelected  = this.queueData.filter(item=>{ if (item.id == this.queueId.value) return; });
+  labels.push(itemSelected['name']);
 
   
   this.mainLabels = labels;
