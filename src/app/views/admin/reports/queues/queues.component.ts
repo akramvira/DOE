@@ -274,7 +274,7 @@ export class QueuesComponent implements OnInit {
           busy.push(data[i]["data"]["busy"]);
           performance.push(data[i]["data"]["performance"]);
           time.push(data[i]["data"]["time"]);
-          ringTime.push(data[i]["data"]["ringTime"]);
+          ringTime.push(data[i]["data"]["ringtime"]);
         }
 
         //console.log(detailsLabels);
