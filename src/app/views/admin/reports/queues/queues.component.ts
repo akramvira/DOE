@@ -157,11 +157,12 @@ getGeneralChartData(){
         let ringTime = [];
 
         let arrayData = [];
-        let mainLabels = [];
+        
+        this.mainLabels=[];
         for(let i in data ){
           this.queueId.setValue(data[i]['id']);
-          if(!this.mainLabels.length)
-          mainLabels.push(data[i]['name'] );
+          
+          this.mainLabels.push(data[i]['name'] );
 
           arrayData.push({ id: data[i]['id'],
            name:data[i]['name'] ,
@@ -176,7 +177,7 @@ getGeneralChartData(){
 
         }
 
-        this.mainLabels = mainLabels;
+        
         this.queueData = arrayData;
       //this.setPage(data); 
 
@@ -240,11 +241,11 @@ submitDetailedChartsFilter(){
 
       let arrayData = [];
      
-     let detailsLabels = [];
+     this.detailsLabels = [];
       
       for(let i in data ){
         
-        detailsLabels.push(data[i]['name'] );
+        this.detailsLabels.push(data[i]['name'] );
         
         arrayData.push({ id: data[i]['id'],
          name:data[i]['name'] ,
@@ -261,7 +262,7 @@ submitDetailedChartsFilter(){
 
       //console.log(detailsLabels);
 
-      this.detailsLabels = detailsLabels;
+      
       //this.queueData = arrayData;
     //this.setPage(data); 
 
