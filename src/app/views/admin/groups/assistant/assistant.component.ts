@@ -208,6 +208,7 @@ ngOnInit() {
         data => {
           this.toastr.success("معاونت با موفقیت اضافه شد.");
            this.groups.push({id: data['id'], name: newItemData.name, sub:[]});
+		   this.refreshParents();
         },
         error => {
           this.authServ.handdleAuthErrors(error);
