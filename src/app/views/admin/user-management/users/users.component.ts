@@ -116,10 +116,11 @@ getUsers(){
     debugger;
     this.usersServ.deleteUser(this.users[this.activeRow]["id"]).subscribe(
       data => {
+        this.removeItemModal.hide();
+        this.getUsers();
         this.toastr.success("کاربر مورد نظر با موفقیت حذف شد.");
       },
       error => {
-        console.log(error);
         this.toastr.error("خطا در زمان حذف کاربر.");
         this.authServ.handdleAuthErrors(error);
       }
