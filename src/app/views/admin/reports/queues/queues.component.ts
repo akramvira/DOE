@@ -232,12 +232,24 @@ submitDetailedChartsFilter(){
   let data = {
   from : this.filter.from = this.daterangeDetailsChart.selectedDateFrom.value,
   to : this.filter.to = this.daterangeDetailsChart.selectedDateTo.value,
-  id: this.queueId.value.id,
+  id: this.queueId.value,
   time: -1
-  };
-debugger;
+  }
 
-  this.mainLabels = [this.queueId.value.name];
+  this.mainLabels = [];
+  let labels  = [];
+  debugger;
+  
+  let itemSelected  = this.queueData.forEach(
+    item=>{ 
+      if (item.id == this.queueId.value) 
+        labels.push(item['name']);
+     }
+    );
+  
+
+  
+  this.mainLabels = labels;
 
 
   this.reportServ.gerChartsDetailsData(data).subscribe(

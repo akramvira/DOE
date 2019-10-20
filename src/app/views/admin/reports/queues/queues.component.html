@@ -268,7 +268,7 @@
                       class="col form-control"
                       [formControl]="queueId"
                     >
-                    <option *ngFor="let item of queueData" value="{{item}}" >
+                    <option  *ngFor="let item of queueData" value="{{item.id}}" >
                       {{item.name}}
                     </option>
                     </select>
