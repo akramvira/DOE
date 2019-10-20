@@ -72,7 +72,7 @@ export class OfficeComponent implements OnInit {
         data => {
           console.log(data);
           this.itemsChanged = false;
-          this.toastr.success("نام گروه با موفقیت تغییر یافت");
+          this.toastr.success("نام اداره با موفقیت تغییر یافت");
         },
         error => {
           console.log(error);
@@ -209,7 +209,7 @@ export class OfficeComponent implements OnInit {
         data => {
           data = data['data'];
 
-          this.toastr.success("گروه با موفقیت اضافه شد.");
+          this.toastr.success("اداره با موفقیت اضافه شد.");
        
           this.groups.push({id: data['id'], name: newItemData.name, sub:[]});
           this.refreshParents();

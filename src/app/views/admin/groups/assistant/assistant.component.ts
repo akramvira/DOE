@@ -76,7 +76,7 @@ ngOnInit() {
         data => {
           console.log(data);
           this.itemsChanged = false;
-          this.toastr.success("نام گروه با موفقیت تغییر یافت");
+          this.toastr.success("نام معاونت با موفقیت تغییر یافت");
         },
         error => {
           this.authServ.handdleAuthErrors(error);
@@ -206,7 +206,7 @@ ngOnInit() {
 
       this.webServ.addGroup(newItemData).subscribe(
         data => {
-          this.toastr.success("گروه با موفقیت اضافه شد.");
+          this.toastr.success("معاونت با موفقیت اضافه شد.");
           this.groups.push(newItemData);
           this.refreshParents();
         },
