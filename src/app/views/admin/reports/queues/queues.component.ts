@@ -234,8 +234,8 @@ submitDetailedChartsFilter(){
   to : this.filter.to = this.daterangeDetailsChart.selectedDateTo.value,
   id: this.queueId.value.id,
   time: -1
-  }
-
+  };
+debugger;
 
   this.mainLabels = [this.queueId.value.name];
 

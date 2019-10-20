@@ -267,7 +267,6 @@
                     <select
                       class="col form-control"
                       [formControl]="queueId"
-                      (change)="detailsLabelChanged($event)"
                     >
                     <option *ngFor="let item of queueData" value="{{item}}" >
                       {{item.name}}
