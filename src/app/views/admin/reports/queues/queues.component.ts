@@ -227,6 +227,11 @@ detailsLabels = [];
 //--------------details chart -------------
 
 @ViewChild('daterangeDetailsChart') daterangeDetailsChart :DaterangeComponent;
+lastLabel :string = '';
+detailsLabelChanged (data){
+  debugger;
+  this.lastLabel = ''
+}
 submitDetailedChartsFilter(){
   let data = {
   from : this.filter.from = this.daterangeDetailsChart.selectedDateFrom.value,
@@ -235,15 +240,8 @@ submitDetailedChartsFilter(){
   time: -1
   }
 
-  this.mainLabels = [];
-  let labels  = [];
-  debugger;
-  
-  let itemSelected  = this.queueData.filter(item=>{ if (item.id == this.queueId.value) return; });
-  labels.push(itemSelected['name']);
 
-  
-  this.mainLabels = labels;
+  this.mainLabels = [this.lastLabel];
 
 
   this.reportServ.gerChartsDetailsData(data).subscribe(
