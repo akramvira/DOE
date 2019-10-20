@@ -237,7 +237,7 @@ export class QueuesComponent implements OnInit {
     });
     
     if (labels.length) 
-    this.detailsLabels = labels[0];
+    this.detailsLabels = [labels[0]];
     else this.detailsLabels = [];
 
     this.reportServ.gerChartsDetailsData(data).subscribe(
