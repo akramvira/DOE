@@ -144,6 +144,15 @@ getGeneralChartData(){
     from : this.daterange.selectedDateFrom.value,
     to : this.daterange.selectedDateTo.value
   }
+
+  this.mainLabels = [];
+  let labels  = [];
+  for (let i in this.queueData){
+    labels.push(this.queueData[i]['name'])
+  }
+  this.mainLabels = labels;
+
+
     this.reportServ.gerChartsData(data).subscribe(
       (data)=>{
 
