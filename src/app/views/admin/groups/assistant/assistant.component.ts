@@ -207,11 +207,10 @@ ngOnInit() {
       this.webServ.addGroup(newItemData).subscribe(
         data => {
           this.toastr.success("معاونت با موفقیت اضافه شد.");
-          this.groups.push(newItemData);
-          this.refreshParents();
+           this.groups.push({id: data['id'], name: newItemData.name, sub:[]});
         },
         error => {
-          console.log(error);
+          this.authServ.handdleAuthErrors(error);
         }
       );
 
