@@ -139,7 +139,12 @@ ngOnInit() {
       if (!this.selectedGroupExtensions.includes(subItem)) {
         this.itemsChanged = true;
         this.selectedGroupExtensions.push(subItem);
+		this.allExtensions.splice(
+          this.allExtensions.indexOf(subItem),
+          1
+        );
          this.setRemainingExtensions();;
+		 
       }
   }
 
@@ -243,7 +248,7 @@ ngOnInit() {
         );
         this.removeGroup(activeId);
         this.smallModal.hide();
-        this.refreshParents();
+         this.getAllData();
       },
       error => {
         this.smallModal.hide();

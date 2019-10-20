@@ -136,6 +136,10 @@ export class OfficeComponent implements OnInit {
       if (!this.selectedGroupExtensions.includes(subItem)) {
         this.itemsChanged = true;
         this.selectedGroupExtensions.push(subItem);
+		this.allExtensions.splice(
+          this.allExtensions.indexOf(subItem),
+          1
+        );
         this.setRemainingExtensions();
       }
   }
@@ -251,7 +255,7 @@ export class OfficeComponent implements OnInit {
         );
         this.smallModal.hide();
         this.removeGroup(activeId);
-        this.refreshParents();
+         this.getAllData();
       },
       error => {
         this.toastr.error("اشکال در روند حذف اداره");
