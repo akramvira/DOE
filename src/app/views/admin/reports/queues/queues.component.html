@@ -269,7 +269,7 @@
                       [formControl]="queueId"
                       (change)="detailsLabelChanged($event)"
                     >
-                    <option *ngFor="let item of queueData" value="{{item.id}}" >
+                    <option *ngFor="let item of queueData" value="{{item}}" >
                       {{item.name}}
                     </option>
                     </select>
