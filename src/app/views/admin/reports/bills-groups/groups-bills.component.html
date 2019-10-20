@@ -38,7 +38,7 @@
                     placeholder="تاریخ"
                     [formControl]="selectedDateFrom"
                     [dpDayPicker]="datePickerConfig"
-                    (onSelect)="onSelectDate()"
+                    
                   />
                 </md-input-container>
               </div>
@@ -55,7 +55,7 @@
                     placeholder="تاریخ"
                     [formControl]="selectedDateTo"
                     [dpDayPicker]="datePickerConfig"
-                    (onSelect)="onSelectDate()"
+                    
                   />
                 </md-input-container>
               </div>
@@ -264,7 +264,7 @@
                   font-family: IRANSans;
                   font-size:14px;"
                   >
-                  <div class="bg-gray-100 p-4 text-right">قبض از تاریخ {{selectedDateFrom.value}} تا تاریخ  {{selectedDateTo.value}}</div>
+                  <div style="text-align: right;;" >قبض از تاریخ {{printDateFrom}} تا تاریخ  {{printDateTo}}</div>
                     <tr style="border-bottom:1px solid grey;">
                         <th>نام</th>
                         <td>{{ bills[rowIndex]['name'] }}</td>

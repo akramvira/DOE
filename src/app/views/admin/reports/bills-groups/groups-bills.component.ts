@@ -18,7 +18,8 @@ export class GroupsBillsComponent implements OnInit {
  
   bills: any;
   page = new Page();
-
+  printDateTo;
+  printDateFrom;
   @ViewChild('selectItem') selectItem : SelectItemComponent;
 
   constructor(
@@ -143,6 +144,9 @@ export class GroupsBillsComponent implements OnInit {
         let dataCount = 0;
 
         let billsData = new Array();
+        this.printDateTo= data['to'];
+        this.printDateFrom= data['from'];
+        
         for (var i in data) {
           //      
          // if (i == "all") continue;
