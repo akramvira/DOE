@@ -31,7 +31,11 @@ export class OfficeComponent implements OnInit {
   editing = {};
 
   ngOnInit() {
-    this.webServ.getAllGroups().subscribe(
+ this.getAllData();
+  }
+
+  getAllData(){
+	     this.webServ.getAllGroups().subscribe(
       data => {
         data = data["data"];
         let groupesData = new Array();
@@ -45,18 +49,15 @@ export class OfficeComponent implements OnInit {
         // this.selectedGroupExtensions = this.groups[0]['value'].split(',');
       },
       error => {
-        console.log(error);
         this.authServ.handdleAuthErrors(error);
       }
     );
   }
-
   updateValue(event, cell, rowIndex) {
     console.log("inline editing rowIndex", rowIndex);
     this.editing[rowIndex + "-" + cell] = false;
     this.groups[rowIndex][cell] = event.target.value;
-    this.refreshParents();
-    console.log("UPDATED!", this.groups[rowIndex][cell]);
+    this.refreshParents();;
 
     let newName = this.groups[rowIndex][cell];
     let id = this.groups[rowIndex]["id"];
@@ -186,6 +187,7 @@ export class OfficeComponent implements OnInit {
               this.groups[activeId]["name"] +
               "  با موفقیت ثبت شد.  "
           );
+		  this.getAllData();
         },
         error => {
           console.log(error);

@@ -29,8 +29,13 @@ export class AssistantComponent implements OnInit {
   activeRow: number;
   editing = {};
 
-  ngOnInit() {
-    this.webServ.getAllGroups().subscribe(
+ngOnInit() {
+	this.getAllData();
+  }
+  
+  getAllData(){
+	  
+	      this.webServ.getAllGroups().subscribe(
       data => {
         data = data["data"];
         let groupesData = new Array();
@@ -48,6 +53,8 @@ export class AssistantComponent implements OnInit {
       }
     );
   }
+  
+    
 
   updateValue(event, cell, rowIndex) {
     console.log("inline editing rowIndex", rowIndex);
@@ -72,7 +79,7 @@ export class AssistantComponent implements OnInit {
           this.toastr.success("نام گروه با موفقیت تغییر یافت");
         },
         error => {
-          console.log(error);
+          this.authServ.handdleAuthErrors(error);
         }
       );
   }
@@ -127,12 +134,12 @@ export class AssistantComponent implements OnInit {
   }
 
   addItemToSelectedParent(event, subItem) {
-    debugger;
+    
     if (this.parentSelected)
       if (!this.selectedGroupExtensions.includes(subItem)) {
         this.itemsChanged = true;
         this.selectedGroupExtensions.push(subItem);
-        this.setRemainingExtensions();
+         this.setRemainingExtensions();;
       }
   }
 
@@ -145,7 +152,6 @@ export class AssistantComponent implements OnInit {
           1
         );
         this.allExtensions.push(subItem);
-
         this.setRemainingExtensions();
       }
   }
@@ -167,7 +173,6 @@ export class AssistantComponent implements OnInit {
       })
       .subscribe(
         data => {
-          console.log(data);
           this.itemsChanged = false;
 
           this.groups[this.activeRow][
@@ -175,13 +180,14 @@ export class AssistantComponent implements OnInit {
           ] = this.selectedGroupExtensions.join(",");
           this.refreshParents();
           this.toastr.success(
-            "داخلی های گروهگ " +
+            "ادارات معاونت  " +
               this.groups[this.activeRow]["name"] +
               "  با موفقیت ثبت شد."
           );
+		  this.getAllData();
         },
         error => {
-          console.log(error);
+         this.authServ.handdleAuthErrors(error);
         }
       );
   }
