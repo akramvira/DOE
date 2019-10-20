@@ -270,9 +270,9 @@
                         <td>{{ bills[rowIndex]['name'] }}</td>
                       </tr>
                      
-                      <tr> <th> هزینه موبایل</th><td>{{ bills[rowIndex]['mobile'] | number }}</td></tr>
-                      <tr><th> هزینه شهری</th><td>{{ bills[rowIndex]['co']  | number }}</td> </tr>
-                      <tr><th> هزینه بین شهری</th><td>{{ bills[rowIndex]['betweanco'] | number }}</td> </tr>
+                      <tr> <th> هزینه موبایل</th><td>{{ bills[rowIndex]['mobile'] | number }}ریال</td></tr>
+                      <tr><th> هزینه شهری</th><td>{{ bills[rowIndex]['co']  | number }}ریال</td> </tr>
+                      <tr><th> هزینه بین شهری</th><td>{{ bills[rowIndex]['betweanco'] | number }}ریال</td> </tr>
                       <tr><th>آبونمان</th><td>{{ bills[rowIndex]['abonmah']  | number }} ریال</td> </tr>
                       <tr><th>جمع</th><td>{{ bills[rowIndex]['sum'] | number }} ریال</td> </tr>
                       
@@ -428,8 +428,8 @@
               >
                 <td>{{ i + 1 }}</td>
                 <td>{{ item.name }}</td>
-                <td>{{ item.mobile | number }}</td>
-                <td>{{ item.co | number }}</td>
+                <td>{{ item.mobile | number }}ریال</td>
+                <td>{{ item.co | number }} ریال</td>
                 <td>{{ item.betweanco | number }}</td>
                 <td>{{ item.abonmah | number }} ریال</td>
                 <td>{{ item.sum | number }} ریال</td>

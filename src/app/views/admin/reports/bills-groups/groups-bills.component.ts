@@ -113,7 +113,6 @@ export class GroupsBillsComponent implements OnInit {
   getBillsData() {
   
     let filterData = {};
-    debugger;;
     
     filterData["time"] = this.time.value;
     filterData["from"] = this.selectedDateFrom.value || '';
