@@ -1,94 +1,100 @@
-<div class="row" [formGroup]="selectedItem1">
-        <label class="col-1 form-text">{{label}}</label>
-    <div class="input-group col-xl-2">
-       
+<div class="row align-items-center border-bottom pb-2 mb-1 justify-content-lg-start border-light justify-content-center" [formGroup]="selectedItem1">
 
-        <div  class="col-12 btn-group btn-group-toggle mb-2"  data-toggle="buttons" >
+  <div class="col-12 col-md-6 col-xl-4">
+      <div class="row">
+      <label class="col-12 col-md-4 col-lg-4 col-xl-4 form-text font-weight-bold">{{label}}</label>
+      <div class=" col-8 col-md-7 col-lg-8 col-xl-8 input-group">
+          <div  class="col-12 btn-group btn-group-toggle mb-2"  data-toggle="buttons" >
 
-        <label
-          class="btn btn-foursquare  p-2 "
-          [ngClass]="{ active: selectedItem1.value.level == '0' }"
-          [for]="id1"
+          <label
+            class="btn btn-foursquare  p-2 "
+            [ngClass]="{ active: selectedItem1.value.level == '0' }"
+            [for]="id1"
+            >
+            <input
+              type="radio"
+              value="0"
+              formControlName="level"
+              [id]="id1"
+              (change)="updateDropdownsData1()"
+              autocomplete="off"
+            />
+            معاونت
+          </label>
+          <label
+            class="btn btn-foursquare  p-2 "
+            [ngClass]="{ active: selectedItem1.value.level == '1' }"
+            [for]="id2"
           >
-          <input
-            type="radio"
-            value="0"
-            formControlName="level"
-            [id]="id1"
-            (change)="updateDropdownsData1()"
-            autocomplete="off"
-          />
-          معاونت
-        </label>
-        <label
-          class="btn btn-foursquare  p-2 "
-          [ngClass]="{ active: selectedItem1.value.level == '1' }"
-          [for]="id2"
-        >
-          <input
-            type="radio"
-            value="1"
-            formControlName="level"
-            [id]="id2"
-            autocomplete="off"
-            (change)="updateDropdownsData1()"
-          />
-          اداره
-        </label>
+            <input
+              type="radio"
+              value="1"
+              formControlName="level"
+              [id]="id2"
+              autocomplete="off"
+              (change)="updateDropdownsData1()"
+            />
+            اداره
+          </label>
 
-        
-        <label
-          class="btn btn-foursquare  p-2 "
-          [ngClass]="{ active: selectedItem1.value.level == '2' }"
-          [for]="id3"
-        >
-          <input
-            type="radio"
-            value="2"
-            formControlName="level"
-            [id]="id3"
-            autocomplete="off"
-            (change)="updateDropdownsData1()"
-          />
           
-          داخلی
-        </label>
+          <label
+            class="btn btn-foursquare  p-2 "
+            [ngClass]="{ active: selectedItem1.value.level == '2' }"
+            [for]="id3"
+          >
+            <input
+              type="radio"
+              value="2"
+              formControlName="level"
+              [id]="id3"
+              autocomplete="off"
+              (change)="updateDropdownsData1()"
+            />
+            
+            داخلی
+          </label>
+        </div>
       </div>
     </div>
-  
-    <ng-multiselect-dropdown   class="form-control col-3 p-0 "
-        [placeholder]="'انتخاب معاونت '"
-        [data]="groups"
-        formControlName="main"
-        [settings]="mainDropdownSettings"
-        (onSelect)="onMain1Select($event)"
-        (onDeSelect)="onDeSelectMain()"
-    >
-    </ng-multiselect-dropdown>
+  </div>
+  <div class="col-12 col-md-6 col-xl-8">
+      <div class="row">
+      <ng-multiselect-dropdown  class="form-control col-10 col-md-12 col-lg-4  p-0 "
+          [placeholder]="'انتخاب معاونت '"
+          [data]="groups"
+          formControlName="main"
+          [settings]="mainDropdownSettings"
+          (onSelect)="onMain1Select($event)"
+          (onDeSelect)="onDeSelectMain()"
+      >
+      </ng-multiselect-dropdown>
 
-    <ng-multiselect-dropdown 
-    *ngIf="selectedItem1.value.level != 0" 
-     class="form-control col-3 p-0 "
-     [disables]="selectedItem1.value.main.length == 0"
-        [placeholder]="'انتخاب اداره '"
-        [data]="activeSub1_1"
-        formControlName="sub1"
-        [settings]="officeDropdownSettings"
-        (onDeSelect)="onDeSelectSub1($event)"
-        (onDeSelectAll)="onDeSelectSub1($event)"
-        (onSelect)="updateLines()"
-        (onSelectAll)="updateLines()"
-        (onDeSelectAll)="updateLines()"
-    >
-    </ng-multiselect-dropdown>
+      <ng-multiselect-dropdown class="form-control col-10 col-md-12 col-lg-4  p-0 "
+      *ngIf="selectedItem1.value.level != 0" 
+      
+      [disables]="selectedItem1.value.main.length == 0"
+          [placeholder]="'انتخاب اداره '"
+          [data]="activeSub1_1"
+          formControlName="sub1"
+          [settings]="officeDropdownSettings"
+          (onDeSelect)="onDeSelectSub1($event)"
+          (onDeSelectAll)="onDeSelectSub1($event)"
+          (onSelect)="updateLines()"
+          (onSelectAll)="updateLines()"
+          (onDeSelectAll)="updateLines()"
+      >
+      </ng-multiselect-dropdown>
 
-    <ng-multiselect-dropdown  
-    *ngIf="selectedItem1.value.level ==2" 
-    class="form-control col-3 p-0 "
-    [placeholder]="'انتخاب داخلی '"
-    [data]="lines"
-    formControlName="sub2"
-    [settings]="lineDropdownSettings"
-    >
-    </ng-multiselect-dropdown>
+      <ng-multiselect-dropdown  class="form-control col-10 col-md-12 col-lg-4  p-0 "
+      *ngIf="selectedItem1.value.level ==2" 
+      
+      [placeholder]="'انتخاب داخلی '"
+      [data]="lines"
+      formControlName="sub2"
+      [settings]="lineDropdownSettings"
+      >
+      </ng-multiselect-dropdown>
+    </div>
+  </div>
 </div>
