@@ -9,7 +9,7 @@
     <div class="row animated fadeIn mt-4 justify-content-center">
         <div class="col-12 border-bottom mb-3">
             <div class="mb-1 pb-2 row  justify-content-center">
-              <div class="border border-success col-4 input-group m-2 p-0 rounded">
+              <div class="border border-success col-11 col-md-6 col-xl-4 input-group m-2 p-0 rounded">
                 <div class="input-group-prepend">
                   <label class="input-group-text">نحوه دریافت اطلاعات :</label>
                 </div>
@@ -290,7 +290,7 @@
             </div>
           </div>
         </div>
-        <div class=" col-12 col-md-6 col-lg-6"  *ngIf="type.value == 'file'">
+        <div class=" col-12 col-md-8 col-lg-8  col-xl-6"  *ngIf="type.value == 'file'">
             <div class="card card-accent-success">
               <div class="card-header">
                 ورود فایل اطلاعات گزارشات و صف ها (.csv)
@@ -352,7 +352,7 @@
                         (change)="handleDataFileInput($event.target.files)"
                       />
 
-                      <div class="row">
+                      <div class="col-12">
                           <div *ngIf="datafileToUpload" >
                             {{ datafileToUpload.name }}
                           </div>
@@ -384,7 +384,7 @@
               </div>
     
               <div class="text-center border-top p-4">
-                <button class="btn btn-danger" (click)="removeAllDataModal.show()">
+                <button class="btn btn-danger mb-lg-2" (click)="removeAllDataModal.show()">
                   حذف اطلاعات دیتابیس گزارشات
                   <i class="fa fa-trash"></i>
                 </button>
