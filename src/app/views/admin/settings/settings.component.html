@@ -1,397 +1,411 @@
-<div>
-  <div class=" row mb-3 border-bottom pb-2">
-    <label class="form-text col-6 col-lg-3 col-xl-2 text-left" >نحوه دریافت اطلاعات : </label>
-    <select class="form-control  col-6 col-lg-3 col-xl-3 "
-     [formControl]="type" 
-     (change)="saveDataType()">
-      <option value="file">بارگزاری اطلاعات از طریق فایل</option>
-      <option value="server">دریافت اطلاعات از سرور</option>
-    </select>
-  </div>
-</div>
 
 
 <tabset>
-
-  <tab *ngIf="type.value !='file'">
-    <ng-template tabHeading ><i class="icon-calculator"></i> تنظیمات اولیه سیستم</ng-template
+  <tab>
+      <ng-template tabHeading
+      ><i class="icon-calculator"></i> تنظیمات داده های سیستم</ng-template
     >
 
-    <div class="row animated fadeIn mt-4">
-      <div class="col-12">
-        <div class="card card-accent-primary">
-          <div class="card-header">
-            اطلاعات دیتابیس ها
-          </div>
-          <div class="card-body">
-            <form (ngSubmit)="onSubmitServers($event)" [formGroup]="settings">
-              <div class="row" formGroupName="ami">
-                <label class="col-sm-2 col-form-label">دیتابیس Ami</label>
-                <div class="col-12 col-md-10 col-lg-10 col-xl-10">
-                  <div class="row">
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Server IP </span>
-                        </div>
-                        <input
-                          type="email"
-                          class="form-control border"
-                          [ngClass]="{
-                            'border-success': pingStatus == 1,
-                            'border-danger': pingStatus == -1
-                          }"
-                          autocomplete="email"
-                          formControlName="ip"
-                        />
-                        <div class="input-group-append ">
-                          <button
-                            class="input-group-text"
-                            (click)="pingAmi()"
-                            [ngClass]="{
-                              'bg-success': pingStatus == 1,
-                              'bg-danger': pingStatus == -1
-                            }"
-                          >
-                            {{ pingStatus == 1 ? "ok" : "ping" }}
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Port</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="port"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">user</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="username"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Password</span>
-                        </div>
-                        <input
-                          type="password"
-                          class="form-control"
-                          autocomplete="current-password"
-                          formControlName="password"
-                        />
-                      </div>
-                    </div>
-                  </div>
+    <div class="row animated fadeIn mt-4 justify-content-center">
+        <div class="col-12 border-bottom mb-3">
+            <div class="mb-1 pb-2 row  justify-content-center">
+              <div class="border border-success col-4 input-group m-2 p-0 rounded">
+                <div class="input-group-prepend">
+                  <label class="input-group-text">نحوه دریافت اطلاعات :</label>
                 </div>
-              </div>
-
-              <div class="row" formGroupName="operatori">
-                <label class="col-sm-2 col-form-label">دیتابیس operatori</label>
-                <div class="col-10">
-                  <div class="row">
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Server IP </span>
-                        </div>
-                        <input
-                          type="email"
-                          class="form-control"
-                          autocomplete="email"
-                          formControlName="ip"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Port</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="port"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">user</span>
-                        </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="username"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Password</span>
-                        </div>
-                        <input
-                          type="password"
-                          class="form-control"
-                          autocomplete="current-password"
-                          formControlName="password"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row" formGroupName="invitation">
-                <label class="col-sm-2 col-form-label"
-                  >سرور سیستم فراخوان</label
+                <select
+                  class="form-control "
+                  [formControl]="type"
+                  (change)="saveDataType()"
                 >
-                <div class="col-10">
-                  <div class="row">
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Server IP </span>
+                  <option value="file">بارگزاری اطلاعات از طریق فایل</option>
+                  <option value="server">دریافت اطلاعات از سرور</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        <div class="col-12 animated fadeIn " *ngIf="type.value != 'file'">
+          <div class="card card-accent-primary">
+            <div class="card-header">
+              اطلاعات دیتابیس ها
+            </div>
+            <div class="card-body">
+              <form (ngSubmit)="onSubmitServers($event)" [formGroup]="settings">
+                <div class="row" formGroupName="ami">
+                  <label class="col-sm-2 col-form-label">دیتابیس Ami</label>
+                  <div class="col-12 col-md-10 col-lg-10 col-xl-10">
+                    <div class="row">
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Server IP </span>
+                          </div>
+                          <input
+                            type="email"
+                            class="form-control border"
+                            [ngClass]="{
+                              'border-success': pingStatus == 1,
+                              'border-danger': pingStatus == -1
+                            }"
+                            autocomplete="email"
+                            formControlName="ip"
+                          />
+                          <div class="input-group-append ">
+                            <button
+                              class="input-group-text"
+                              (click)="pingAmi()"
+                              [ngClass]="{
+                                'bg-success': pingStatus == 1,
+                                'bg-danger': pingStatus == -1
+                              }"
+                            >
+                              {{ pingStatus == 1 ? "ok" : "ping" }}
+                            </button>
+                          </div>
                         </div>
-                        <input
-                          type="email"
-                          class="form-control"
-                          autocomplete="email"
-                          formControlName="ip"
-                        />
                       </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Port</span>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Port</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="port"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="port"
-                        />
                       </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">user</span>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">user</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="username"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="username"
-                        />
                       </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Password</span>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                          </div>
+                          <input
+                            type="password"
+                            class="form-control"
+                            autocomplete="current-password"
+                            formControlName="password"
+                          />
                         </div>
-                        <input
-                          type="password"
-                          class="form-control"
-                          autocomplete="current-password"
-                          formControlName="password"
-                        />
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="row" formGroupName="server">
-                <label class="col-sm-2 col-form-label">دیتابیس Server</label>
-                <div class="col-10">
-                  <div class="row">
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Server IP </span>
+  
+                <div class="row" formGroupName="operatori">
+                  <label class="col-sm-2 col-form-label">دیتابیس operatori</label>
+                  <div class="col-10">
+                    <div class="row">
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Server IP </span>
+                          </div>
+                          <input
+                            type="email"
+                            class="form-control"
+                            autocomplete="email"
+                            formControlName="ip"
+                          />
                         </div>
-                        <input
-                          type="email"
-                          class="form-control"
-                          autocomplete="email"
-                          formControlName="ip"
-                        />
                       </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Port</span>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Port</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="port"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="port"
-                        />
                       </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">user</span>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">user</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="username"
+                          />
                         </div>
-                        <input
-                          type="text"
-                          class="form-control"
-                          formControlName="username"
-                        />
                       </div>
-                    </div>
-                    <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
-                      <div class="input-group">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text">Password</span>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                          </div>
+                          <input
+                            type="password"
+                            class="form-control"
+                            autocomplete="current-password"
+                            formControlName="password"
+                          />
                         </div>
-                        <input
-                          type="password"
-                          class="form-control"
-                          autocomplete="current-password"
-                          formControlName="password"
-                        />
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div class="form-group form-actions col-12 text-left">
-                <button type="submit" class="btn  btn-primary">
-                  ذخیره شود
-                </button>
-              </div>
-            </form>
+  
+                <div class="row" formGroupName="invitation">
+                  <label class="col-sm-2 col-form-label"
+                    >سرور سیستم فراخوان</label
+                  >
+                  <div class="col-10">
+                    <div class="row">
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Server IP </span>
+                          </div>
+                          <input
+                            type="email"
+                            class="form-control"
+                            autocomplete="email"
+                            formControlName="ip"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Port</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="port"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">user</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="username"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                          </div>
+                          <input
+                            type="password"
+                            class="form-control"
+                            autocomplete="current-password"
+                            formControlName="password"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="row" formGroupName="server">
+                  <label class="col-sm-2 col-form-label">دیتابیس Server</label>
+                  <div class="col-10">
+                    <div class="row">
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Server IP </span>
+                          </div>
+                          <input
+                            type="email"
+                            class="form-control"
+                            autocomplete="email"
+                            formControlName="ip"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Port</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="port"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">user</span>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control"
+                            formControlName="username"
+                          />
+                        </div>
+                      </div>
+                      <div class="form-group col-12 col-md-6 col-lg-6 col-xl-3">
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <span class="input-group-text">Password</span>
+                          </div>
+                          <input
+                            type="password"
+                            class="form-control"
+                            autocomplete="current-password"
+                            formControlName="password"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
+                <div class="form-group form-actions col-12 text-left">
+                  <button type="submit" class="btn  btn-primary">
+                    ذخیره شود
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-  </tab>
-
-  <tab *ngIf="type.value=='file'">
-    <ng-template tabHeading ><i class="fa fa-list"></i>بارگزاری فایل اطلاعات سیستم</ng-template>
-    <div class="row animated fadeIn border-bottom justify-content-center">
-      <div class=" col-12 col-md-6 col-lg-6  ">
-        <div class="card card-accent-success">
-          <div class="card-header">
-              ورود فایل اطلاعاتی گزارشات و صف ها (.csv)
-          </div>
-          <div class="card-body">
-            <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
-              <div class="form-group ">
-                <div class="input-group">
-
-                  <label class="col-4 col-form-label" for = "file1">
-                    فایل اطلاعات سیستم:</label
-                  >
-                  <div  class="col-12 btn-group btn-group-toggle mb-2"  data-toggle="buttons" >
-
-                      <label
-                        class="btn btn-foursquare  p-2 "
-                        [ngClass]="{ active: fileType.value == '0' }"
-                        for="id1"
-                        >
-                        <input
+        <div class=" col-12 col-md-6 col-lg-6"  *ngIf="type.value == 'file'">
+            <div class="card card-accent-success">
+              <div class="card-header">
+                ورود فایل اطلاعات گزارشات و صف ها (.csv)
+              </div>
+              <div class="card-body">
+                <form [formGroup]="systemData" (ngSubmit)="submitSystemData()">
+                  <div class="form-group ">
+                    <div class="input-group row text-center justify-content-center">
+                      <label class="col-3 col-form-label">نوع فایل: </label>
+                      <div class="col-9 text-right col-form-label">
+                     
+                        <div class="form-check">
+                          <label
+                            class=" col-12 "
+                            [ngClass]="{ active: fileType.value == '0' }"
+                            for="id1"
+                          >
+                          <input
                           type="radio"
                           value="0"
                           [formControl]="fileType"
                           id="id1"
-                          autocomplete="off"
+                          checked
                         />
-                        فایل اطلاعات سیستم
-                      </label>
-                      <label
-                        class="btn btn-foursquare  p-2 "
-                        [ngClass]="{ active: fileType.value == '1' }"
-                        for="id2"
+                          
+                          فایل اطلاعات سیستم
+                          <i class="fa fa-check" [hidden]="fileType.value != '0'"></i>
+                          </label>
+                        </div>
+                        <div class="form-check">
+                        <label
+                          class=" col-12 "
+                          [ngClass]="{ active: fileType.value == '1' }"
+                          for="id2"
+                        >
+                          <input
+                            type="radio"
+                            value="1"
+                            [formControl]="fileType"
+                            id="id2"
+                            autocomplete="off"
+                          />
+                    
+                          فایل اطلاعات صف ها
+                          <i class="fa fa-check" [hidden]="fileType.value != '1'"></i>
+                        </label>
+                        </div>
+
+                      </div>
+                      
+                      <label for="data-file" class="btn btn-primary col-6"
+                        >انتخاب فایل csv {{fileType.value == '0' ? 'اطلاعات سیستم' : ' اطلاعات صف ها' }} ...</label
                       >
-                        <input
-                          type="radio"
-                          value="1"
-                          [formControl]="fileType"
-                          id="id2"
-                          autocomplete="off"
-                        />
-                      فایل اطلاعات صف ها
-                      </label>
-            
-                    </div>
+                      <input
+                        type="file"
+                        class="form-control-file form-control hide is-invalid"
+                        formControlName="file"
+                        id="data-file"
+                        (change)="handleDataFileInput($event.target.files)"
+                      />
 
-
-                  <label for="data-file" class="btn btn-primary"
-                    >انتخاب فایل csv ...</label
-                  >
-
-                  <input
-                    type="file"
-                    class="form-control-file form-control hide is-invalid"
-                    formControlName="file"
-                    id="data-file"
-                    (change)="handleDataFileInput($event.target.files)"
-                  />
-                  <div *ngIf="datafileToUpload">
-                    {{ datafileToUpload.name }}
-                  </div>
-                  <div
-                    *ngIf="systemDataSubmitted && systemDataInfo.file.errors"
-                    class="invalid-feedback"
-                  >
-                    <div *ngIf="systemDataInfo.file.errors.required">
-                      فایلی انتخاب نشده است.
+                      <div class="row">
+                          <div *ngIf="datafileToUpload" >
+                            {{ datafileToUpload.name }}
+                          </div>
+                          <div
+                            *ngIf="systemDataSubmitted && systemDataInfo.file.errors"
+                            class="invalid-feedback"
+                          >
+                            <div *ngIf="systemDataInfo.file.errors.required">
+                              فایلی انتخاب نشده است.
+                            </div>
+                          </div>
+                      </div>
                     </div>
                   </div>
-                </div>
+                  <div class="row justify-content-center align-items-center"><div class="col-7 border-top m-2"></div></div>
+                  <div class="form-group form-actions  text-center">
+                    <button type="submit" class="btn  btn-success" disabled="!datafileToUpload">
+                      ذخیره شود
+                      <app-spintick [showSpinner]="fileIsUploading"></app-spintick>
+                    </button>
+                  </div>
+                  <progressbar
+                    [hidden]="!fileIsUploading"
+                    class="progress"
+                    [value]="progress"
+                    [max]="100"
+                  ></progressbar>
+                </form>
               </div>
-
-              <div class="form-group form-actions text-left">
-                <button type="submit" class="btn  btn-success">
-                  ذخیره شود
-                  <app-spintick [showSpinner]="fileIsUploading"></app-spintick>
+    
+              <div class="text-center border-top p-4">
+                <button class="btn btn-danger" (click)="removeAllDataModal.show()">
+                  حذف اطلاعات دیتابیس گزارشات
+                  <i class="fa fa-trash"></i>
+                </button>
+                <button class="btn btn-danger" (click)="removeAllQDataModal.show()">
+                  حذف اطلاعات دیتابیس صف ها
+                  <i class="fa fa-trash"></i>
                 </button>
               </div>
-              <progressbar
-                [hidden]="!fileIsUploading"
-                class="progress"
-                [value]="progress"
-                [max]="100"
-              ></progressbar>
-            </form>
+            </div>
           </div>
-
-          <div class="text-center border-top p-4">
-            <button class="btn btn-danger" (click)="removeAllDataModal.show()">
-             حذف اطلاعات دیتابیس گزارشات
-            </button>
-            <button class="btn btn-danger" (click)="removeAllQDataModal.show()">
-                حذف اطلاعات دیتابیس صف ها
-               </button>
-          </div>
-        </div>
-      </div>
     </div>
- </tab>
+
+
+  </tab>
+
+
 
   <tab>
-    <ng-template tabHeading ><i class="icon-basket-loaded"></i> تنظیمات لایسنس</ng-template>
+    <ng-template tabHeading
+      ><i class="icon-basket-loaded"></i> تنظیمات لایسنس</ng-template
+    >
 
     <div class="row animated fadeIn border-bottom justify-content-center">
       <div class=" col-12 col-md-6 col-lg-6  ">
@@ -526,9 +540,10 @@
     </div>
   </tab>
 
-
   <tab>
-    <ng-template tabHeading><i class="fa da-list"></i> تعرفه های قبوض</ng-template>
+    <ng-template tabHeading
+      ><i class="fa da-list"></i> تعرفه های قبوض</ng-template
+    >
     <div class="row animated fadeIn border-bottom justify-content-center">
       <div class="col-12 col-md-10 col-lg-10 col-xl-6">
         <div class="card card-accent-success">
@@ -644,132 +659,133 @@
   </tab>
 
   <tab>
-      <ng-template tabHeading><i class="icon-basket-loaded"></i>دیگر اطلاعات سیستم</ng-template
+    <ng-template tabHeading
+      ><i class="icon-basket-loaded"></i>دیگر اطلاعات سیستم</ng-template
     >
     <div class="row animated fadeIn border-bottom justify-content-center">
-        <div class=" col-12 col-md-12 col-lg-12 ">
-            <div class="card card-accent-success">
-              <div class="card-header">
-                دیگر اطلاعات سیستم
-              </div>
-              <div class="card-body">
-                <form
-                  class="row"
-                  [formGroup]="otherData"
-                  (ngSubmit)="submitOtherData()"
-                >
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">countco</span>
-                      </div>
-                      <input class="form-control" formControlName="countco" />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> counte1 </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        autocomplete="email"
-                        formControlName="counte1"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> counte1 </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        autocomplete="email"
-                        formControlName="counte1"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> queue_number </span>
-                      </div>
-                      <input class="form-control" formControlName="queue_number" />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          prepend_outbound_from
-                        </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        formControlName="prepend_outbound_from"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> prepend_outbound_to </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        autocomplete="email"
-                        formControlName="prepend_outbound_to"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> did_inbound_from </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        autocomplete="email"
-                        formControlName="did_inbound_from"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text"> did_inbound_to </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        formControlName="did_inbound_to"
-                      />
-                    </div>
-                  </div>
-                  <div class="form-group col-sm-6">
-                    <div class="input-group">
-                      <div class="input-group-prepend">
-                        <span class="input-group-text">
-                          prefix_outbound_transfer
-                        </span>
-                      </div>
-                      <input
-                        class="form-control"
-                        autocomplete="email"
-                        formControlName="prefix_outbound_transfer"
-                      />
-                    </div>
-                  </div>
-    
-                  <div class="form-group form-actions col-sm-12 text-left">
-                    <button type="submit" class="btn  btn-primary">
-                      ذخیره شود
-                    </button>
-                  </div>
-                </form>
-              </div>
-            </div>
+      <div class=" col-12 col-md-12 col-lg-12 ">
+        <div class="card card-accent-success">
+          <div class="card-header">
+            دیگر اطلاعات سیستم
           </div>
+          <div class="card-body">
+            <form
+              class="row"
+              [formGroup]="otherData"
+              (ngSubmit)="submitOtherData()"
+            >
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">countco</span>
+                  </div>
+                  <input class="form-control" formControlName="countco" />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> counte1 </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="counte1"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> counte1 </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="counte1"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> queue_number </span>
+                  </div>
+                  <input class="form-control" formControlName="queue_number" />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      prepend_outbound_from
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    formControlName="prepend_outbound_from"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> prepend_outbound_to </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="prepend_outbound_to"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> did_inbound_from </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="did_inbound_from"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text"> did_inbound_to </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    formControlName="did_inbound_to"
+                  />
+                </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">
+                      prefix_outbound_transfer
+                    </span>
+                  </div>
+                  <input
+                    class="form-control"
+                    autocomplete="email"
+                    formControlName="prefix_outbound_transfer"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group form-actions col-sm-12 text-left">
+                <button type="submit" class="btn  btn-primary">
+                  ذخیره شود
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
   </tab>
 </tabset>
@@ -779,66 +795,114 @@
   [showLoading]="fileIsUploading"
 ></app-loading>
 
-<div  bsModal  #removeAllDataModal ="bs-modal" class="modal fade" tabindex="-1" 
-role="dialog" aria-labelledby="myModalLabel" 
-aria-hidden="true">
-    <div class="modal-dialog modal-md modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title col-11">حذف کل اطلاعات گزارشات</h4>
-          <button type="button" class="close " (click)="removeAllDataModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-       
-        </div>
-        <div class="modal-body">
-          <p>آیا از حذف کل اطلاعات دیتابیس گزارشات مطمئنید؟ </p>
-          <p>در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم حذف خواهد شد.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary mr-2" (click)="removeAllDataModal.hide()">انصراف</button>
-          <button type="button" class="btn btn-danger"
-           (click)="removeLastFileData()"
-           
-           >
-        {{!fileIsRemoving? 'بله حذف شود':  'در حال حذف اطلاعات '}}
-           <app-spintick
-           [showSpinner]="fileIsRemoving"
-           [showTick]="false"
-         ></app-spintick></button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+<div
+  bsModal
+  #removeAllDataModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title col-11">حذف کل اطلاعات گزارشات</h4>
+        <button
+          type="button"
+          class="close "
+          (click)="removeAllDataModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>آیا از حذف کل اطلاعات دیتابیس گزارشات مطمئنید؟</p>
+        <p>
+          در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم
+          حذف خواهد شد.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary mr-2"
+          (click)="removeAllDataModal.hide()"
+        >
+          انصراف
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="removeLastFileData()"
+        >
+          {{ !fileIsRemoving ? "بله حذف شود" : "در حال حذف اطلاعات " }}
+          <app-spintick
+            [showSpinner]="fileIsRemoving"
+            [showTick]="false"
+          ></app-spintick>
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
-  <div  bsModal  #removeAllQDataModal ="bs-modal" class="modal fade" tabindex="-1" 
-role="dialog" aria-labelledby="myModalLabel" 
-aria-hidden="true">
-    <div class="modal-dialog modal-md modal-danger" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h4 class="modal-title col-11"> حذف کل اطلاعات صف ها</h4>
-          <button type="button" class="close " (click)="removeAllQDataModal.hide()" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-       
-        </div>
-        <div class="modal-body">
-          <p>آیا از حذف کل اطلاعات دیتابیس صف ها مطمئنید؟ </p>
-          <p>در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم حذف خواهد شد.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary mr-2" (click)="removeAllQDataModal.hide()">انصراف</button>
-          <button type="button" class="btn btn-danger"
-           (click)="removeLastQFileData()"
-           
-           >
-        {{!fileIsRemoving? 'بله حذف شود':  'در حال حذف اطلاعات '}}
-           <app-spintick
-           [showSpinner]="fileIsRemoving"
-           [showTick]="false"
-         ></app-spintick></button>
-        </div>
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
+<div
+  bsModal
+  #removeAllQDataModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-md modal-danger" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title col-11">حذف کل اطلاعات صف ها</h4>
+        <button
+          type="button"
+          class="close "
+          (click)="removeAllQDataModal.hide()"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>آیا از حذف کل اطلاعات دیتابیس صف ها مطمئنید؟</p>
+        <p>
+          در صورت تایید، <b>کل اطلاعات ذخیره شده در تمام تاریخ ها </b>از سیستم
+          حذف خواهد شد.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary mr-2"
+          (click)="removeAllQDataModal.hide()"
+        >
+          انصراف
+        </button>
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="removeLastQFileData()"
+        >
+          {{ !fileIsRemoving ? "بله حذف شود" : "در حال حذف اطلاعات " }}
+          <app-spintick
+            [showSpinner]="fileIsRemoving"
+            [showTick]="false"
+          ></app-spintick>
+        </button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
