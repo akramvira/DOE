@@ -29,8 +29,13 @@ export class AssistantComponent implements OnInit {
   activeRow: number;
   editing = {};
 
-  ngOnInit() {
-    this.webServ.getAllGroups().subscribe(
+ngOnInit() {
+	this.getAllData();
+  }
+  
+  getAllData(){
+	  
+	      this.webServ.getAllGroups().subscribe(
       data => {
         data = data["data"];
         let groupesData = new Array();
@@ -48,6 +53,8 @@ export class AssistantComponent implements OnInit {
       }
     );
   }
+  
+    
 
   updateValue(event, cell, rowIndex) {
     console.log("inline editing rowIndex", rowIndex);
@@ -69,10 +76,10 @@ export class AssistantComponent implements OnInit {
         data => {
           console.log(data);
           this.itemsChanged = false;
-          this.toastr.success("نام گروه با موفقیت تغییر یافت");
+          this.toastr.success("نام معاونت با موفقیت تغییر یافت");
         },
         error => {
-          console.log(error);
+          this.authServ.handdleAuthErrors(error);
         }
       );
   }
@@ -127,12 +134,17 @@ export class AssistantComponent implements OnInit {
   }
 
   addItemToSelectedParent(event, subItem) {
-    debugger;
+    
     if (this.parentSelected)
       if (!this.selectedGroupExtensions.includes(subItem)) {
         this.itemsChanged = true;
         this.selectedGroupExtensions.push(subItem);
-        this.setRemainingExtensions();
+		this.allExtensions.splice(
+          this.allExtensions.indexOf(subItem),
+          1
+        );
+         this.setRemainingExtensions();;
+		 
       }
   }
 
@@ -145,7 +157,6 @@ export class AssistantComponent implements OnInit {
           1
         );
         this.allExtensions.push(subItem);
-
         this.setRemainingExtensions();
       }
   }
@@ -167,7 +178,6 @@ export class AssistantComponent implements OnInit {
       })
       .subscribe(
         data => {
-          console.log(data);
           this.itemsChanged = false;
 
           this.groups[this.activeRow][
@@ -175,13 +185,14 @@ export class AssistantComponent implements OnInit {
           ] = this.selectedGroupExtensions.join(",");
           this.refreshParents();
           this.toastr.success(
-            "داخلی های گروهگ " +
+            "ادارات معاونت  " +
               this.groups[this.activeRow]["name"] +
               "  با موفقیت ثبت شد."
           );
+		  this.getAllData();
         },
         error => {
-          console.log(error);
+         this.authServ.handdleAuthErrors(error);
         }
       );
   }
@@ -195,12 +206,12 @@ export class AssistantComponent implements OnInit {
 
       this.webServ.addGroup(newItemData).subscribe(
         data => {
-          this.toastr.success("گروه با موفقیت اضافه شد.");
-          this.groups.push(newItemData);
-          this.refreshParents();
+          this.toastr.success("معاونت با موفقیت اضافه شد.");
+           this.groups.push({id: data['data']['id'], name: newItemData.name, sub:[]});
+		   this.refreshParents();
         },
         error => {
-          console.log(error);
+          this.authServ.handdleAuthErrors(error);
         }
       );
 
@@ -237,7 +248,8 @@ export class AssistantComponent implements OnInit {
         );
         this.removeGroup(activeId);
         this.smallModal.hide();
-        this.refreshParents();
+         this.getAllData();
+		 this.selectedGroupExtensions=[];
       },
       error => {
         this.smallModal.hide();

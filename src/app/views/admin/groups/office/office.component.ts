@@ -31,7 +31,11 @@ export class OfficeComponent implements OnInit {
   editing = {};
 
   ngOnInit() {
-    this.webServ.getAllGroups().subscribe(
+ this.getAllData();
+  }
+
+  getAllData(){
+	     this.webServ.getAllGroups().subscribe(
       data => {
         data = data["data"];
         let groupesData = new Array();
@@ -45,18 +49,15 @@ export class OfficeComponent implements OnInit {
         // this.selectedGroupExtensions = this.groups[0]['value'].split(',');
       },
       error => {
-        console.log(error);
         this.authServ.handdleAuthErrors(error);
       }
     );
   }
-
   updateValue(event, cell, rowIndex) {
     console.log("inline editing rowIndex", rowIndex);
     this.editing[rowIndex + "-" + cell] = false;
     this.groups[rowIndex][cell] = event.target.value;
-    this.refreshParents();
-    console.log("UPDATED!", this.groups[rowIndex][cell]);
+    this.refreshParents();;
 
     let newName = this.groups[rowIndex][cell];
     let id = this.groups[rowIndex]["id"];
@@ -71,7 +72,7 @@ export class OfficeComponent implements OnInit {
         data => {
           console.log(data);
           this.itemsChanged = false;
-          this.toastr.success("نام گروه با موفقیت تغییر یافت");
+          this.toastr.success("نام اداره با موفقیت تغییر یافت");
         },
         error => {
           console.log(error);
@@ -135,6 +136,10 @@ export class OfficeComponent implements OnInit {
       if (!this.selectedGroupExtensions.includes(subItem)) {
         this.itemsChanged = true;
         this.selectedGroupExtensions.push(subItem);
+		this.allExtensions.splice(
+          this.allExtensions.indexOf(subItem),
+          1
+        );
         this.setRemainingExtensions();
       }
   }
@@ -186,6 +191,7 @@ export class OfficeComponent implements OnInit {
               this.groups[activeId]["name"] +
               "  با موفقیت ثبت شد.  "
           );
+		  this.getAllData();
         },
         error => {
           console.log(error);
@@ -203,7 +209,7 @@ export class OfficeComponent implements OnInit {
         data => {
           data = data['data'];
 
-          this.toastr.success("گروه با موفقیت اضافه شد.");
+          this.toastr.success("اداره با موفقیت اضافه شد.");
        
           this.groups.push({id: data['id'], name: newItemData.name, sub:[]});
           this.refreshParents();
@@ -249,7 +255,8 @@ export class OfficeComponent implements OnInit {
         );
         this.smallModal.hide();
         this.removeGroup(activeId);
-        this.refreshParents();
+         this.getAllData();
+		 this.selectedGroupExtensions = [];
       },
       error => {
         this.toastr.error("اشکال در روند حذف اداره");

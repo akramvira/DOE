@@ -15,7 +15,26 @@
           (activate)="onActivate($event)"
           >
          
+  <ngx-datatable-column
+       
+     [sortable]="true"
+     [canAutoResize]="false"
+     [draggable]="false"
+     [resizeable]="false"
+     name="edit"
+     [width]="50"
+     >
+     <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
+         <span >حذف</span>
+       </ng-template>
+       <ng-template let-value="value"   let-row="row" 
+         let-rowIndex="rowIndex"  ngx-datatable-cell-template>
+        <span class="btn btn-sm btn-danger" data-toggle="modal" (click)="showRemoveModal(rowIndex)">
+          <i class="fa fa-trash"></i>
+        </span>
 
+       </ng-template>
+  </ngx-datatable-column>
        <ngx-datatable-column
        
         [sortable]="true"
@@ -48,26 +67,7 @@
             />
           </ng-template>
      </ngx-datatable-column>
-     <ngx-datatable-column
-       
-     [sortable]="true"
-     [canAutoResize]="false"
-     [draggable]="false"
-     [resizeable]="false"
-     name="edit"
-     [width]="50"
-     >
-     <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
-         <span >حذف</span>
-       </ng-template>
-       <ng-template let-value="value"   let-row="row" 
-         let-rowIndex="rowIndex"  ngx-datatable-cell-template>
-        <span class="btn btn-sm btn-danger" data-toggle="modal" (click)="showRemoveModal(rowIndex)">
-          <i class="fa fa-trash"></i>
-        </span>
-
-       </ng-template>
-  </ngx-datatable-column>
+   
 
     </ngx-datatable>
 

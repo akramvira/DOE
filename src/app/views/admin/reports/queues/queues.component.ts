@@ -233,11 +233,15 @@ export class QueuesComponent implements OnInit {
     let labels = [];
 
     let itemSelected = this.queueData.forEach(item => {
-      if (item.id == this.queueId.value) labels.push(item["name"]);
+      if (item.id == this.queueId.value){
+		  for(let i in item['agents'])
+			labels.push(item['agents'][i]["name"]);
+	  }
+		  
     });
     
     if (labels.length) 
-    this.detailsLabels = [labels[0]];
+    this.detailsLabels = labels;
     else this.detailsLabels = [];
 
     this.reportServ.gerChartsDetailsData(data).subscribe(
@@ -270,7 +274,7 @@ export class QueuesComponent implements OnInit {
           busy.push(data[i]["data"]["busy"]);
           performance.push(data[i]["data"]["performance"]);
           time.push(data[i]["data"]["time"]);
-          ringTime.push(data[i]["data"]["ringTime"]);
+          ringTime.push(data[i]["data"]["ringtime"]);
         }
 
         //console.log(detailsLabels);
