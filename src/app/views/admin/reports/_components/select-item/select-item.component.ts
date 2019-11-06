@@ -273,7 +273,6 @@ export class SelectItemComponent implements OnInit {
   public getSelectedValue(){
 
     let filterData = [];
-    debugger;
     let selectedItem1 = this.selectedItem1.getRawValue();
     if (selectedItem1.level ==0 && (!selectedItem1.main || !selectedItem1.main.length )) return;
     if (selectedItem1.level == 1 && 

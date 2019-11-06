@@ -168,11 +168,7 @@ export class PerformanceL1Component implements OnInit {
           selectedItems: []
         });
 
-        let labels = [];
-        for (let index in this.filters.value.selectedItems) {
-          labels.push(this.filters.value.selectedItems[index]["item_text"]);
-        }
-        this.mainLabels = labels;
+       
        // this.updateCharts();
         this.initingData = false;
         this.toaster.warning('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
@@ -208,6 +204,7 @@ export class PerformanceL1Component implements OnInit {
       labels.push(this.filters.value.selectedItems[index]["item_text"]);
     }
     this.mainLabels = labels;
+  
     //this.updateCharts();
   }
 
@@ -238,6 +235,12 @@ export class PerformanceL1Component implements OnInit {
     this.callsBarChartLabels = this.mainLabels;
     this.performanceChartLabels = this.mainLabels;
   
+    let labels = [];
+    for (let index in this.filters.value.selectedItems) {
+      labels.push(this.filters.value.selectedItems[index]["item_text"]);
+    }
+    this.mainLabels = labels;
+    
     this.getChartsData(filterData);
   }
 
