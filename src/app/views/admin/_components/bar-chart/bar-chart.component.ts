@@ -41,9 +41,9 @@ export class BarChartComponent implements OnInit {
             if(isTimeChart){
               var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-              if(isTimeChart)
+             
               return label+' : ' + new Date( tooltipItem.yLabel * 1000).toISOString().substr(11, 8);
-              else return label + ' ' + tooltipItem.yLabel;
+             // else return label + ' ' + tooltipItem.yLabel;
             }
             else if(isPercentChart){
               var label = data.datasets[tooltipItem.datasetIndex].label || "";

@@ -81,7 +81,7 @@ export class AllComponent implements OnInit {
           { data:  [data['out']["avg"]], label: " مدت زمان میانگین مکالمات" },
         ];
 
-        debugger;
+        
         this.inPerformanceData = [
           data["in"]["performance"],
           100 - data["in"]["performance"]
