@@ -243,7 +243,9 @@
     </div>
 
     <div class="row">
-      <div class="col-12" >
+      <div class="col-6" 
+      [ngClass]="{'col-6' : labelsCount < 6 , 'col-12': labelsCount >= 6 }"
+       >
         <div class="card">
           <div class="card-header">
             نمودار تعداد کل تماس ها
@@ -390,7 +392,7 @@
         </div>
       </div>
 
-      <div class="col-12" >
+      <div class="col-6" >
         <div class="card">
           <div class="card-header">
            نمودار تعداد تماس های پاسخ داده شده، پاسخ داده نشده و مشغول
@@ -410,7 +412,7 @@
 
 
 
-      <div class="col-12" >
+      <div class="col-6" >
         <div class="card">
           <div class="card-header">
             نمودار عملکرد معاونت ها
@@ -429,7 +431,7 @@
         </div>
       </div>
 
-      <div class="col-12" >
+      <div class="col-6" >
         <div class="card">
           <div class="card-header">
            نمودار مدت زمان مکالمه معاونت ها
@@ -449,7 +451,7 @@
         </div>
       </div>
 
-      <div class="col-12" >
+      <div class="col-6" >
         <div class="card">
           <div class="card-header">
         نمودار وضعیت میانگین مکالمات به میانگین کل

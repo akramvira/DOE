@@ -18,7 +18,7 @@ export class AllComponent implements OnInit {
     private sharedService: SharedService
   ) {}
 
-  public inPerformanceLabel: string[]= ['عملکرد'] ;;
+  public inPerformanceLabel: string[]= [' عملکرد موفق', 'عملکرد ناموفق'] ;;
   public inPerformanceColors = [
     {
       backgroundColor: ["#20a8d8", "#eeeeee"]

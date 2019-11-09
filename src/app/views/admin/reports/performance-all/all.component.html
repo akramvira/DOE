@@ -1,17 +1,25 @@
 <div class="animated fadeIn">
-    <div class="row justify-content-center align-items-center text-center card card-info bg-gray-300 p-sm-2">
-            <div class="col-12 col-md-8  col-lg-5 col-xl-5  ">
-                    <div class="bg-gray-200 p-1 rounded row justify-content-center align-items-center">
-                      <app-daterange #daterange></app-daterange>
+  <div
+    class="row justify-content-center align-items-center text-center card card-info bg-gray-300 p-sm-2"
+  >
+    <div class="col-12 col-md-8  col-lg-5 col-xl-5  ">
+      <div
+        class="bg-gray-200 p-1 rounded row justify-content-center align-items-center"
+      >
+        <app-daterange #daterange></app-daterange>
 
-                        <button class="btn btn-primary col-8 mt-2" [disabled]="loadingData"
-                         (click)="updateCharts()">
-                            {{ loadingData? 'در حال دریافت اطلاعات': ' دریافت اطلاعات ' }} 
-                            <i [hidden]= "loadingData" class="fa fa-check"></i >
-                            <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i> </button>
-                    </div>
-                </div>
+        <button
+          class="btn btn-primary col-8 mt-2"
+          [disabled]="loadingData"
+          (click)="updateCharts()"
+        >
+          {{ loadingData ? "در حال دریافت اطلاعات" : " دریافت اطلاعات " }}
+          <i [hidden]="loadingData" class="fa fa-check"></i>
+          <i [hidden]="!loadingData" class="fa fa-spinner fa-spin"></i>
+        </button>
+      </div>
     </div>
+  </div>
   <div class="row justify-content-center">
     <div class="col-12">
       <div class="row justify-content-center">
@@ -48,10 +56,9 @@
           <div class="col-12">
             <div class="row">
               <app-bar-chart
-              class="col-12"
+                class="col-12"
                 [datasets]="barChartDataIn"
-                
-                [labels]= "['تعداد تماس ها']"
+                [labels]="['تعداد تماس ها']"
               >
               </app-bar-chart>
             </div>
@@ -68,23 +75,21 @@
         <div class="chart-wrapper">
           <div class="col-12">
             <div class="row">
-              <app-bar-chart class="col-12"
+              <app-bar-chart
+                class="col-12"
                 [datasets]="barChartDataOut"
-                
-                [labels]= "['تعداد تماس ها']"
+                [labels]="['تعداد تماس ها']"
               >
               </app-bar-chart>
-              
             </div>
           </div>
         </div>
       </div>
     </div>
 
-
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
       <div class="card-header row">
-      تماس های ورودی (درصد)
+        تماس های ورودی (درصد)
         <div class="card-header-actions"></div>
       </div>
       <div class="card-body">
@@ -104,41 +109,39 @@
     </div>
 
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
-        <div class="card-header row">
-        تماس های خروجی (درصد)
-          <div class="card-header-actions"></div>
-        </div>
-        <div class="card-body">
-          <div class="col-12">
-            <div class="row">
-              <div class="chart-wrapper col-12">
-                <app-doughnut-chart
-                  [data]="outDetailsPercent"
-                  [labels]="detailPercentLabelsOut"
-                  [colors]="inPercentsColors"
-                >
-                </app-doughnut-chart>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      
-    <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
       <div class="card-header row">
-      مدت زمان مکالمات در تماس های ورودی
+        تماس های خروجی (درصد)
         <div class="card-header-actions"></div>
       </div>
       <div class="card-body">
         <div class="col-12">
           <div class="row">
             <div class="chart-wrapper col-12">
-                <app-bar-chart
-              class="col-12"
+              <app-doughnut-chart
+                [data]="outDetailsPercent"
+                [labels]="detailPercentLabelsOut"
+                [colors]="inPercentsColors"
+              >
+              </app-doughnut-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
+      <div class="card-header row">
+        مدت زمان مکالمات در تماس های ورودی
+        <div class="card-header-actions"></div>
+      </div>
+      <div class="card-body">
+        <div class="col-12">
+          <div class="row">
+            <div class="chart-wrapper col-12">
+              <app-bar-chart
+                class="col-12"
                 [datasets]="barChartDataTimeIn"
-                
-                [labels]= "['مدت زمان مکالمات']"
+                [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
               >
               </app-bar-chart>
@@ -149,27 +152,25 @@
     </div>
 
     <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
-        <div class="card-header row">
-            مدت زمان مکالمات در تماس های خروجی
-          <div class="card-header-actions"></div>
-        </div>
-        <div class="card-body">
-          <div class="col-12">
-            <div class="row">
-              <div class="chart-wrapper col-12">
-                  <app-bar-chart
-                  class="col-12"
-                    [datasets]="barChartDataTimeOut"
-                    
-                    [labels]= "['مدت زمان مکالمات']"
-                    [isTimeChart]="true"
-                  >
-                  </app-bar-chart>
-              </div>
+      <div class="card-header row">
+        مدت زمان مکالمات در تماس های خروجی
+        <div class="card-header-actions"></div>
+      </div>
+      <div class="card-body">
+        <div class="col-12">
+          <div class="row">
+            <div class="chart-wrapper col-12">
+              <app-bar-chart
+                class="col-12"
+                [datasets]="barChartDataTimeOut"
+                [labels]="['مدت زمان مکالمات']"
+                [isTimeChart]="true"
+              >
+              </app-bar-chart>
             </div>
           </div>
         </div>
+      </div>
     </div>
-
   </div>
 </div>

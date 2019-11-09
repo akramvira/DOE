@@ -95,7 +95,7 @@ export class DefaultLayoutComponent implements OnDestroy {
           let reportsMeunuChildrens = [
             {
               name: "عملکرد",
-
+              url: "/admin/reports/all",  
               icon: "icon-pie-chart",
 
               children: [
@@ -167,7 +167,7 @@ export class DefaultLayoutComponent implements OnDestroy {
 
           tmpNavItems.push({
             name: "گزارشات",
-
+            url: "/admin/reports",
             icon: "icon-chart",
             children: reportsMeunuChildrens
           });
@@ -196,7 +196,7 @@ export class DefaultLayoutComponent implements OnDestroy {
         if (haveAccesedMenues.indexOf("users") > -1)
           tmpNavItems.push({
             name: "مدیریت کاربران",
-
+            url: "/admin/users-management/users", 
             icon: "icon-pie-chart",
             children: userMnggmntChildren
           });
@@ -204,6 +204,7 @@ export class DefaultLayoutComponent implements OnDestroy {
         if (haveAccesedMenues.indexOf("groupExtensions") > -1)
           tmpNavItems.push({
             name: "مدیریت بخش ها",
+            url: "/admin/groups/assistant",
             icon: "icon-user",
             children:[
               {
