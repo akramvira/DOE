@@ -38,12 +38,16 @@ export class DoughnutChartComponent implements OnInit {
         custom: CustomTooltips,
         callbacks: {
           label: function(tooltipItem, data) {
-            var label = data.datasets[tooltipItem.datasetIndex].label || "";
+            
+            var label = data.labels[tooltipItem.index] || "";
   
+            console.log(data.datasets[0]['data'][tooltipItem.index]);
+            
               if (label) {
                 label += ": ";
               }
-              label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel+'%';
+              label += isNaN(data.datasets[0]['data'][tooltipItem.index]) ? "%0" :
+              '%'+ data.datasets[0]['data'][tooltipItem.index];
               return label;
           }
         }
