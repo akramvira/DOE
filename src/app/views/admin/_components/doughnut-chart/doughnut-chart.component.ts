@@ -36,7 +36,17 @@ export class DoughnutChartComponent implements OnInit {
         fontStyle: "bold",
         enabled: false,
         custom: CustomTooltips,
-       
+        callbacks: {
+          label: function(tooltipItem, data) {
+            var label = data.datasets[tooltipItem.datasetIndex].label || "";
+  
+              if (label) {
+                label += ": ";
+              }
+              label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel+'%';
+              return label;
+          }
+        }
       },
  
 
