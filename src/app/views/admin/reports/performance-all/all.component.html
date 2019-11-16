@@ -58,7 +58,9 @@
               <app-bar-chart
                 class="col-12"
                 [datasets]="barChartDataIn"
+                [colors]="barChartInColors"
                 [labels]="['تعداد تماس ها']"
+                unitLabel="عدد"
               >
               </app-bar-chart>
             </div>
@@ -78,7 +80,9 @@
               <app-bar-chart
                 class="col-12"
                 [datasets]="barChartDataOut"
+                [colors]="barChartOutColors"
                 [labels]="['تعداد تماس ها']"
+                unitLabel="عدد"
               >
               </app-bar-chart>
             </div>
@@ -100,6 +104,7 @@
                 [data]="inDetailsPercent"
                 [labels]="detailPercentLabelsIn"
                 [colors]="inPercentsColors"
+                
               >
               </app-doughnut-chart>
             </div>
@@ -139,7 +144,6 @@
           <div class="row">
             <div class="chart-wrapper col-12">
               <app-bar-chart
-                class="col-12"
                 [datasets]="barChartDataTimeIn"
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
@@ -161,7 +165,6 @@
           <div class="row">
             <div class="chart-wrapper col-12">
               <app-bar-chart
-                class="col-12"
                 [datasets]="barChartDataTimeOut"
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"

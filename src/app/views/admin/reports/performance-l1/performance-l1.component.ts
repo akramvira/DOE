@@ -34,7 +34,7 @@ export class PerformanceL1Component implements OnInit {
   ////--------Charts And shared data Section------------------
   public performanceBarChartColors = [
     {
-      backgroundColor: "#86c7f3"
+      backgroundColor: "#4dbd74"
     }
   ];
   public timeBarChartColors = [
@@ -48,7 +48,6 @@ export class PerformanceL1Component implements OnInit {
 
   public timeAvgChartColors = [
     {
-      //cpu
       backgroundColor: "rgba(255, 161, 181, 0.2)",
       borderColor: "rgba(255, 161, 181, 0.9)",
       pointBackgroundColor: "rgba(255, 161, 181, 0.4)",
@@ -57,7 +56,6 @@ export class PerformanceL1Component implements OnInit {
       pointHoverBorderColor: "rgba(148,159,177,0.8)"
     },
     {
-      // ram
       backgroundColor: "rgba(77, 189, 116, 0)",
       borderColor: "rgba(77, 189, 116, 0.9)",
       pointBackgroundColor: "rgba(77, 189, 116, 0.4)",

@@ -243,8 +243,8 @@
     </div>
 
     <div class="row">
-      <div class="col-6" 
-      [ngClass]="{'col-6' : labelsCount < 6 , 'col-12': labelsCount >= 6 }"
+      <div 
+      class="col-6"
        >
         <div class="card">
           <div class="card-header">
@@ -422,7 +422,7 @@
               <app-bar-chart
                 [datasets]="performanceChartData"
                 [labels]="mainLabels"
-                [colors]="timeBarChartColors"
+                [colors]="performanceBarChartColors"
                 [isPercentChart]="true"
               >
               </app-bar-chart>

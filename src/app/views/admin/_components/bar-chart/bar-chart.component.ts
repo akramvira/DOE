@@ -12,15 +12,18 @@ export class BarChartComponent implements OnInit {
 
   @Input() isTimeChart: boolean = false;
   @Input() isPercentChart: boolean = false;
-  ngOnInit() {
+  @Input() unitLabel: string = "";
 
+  ngOnInit() {
     let isTimeChart = this.isTimeChart;
     let isPercentChart = this.isPercentChart;
+    let unitLabel = this.unitLabel;
+
     let stepSizee = 1;
 
-    this.chartOptions ={
+    this.chartOptions = {
       scaleShowVerticalLines: true,
-  
+
       barRoundness: 3,
       legend: {
         labels: {
@@ -37,34 +40,49 @@ export class BarChartComponent implements OnInit {
         custom: CustomTooltips,
         callbacks: {
           label: function(tooltipItem, data) {
-      
-            if(isTimeChart){
-              var label = data.datasets[tooltipItem.datasetIndex].label || '';
-
-             
-              return label+' : ' + new Date( tooltipItem.yLabel * 1000).toISOString().substr(11, 8);
-             // else return label + ' ' + tooltipItem.yLabel;
-            }
-            else if(isPercentChart){
+            if (isTimeChart) {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
   
+              let d = Number(tooltipItem.yLabel);
+              let day = Math.floor(d / (3600*24));
+              d = d % (3600*24);
+              let h = Math.floor(d / 3600);
+              let m = Math.floor(d % 3600 / 60);
+              let s = Math.floor(d % 3600 % 60);
+          
+              let hDisplay = h >= 10 ? h : "0"+ h as string;
+              let mDisplay = m >= 10  ? m : "0"+m as string ;
+              let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+              let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay;  
+
+              return (
+                label +
+                " : " +
+                time
+              );
+              // else return label + ' ' + tooltipItem.yLabel;
+            } else if (isPercentChart) {
+              var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
               if (label) {
                 label += ": ";
               }
-              label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel+'%';
+              label += isNaN(tooltipItem.yLabel)
+                ? "0"
+                : tooltipItem.yLabel + "%";
               return label;
-            }
-            else {
+            } else {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
-  
+
               if (label) {
                 label += ": ";
               }
               label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
-            return label;
 
+              if (unitLabel) label = label + unitLabel;
+
+              return label;
             }
-            
           }
         }
       },
@@ -75,14 +93,13 @@ export class BarChartComponent implements OnInit {
               beginAtZero: true,
               //this will fix your problem with NaN
               callback: function(label, index, labels, data) {
-            
                 return label ? label : "";
               },
               fontFamily: "IRANSans",
               fontColor: "black",
               fontSize: 13
             },
-            barPercentage: 0.4
+            barPercentage: 0.9
           }
         ],
         yAxes: [
@@ -95,24 +112,46 @@ export class BarChartComponent implements OnInit {
               fontFamily: "IRANSans",
               fontColor: "black",
               fontSize: 13,
+              
+              min: 0 ,
+              
+              max: isPercentChart? 100 : undefined,
               userCallback: function(item) {
-                if(isTimeChart)
-                return new Date(item * 1000).toISOString().substr(11, 8);
-                else if(isPercentChart)
-                  return item +'%'
+
+                if (isTimeChart){
+                  let d = Number(item);
+                  
+                  let day = Math.floor(d / (3600*24));
+                  d = d % (3600*24);
+                  let h = Math.floor(d / 3600);
+                  let m = Math.floor(d % 3600 / 60);
+                  let s = Math.floor(d % 3600 % 60);
+              
+                  let hDisplay = h >= 10 ? h : "0"+ h as string;
+                  let mDisplay = m >= 10  ? m : "0"+m as string ;
+                  let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+                  let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+              
+                  return time;
+                }
+                  
+                else if (isPercentChart) return item + "%";
                 else return item;
-            },
+              }
             }
           }
         ]
       },
-  
+
       plugins: {
         labels: {
           render: "value",
           precision: 2,
           arc: true,
-          callback:(item)=>{console.log(item)}
+          callback: item => {
+            console.log(item);
+            return 0;
+          }
         },
         userCallback: function(value) {
           console.log(value);
@@ -120,19 +159,31 @@ export class BarChartComponent implements OnInit {
             return "";
           }
 
-          if(isTimeChart)
-            return new Date( value * 1000).toISOString().substr(11, 8);
-          else if(isPercentChart) return value+'%';
+          if (isTimeChart){
+            let d = Number(value);
+              
+            let day = Math.floor(d / (3600*24));
+            d = d % (3600*24);
+            let h = Math.floor(d / 3600);
+            let m = Math.floor(d % 3600 / 60);
+            let s = Math.floor(d % 3600 % 60);
+        
+            let hDisplay = h >= 10 ? h : "0"+ h as string;
+            let mDisplay = m >= 10  ? m : "0"+m as string ;
+            let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+            let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+        
+            return time;
+          }
+            
+          else if (isPercentChart) return value + "%";
           else return value;
         }
       }
     };
-  
   }
 
-  public chartClicked(e: any): void {
-
-  }
+  public chartClicked(e: any): void {}
 
   public chartHovered(e: any): void {
     console.log(e);
@@ -147,49 +198,28 @@ export class BarChartComponent implements OnInit {
   @Input() contentTitle: string = "";
   @Input() labels: Array<any> = [];
 
-  formatTime(secs) {
-    secs = parseInt(secs);
-    var hours = Math.floor(secs / (60 * 60));
 
-    var divisor_for_minutes = secs % (60 * 60);
-    var minutes = Math.floor(divisor_for_minutes / 60);
 
-    var divisor_for_seconds = divisor_for_minutes % 60;
-    var seconds = Math.ceil(divisor_for_seconds);
-
-    return hours + ":" + minutes;
-  }
-
-  public chartOptions: any ;
+  public chartOptions: any;
   @Input() colors: Array<any> = [
     {
-      backgroundColor:  "rgba(77, 189, 116, 0.5)"
-      ,
-      borderColor:  "rgba(77, 189, 116, 0.9)"
-      ,
-      borderWidth: 1,
-    },
-    {
-      backgroundColor:  "rgba(255, 99, 132, 0.5)"
-      ,
-      borderColor:  "rgba(255, 99, 132, 0.9)"
-      ,
-      borderWidth: 1,
-    },
-    {
-      backgroundColor: 
-        "rgba(255, 193, 7, 0.6)"
-      ,
-      borderColor: "rgba(255, 193, 7, 0.9)"
-      ,
+      backgroundColor: "rgba(77, 189, 116, 1)",
+      borderColor: "rgba(77, 189, 116, 1)",
       borderWidth: 1
     },
     {
-      backgroundColor: 
-        "rgba(255, 100, 50, 0.6)"
-      ,
-      borderColor: "rgba(255, 193, 7, 0.9)"
-      ,
+      backgroundColor: "rgba(255, 99, 132, 1)",
+      borderColor: "rgba(255, 99, 132, 1)",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "rgba(255, 193, 7, 1)",
+      borderColor: "rgba(255, 193, 7, 1)",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "rgba(255, 100, 50, 1)",
+      borderColor: "rgba(255, 193, 7, 1)",
       borderWidth: 1
     }
   ];
@@ -219,4 +249,7 @@ export class BarChartComponent implements OnInit {
   exportAsXLSX(data, type: string = "excel"): void {
     this.excelService.exportAsExcelFile(data, this.chartType, type);
   }
+
+
+
 }

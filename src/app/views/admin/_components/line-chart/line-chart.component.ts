@@ -45,8 +45,21 @@ export class LineChartComponent implements OnInit {
             
             var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
-            if(isTimeChart)
-            return label+' : ' + new Date( tooltipItem.yLabel * 1000).toISOString().substr(11, 8);
+            if(isTimeChart){
+              let d = Number(tooltipItem.yLabel);
+                  
+              let day = Math.floor(d / (3600*24));
+              d = d % (3600*24);
+              let h = Math.floor(d / 3600);
+              let m = Math.floor(d % 3600 / 60);
+              let s = Math.floor(d % 3600 % 60);
+          
+              let hDisplay = h >= 10 ? h : "0"+ h as string;
+              let mDisplay = m >= 10  ? m : "0"+m as string ;
+              let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+              let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+              return time;
+            }
             else return label + ' ' + tooltipItem.yLabel;
           }
         }
@@ -104,8 +117,22 @@ export class LineChartComponent implements OnInit {
               fontColor: "black",
               fontSize: 13,
               userCallback: function(item) {
-                if(isTimeChart)
-                return new Date(item * 1000).toISOString().substr(11, 8);
+                if(isTimeChart){
+                  let d = Number(item);
+                  
+                  let day = Math.floor(d / (3600*24));
+                  d = d % (3600*24);
+                  let h = Math.floor(d / 3600);
+                  let m = Math.floor(d % 3600 / 60);
+                  let s = Math.floor(d % 3600 % 60);
+              
+                  let hDisplay = h >= 10 ? h : "0"+ h as string;
+                  let mDisplay = m >= 10  ? m : "0"+m as string ;
+                  let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+                  let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+               return time;
+                }
+               
                 else return item;
             },
             }

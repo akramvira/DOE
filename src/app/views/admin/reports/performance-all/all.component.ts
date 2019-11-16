@@ -21,7 +21,7 @@ export class AllComponent implements OnInit {
   public inPerformanceLabel: string[]= [' عملکرد موفق', 'عملکرد ناموفق'] ;;
   public inPerformanceColors = [
     {
-      backgroundColor: ["#20a8d8", "#eeeeee"]
+      backgroundColor: ["#4dbd74", "#eeeeee"]
     }
   ];
 
@@ -31,6 +31,52 @@ export class AllComponent implements OnInit {
     }
   ];
   
+  public barChartInColors = [
+    {
+      backgroundColor: "#d1d1d1",
+      borderColor: "#d1d1d1",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "#4dbd74",
+      borderColor: "#4dbd74",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "#e32234",
+      borderColor: "#e32234",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "#ffc107",
+      borderColor: "#ffc107",
+      borderWidth: 1
+    }
+  ];
+
+  public barChartOutColors = [
+    {
+      backgroundColor: "#d1d1d1",
+      borderColor: "#d1d1d1",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "#009688",
+      borderColor: "#009688",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "#673ab7",
+      borderColor: "#673ab7",
+      borderWidth: 1
+    },
+    {
+      backgroundColor: "#795548",
+      borderColor: "#795548",
+      borderWidth: 1
+    }
+  ];
+
   public inPerformanceData: number[] = [1, 100];
 
   public inDetailsPercent: number[] = [1,0,0];
