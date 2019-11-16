@@ -1,0 +1,5 @@
+deploy:
+   stage: deploy
+   script:
+      - sh /usr/share/nginx/html/delete.sh
+      - cp -rf * /usr/share/nginx/html/admin
