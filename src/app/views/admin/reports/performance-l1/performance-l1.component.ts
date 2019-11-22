@@ -245,7 +245,10 @@ export class PerformanceL1Component implements OnInit {
   getChartsData(filterData) {
     filterData["id"] = [];
 
-    if (filterData.selectedItems.length == 0) return;
+    if (filterData.selectedItems.length == 0) {
+      this.toaster.warning('لطفا حداقل یک معاونت انتخاب کنید.');
+      return;
+    }
     for (let item in filterData.selectedItems) {
       filterData["id"].push(filterData.selectedItems[item]["item_id"]);
     }
@@ -257,7 +260,7 @@ export class PerformanceL1Component implements OnInit {
     }
 
     if(!filterData["id"]) {
-      this.toaster.warning('لطفا یک معاونت انتخاب کنید.');
+      this.toaster.warning('لطفا حداقل یک معاونت انتخاب کنید.');
       return;
     }
     filterData.time = parseInt(filterData.time);
@@ -312,7 +315,6 @@ export class PerformanceL1Component implements OnInit {
           { data: avgAll, label: "میانگین زمان کل" }
         ];
 
-        console.log(this.timesAvgChartData);
 
         let allCalls = this.showLineAllCalls
           ? { data: allCalsData, label: " تعداد کل تماس ها" }

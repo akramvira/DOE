@@ -204,10 +204,12 @@ ngOnInit() {
         value: []
       };
 
+      this.newGroupName.setValue('');
       this.webServ.addGroup(newItemData).subscribe(
         data => {
           this.toastr.success("معاونت با موفقیت اضافه شد.");
-           this.groups.push({id: data['data']['id'], name: newItemData.name, sub:[]});
+          
+           this.groups.push({id: data['data'], name: newItemData.name, sub:[]});
 		   this.refreshParents();
         },
         error => {

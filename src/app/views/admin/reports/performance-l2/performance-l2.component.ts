@@ -144,17 +144,19 @@ export class PerformanceL2Component implements OnInit {
   ngOnInit() {
 
     this.asDropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: "id",
       textField: "name",
       selectAllText: "انتخاب همه",
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
+      closeDropDownOnSelection:true,
       limitSelection: 1,
       allowSearchFilter: true
     };
 
+    console.log(this.asDropdownSettings);
     this.officeDropdownSettings = {
       singleSelection: false,
       idField: "id",

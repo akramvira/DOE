@@ -15,9 +15,9 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ["./performance-l3.component.scss"]
 })
 export class PerformanceL3Component implements OnInit {
-  asDropdownSettings = {};
-  officeDropdownSettings = {};
-  lineDropdownSettings = {};
+  asDropdownSettings;
+  officeDropdownSettings;
+  lineDropdownSettings;
   @ViewChild('daterange') dateRange : DaterangeComponent;
   constructor(
     private webServ: WebService,
@@ -168,25 +168,27 @@ loadingData = false;
 
   ngOnInit() {
     this.asDropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: "id",
       textField: "name",
       selectAllText: "انتخاب همه",
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
+      closeDropDownOnSelection:true,
       limitSelection: 1,
       allowSearchFilter: true
     };
 
     this.officeDropdownSettings = {
-      singleSelection: false,
+      singleSelection: true,
       idField: "id",
       textField: "name",
       selectAllText: "انتخاب همه",
       unSelectAllText: "حذف همه موارد",
       searchPlaceholderText: "جستجو",
       itemsShowLimit: 1,
+      closeDropDownOnSelection:true,
       limitSelection: 1,
       allowSearchFilter: true
     };

@@ -208,8 +208,8 @@ export class BarChartComponent implements OnInit {
       borderWidth: 1
     },
     {
-      backgroundColor: "rgba(255, 99, 132, 1)",
-      borderColor: "rgba(255, 99, 132, 1)",
+      backgroundColor: "#d0002c",
+      borderColor: "#d0002c",
       borderWidth: 1
     },
     {
@@ -250,6 +250,8 @@ export class BarChartComponent implements OnInit {
     this.excelService.exportAsExcelFile(data, this.chartType, type);
   }
 
-
+  zoomOut(){
+    
+  }
 
 }
