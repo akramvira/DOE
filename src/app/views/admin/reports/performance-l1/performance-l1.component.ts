@@ -228,21 +228,12 @@ export class PerformanceL1Component implements OnInit {
   }
 
   updateCharts() {
-    let filterData = this.filters.getRawValue();
-    this.lineChartLabels = this.mainLabels;
-    this.callsBarChartLabels = this.mainLabels;
-    this.performanceChartLabels = this.mainLabels;
-  
-    let labels = [];
-    for (let index in this.filters.value.selectedItems) {
-      labels.push(this.filters.value.selectedItems[index]["item_text"]);
-    }
-    this.mainLabels = labels;
-    
-    this.getChartsData(filterData);
+    this.getChartsData();
   }
 
-  getChartsData(filterData) {
+  getChartsData() {
+    
+    let filterData =  this.filters.getRawValue();;
     filterData["id"] = [];
 
     if (filterData.selectedItems.length == 0) {
@@ -264,9 +255,15 @@ export class PerformanceL1Component implements OnInit {
       return;
     }
     filterData.time = parseInt(filterData.time);
+
     this.loadingData = true;
+
+    this.setLabels();
+
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
+        this.resetCharts();
+        
         data = data["data"];
         let allCalsData = [];
         let answeredData = [];
@@ -277,10 +274,8 @@ export class PerformanceL1Component implements OnInit {
         let avgTimesData = [];
         let avgAll = [];
 
-        this.mainLabels = [];
         for (let index in data) {
           let itemChartData = data[index]["data"];
-          this.mainLabels.push(data[index]["name"]);
 
           allCalsData.push(itemChartData["all"]);
 
@@ -294,6 +289,7 @@ export class PerformanceL1Component implements OnInit {
           avgTimesData.push(itemChartData["avg"]);
           avgAll.push(itemChartData["avgall"]);
         }
+      
 
         this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
 
@@ -307,8 +303,6 @@ export class PerformanceL1Component implements OnInit {
           { data: timesData, label: "مدت زمان مکالمه" }
         ];
 
-       
-      
         this.loadTimeLabels =true;
         this.timesAvgChartData = [
           { data: avgTimesData, label: "میانگین زمان هر بخش" },
@@ -327,43 +321,62 @@ export class PerformanceL1Component implements OnInit {
         ];
 
        this.loadingData = false;
-        this.initingData = false;
 
       },
       error => {
-       this.loadingData = false;
-        this.initingData = false;
+        this.loadingData = false;
         this.authServe.handdleAuthErrors(error);
       }
     );
   }
 
+  setLabels(){
+    let labels = [];
+    for (let index in this.filters.value.selectedItems) {
+      labels.push(this.filters.value.selectedItems[index]["item_text"]);
+    }
+    this.mainLabels = labels;
+  }
   resetCharts(){
-    this.allCallsData = [{ data: [], label: "تعداد کل تماس ها" }];
+
+    let emptyData = [];
+
+    for(let i in this.mainLabels){
+      emptyData.push(0);
+    }
+
+    this.allCallsData = [{ data: emptyData , label: "تعداد کل تماس ها" }];
 
     this.callsDetailsData = [
-      { data: [], label: "تعداد تماس پاسخ داده شده" },
-      { data: [], label: "تعداد تماس پاسخ داده نشده" },
-      { data: [], label: "تعداد تماس های مشغول" }
+      { data: emptyData, label: "تعداد تماس پاسخ داده شده" },
+      { data: emptyData, label: "تعداد تماس پاسخ داده نشده" },
+      { data: emptyData, label: "تعداد تماس های مشغول" }
     ];
 
-    this.timesChartData = [{ data: [], label: "مدت زمان مکالمه" }];
+    this.timesChartData = [{ data: emptyData, label: "مدت زمان مکالمه" }];
 
     this.loadTimeLabels = true;
     this.timesAvgChartData = [
-      { data: [], label: "میانگین زمان هر بخش" },
-      { data: [], label: "میانگین زمان کل" }
+      { data: emptyData, label: "میانگین زمان هر بخش" },
+      { data: emptyData, label: "میانگین زمان کل" }
     ];
 
-    let allCalls =  { data: [], label: " تعداد کل تماس ها" };
+    let allCalls =  { data: emptyData, label: " تعداد کل تماس ها" };
 
     this.allCallsData = [allCalls];
 
     this.performanceChartData = [
-      { data: [], label: "عملکرد گروه(درصد)" }
+      { data: emptyData , label: "عملکرد گروه(درصد)" }
     ];
+
+
+
+
+
   }
+
+
   onSelectDate() {
-    this.getChartsData(this.filters.getRawValue());
+    this.getChartsData();
   }
 }

@@ -27,7 +27,7 @@ export class PerformanceL3Component implements OnInit {
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl(-1),
+    time: new FormControl("-1"),
     type: new FormControl(0),
     inorout: new FormControl("in"),
     disposition: new FormControl(0),
@@ -282,7 +282,7 @@ loadingData = false;
     }
 
     filterData["idnumber"] = [];
-    for (let item in this.lines) {
+    for (let item in filterData.selectedSub2) {
       filterData["idnumber"].push(this.lines[item]["id"]);
     }
 
@@ -291,7 +291,7 @@ loadingData = false;
     filterData["idsub"] = filterData["idsub"].join(",");
 
     if (filterData.time == "-1") {
-      (filterData.from = this.dateRange.selectedDateFrom.value),
+        (filterData.from = this.dateRange.selectedDateFrom.value),
         (filterData.to = this.dateRange.selectedDateTo.value);
     }
 
@@ -300,6 +300,7 @@ loadingData = false;
     this.loadingData=true;
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
+        
         data = data["data"];
         let allCalsData = [];
         let answeredData = [];
@@ -327,7 +328,7 @@ loadingData = false;
           avgTimesData.push(itemChartData["avg"]);
           avgAll.push(itemChartData["avgall"]);
         }
-
+        this.resetCharts();
         this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
 
         this.callsDetailsData = [
@@ -372,6 +373,39 @@ loadingData = false;
     );
   }
 
+  resetCharts(){
+
+    let emptyData = [];
+
+    for(let i in this.mainLabels){
+      emptyData.push(0);
+    }
+
+    this.allCallsData = [{ data: emptyData , label: "تعداد کل تماس ها" }];
+
+    console.log(this.allCallsData);
+    this.callsDetailsData = [
+      { data: emptyData, label: "تعداد تماس پاسخ داده شده" },
+      { data: emptyData, label: "تعداد تماس پاسخ داده نشده" },
+      { data: emptyData, label: "تعداد تماس های مشغول" }
+    ];
+
+    this.timesChartData = [{ data: emptyData, label: "مدت زمان مکالمه" }];
+
+    this.loadTimeLabels = true;
+    this.timesAvgChartData = [
+      { data: emptyData, label: "میانگین زمان هر بخش" },
+      { data: emptyData, label: "میانگین زمان کل" }
+    ];
+
+    let allCalls =  { data: emptyData, label: " تعداد کل تماس ها" };
+
+    this.allCallsData = [allCalls];
+
+    this.performanceChartData = [
+      { data: emptyData , label: "عملکرد گروه(درصد)" }
+    ];
+  }
   onSelectDate() {
     this.getOneGroupData();
   }

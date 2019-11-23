@@ -70,11 +70,12 @@
                           
                           formControlName="time"
                         >
+                        <option value="-1">انتخابی...</option>
                           <option value="0">همه زمان ها</option>
                           <option value="1">یک روز اخیر</option>
                           <option value="30">یک ماه اخیر </option>
                           <option value="365"> یک سال اخیر</option>
-                          <option value="-1">انتخابی...</option>
+                         
                         </select>
                       </div>
                     </div>
@@ -478,5 +479,5 @@
     </div>
   </div>
   
-  <app-loading text="در حال دریافت اطلاعات... " [showLoading]="initingData"></app-loading>
+  <app-loading text="در حال دریافت اطلاعات... " [showLoading]="loadingData"></app-loading>
   

@@ -245,6 +245,7 @@ export class PerformanceL2Component implements OnInit {
     filterData.time = parseInt(filterData.time);
     this.webServ.getGroupPerformance(filterData).subscribe(
       data => {
+       
         data = data["data"];
         let allCalsData = [];
         let answeredData = [];
@@ -255,10 +256,8 @@ export class PerformanceL2Component implements OnInit {
         let avgTimesData = [];
         let avgAll = [];
 
-        this.mainLabels = [];
         for (let index in data) {
           let itemChartData = data[index]["data"];
-          this.mainLabels.push(data[index]["name"]);
 
           allCalsData.push(itemChartData["all"]);
 
@@ -272,6 +271,8 @@ export class PerformanceL2Component implements OnInit {
           avgTimesData.push(itemChartData["avg"]);
           avgAll.push(itemChartData["avgall"]);
         }
+
+        this.resetCharts();
 
         this.allCallsData = [{ data: allCalsData, label: "تعداد کل تماس ها" }];
 
@@ -310,6 +311,39 @@ export class PerformanceL2Component implements OnInit {
         this.authServe.handdleAuthErrors(error);
       }
     );
+  }
+
+  resetCharts(){
+
+    let emptyData = [];
+
+    for(let i in this.mainLabels){
+      emptyData.push(0);
+    }
+
+    this.allCallsData = [{ data: emptyData , label: "تعداد کل تماس ها" }];
+
+    this.callsDetailsData = [
+      { data: emptyData, label: "تعداد تماس پاسخ داده شده" },
+      { data: emptyData, label: "تعداد تماس پاسخ داده نشده" },
+      { data: emptyData, label: "تعداد تماس های مشغول" }
+    ];
+
+    this.timesChartData = [{ data: emptyData, label: "مدت زمان مکالمه" }];
+
+    this.loadTimeLabels = true;
+    this.timesAvgChartData = [
+      { data: emptyData, label: "میانگین زمان هر بخش" },
+      { data: emptyData, label: "میانگین زمان کل" }
+    ];
+
+    let allCalls =  { data: emptyData, label: " تعداد کل تماس ها" };
+
+    this.allCallsData = [allCalls];
+
+    this.performanceChartData = [
+      { data: emptyData , label: "عملکرد گروه(درصد)" }
+    ];
   }
 
   onSelectDate() {
