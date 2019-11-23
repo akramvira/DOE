@@ -56,7 +56,7 @@ export class GroupsBillsComponent implements OnInit {
   maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
-  time = new FormControl("0");
+  time = new FormControl(-1);
 
   datePickerConfig = {};
   setDate() {
