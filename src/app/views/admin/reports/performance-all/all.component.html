@@ -61,6 +61,7 @@
                 [colors]="barChartInColors"
                 [labels]="['تعداد تماس ها']"
                 unitLabel="عدد"
+                title="نمودار تعداد تماس های ورودی"
               >
               </app-bar-chart>
             </div>
@@ -83,6 +84,7 @@
                 [colors]="barChartOutColors"
                 [labels]="['تعداد تماس ها']"
                 unitLabel="عدد"
+                title="نمودار تعداد تماس های خروجی"
               >
               </app-bar-chart>
             </div>
@@ -147,6 +149,7 @@
                 [datasets]="barChartDataTimeIn"
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
+                title="مدت زمان مکالمات در تماس های ورودی"
               >
               </app-bar-chart>
             </div>
@@ -168,6 +171,7 @@
                 [datasets]="barChartDataTimeOut"
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
+                title="مدت زمان مکالمات در تماس های خروجی"
               >
               </app-bar-chart>
             </div>

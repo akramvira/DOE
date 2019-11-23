@@ -13,6 +13,7 @@ export class BarChartComponent implements OnInit {
   @Input() isTimeChart: boolean = false;
   @Input() isPercentChart: boolean = false;
   @Input() unitLabel: string = "";
+  @Input() title: string = "";
 
   ngOnInit() {
     let isTimeChart = this.isTimeChart;
@@ -44,8 +45,8 @@ export class BarChartComponent implements OnInit {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
   
               let d = Number(tooltipItem.yLabel);
-              let day = Math.floor(d / (3600*24));
-              d = d % (3600*24);
+              //let day = Math.floor(d / (3600*24));
+              //d = d % (3600*24);
               let h = Math.floor(d / 3600);
               let m = Math.floor(d % 3600 / 60);
               let s = Math.floor(d % 3600 % 60);
@@ -53,7 +54,7 @@ export class BarChartComponent implements OnInit {
               let hDisplay = h >= 10 ? h : "0"+ h as string;
               let mDisplay = m >= 10  ? m : "0"+m as string ;
               let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-              let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay;  
+              let time = hDisplay +":"+ mDisplay +":"+ sDisplay;  
 
               return (
                 label +
@@ -122,7 +123,7 @@ export class BarChartComponent implements OnInit {
                   let d = Number(item);
                   
                   let day = Math.floor(d / (3600*24));
-                  d = d % (3600*24);
+                  //d = d % (3600*24);
                   let h = Math.floor(d / 3600);
                   let m = Math.floor(d % 3600 / 60);
                   let s = Math.floor(d % 3600 % 60);
@@ -130,7 +131,7 @@ export class BarChartComponent implements OnInit {
                   let hDisplay = h >= 10 ? h : "0"+ h as string;
                   let mDisplay = m >= 10  ? m : "0"+m as string ;
                   let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-                  let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+                  let time =  hDisplay +":"+ mDisplay +":"+ sDisplay; 
               
                   return time;
                 }
@@ -163,7 +164,7 @@ export class BarChartComponent implements OnInit {
             let d = Number(value);
               
             let day = Math.floor(d / (3600*24));
-            d = d % (3600*24);
+            //d = d % (3600*24);
             let h = Math.floor(d / 3600);
             let m = Math.floor(d % 3600 / 60);
             let s = Math.floor(d % 3600 % 60);
@@ -171,7 +172,7 @@ export class BarChartComponent implements OnInit {
             let hDisplay = h >= 10 ? h : "0"+ h as string;
             let mDisplay = m >= 10  ? m : "0"+m as string ;
             let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-            let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+            let time = hDisplay +":"+ mDisplay +":"+ sDisplay; 
         
             return time;
           }
@@ -251,7 +252,7 @@ export class BarChartComponent implements OnInit {
   }
 
   zoomOut(){
-    
+
   }
 
 }

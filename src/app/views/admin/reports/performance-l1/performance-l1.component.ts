@@ -24,7 +24,7 @@ export class PerformanceL1Component implements OnInit {
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl(0),
+    time: new FormControl(-1),
     type: new FormControl(0),
     inorout: new FormControl("in"),
     disposition: new FormControl(0),
@@ -169,7 +169,7 @@ export class PerformanceL1Component implements OnInit {
        
        // this.updateCharts();
         this.initingData = false;
-        this.toaster.warning('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
+        this.toaster.info('لطفا جهت نمایش آمار، ابتدا فیلتر مورد نظر را انتخاب کرده و روی دکمه فیلتر کلیک کنید.', 'پیغام سیستم');
       },
       error => {
         this.initingData = false;

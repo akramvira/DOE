@@ -3,7 +3,7 @@
 <button class="badge btn  btn-sm float-right mr-1" (click)="export('csv')"><i class="fa fa-external-link"></i> CSV</button>
 <button class="badge btn  btn-sm float-right mr-1" (click)="zooOutModal.show()"><i class="fa fa-search"></i> Zoom</button>
 
-<div class="chart-wrapper">
+<div class="chart-wrapper mt-2">
     <canvas 
     baseChart 
     class="chart"
@@ -18,7 +18,7 @@
 </div>
 
 
-<!--<div
+<div
   bsModal
   #zooOutModal="bs-modal"
   class="modal fade"
@@ -27,13 +27,13 @@
   aria-labelledby="myModalLabel"
   aria-hidden="true"
 >
-  <div class="modal-dialog modal-lg modal-primary" role="document">
+  <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
-      <div class="modal-header">
-          <h4 class="modal-title col-10">sdfdf</h4>
+      <div class="modal-header bg-light">
+          <h4 class="modal-title col-12 p-0">{{title}}</h4>
           <button
             type="button"
-            class="close"
+            class="close p-0 pt-4"
             (click)="zooOutModal.hide()"
             aria-label="Close"
           >
@@ -42,9 +42,21 @@
        
       </div>
       <div class="modal-body">
-        <div class="animated fadeIn row border-bottom justify-content-center">
+        <div class="animated fadeIn justify-content-end row border-bottom justify-content-center">
           <div class="col-10">
-           asdfd
+            <div class="chart-wrapper  pt-3">
+              <canvas 
+              baseChart 
+              class="chart"
+              [datasets]="datasets"
+              [labels]="labels"
+              [chartType]="chartType"
+              [colors] ="colors"
+              [options]="chartOptions"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)">
+            </canvas>
+          </div>
           </div>
         </div>
         <div class="modal-footer">
@@ -53,11 +65,10 @@
             class="btn btn-secondary mr-2"
             (click)="zooOutModal.hide()"
           >
-            انصراف
+           بستن
           </button>
         </div>
       </div>
     </div>
   </div>
 </div>
--->

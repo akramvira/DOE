@@ -237,7 +237,9 @@
                             <app-bar-chart
                                 [datasets]="performanceBarChartData "
                                 [labels]="performanceBarChartLabels"
-                                [colors] = "performanceBarChartColors">
+                                [colors] = "performanceBarChartColors"
+                                title="نمودار عملکرد داخلی"
+                                >
                             </app-bar-chart>
                         </div>
                         </div>
@@ -259,6 +261,7 @@
                         <app-bar-chart
                         [datasets]="callsBarChartData"
                         [labels]="callsBarChartLabels"
+                        title="نمودار پاسخ گویی تماس ها"
                         >
                         </app-bar-chart>
                     </div>

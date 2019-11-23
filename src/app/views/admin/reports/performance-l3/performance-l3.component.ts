@@ -27,7 +27,7 @@ export class PerformanceL3Component implements OnInit {
   ) {}
   groups = new Array();
   filters = new FormGroup({
-    time: new FormControl(0),
+    time: new FormControl(-1),
     type: new FormControl(0),
     inorout: new FormControl("in"),
     disposition: new FormControl(0),

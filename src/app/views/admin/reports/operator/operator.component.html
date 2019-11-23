@@ -62,10 +62,10 @@
               <div class="col-12">
                 <div class="row">
                   <app-bar-chart
-                  class="col-12"
+                    class="col-12"
                     [datasets]="barChartDataIn"
-                    
                     [labels]= "['تعداد تماس ها']"
+                    title="نمودار تعداد تماس های ورودی"
                   >
                   </app-bar-chart>
                 </div>
@@ -84,7 +84,7 @@
                 <div class="row">
                   <app-bar-chart class="col-12"
                     [datasets]="barChartDataOut"
-                    
+                    title="  نمودار تعداد تماس های خروجی"
                     [labels]= "['تعداد تماس ها']"
                   >
                   </app-bar-chart>
@@ -151,7 +151,7 @@
                     <app-bar-chart
                   class="col-12"
                     [datasets]="barChartDataTimeIn"
-                    
+                    title="مدت زمان مکالمات در تماس های ورودی"
                     [labels]= "['مدت زمان مکالمات']"
                     [isTimeChart]="true"
                   >
@@ -174,7 +174,7 @@
                       <app-bar-chart
                       class="col-12"
                         [datasets]="barChartDataTimeOut"
-                        
+                        title="مدت زمان مکالمات در تماس های خروجی"
                         [labels]= "['مدت زمان مکالمات']"
                         [isTimeChart]="true"
                       >

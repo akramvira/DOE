@@ -242,7 +242,7 @@
       </div>
   
       <div class="row">
-        <div class="col-12" >
+        <div class="col-6" >
           <div class="card">
             <div class="card-header">
               نمودار تعداد کل تماس ها
@@ -255,6 +255,7 @@
                     <app-bar-chart
                       [datasets]="allCallsData"
                       [labels]="mainLabels"
+                      title=" نمودار تعداد کل تماس ها"
                     >
                     </app-bar-chart>
                   </div>
@@ -389,7 +390,7 @@
           </div>
         </div>
   
-        <div class="col-12" >
+        <div class="col-6" >
           <div class="card">
             <div class="card-header">
              نمودار تعداد تماس های پاسخ داده شده، پاسخ داده نشده و مشغول
@@ -400,6 +401,7 @@
                 <app-bar-chart
                   [datasets]="callsDetailsData"
                   [labels]="mainLabels"
+                  title="نمودار تعداد تماس های پاسخ داده شده، پاسخ داده نشده و مشغول"
                 >
                 </app-bar-chart>
               </div>
@@ -409,7 +411,7 @@
   
   
   
-        <div class="col-12" >
+        <div class="col-6" >
           <div class="card">
             <div class="card-header">
               نمودار عملکرد داخلی ها
@@ -421,6 +423,7 @@
                   [labels]="mainLabels"
                   [colors]="timeBarChartColors"
                   [isPercentChart]="true"
+                  title="نمودار عملکرد داخلی ها"
                 >
                 </app-bar-chart>
               </div>
@@ -428,7 +431,7 @@
           </div>
         </div>
   
-        <div class="col-12" >
+        <div class="col-6" >
           <div class="card">
             <div class="card-header">
              نمودار مدت زمان مکالمه داخلی ها
@@ -441,6 +444,7 @@
                   [labels]="mainLabels"
                   [colors]="timeBarChartColors"
                   isTimeChart = "true"
+                  title="نمودار مدت زمان مکالمه داخلی ها"
                 >
                 </app-bar-chart>
               </div>
@@ -448,7 +452,7 @@
           </div>
         </div>
   
-        <div class="col-12" >
+        <div class="col-6" >
           <div class="card">
             <div class="card-header">
           نمودار وضعیت میانگین مکالمات به میانگین کل

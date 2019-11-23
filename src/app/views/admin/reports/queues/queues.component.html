@@ -202,6 +202,7 @@
                   <app-bar-chart
                   [datasets]="callsBarChartData"
                   [labels]="mainLabels"
+                  title="نمودار وضعیت تماس ها"
                   ></app-bar-chart>
                     
                 </div>
@@ -220,6 +221,7 @@
                     [datasets]="timesBarChartData"
                     [labels]="mainLabels"
                     isTimeChart='true'
+                    title="نمودار مدت زمان انتظار و مکالمه"
                     ></app-bar-chart>
                     
                 </div>
@@ -238,6 +240,7 @@
                     [datasets]="serviceLevelbarChartData"
                     [labels]="mainLabels"
                     isPercentChart='true'
+                    title="نمودار میزان عملکرد(درصد)"
                     ></app-bar-chart>
                 </div>
             </div>
@@ -290,6 +293,7 @@
                       <app-bar-chart
                       [datasets]="callsBarChartDataDetails"
                       [labels]="detailsLabels"
+                      title="نمودار وضعیت تماس ها"
                       ></app-bar-chart>
                         
                     </div>
@@ -308,6 +312,7 @@
                         [datasets]="timesBarChartDataDetails"
                         [labels]="detailsLabels"
                         isTimeChart='true'
+                        title="نمودار مدت زمان انتظار و مکالمه"
                         ></app-bar-chart>
                         
                     </div>
@@ -326,6 +331,7 @@
                         [datasets]="serviceLevelbarChartDataDetails"
                         [labels]="detailsLabels"
                         isPercentChart='true'
+                        title="نمودار میزان عملکرد(درصد)"
                         ></app-bar-chart>
                     </div>
                 </div>

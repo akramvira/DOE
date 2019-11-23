@@ -8,6 +8,7 @@ import { PieChartComponent } from '../pie-chart/pie-chart.component';
 import { SpintickComponent } from '../spintick/spintick.component';
 import { LoadingComponent } from '../loading/loading.component';
 import { ProgressbarComponent } from '../progressbar/progressbar.component';
+import { ModalModule } from 'ngx-bootstrap';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ProgressbarComponent } from '../progressbar/progressbar.component';
   ],
   imports: [
     CommonModule,
-    ChartsModule
+    ChartsModule,
+    ModalModule.forRoot()
   ],
   exports:[
     DoughnutChartComponent,
