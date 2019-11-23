@@ -171,11 +171,15 @@ export class SelectItemComponent implements OnInit {
   
       this.mainDropdownSettings = {
         ...mainSettings,
+        singleSelection: (mainLimitSelections== 1)? true : false,
+        closeDropDownOnSelection: (mainLimitSelections== 1)? true : false,
         limitSelection: mainLimitSelections
       };
   
       this.officeDropdownSettings = {
         ...mainSettings,
+        singleSelection: (sub1LimitSelections== 1)? true : false,
+        closeDropDownOnSelection: (sub1LimitSelections== 1)? true : false,
         limitSelection: sub1LimitSelections
       };
   
