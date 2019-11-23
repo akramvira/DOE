@@ -125,7 +125,7 @@ export class GroupsBillsComponent implements OnInit {
       filterData['to'] = this.selectedDateTo.value;
     }
     if(!selectedItem)
-      this.toaster.warning('مورد اول مقایسه انتخاب نشده است');
+      this.toaster.warning('هیچ داخلی، اداره یا معاونتی انتخاب نشده است.');
     
       
     filterData['level']= selectedItem['level'];
