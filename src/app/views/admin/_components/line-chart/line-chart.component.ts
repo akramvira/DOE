@@ -43,13 +43,13 @@ export class LineChartComponent implements OnInit {
         callbacks: {
           label: function(tooltipItem, data) {
             
+
             var label = data.datasets[tooltipItem.datasetIndex].label || '';
 
             if(isTimeChart){
+              if(tooltipItem.yLabel == 0 ) return 0;
               let d = Number(tooltipItem.yLabel);
                   
-              let day = Math.floor(d / (3600*24));
-              d = d % (3600*24);
               let h = Math.floor(d / 3600);
               let m = Math.floor(d % 3600 / 60);
               let s = Math.floor(d % 3600 % 60);
@@ -57,7 +57,7 @@ export class LineChartComponent implements OnInit {
               let hDisplay = h >= 10 ? h : "0"+ h as string;
               let mDisplay = m >= 10  ? m : "0"+m as string ;
               let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-              let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+              let time = hDisplay +":"+ mDisplay +":"+ sDisplay; 
               return time;
             }
             else return label + ' ' + tooltipItem.yLabel;
@@ -118,10 +118,10 @@ export class LineChartComponent implements OnInit {
               fontSize: 13,
               userCallback: function(item) {
                 if(isTimeChart){
+                  if(item == 0 ) return 0;
                   let d = Number(item);
                   
-                  let day = Math.floor(d / (3600*24));
-                  d = d % (3600*24);
+                  
                   let h = Math.floor(d / 3600);
                   let m = Math.floor(d % 3600 / 60);
                   let s = Math.floor(d % 3600 % 60);
@@ -129,7 +129,7 @@ export class LineChartComponent implements OnInit {
                   let hDisplay = h >= 10 ? h : "0"+ h as string;
                   let mDisplay = m >= 10  ? m : "0"+m as string ;
                   let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-                  let time = day + 'd '+ hDisplay +":"+ mDisplay +":"+ sDisplay; 
+                  let time =  hDisplay +":"+ mDisplay +":"+ sDisplay; 
                return time;
                 }
                

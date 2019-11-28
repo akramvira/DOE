@@ -21,7 +21,7 @@ export class BarChartComponent implements OnInit {
     let unitLabel = this.unitLabel;
 
     let topNumbersType = !isPercentChart? "value" : 'percent';
-    let stepSizee = 1;
+    let stepSizee = isPercentChart? 10: 1;
 
     this.chartOptions = {
       scaleShowVerticalLines: true,
@@ -110,9 +110,9 @@ export class BarChartComponent implements OnInit {
               fontFamily: "IRANSans",
               fontColor: "black",
               fontSize: 13,
-
+              
               min: 0,
-
+              maxTicksLimi:10,
               max: isPercentChart ? 100 : undefined,
               userCallback: function(item) {
                 if (isTimeChart) {
@@ -144,7 +144,7 @@ export class BarChartComponent implements OnInit {
             
             if(args.value == 0)
               return '';
-              
+
             if(isPercentChart)
               return '%' + args.value;
             else if(isTimeChart){
