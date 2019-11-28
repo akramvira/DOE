@@ -219,8 +219,12 @@ export class PerformanceL2Component implements OnInit {
   getChartsData() {
     let filterData = this.filters.getRawValue();
 
-    if (!filterData.selectedItems.length) return;
-    if (!filterData.selectedSub1.length) return;
+    if (!filterData.selectedItems.length) {
+      this.toaster.warning('لطفا معاونت مورد نظر خود را انتخاب نمایید.')
+      return;}
+    if (!filterData.selectedSub1.length) {
+      this.toaster.warning('لطفا اداره مورد نظر خود را انتخاب نمایید.')
+      return;}
 
     filterData["idsub"] = [];
     filterData["id"] = filterData.selectedItems[0]["id"];

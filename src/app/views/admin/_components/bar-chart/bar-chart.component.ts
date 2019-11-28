@@ -20,6 +20,7 @@ export class BarChartComponent implements OnInit {
     let isPercentChart = this.isPercentChart;
     let unitLabel = this.unitLabel;
 
+    let topNumbersType = !isPercentChart? "value" : 'percent';
     let stepSizee = 1;
 
     this.chartOptions = {
@@ -43,24 +44,20 @@ export class BarChartComponent implements OnInit {
           label: function(tooltipItem, data) {
             if (isTimeChart) {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
-  
+
               let d = Number(tooltipItem.yLabel);
               //let day = Math.floor(d / (3600*24));
               //d = d % (3600*24);
               let h = Math.floor(d / 3600);
-              let m = Math.floor(d % 3600 / 60);
-              let s = Math.floor(d % 3600 % 60);
-          
-              let hDisplay = h >= 10 ? h : "0"+ h as string;
-              let mDisplay = m >= 10  ? m : "0"+m as string ;
-              let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-              let time = hDisplay +":"+ mDisplay +":"+ sDisplay;  
+              let m = Math.floor((d % 3600) / 60);
+              let s = Math.floor((d % 3600) % 60);
 
-              return (
-                label +
-                " : " +
-                time
-              );
+              let hDisplay = h >= 10 ? h : (("0" + h) as string);
+              let mDisplay = m >= 10 ? m : (("0" + m) as string);
+              let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+              let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+
+              return label + " : " + time;
               // else return label + ' ' + tooltipItem.yLabel;
             } else if (isPercentChart) {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
@@ -113,30 +110,27 @@ export class BarChartComponent implements OnInit {
               fontFamily: "IRANSans",
               fontColor: "black",
               fontSize: 13,
-              
-              min: 0 ,
-              
-              max: isPercentChart? 100 : undefined,
-              userCallback: function(item) {
 
-                if (isTimeChart){
+              min: 0,
+
+              max: isPercentChart ? 100 : undefined,
+              userCallback: function(item) {
+                if (isTimeChart) {
                   let d = Number(item);
-                  
-                  let day = Math.floor(d / (3600*24));
+
+                  let day = Math.floor(d / (3600 * 24));
                   //d = d % (3600*24);
                   let h = Math.floor(d / 3600);
-                  let m = Math.floor(d % 3600 / 60);
-                  let s = Math.floor(d % 3600 % 60);
-              
-                  let hDisplay = h >= 10 ? h : "0"+ h as string;
-                  let mDisplay = m >= 10  ? m : "0"+m as string ;
-                  let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-                  let time =  hDisplay +":"+ mDisplay +":"+ sDisplay; 
-              
+                  let m = Math.floor((d % 3600) / 60);
+                  let s = Math.floor((d % 3600) % 60);
+
+                  let hDisplay = h >= 10 ? h : (("0" + h) as string);
+                  let mDisplay = m >= 10 ? m : (("0" + m) as string);
+                  let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+                  let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+
                   return time;
-                }
-                  
-                else if (isPercentChart) return item + "%";
+                } else if (isPercentChart) return item + "%";
                 else return item;
               }
             }
@@ -146,38 +140,61 @@ export class BarChartComponent implements OnInit {
 
       plugins: {
         labels: {
-          render: "value",
+          render: function (args) {
+            
+            if(args.value == 0)
+              return '';
+              
+            if(isPercentChart)
+              return '%' + args.value;
+            else if(isTimeChart){
+              
+
+              let d = Number(args.value);
+
+              let day = Math.floor(d / (3600 * 24));
+              //d = d % (3600*24);
+              let h = Math.floor(d / 3600);
+              let m = Math.floor((d % 3600) / 60);
+              let s = Math.floor((d % 3600) % 60);
+  
+              let hDisplay = h >= 10 ? h : (("0" + h) as string);
+              let mDisplay = m >= 10 ? m : (("0" + m) as string);
+              let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+              let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+  
+              return time;
+            }
+             
+             else return args.value;
+      
+          },
           precision: 2,
-          arc: true,
-          callback: item => {
-            console.log(item);
-            return 0;
-          }
+          arc: true
         },
         userCallback: function(value) {
+        
           console.log(value);
           if (isNaN(value)) {
             return "";
           }
 
-          if (isTimeChart){
+          if (isTimeChart) {
             let d = Number(value);
-              
-            let day = Math.floor(d / (3600*24));
+
+            let day = Math.floor(d / (3600 * 24));
             //d = d % (3600*24);
             let h = Math.floor(d / 3600);
-            let m = Math.floor(d % 3600 / 60);
-            let s = Math.floor(d % 3600 % 60);
-        
-            let hDisplay = h >= 10 ? h : "0"+ h as string;
-            let mDisplay = m >= 10  ? m : "0"+m as string ;
-            let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-            let time = hDisplay +":"+ mDisplay +":"+ sDisplay; 
-        
+            let m = Math.floor((d % 3600) / 60);
+            let s = Math.floor((d % 3600) % 60);
+
+            let hDisplay = h >= 10 ? h : (("0" + h) as string);
+            let mDisplay = m >= 10 ? m : (("0" + m) as string);
+            let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+            let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+
             return time;
-          }
-            
-          else if (isPercentChart) return value + "%";
+          } else if (isPercentChart) return value + "%";
           else return value;
         }
       }
@@ -198,8 +215,6 @@ export class BarChartComponent implements OnInit {
   ];
   @Input() contentTitle: string = "";
   @Input() labels: Array<any> = [];
-
-
 
   public chartOptions: any;
   @Input() colors: Array<any> = [
@@ -251,8 +266,5 @@ export class BarChartComponent implements OnInit {
     this.excelService.exportAsExcelFile(data, this.chartType, type);
   }
 
-  zoomOut(){
-
-  }
-
+  zoomOut() {}
 }
