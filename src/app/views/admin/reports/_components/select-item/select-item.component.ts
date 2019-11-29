@@ -146,7 +146,6 @@ export class SelectItemComponent implements OnInit {
         searchPlaceholderText: "جستجو",
         itemsShowLimit: 1,
         noDataAvailablePlaceholderText: "بدون اطلاعات",
-  
         allowSearchFilter: true
       };
   
@@ -154,7 +153,7 @@ export class SelectItemComponent implements OnInit {
       let sub1LimitSelections: number;
       let sub2LimitSelections: number;
   
-      let unlimitted = 10000;
+      let unlimitted = undefined;
       if (this.selectedItem1.value.level == 0) {
         mainLimitSelections = unlimitted;
         sub1LimitSelections = unlimitted;
@@ -169,23 +168,40 @@ export class SelectItemComponent implements OnInit {
         sub2LimitSelections = unlimitted;
       }
   
+     if(mainLimitSelections== 1){
       this.mainDropdownSettings = {
         ...mainSettings,
-        singleSelection: (mainLimitSelections== 1)? true : false,
-        closeDropDownOnSelection: (mainLimitSelections== 1)? true : false,
-        limitSelection: mainLimitSelections
+        singleSelection: true,
+        closeDropDownOnSelection: true,
+        limitSelection: 1
       };
+     }
+     else {
+      this.mainDropdownSettings = {
+        ...mainSettings
+      };
+     }
+      
+
   
+     if(sub1LimitSelections== 1){
       this.officeDropdownSettings = {
         ...mainSettings,
-        singleSelection: (sub1LimitSelections== 1)? true : false,
-        closeDropDownOnSelection: (sub1LimitSelections== 1)? true : false,
-        limitSelection: sub1LimitSelections
+        singleSelection: true ,
+        closeDropDownOnSelection: true ,
+        limitSelection: 1
       };
-  
+     }
+     else {
+      this.officeDropdownSettings = {
+        ...mainSettings
+      };
+
+     }
+     
+
       this.lineDropdownSettings = {
-        ...mainSettings,
-        limitSelection: sub2LimitSelections
+        ...mainSettings
       };
     }
     else{

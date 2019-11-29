@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation, ContentChild, ViewChild } from "@angular/core";
 
 import { FormGroup, FormControl } from "@angular/forms";
 import * as moment from "jalali-moment";
@@ -8,6 +8,8 @@ import { WebService } from "./web.service";
 import { formControlBinding } from "@angular/forms/src/directives/reactive_directives/form_control_directive";
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../../../_services/shared.service';
+import { IDate, IDatePickerConfig, DatePickerComponent } from 'ng2-jalali-date-picker';
+import { DatepickerModule } from 'ngx-bootstrap';
 @Component({
   selector: "app-performance-l1",
   templateUrl: "./performance-l1.component.html",
@@ -86,23 +88,49 @@ export class PerformanceL1Component implements OnInit {
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
 
-  datePickerConfig = {};
+  datePickerConfig :IDatePickerConfig = {
+      format: "jYYYY/MM/DD",
+      //theme: "dp-material",
+      min: moment(this.minDate, "jYYYY,jMM,jDD"),
+      max: moment(this.maxDate, "jYYYY,jMM,jDD"),
+      showGoToCurrent :true,
+      hideOnOutsideClick : true,
+      showNearMonthDays:true,
+      drops: "down"
+  };
 
   initingData :boolean = false;
   loadingData = false;
   //--------------------------------
 
+  @ViewChild('dateFrom') dateFrom: DatePickerComponent;
+  @ViewChild('dateTo') dateTo: DatePickerComponent;
+
   setDate(){
     if(this.sharedService.minMaxTime.value){
+      this.minDate =  moment('1398/06/20', 'jYYYY/jMM/jDD').locale('fa');
+
+      // console.log('datL',this.dateFrom.api);
+      // console.log('conf', this.datePickerConfig);
+      // this.selectedDateFrom.setValue(this.minDate);
+      // //this.dateFrom.api.moveCalendarTo(this.minDate);
+      // this.dateFrom.api.open();
+
+      //return;
       this.minDate =this.sharedService.minMaxTime.value.min;
       this.maxDate =this.sharedService.minMaxTime.value.max;
+
+      
+      //this.dateFrom.moveCalendarTo(this.minDate);
+      //this.dateTo.moveCalendarTo(this.maxDate);
+
 
       this.selectedDateFrom.setValue(this.minDate);
       this.selectedDateTo.setValue(this.maxDate);
       
       this.datePickerConfig = {
         format: "jYYYY/MM/DD",
-        theme: "dp-material",
+        //theme: "dp-material",
         min: moment(this.minDate, "jYYYY,jMM,jDD"),
         max: moment(this.maxDate, "jYYYY,jMM,jDD"),
         showGoToCurrent :true,
@@ -120,13 +148,14 @@ export class PerformanceL1Component implements OnInit {
         this.selectedDateFrom.setValue(this.minDate);
         this.selectedDateTo.setValue(this.maxDate);
         this.datePickerConfig = {
-          format: "jYYYY/MM/DD",
-          theme: "dp-material",
+          //format: "jYYYY/MM/DD",
+          //theme: "dp-material",
           min: moment(this.minDate, "jYYYY,jMM,jDD"),
           max: moment(this.maxDate, "jYYYY,jMM,jDD"),
           showGoToCurrent :true,
           hideOnOutsideClick : true,
-          showNearMonthDays:true
+          showNearMonthDays:true,
+          drops: "down"
         };
 
       }

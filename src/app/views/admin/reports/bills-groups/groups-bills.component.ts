@@ -20,6 +20,11 @@ export class GroupsBillsComponent implements OnInit {
   page = new Page();
   printDateTo;
   printDateFrom;
+  my_messages = {
+    'emptyMessage': 'داده ای جهت نمایش موجود نیست.',
+    // 'totalMessage': 'sdfsdf'
+  };
+
   @ViewChild('selectItem') selectItem : SelectItemComponent;
 
   constructor(
@@ -74,7 +79,7 @@ export class GroupsBillsComponent implements OnInit {
         max: moment(this.maxDate, "jYYYY,jMM,jDD"),
         showGoToCurrent: true,
         hideOnOutsideClick: true,
-        showNearMonthDays: true
+        showNearMonthDays: true,
       };
     }
 

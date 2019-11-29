@@ -3,72 +3,69 @@
     <div  class="card text-left justify-content-end  m-0 card-info bg-gray-300 p-2">
       <div class="text-center col-12 " >
         <div class="row text-center">
-          <!--date-->
-          <div class="col-12 col-lg-5 col-xl-4  mb-md-2 mb-sm-2 mb-lg-2 ">
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <label class="input-group-text">بازه زمانی</label>
-              </div>
-              <select class="col form-control" [formControl]="time">
-                <option value="0">همه زمان ها</option>
-                <option value="1">یک روز اخیر</option>
-                <option value="30">یک ماه اخیر </option>
-                <option value="365"> یک سال اخیر</option>
-                <option value="-1">انتخابی...</option>
-              </select>
+        <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
+              <app-select-item
+              #selectItem
+              label="انتخاب کنید :"
+              isMultipleSelectionPossible = 'true'>
+              </app-select-item>
+        </div>
+        <!--date-->
+        <div class="col-12 col-lg-5 col-xl-4  mb-md-2 mb-sm-2 mb-lg-2 ">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <label class="input-group-text">بازه زمانی</label>
+            </div>
+            <select class="col form-control" [formControl]="time">
+              <option value="0">همه زمان ها</option>
+              <option value="1">یک روز اخیر</option>
+              <option value="30">یک ماه اخیر </option>
+              <option value="365"> یک سال اخیر</option>
+              <option value="-1">انتخابی...</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-lg-7 col-xl-7 p-0  mb-md-2 mb-sm-2 mb-lg-2"
+          [hidden]="time.value != '-1'"
+        >
+          <div class="bg-gray-200 p-1 mx-0 rounded row text-right">
+            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+              <span>از تاریخ:</span>
+              <md-input-container class="date-filter">
+                <input
+                  class="form-control-sm p-0 border"
+                  mdInput
+                  name="someName"
+                  dir="rtl"
+                  mode="day"
+                  theme="dp-material"
+                  placeholder="تاریخ"
+                  [formControl]="selectedDateFrom"
+                  [dpDayPicker]="datePickerConfig"
+                  
+                />
+              </md-input-container>
+            </div>
+            <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
+              <span>تا تاریخ:</span>
+              <md-input-container class="date-filter">
+                <input
+                  class="form-control-sm p-0 border"
+                  mdInput
+                  name="someName"
+                  dir="rtl"
+                  mode="day"
+                  theme="dp-material"
+                  placeholder="تاریخ"
+                  [formControl]="selectedDateTo"
+                  [dpDayPicker]="datePickerConfig"
+                  
+                />
+              </md-input-container>
             </div>
           </div>
-          <div class="col-12 col-lg-7 col-xl-7 p-0  mb-md-2 mb-sm-2 mb-lg-2"
-            [hidden]="time.value != '-1'"
-          >
-            <div class="bg-gray-200 p-1 mx-0 rounded row text-right">
-              <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <span>از تاریخ:</span>
-                <md-input-container class="date-filter">
-                  <input
-                    class="form-control-sm p-0 border"
-                    mdInput
-                    name="someName"
-                    dir="rtl"
-                    mode="day"
-                    theme="dp-material"
-                    placeholder="تاریخ"
-                    [formControl]="selectedDateFrom"
-                    [dpDayPicker]="datePickerConfig"
-                    
-                  />
-                </md-input-container>
-              </div>
-              <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
-                <span>تا تاریخ:</span>
-                <md-input-container class="date-filter">
-                  <input
-                    class="form-control-sm p-0 border"
-                    mdInput
-                    name="someName"
-                    dir="rtl"
-                    mode="day"
-                    theme="dp-material"
-                    placeholder="تاریخ"
-                    [formControl]="selectedDateTo"
-                    [dpDayPicker]="datePickerConfig"
-                    
-                  />
-                </md-input-container>
-              </div>
-            </div>
-          </div>
-          <!--/date-->
-
-
-          <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
-                <app-select-item
-                #selectItem
-                label="انتخاب کنید :"
-                isMultipleSelectionPossible = 'true'>
-                </app-select-item>
-          </div>
-
+        </div>
+        <!--/date-->
           <div class="col-12 col-lg-2 col-xl-12  pt-1 ">
             <button
               class="btn btn-success"
@@ -112,6 +109,7 @@
           [limit]="1"
           [width]="100"
           style="width:100%"
+          [messages]="my_messages"
         >
           <ngx-datatable-column name="id" [width]="30">
             <ng-template let-column="column" ngx-datatable-header-template>
@@ -280,7 +278,7 @@
                   class="btn btn-primary mr-2"
                   printTitle="گزارش قبض {{bills[rowIndex]}}"
                   printSectionId="print-item-{{rowIndex}}"
-                  styleSheetFile= "./font.css"
+                  styleSheetFile= "./printstyle.css"
                   ngxPrint
                 >پرینت<i class="fa fa-print"></i></button>
 
@@ -318,95 +316,11 @@
       <div class="modal-body">
         <div class="animated fadeIn row border-bottom justify-content-center">
           <div class="col-10" id="print-section">
-            <style>
-              @font-face {
-                font-family: IRANSans;
-                font-style: normal;
-                font-weight: bold;
-                src: url("assets/fonts/eot/IRANSansWeb_Bold.eot");
-                src: url("assets/fonts/eot/IRANSansWeb_Bold.eot?#iefix")
-                    format("embedded-opentype"),
-                  /* IE6-8 */ url("assets/fonts/woff2/IRANSansWeb_Bold.woff2")
-                    format("woff2"),
-                  /* FF39+,Chrome36+, Opera24+*/
-                    url("assets/fonts/woff/IRANSansWeb_Bold.woff")
-                    format("woff"),
-                  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-                    url("assets/fonts/ttf/IRANSansWeb_Bold.ttf")
-                    format("truetype");
-              }
-              @font-face {
-                font-family: IRANSans;
-                font-style: normal;
-                font-weight: 500;
-                src: url("assets/fonts/eot/IRANSansWeb_Medium.eot");
-                src: url("assets/fonts/eot/IRANSansWeb_Medium.eot?#iefix")
-                    format("embedded-opentype"),
-                  /* IE6-8 */ url("assets/fonts/woff2/IRANSansWeb_Medium.woff2")
-                    format("woff2"),
-                  /* FF39+,Chrome36+, Opera24+*/
-                    url("assets/fonts/woff/IRANSansWeb_Medium.woff")
-                    format("woff"),
-                  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-                    url("assets/fonts/ttf/IRANSansWeb_Medium.ttf")
-                    format("truetype");
-              }
-              @font-face {
-                font-family: IRANSans;
-                font-style: normal;
-                font-weight: 300;
-                src: url("assets/fonts/eot/IRANSansWeb_Light.eot");
-                src: url("assets/fonts/eot/IRANSansWeb_Light.eot?#iefix")
-                    format("embedded-opentype"),
-                  /* IE6-8 */ url("assets/fonts/woff2/IRANSansWeb_Light.woff2")
-                    format("woff2"),
-                  /* FF39+,Chrome36+, Opera24+*/
-                    url("assets/fonts/woff/IRANSansWeb_Light.woff")
-                    format("woff"),
-                  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-                    url("assets/fonts/ttf/IRANSansWeb_Light.ttf")
-                    format("truetype");
-              }
-              @font-face {
-                font-family: IRANSans;
-                font-style: normal;
-                font-weight: 200;
-                src: url("assets/fonts/eot/IRANSansWeb_UltraLight.eot");
-                src: url("assets/fonts/eot/IRANSansWeb_UltraLight.eot?#iefix")
-                    format("embedded-opentype"),
-                  /* IE6-8 */
-                    url("assets/fonts/woff2/IRANSansWeb_UltraLight.woff2")
-                    format("woff2"),
-                  /* FF39+,Chrome36+, Opera24+*/
-                    url("assets/fonts/woff/IRANSansWeb_UltraLight.woff")
-                    format("woff"),
-                  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-                    url("assets/fonts/ttf/IRANSansWeb_UltraLight.ttf")
-                    format("truetype");
-              }
-              @font-face {
-                font-family: IRANSans;
-                font-style: normal;
-                font-weight: normal;
-                src: url("assets/fonts/eot/IRANSansWeb.eot");
-                src: url("assets/fonts/eot/IRANSansWeb.eot?#iefix")
-                    format("embedded-opentype"),
-                  /* IE6-8 */ url("assets/fonts/woff2/IRANSansWeb.woff2")
-                    format("woff2"),
-                  /* FF39+,Chrome36+, Opera24+*/
-                    url("assets/fonts/woff/IRANSansWeb.woff") format("woff"),
-                  /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
-                    url("assets/fonts/ttf/IRANSansWeb.ttf") format("truetype");
-              }
-            </style>
+          
             <div style="text-align: right;;" >قبض از تاریخ {{printDateFrom}} تا تاریخ  {{printDateTo}}</div>
             <table
               cellpadding="10"
-              style="border:1px solid grey; 
-                 border-collapse:collapse;
-                 width:100%; direction: rtl; 
-                 font-family: IRANSans;
-                 font-size:14px;"
+              class="table"
             >
               <tr style="border-bottom:1px solid grey;">
                 <th>ردیف</th>
@@ -445,6 +359,7 @@
             class="btn btn-primary mr-2"
             printTitle="گزارش قبوض"
             printSectionId="print-section"
+            styleSheetFile= "./printstyle.css"
             ngxPrint
           >
             پرینت

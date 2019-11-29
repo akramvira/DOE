@@ -63,6 +63,7 @@
       <ng-multiselect-dropdown  class="form-control  col-10 col-md-12 col-lg-4  p-0 "
           [placeholder]="'انتخاب معاونت '"
           [data]="groups"
+          (onSelectAll)="onSelectAll($event)"
           formControlName="main"
           [settings]="mainDropdownSettings"
           (onSelect)="onMain1Select($event)"
