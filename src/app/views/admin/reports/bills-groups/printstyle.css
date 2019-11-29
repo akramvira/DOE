@@ -72,10 +72,15 @@
   font-family: IRANSans;
 }
 
-table tr:nth-child(even) {
+@media print{
+  
+
+.table tr:nth-child(even) {
   background: red;
 }
-table tr:nth-child(odd) {
+.table tr:nth-child(odd) {
+  background-color: #7a3f6d;
+   color:#fff
 }
 
 .table {
@@ -85,4 +90,7 @@ table tr:nth-child(odd) {
   direction: rtl;
   font-family: IRANSans;
   font-size: 14px;
+  color:red
+}
+
 }

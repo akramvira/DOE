@@ -129,8 +129,11 @@ export class GroupsBillsComponent implements OnInit {
       filterData['from'] = this.selectedDateFrom.value;
       filterData['to'] = this.selectedDateTo.value;
     }
-    if(!selectedItem)
+    if(!selectedItem){
       this.toaster.warning('هیچ داخلی، اداره یا معاونتی انتخاب نشده است.');
+      return;
+    }
+      
     
       
     filterData['level']= selectedItem['level'];

@@ -1,71 +1,73 @@
 <div class="animated fadeIn row">
   <div class="col-12">
-    <div  class="card text-left justify-content-end  m-0 card-info bg-gray-300 p-2">
-      <div class="text-center col-12 " >
+    <div
+      class="card text-left justify-content-end  m-0 card-info bg-gray-300 p-2"
+    >
+      <div class="text-center col-12 ">
         <div class="row text-center">
-        <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
-              <app-select-item
+          <div class="mb-md-2 mb-sm-2 mb-lg-2 col-12 col-xl-12 ">
+            <app-select-item
               #selectItem
               label="انتخاب کنید :"
-              isMultipleSelectionPossible = 'true'>
-              </app-select-item>
-        </div>
-        <!--date-->
-        <div class="col-12 col-lg-5 col-xl-4  mb-md-2 mb-sm-2 mb-lg-2 ">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <label class="input-group-text">بازه زمانی</label>
-            </div>
-            <select class="col form-control" [formControl]="time">
-              <option value="0">همه زمان ها</option>
-              <option value="1">یک روز اخیر</option>
-              <option value="30">یک ماه اخیر </option>
-              <option value="365"> یک سال اخیر</option>
-              <option value="-1">انتخابی...</option>
-            </select>
+              isMultipleSelectionPossible="true"
+            >
+            </app-select-item>
           </div>
-        </div>
-        <div class="col-12 col-lg-7 col-xl-7 p-0  mb-md-2 mb-sm-2 mb-lg-2"
-          [hidden]="time.value != '-1'"
-        >
-          <div class="bg-gray-200 p-1 mx-0 rounded row text-right">
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-              <span>از تاریخ:</span>
-              <md-input-container class="date-filter">
-                <input
-                  class="form-control-sm p-0 border"
-                  mdInput
-                  name="someName"
-                  dir="rtl"
-                  mode="day"
-                  theme="dp-material"
-                  placeholder="تاریخ"
-                  [formControl]="selectedDateFrom"
-                  [dpDayPicker]="datePickerConfig"
-                  
-                />
-              </md-input-container>
-            </div>
-            <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
-              <span>تا تاریخ:</span>
-              <md-input-container class="date-filter">
-                <input
-                  class="form-control-sm p-0 border"
-                  mdInput
-                  name="someName"
-                  dir="rtl"
-                  mode="day"
-                  theme="dp-material"
-                  placeholder="تاریخ"
-                  [formControl]="selectedDateTo"
-                  [dpDayPicker]="datePickerConfig"
-                  
-                />
-              </md-input-container>
+          <!--date-->
+          <div class="col-12 col-lg-5 col-xl-4  mb-md-2 mb-sm-2 mb-lg-2 ">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <label class="input-group-text">بازه زمانی</label>
+              </div>
+              <select class="col form-control" [formControl]="time">
+                <option value="0">همه زمان ها</option>
+                <option value="1">یک روز اخیر</option>
+                <option value="30">یک ماه اخیر </option>
+                <option value="365"> یک سال اخیر</option>
+                <option value="-1">انتخابی...</option>
+              </select>
             </div>
           </div>
-        </div>
-        <!--/date-->
+          <div
+            class="col-12 col-lg-7 col-xl-7 p-0  mb-md-2 mb-sm-2 mb-lg-2"
+            [hidden]="time.value != '-1'"
+          >
+            <div class="bg-gray-200 p-1 mx-0 rounded row text-right">
+              <div class="col-12 col-md-6 col-lg-6 col-xl-6">
+                <span>از تاریخ:</span>
+                <md-input-container class="date-filter">
+                  <input
+                    class="form-control-sm p-0 border"
+                    mdInput
+                    name="someName"
+                    dir="rtl"
+                    mode="day"
+                    theme="dp-material"
+                    placeholder="تاریخ"
+                    [formControl]="selectedDateFrom"
+                    [dpDayPicker]="datePickerConfig"
+                  />
+                </md-input-container>
+              </div>
+              <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
+                <span>تا تاریخ:</span>
+                <md-input-container class="date-filter">
+                  <input
+                    class="form-control-sm p-0 border"
+                    mdInput
+                    name="someName"
+                    dir="rtl"
+                    mode="day"
+                    theme="dp-material"
+                    placeholder="تاریخ"
+                    [formControl]="selectedDateTo"
+                    [dpDayPicker]="datePickerConfig"
+                  />
+                </md-input-container>
+              </div>
+            </div>
+          </div>
+          <!--/date-->
           <div class="col-12 col-lg-2 col-xl-12  pt-1 ">
             <button
               class="btn btn-success"
@@ -182,40 +184,38 @@
             </ng-template>
           </ngx-datatable-column>
 
-         
-
           <ngx-datatable-column name="co" [width]="100">
-              <ng-template
-                let-column="column"
-                let-sort="sortFn"
-                ngx-datatable-header-template
-              >
-                <span (click)="sort()">هزینه شهری</span>
-              </ng-template>
-              <ng-template
-                let-value="value"
-                let-rowIndex="rowIndex"
-                ngx-datatable-cell-template
-              >
-                <span> {{ value | number }} ریال </span>
-              </ng-template>
-            </ngx-datatable-column>
+            <ng-template
+              let-column="column"
+              let-sort="sortFn"
+              ngx-datatable-header-template
+            >
+              <span (click)="sort()">هزینه شهری</span>
+            </ng-template>
+            <ng-template
+              let-value="value"
+              let-rowIndex="rowIndex"
+              ngx-datatable-cell-template
+            >
+              <span> {{ value | number }} ریال </span>
+            </ng-template>
+          </ngx-datatable-column>
 
           <ngx-datatable-column name="abonmah" [width]="100">
-              <ng-template
-                let-column="column"
-                let-sort="sortFn"
-                ngx-datatable-header-template
-              >
-                <span (click)="sort()">آبونمان</span>
-              </ng-template>
-              <ng-template
-                let-value="value"
-                let-rowIndex="rowIndex"
-                ngx-datatable-cell-template
-              >
-                <span> {{ value | number }} ریال </span>
-              </ng-template>
+            <ng-template
+              let-column="column"
+              let-sort="sortFn"
+              ngx-datatable-header-template
+            >
+              <span (click)="sort()">آبونمان</span>
+            </ng-template>
+            <ng-template
+              let-value="value"
+              let-rowIndex="rowIndex"
+              ngx-datatable-cell-template
+            >
+              <span> {{ value | number }} ریال </span>
+            </ng-template>
           </ngx-datatable-column>
           <ngx-datatable-column name="sum" [width]="100">
             <ng-template
@@ -234,57 +234,83 @@
             </ng-template>
           </ngx-datatable-column>
 
-             <ngx-datatable-column name="sum" [width]="100">
-              <ng-template
-                let-column="column"
-                ngx-datatable-header-template
-              >
-               عملیات
-              </ng-template>
-              <ng-template
-                let-value="value"
-                let-rowIndex="rowIndex"
-                ngx-datatable-cell-template
-              >
-
+          <ngx-datatable-column name="sum" [width]="100">
+            <ng-template let-column="column" ngx-datatable-header-template>
+              عملیات
+            </ng-template>
+            <ng-template
+              let-value="value"
+              let-rowIndex="rowIndex"
+              ngx-datatable-cell-template
+            >
               <div style="display:none">
-                <div  id="print-item-{{rowIndex}}">
-                <table 
-                 
-                  style="border:1px solid grey; 
-                  border-collapse:collapse;
-                  width:100%; direction: rtl; 
-                  font-family: IRANSans;
-                  font-size:14px;"
-                  >
-                  <div style="text-align: right;;" >قبض از تاریخ {{printDateFrom}} تا تاریخ  {{printDateTo}}</div>
-                    <tr style="border-bottom:1px solid grey;">
-                        <th>نام</th>
-                        <td>{{ bills[rowIndex]['name'] }}</td>
-                      </tr>
-                     
-                      <tr> <th> هزینه موبایل</th><td>{{ bills[rowIndex]['mobile'] | number }}ریال</td></tr>
-                      <tr><th> هزینه شهری</th><td>{{ bills[rowIndex]['co']  | number }}ریال</td> </tr>
-                      <tr><th> هزینه بین شهری</th><td>{{ bills[rowIndex]['betweanco'] | number }}ریال</td> </tr>
-                      <tr><th>آبونمان</th><td>{{ bills[rowIndex]['abonmah']  | number }} ریال</td> </tr>
-                      <tr><th>جمع</th><td>{{ bills[rowIndex]['sum'] | number }} ریال</td> </tr>
-                      
-                     
-                </table>
-              </div>
-              </div>
-                <button 
-                  class="btn btn-sm btn-primary"
-                  class="btn btn-primary mr-2"
-                  printTitle="گزارش قبض {{bills[rowIndex]}}"
-                  printSectionId="print-item-{{rowIndex}}"
-                  styleSheetFile= "./printstyle.css"
-                  ngxPrint
-                >پرینت<i class="fa fa-print"></i></button>
+                <div id="print-item-{{ rowIndex }}">
+                  <div class="print-page">
+                    <div class="print-page-wrapper">
 
-                
-              </ng-template>
-            </ngx-datatable-column>
+                      <div class="print-header"> پرینت قبض</div>
+                      <div class="separator"></div>
+                        <div class="row">
+                           <label class="label"> مربوط به :</label>
+                           <b class="input-field">{{ bills[rowIndex]["name"] }}</b>
+                         </div>
+
+
+                      <div class="row">
+                        <label class="label"> از تاریخ: </label>
+                        <b class="input-field">{{ selectedDateFrom.value }}</b>
+                        <label class="label"> تا تاریخ:</label>
+                        <b class="input-field"> {{ selectedDateTo.value }}</b>
+                      </div>
+                      
+                        <div class="separator"></div>
+                      <div class="table">
+                        <div class="header">
+                          <span>شرح</span>
+                          <span>مبلغ (ریال)</span>
+                        </div>
+
+                        <div class="color-row">
+                          <span> هزینه موبایل</span
+                          ><span>{{ bills[rowIndex]["mobile"] | number }}</span>
+                        </div>
+                        <div>
+                          <span> هزینه شهری</span
+                          ><span>{{ bills[rowIndex]["co"] | number }}</span>
+                        </div>
+                        <div class="color-row">
+                          <span> هزینه بین شهری</span
+                          ><span>{{
+                            bills[rowIndex]["betweanco"] | number
+                          }}</span>
+                        </div>
+                        <div>
+                          <span>آبونمان</span
+                          ><span
+                            >{{ bills[rowIndex]["abonmah"] | number }}
+                          </span>
+                        </div>
+                      </div>
+                      <div class="result">
+                        <span>مبلغ قابل پرداخت (ریال)</span
+                        ><span>{{ bills[rowIndex]["sum"] | number }} </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="btn btn-sm btn-primary"
+                class="btn btn-primary mr-2"
+                printTitle="گزارش قبض {{ bills[rowIndex] }}"
+                printSectionId="print-item-{{ rowIndex }}"
+                styleSheetFile="assets/printstyle.css"
+                ngxPrint
+              >
+                پرینت<i class="fa fa-print"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
         </ngx-datatable>
       </div>
     </div>
@@ -316,34 +342,48 @@
       <div class="modal-body">
         <div class="animated fadeIn row border-bottom justify-content-center">
           <div class="col-10" id="print-section">
-          
-            <div style="text-align: right;;" >قبض از تاریخ {{printDateFrom}} تا تاریخ  {{printDateTo}}</div>
-            <table
-              cellpadding="10"
-              class="table"
-            >
-              <tr style="border-bottom:1px solid grey;">
-                <th>ردیف</th>
-                <th>نام</th>
-                <th> هزینه موبایل</th>
-                <th> هزینه شهری</th>
-                <th> هزینه بین شهری</th>
-                <th>آبونمان</th>
-                <th>جمع</th>
-              </tr>
-              <tr
-                *ngFor="let item of bills; let i = index"
-                style="border-bottom:1px solid grey;font-size:12px;"
-              >
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.name }}</td>
-                <td>{{ item.mobile | number }}ریال</td>
-                <td>{{ item.co | number }} ریال</td>
-                <td>{{ item.betweanco | number }}</td>
-                <td>{{ item.abonmah | number }} ریال</td>
-                <td>{{ item.sum | number }} ریال</td>
-              </tr>
-            </table>
+            <div class="print-page">
+                <div class="print-page-wrapper print-all">
+
+                  <div class="print-header"> پرینت قبض</div>
+                  <div class="separator"></div>
+
+                  <div class="row">
+                    <label class="label"> از تاریخ: </label>
+                    <b class="input-field">{{ selectedDateFrom.value }}</b>
+                    <label class="label"> تا تاریخ:</label>
+                    <b class="input-field"> {{ selectedDateTo.value }}</b>
+                  </div>
+                  
+                    <div class="separator"></div>
+                  <div class="table table-all">
+                    <div class="header">
+                        <span class="col-id">ردیف</span>
+                        <span class="col-name">نام</span>
+                        <span class="col-mob"> موبایل(ریال)</span>
+                        <span class="col-co"> شهری(ریال)</span>
+                        <span class="col-bw"> بین شهری(ریال)</span>
+                        <span class="col-ab">آبونمان(ریال)</span>
+                        <span class="col-sum">جمع(ریال)</span>
+                    </div>
+
+                    <div  *ngFor="let item of bills; let i = index">
+                        <span class="col-id">{{ i + 1 }}</span>
+                        <span class="col-name">{{ item.name }}</span>
+                        <span class="col-mob">{{ item.mobile | number }}</span>
+                        <span class="col-co">{{ item.co | number }} </span>
+                        <span class="col-bw">{{ item.betweanco | number }}</span>
+                        <span class="col-ab">{{ item.abonmah | number }} </span>
+                        <span class="col-sum">{{ item.sum | number }} </span>
+                    </div>
+                  </div>
+                  <!-- <div class="result">
+                    <span>مبلغ قابل پرداخت (ریال)</span
+                    ><span></span>
+                  </div> -->
+                </div>
+              </div>
+              
           </div>
         </div>
         <div class="modal-footer">
@@ -359,7 +399,7 @@
             class="btn btn-primary mr-2"
             printTitle="گزارش قبوض"
             printSectionId="print-section"
-            styleSheetFile= "./printstyle.css"
+            styleSheetFile="assets/printstyle.css"
             ngxPrint
           >
             پرینت
@@ -372,6 +412,3 @@
   </div>
   <!-- /.modal -->
 </div>
-
-
-
