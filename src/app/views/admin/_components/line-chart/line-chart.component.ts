@@ -54,13 +54,15 @@ export class LineChartComponent implements OnInit {
               let m = Math.floor(d % 3600 / 60);
               let s = Math.floor(d % 3600 % 60);
           
-              let hDisplay = h >= 10 ? h : "0"+ h as string;
-              let mDisplay = m >= 10  ? m : "0"+m as string ;
-              let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-              let time = hDisplay +":"+ mDisplay +":"+ sDisplay; 
-              return time;
+
+              let hDisplay = h == 0 ? '' : h >= 10 ? h+ ':' : (("0" + h) as string) + ':';
+              let mDisplay = m >= 10 ? m : (("0" + m) as string);
+              let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+              let time = hDisplay + mDisplay + ":" + sDisplay;
+
+              return label +': ' + time;
             }
-            else return label + ' ' + tooltipItem.yLabel;
+            else return label + '<i class="icon icon-clock"></i> :: '  + tooltipItem.yLabel;
           }
         }
       },
@@ -117,6 +119,7 @@ export class LineChartComponent implements OnInit {
               fontColor: "black",
               fontSize: 13,
               userCallback: function(item) {
+       
                 if(isTimeChart){
                   if(item == 0 ) return 0;
                   let d = Number(item);
@@ -126,10 +129,12 @@ export class LineChartComponent implements OnInit {
                   let m = Math.floor(d % 3600 / 60);
                   let s = Math.floor(d % 3600 % 60);
               
-                  let hDisplay = h >= 10 ? h : "0"+ h as string;
-                  let mDisplay = m >= 10  ? m : "0"+m as string ;
-                  let sDisplay = s >= 10 ? s : "0"+ s as string ; // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-                  let time =  hDisplay +":"+ mDisplay +":"+ sDisplay; 
+
+                let hDisplay = h == 0 ? '' : h >= 10 ? h+ ':' : (("0" + h) as string) + ':';
+                let mDisplay = m >= 10 ? m : (("0" + m) as string);
+                let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+                let time = hDisplay + mDisplay + ":" + sDisplay;
+
                return time;
                 }
                

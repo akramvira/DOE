@@ -57,7 +57,7 @@ export class BarChartComponent implements OnInit {
               let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
               let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
 
-              return label + " : " + time;
+              return ' '+ label + '<i class="icon icon-clock"></i> :: ' + time;
               // else return label + ' ' + tooltipItem.yLabel;
             } else if (isPercentChart) {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
@@ -68,7 +68,7 @@ export class BarChartComponent implements OnInit {
               label += isNaN(tooltipItem.yLabel)
                 ? "0"
                 : tooltipItem.yLabel + "%";
-              return label;
+              return ' '+ label;
             } else {
               var label = data.datasets[tooltipItem.datasetIndex].label || "";
 
@@ -77,9 +77,9 @@ export class BarChartComponent implements OnInit {
               }
               label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
 
-              if (unitLabel) label = label + unitLabel;
+              //if (unitLabel) label = label + 'تماس';
 
-              return label;
+              return ' '+ label + ' تماس';
             }
           }
         }
@@ -105,12 +105,19 @@ export class BarChartComponent implements OnInit {
             fontFamily: "IRANSans",
             fontColor: "black",
             fontStyle: "bold",
+            scaleLabel:{
+              labelString: isTimeChart? 'مدت زمان' : isPercentChart?'درصد': 'تعداد تماس' ,
+              display: true,
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontStyle: "bold",
+            },
             ticks: {
               beginAtZero: true,
               fontFamily: "IRANSans",
               fontColor: "black",
-              fontSize: 13,
-              
+              fontSize: 11,
+              padding:10,
               min: 0,
               maxTicksLimi:10,
               max: isPercentChart ? 100 : undefined,
@@ -127,16 +134,19 @@ export class BarChartComponent implements OnInit {
                   let hDisplay = h >= 10 ? h : (("0" + h) as string);
                   let mDisplay = m >= 10 ? m : (("0" + m) as string);
                   let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-                  let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+                  let time = hDisplay + ":" + mDisplay;// + ":" + sDisplay;
 
                   return time;
                 } else if (isPercentChart) return item + "%";
                 else return item;
               }
             }
+            
+            
           }
         ]
       },
+      
 
       plugins: {
         labels: {

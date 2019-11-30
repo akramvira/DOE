@@ -117,14 +117,14 @@ export class AllComponent implements OnInit {
         this.inDetailsPercent = [data["in"]['panswer'], data["in"]['pnoanswer'], data["in"]['pbusy']];
         this.outDetailsPercent = [data["out"]['pbetweenco'], data["out"]['pco'], data["out"]['pmobile']];
 
-        this.barChartDataTimeIn = [
-          { data: [data['in']["time"]], label: "مدت زمان کل مکالمات" },
-          { data:  [data['in']["avg"]], label: " مدت زمان میانگین مکالمات" },
+        this.barchartCallsAll = [
+          { data: [data['in']["time"]], label: "  کل مکالمات ورودی" },
+          { data: [data['out']["time"]], label: "   کل مکالمات خروجی" },
         ];
 
-        this.barChartDataTimeOut = [
-          { data: [data['out']["time"]], label: "مدت زمان کل مکالمات" },
-          { data:  [data['out']["avg"]], label: " مدت زمان میانگین مکالمات" },
+        this.barchartCallsAvg = [
+          { data:  [data['in']["avg"]], label: "   میانگین مکالمات ورودی" },
+          { data:  [data['out']["avg"]], label: "   میانگین مکالمات خروجی" },
         ];
 
         
@@ -162,7 +162,7 @@ export class AllComponent implements OnInit {
     { data: [0], label: " پاسخ داده نشده" },
     { data: [0], label: "مشغول" }
   ];
-  public barChartDataTimeIn: any[] = [
+  public barchartCallsAll: any[] = [
     { data: [0], label: "مدت زمان کل مکالمات" },
     { data: [0], label: " مدت زمان میانگین مکالمات" },
   ];
@@ -173,7 +173,7 @@ export class AllComponent implements OnInit {
     { data: [0], label: "بین شهری" },
     { data: [0], label: "موبایل" }
   ];
-  public barChartDataTimeOut: any[] = [
+  public barchartCallsAvg: any[] = [
     { data: [0], label: "مدت زمان کل مکالمات" },
     { data: [0], label: " مدت زمان میانگین مکالمات" },
   ];

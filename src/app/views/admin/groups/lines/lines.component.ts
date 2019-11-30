@@ -35,7 +35,7 @@ export class LinesComponent implements OnInit{
     this.addNewGroupClick();
   }
   ngOnInit() {
-    this.toastr.warning('جهت ویرایش، روی نام یا شماره داخلی دو بار کلیک کنید!','پیغام سیستم');
+    this.toastr.info('جهت ویرایش، روی نام یا شماره داخلی دو بار کلیک کنید!','پیغام سیستم');
     this.webServ.getAllGroups().subscribe(
       data => {
         data = data["data"];
