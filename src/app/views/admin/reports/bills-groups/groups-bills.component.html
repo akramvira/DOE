@@ -33,38 +33,7 @@
             [hidden]="time.value != '-1'"
           >
             <div class="bg-gray-200 p-1 mx-0 rounded row text-right">
-              <div class="col-12 col-md-6 col-lg-6 col-xl-6">
-                <span>از تاریخ:</span>
-                <md-input-container class="date-filter">
-                  <input
-                    class="form-control-sm p-0 border"
-                    mdInput
-                    name="someName"
-                    dir="rtl"
-                    mode="day"
-                    theme="dp-material"
-                    placeholder="تاریخ"
-                    [formControl]="selectedDateFrom"
-                    [dpDayPicker]="datePickerConfig"
-                  />
-                </md-input-container>
-              </div>
-              <div class="col-12 col-md-6 col-lg-6 col-xl-6 ">
-                <span>تا تاریخ:</span>
-                <md-input-container class="date-filter">
-                  <input
-                    class="form-control-sm p-0 border"
-                    mdInput
-                    name="someName"
-                    dir="rtl"
-                    mode="day"
-                    theme="dp-material"
-                    placeholder="تاریخ"
-                    [formControl]="selectedDateTo"
-                    [dpDayPicker]="datePickerConfig"
-                  />
-                </md-input-container>
-              </div>
+              <app-daterange #daterange></app-daterange>
             </div>
           </div>
           <!--/date-->
@@ -350,9 +319,9 @@
 
                   <div class="row">
                     <label class="label"> از تاریخ: </label>
-                    <b class="input-field">{{ selectedDateFrom.value }}</b>
+                    <b class="input-field">{{ daterange.selectedDateFrom.value }}</b>
                     <label class="label"> تا تاریخ:</label>
-                    <b class="input-field"> {{ selectedDateTo.value }}</b>
+                    <b class="input-field"> {{  daterange.selectedDateTo.value }}</b>
                   </div>
                   
                     <div class="separator"></div>

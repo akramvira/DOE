@@ -9,6 +9,7 @@ import { formControlBinding } from "@angular/forms/src/directives/reactive_direc
 import { SharedService } from "../../../../_services/shared.service";
 import { SelectItemComponent } from '../_components/select-item/select-item.component';
 import { Toast, ToastrService } from 'ngx-toastr';
+import { DaterangeComponent } from '../_components/daterange/daterange.component';
 @Component({
   selector: "app-compare-all",
   templateUrl: "./compare-all.component.html",
@@ -38,8 +39,6 @@ export class CompareAllComponent implements OnInit {
   @ViewChild('select2') select2 : SelectItemComponent;
 
   ngOnInit() {
-    this.setDate();
-
   }
 
   
@@ -102,50 +101,7 @@ export class CompareAllComponent implements OnInit {
   public allCallsData: Array<any> = [{ data: [], label: "" }];
   public lineChartLabels: Array<any> = this.mainLabels;
 
-  //------date
-  dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
-  minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
-  maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
-  selectedDateFrom = new FormControl("1398/01/01");
-  selectedDateTo = new FormControl("1398/01/01");
 
-  datePickerConfig = {};
-  setDate() {
-    if (this.sharedService.minMaxTime.value) {
-      this.minDate = this.sharedService.minMaxTime.value.min;
-      this.maxDate = this.sharedService.minMaxTime.value.max;
-
-      this.selectedDateFrom.setValue(this.minDate);
-      this.selectedDateTo.setValue(this.maxDate);
-
-      this.datePickerConfig = {
-        format: "jYYYY/MM/DD",
-        theme: "dp-material",
-        min: moment(this.minDate, "jYYYY,jMM,jDD"),
-        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
-        showGoToCurrent: true,
-        hideOnOutsideClick: true,
-        showNearMonthDays: true
-      };
-    }
-
-    this.sharedService.minMaxTime.subscribe(data => {
-      this.minDate = data["min"];
-      this.maxDate = data["max"];
-
-      this.selectedDateFrom.setValue(this.minDate);
-      this.selectedDateTo.setValue(this.maxDate);
-      this.datePickerConfig = {
-        format: "jYYYY/MM/DD",
-        theme: "dp-material",
-        min: moment(this.minDate, "jYYYY,jMM,jDD"),
-        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
-        showGoToCurrent: true,
-        hideOnOutsideClick: true,
-        showNearMonthDays: true
-      };
-    });
-  }
 
   initingData: boolean = false;
   loadingData = false;
@@ -157,14 +113,15 @@ export class CompareAllComponent implements OnInit {
     this.getOneGroupData();
   }
 
+  @ViewChild('daterange') daterange :DaterangeComponent;
   getOneGroupData() {
     let filterData = this.filters.getRawValue();
     let select1Value1 = this.select1.getSelectedValue();
     let select1Value2 = this.select2.getSelectedValue();
 
     if (filterData.time == "-1") {
-      filterData.from = this.selectedDateFrom.value;
-      filterData.to = this.selectedDateTo.value;
+      filterData.from = this.daterange.selectedDateFrom.value;
+      filterData.to = this.daterange.selectedDateTo.value;
     }
     if(!select1Value1 || !select1Value2){
       if(!select1Value1)

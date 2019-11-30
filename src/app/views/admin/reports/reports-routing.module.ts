@@ -4,8 +4,6 @@ import { AllComponent } from './performance-all/all.component';
 import { CallsDetailsComponent } from './calls-details/calls-details.component';
 import { QueuesComponent } from './queues/queues.component';
 import { GroupsBillsComponent } from './bills-groups/groups-bills.component';
-import { GroupsComponent } from './performance-groups/groups.component';
-import { LinesComponent } from './performance-lines/lines.component';
 import { ReportsComponent } from './reports.component';
 import { AuthGuardService } from '../../../_services/auth-guard.service';
 import { OperatorComponent } from './operator/operator.component';
@@ -25,9 +23,6 @@ const routes: Routes = [
           {path: 'performance-l2', component:PerformanceL2Component, data:{title:'عملکرد ادارات '}},
           {path: 'performance-l3', component:PerformanceL3Component, data:{title:'عملکرد داخلی ها '}},
           {path: 'comapre-all', component:CompareAllComponent, data:{title:' مقایسه کلی '}},
-          
-          {path: 'lines', component:LinesComponent, data:{title:'عملکرد داخلی ها'}},
-          {path: 'groups', component:GroupsComponent, data:{title:'گروه ها'}},
           {path: 'groups-bills', component:GroupsBillsComponent, data:{title:'قبوض گروه ها'}},
           {path: 'queues', component:QueuesComponent, data:{title:'وضعیت صف ها', accessName: 'queues' },
           canActivate: [AuthGuardService]},

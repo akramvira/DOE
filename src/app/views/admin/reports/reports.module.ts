@@ -2,12 +2,10 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { ReportsRoutingModule } from "./reports-routing.module";
-import { GroupsComponent } from "./performance-groups/groups.component";
 import { AllComponent } from "./performance-all/all.component";
 import { QueuesComponent } from "./queues/queues.component";
 import { CallsDetailsComponent } from "./calls-details/calls-details.component";
 import { GroupsBillsComponent } from "./bills-groups/groups-bills.component";
-import { LinesComponent } from "./performance-lines/lines.component";
 import { ReportsComponent } from "./reports.component";
 import { NgxDatatableModule } from "@swimlane/ngx-datatable";
 import { TabsModule } from "ngx-bootstrap/tabs";
@@ -31,12 +29,10 @@ import { DaterangeComponent } from './_components/daterange/daterange.component'
 
 @NgModule({
   declarations: [
-    GroupsComponent,
     AllComponent,
     QueuesComponent,
     CallsDetailsComponent,
     GroupsBillsComponent,
-    LinesComponent,
     ReportsComponent,
     OperatorComponent,
     SearchColumnComponent,

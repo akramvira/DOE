@@ -228,6 +228,7 @@ export class SelectItemComponent implements OnInit {
 
   onSelectAll(item) {}
   onMain1Select(item) {
+    debugger;
     this.activeSub1_1 = this.allSub1Data[item["id"]];
     this.selectedItem1.patchValue({
       sub1: [],

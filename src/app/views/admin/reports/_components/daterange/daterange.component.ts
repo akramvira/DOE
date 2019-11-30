@@ -55,7 +55,9 @@ export class DaterangeComponent implements OnInit {
       this.maxDate = moment(data["max"], "jYYYY/jMM/jDD").locale('fa');
 
       this.selectedDateFrom.setValue(data["min"]);
-      this.selectedDateTo.setValue(data["min"]);
+      this.selectedDateTo.setValue(data["max"]);
+
+      console.log('lkjlkjlkj',this.selectedDateTo, data);
       this.datePickerConfig = {
         format: "jYYYY/MM/DD",
         theme: "dp-material",
