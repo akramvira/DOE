@@ -15,13 +15,12 @@ export class DaterangeComponent implements OnInit {
   constructor(
     private sharedService :SharedService
   ) { }
-  
+
   @ViewChild('dateFrom') dateFrom: DatePickerComponent;
   @Input() onSelect : EventEmitter = new EventEmitter();
 
-  dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
-  minDate = moment("1398/06/20", "jYYYY/jMM/jDD");
-  maxDate = moment("1398/06/20", "jYYYY/jMM/jDD");
+  minDate = moment("1398/01/01", "jYYYY/jMM/jDD").locale('fa');
+  maxDate = moment("1398/01/01", "jYYYY/jMM/jDD").locale('fa');
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
 
@@ -29,25 +28,22 @@ export class DaterangeComponent implements OnInit {
   
   ngOnInit() {
     this.setDate();
-
-    this.dateFrom.api.moveCalendarTo( moment("1395/11/22", "jYYYY/jMM/jDD").locale('fa'));
-    debugger;
   }
 
   
   setDate() {
     if (this.sharedService.minMaxTime.value) {
-      this.minDate = this.sharedService.minMaxTime.value.min;
-      this.maxDate = this.sharedService.minMaxTime.value.max;
+      this.minDate = moment(this.sharedService.minMaxTime.value.min, "jYYYY,jMM,jDD").locale('fa');
+      this.maxDate = moment(this.sharedService.minMaxTime.value.max, "jYYYY,jMM,jDD").locale('fa');
 
-      this.selectedDateFrom.setValue(this.minDate);
-      this.selectedDateTo.setValue(this.maxDate);
+      this.selectedDateFrom.setValue(this.sharedService.minMaxTime.value.min);
+      this.selectedDateTo.setValue(this.sharedService.minMaxTime.value.max);
 
       this.datePickerConfig = {
         format: "jYYYY/MM/DD",
         theme: "dp-material",
-        min: moment(this.minDate, "jYYYY,jMM,jDD"),
-        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
+        min: moment(this.sharedService.minMaxTime.value.min, "jYYYY/jMM/jDD").locale('fa'),
+        max: moment(this.sharedService.minMaxTime.value.max, "jYYYY/jMM/jDD").locale('fa'),
         showGoToCurrent: true,
         hideOnOutsideClick: true,
         showNearMonthDays: true
@@ -55,16 +51,16 @@ export class DaterangeComponent implements OnInit {
     }
 
     this.sharedService.minMaxTime.subscribe(data => {
-      this.minDate = data["min"];
-      this.maxDate = data["max"];
+      this.minDate = moment(data["min"], "jYYYY/jMM/jDD").locale('fa');
+      this.maxDate = moment(data["max"], "jYYYY/jMM/jDD").locale('fa');
 
-      this.selectedDateFrom.setValue(this.minDate);
-      this.selectedDateTo.setValue(this.maxDate);
+      this.selectedDateFrom.setValue(data["min"]);
+      this.selectedDateTo.setValue(data["min"]);
       this.datePickerConfig = {
         format: "jYYYY/MM/DD",
         theme: "dp-material",
-        min: moment(this.minDate, "jYYYY,jMM,jDD"),
-        max: moment(this.maxDate, "jYYYY,jMM,jDD"),
+        min: moment(this.minDate, "jYYYY/jMM/jDD").locale('fa'),
+        max: moment(this.maxDate, "jYYYY/jMM/jDD").locale('fa'),
         showGoToCurrent: true,
         hideOnOutsideClick: true,
         showNearMonthDays: true

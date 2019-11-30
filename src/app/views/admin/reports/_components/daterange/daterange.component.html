@@ -13,7 +13,7 @@
           placeholder="تاریخ"
           [formControl]="selectedDateFrom"
           [dpDayPicker]="datePickerConfig"
-          
+          [displayDate]="minDate"
           />
       </md-input-container>
   </div>
@@ -32,21 +32,9 @@
       placeholder="تاریخ"
       [formControl]="selectedDateTo"
       [dpDayPicker]="datePickerConfig"
-      
+      [displayDate]="maxDate"
       />
       </md-input-container>
 
   </div>
 
-
-  <dp-date-picker 
-   dir="rtl"
-   [(ngModel)]="selectedDateTo"
-   mode="day"
-   placeholder="تاریخ"
-   theme="dp-material">
- </dp-date-picker>
-
- <input name="someName" #dateFrom [(ngModel)]="selectedDateTo" [dpDayPicker]="datePickerConfig" />
-
-  

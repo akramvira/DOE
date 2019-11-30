@@ -175,7 +175,7 @@ export class QueuesComponent implements OnInit {
           busy.push(data[i]["data"]["busy"]);
           performance.push(data[i]["data"]["performance"]);
           time.push(data[i]["data"]["time"]);
-          ringTime.push(data[i]["data"]["ringTime"]);
+          ringTime.push(data[i]["data"]["ringtime"]);
         }
 
         this.queueData = arrayData;
@@ -284,6 +284,7 @@ export class QueuesComponent implements OnInit {
 
         //time chart-----------------------------------
         this.timesBarChartDataDetails = [];
+        
         this.timesBarChartDataDetails = [
           { data: ringTime, label: "مدت زمان انتظار" },
           { data: time, label: "مدت زمان مکالمه" }
