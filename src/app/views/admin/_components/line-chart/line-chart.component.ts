@@ -140,7 +140,14 @@ export class LineChartComponent implements OnInit {
                
                 else return item;
             },
-            }
+            },
+            scaleLabel:{
+              labelString: isTimeChart? 'مدت زمان' :  'تعداد تماس' ,
+              display: true,
+              fontFamily: "IRANSans",
+              fontColor: "black",
+              fontStyle: "bold",
+            },
             
           }
         ],

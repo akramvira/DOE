@@ -38,4 +38,15 @@
 
   </div>
 
+
+  <dp-date-picker 
+   dir="rtl"
+   [(ngModel)]="selectedDateTo"
+   mode="day"
+   placeholder="تاریخ"
+   theme="dp-material">
+ </dp-date-picker>
+
+ <input name="someName" #dateFrom [(ngModel)]="selectedDateTo" [dpDayPicker]="datePickerConfig" />
+
   

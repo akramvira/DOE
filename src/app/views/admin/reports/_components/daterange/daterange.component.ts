@@ -1,8 +1,9 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { EventEmitter } from 'events';
 import * as moment from "jalali-moment";
 import { FormControl } from '@angular/forms';
 import { SharedService } from '../../../../../_services/shared.service';
+import { DatePickerComponent } from 'ng2-jalali-date-picker';
 
 @Component({
   selector: 'app-daterange',
@@ -14,10 +15,13 @@ export class DaterangeComponent implements OnInit {
   constructor(
     private sharedService :SharedService
   ) { }
+  
+  @ViewChild('dateFrom') dateFrom: DatePickerComponent;
+  @Input() onSelect : EventEmitter = new EventEmitter();
 
   dateObject = moment("1395-11-22", "jYYYY,jMM,jDD");
-  minDate = moment("1398/06/20", "jYYYY,jMM,jDD");
-  maxDate = moment("1398/06/20", "jYYYY,jMM,jDD");
+  minDate = moment("1398/06/20", "jYYYY/jMM/jDD");
+  maxDate = moment("1398/06/20", "jYYYY/jMM/jDD");
   selectedDateFrom = new FormControl("1398/01/01");
   selectedDateTo = new FormControl("1398/01/01");
 
@@ -25,6 +29,9 @@ export class DaterangeComponent implements OnInit {
   
   ngOnInit() {
     this.setDate();
+
+    this.dateFrom.api.moveCalendarTo( moment("1395/11/22", "jYYYY/jMM/jDD").locale('fa'));
+    debugger;
   }
 
   
@@ -66,7 +73,7 @@ export class DaterangeComponent implements OnInit {
   }
 
   
-  @Input() onSelect : EventEmitter = new EventEmitter();
+ 
 
   onSelectDate(){
     this.onSelect.emit(this.selectedDateFrom.value, this.selectedDateTo.value);
