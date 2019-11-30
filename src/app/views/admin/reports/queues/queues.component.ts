@@ -179,7 +179,6 @@ export class QueuesComponent implements OnInit {
         }
 
         this.queueData = arrayData;
-        //this.setPage(data);
 
         //time chart-----------------------------------
         this.timesBarChartData = [];
@@ -199,6 +198,8 @@ export class QueuesComponent implements OnInit {
         this.serviceLevelbarChartData = [
           { data: performance, label: "درصد سرویس دهی" }
         ];
+
+        
       },
       error => {
         this.authServ.handdleAuthErrors(error);
@@ -241,7 +242,7 @@ export class QueuesComponent implements OnInit {
     });
     
     if (labels.length) 
-    this.detailsLabels = labels;
+      this.detailsLabels = labels;
     else this.detailsLabels = [];
 
     this.reportServ.gerChartsDetailsData(data).subscribe(
@@ -261,7 +262,6 @@ export class QueuesComponent implements OnInit {
 
         for (let i in data) {
           this.detailsLabels.push(data[i]["name"]);
-
           arrayData.push({
             id: data[i]["id"],
             name: data[i]["name"],
@@ -276,11 +276,6 @@ export class QueuesComponent implements OnInit {
           time.push(data[i]["data"]["time"]);
           ringTime.push(data[i]["data"]["ringtime"]);
         }
-
-        //console.log(detailsLabels);
-
-        //this.queueData = arrayData;
-        //this.setPage(data);
 
         //time chart-----------------------------------
         this.timesBarChartDataDetails = [];
