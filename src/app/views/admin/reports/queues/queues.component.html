@@ -201,7 +201,7 @@
                 <div class="card-body">
                   <app-bar-chart
                   [datasets]="callsBarChartData"
-                  [labels]="mainLabels"
+                  [labels]="['تعداد تماس ها']"
                   title="نمودار وضعیت تماس ها"
                   ></app-bar-chart>
                     
@@ -219,7 +219,7 @@
                 <div class="card-body">
                     <app-bar-chart
                     [datasets]="timesBarChartData"
-                    [labels]="mainLabels"
+                    [labels]="['تعداد تماس ها']"
                     isTimeChart='true'
                     title="نمودار مدت زمان انتظار و مکالمه"
                     ></app-bar-chart>
@@ -238,7 +238,7 @@
                 <div class="card-body">
                     <app-bar-chart
                     [datasets]="serviceLevelbarChartData"
-                    [labels]="mainLabels"
+                    [labels]="['درصد سرویس دهی']"
                     isPercentChart='true'
                     title="نمودار میزان عملکرد(درصد)"
                     ></app-bar-chart>
