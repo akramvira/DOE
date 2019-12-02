@@ -12,6 +12,7 @@ export class LineChartComponent implements OnInit {
   constructor(private excelService: ExcelService) {}
   chartHsteps = 50;
   @Input() isTimeChart = false;
+  @Input() title :string='';;
   
  
 

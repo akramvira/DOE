@@ -1,6 +1,6 @@
-
 <button class="badge  btn btn-sm border-right float-right" (click)="export('excel')"><i class="fa fa-external-link"></i> Excel</button>
 <button class="badge btn  btn-sm float-right mr-1" (click)="export('csv')"><i class="fa fa-external-link"></i> CSV</button>
+<button class="badge btn  btn-sm float-right mr-1" (click)="zooOutModal.show()"><i class="fa fa-search"></i> Zoom</button>
 
   <div class="chart-wrapper mt-3 mx-3 " >
   
@@ -13,4 +13,58 @@
     [chartType]="lineChartType"
     (chartHover)="chartHovered($event)"
     (chartClick)="chartClicked($event)"></canvas>
+</div>
+
+
+<div
+  bsModal
+  #zooOutModal="bs-modal"
+  class="modal fade"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="myModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+          <h4 class="modal-title col-12 p-0">{{title}}</h4>
+          <button
+            type="button"
+            class="close p-0 pt-4"
+            (click)="zooOutModal.hide()"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+       
+      </div>
+      <div class="modal-body">
+        <div class="animated fadeIn justify-content-end row border-bottom justify-content-center">
+          <div class="col-10">
+            <div class="chart-wrapper  pt-3">
+              <canvas baseChart class="chart"
+              [datasets]="datasets"
+              [labels]="labels"
+              [options]="options"
+              [colors]="colors"
+              [legend]="lineChartLegend"
+              [chartType]="lineChartType"
+              (chartHover)="chartHovered($event)"
+              (chartClick)="chartClicked($event)"></canvas>
+          </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary mr-2"
+            (click)="zooOutModal.hide()"
+          >
+           بستن
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

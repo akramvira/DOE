@@ -1,7 +1,7 @@
 
 <button class="badge  btn btn-sm border-right float-right" (click)="export('excel')"><i class="fa fa-external-link"></i> Excel</button>
 <button class="badge btn  btn-sm float-right mr-1" (click)="export('csv')"><i class="fa fa-external-link"></i> CSV</button>
-<button class="badge btn  btn-sm float-right mr-1" (click)="zooOutModal.show()"><i class="fa fa-search"></i> Zoom</button>
+<button class="badge btn  btn-sm float-right mr-1" (click)="zooOutModal.show();"><i class="fa fa-search"></i> Zoom</button>
 
 <div class="chart-wrapper mt-2">
     <canvas 
@@ -26,6 +26,7 @@
   role="dialog"
   aria-labelledby="myModalLabel"
   aria-hidden="true"
+  (close)="onCloseModal()"
 >
   <div class="modal-dialog modal-xl" role="document">
     <div class="modal-content">
