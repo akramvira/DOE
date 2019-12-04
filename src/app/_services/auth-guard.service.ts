@@ -7,6 +7,7 @@ import { map, catchError } from "rxjs/operators";
 import { Globals } from "./globals";
 import { Observable, of } from "rxjs";
 import { setTime } from "ngx-bootstrap/chronos/utils/date-setters";
+import { StoreService } from './store.service';
 
 @Injectable({
   providedIn: "root"
@@ -18,13 +19,22 @@ export class AuthGuardService implements CanActivate {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private gl: Globals
+    private gl: Globals,
+    private storeService : StoreService
   ) {}
 
   canActivate(next: ActivatedRouteSnapshot): Observable<boolean> {
     this.loading = true;
 
     return Observable.create(observer => {
+      if(!this.storeService.getAccessToken()) {
+        observer.next(false);
+        this.router.navigate(['/login']);
+      }
+      else 
+      {
+
+     
       let menu = JSON.parse(localStorage.getItem("menu"));
 
       if (menu) {
@@ -56,6 +66,8 @@ export class AuthGuardService implements CanActivate {
           }
         );
       }
+
+    }
     });
   }
 }
