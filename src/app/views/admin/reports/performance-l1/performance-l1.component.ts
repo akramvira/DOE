@@ -87,8 +87,6 @@ export class PerformanceL1Component implements OnInit {
   initingData :boolean = false;
   loadingData = false;
   //--------------------------------
-
-
  
   ngOnInit() {
     
@@ -139,7 +137,6 @@ export class PerformanceL1Component implements OnInit {
 
   activeFilter(event) {
     let elem = event.target.element;
-
     this.filters.value.time;
   }
 

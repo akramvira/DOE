@@ -105,7 +105,7 @@
         (click)="removeFromSelectedParent($event, item)"  title="{{item.number}}">
         {{ item.name? item.name : item.number }}
           </div>
-            <label class="p-2" [hidden]="selectedGroupExtensions.length"> معاونتی انتخاب نشده است</label>
+            <label class="p-2" [hidden]="!selectedGroupExtensions || selectedGroupExtensions.length"> معاونتی انتخاب نشده است</label>
       </div>
       </div>
     </div>

@@ -93,7 +93,11 @@ export class CallsDetailsComponent implements OnInit {
 
   @ViewChild(DatatableComponent) myTable: DatatableComponent;
   tempData: any = [];
-
+  my_messages = {
+    'emptyMessage': 'داده ای جهت نمایش موجود نیست.',
+    // 'totalMessage': 'sdfsdf'
+  };
+  
   filtersData = new FormGroup({
     disposition: new FormControl("all"),
     src: new FormControl(""),

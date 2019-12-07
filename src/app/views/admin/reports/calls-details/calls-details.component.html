@@ -9,7 +9,7 @@
           <div class="row">
             <app-daterange #daterange></app-daterange>
 
-            <label class="form-text ml-2 ">: وضعیت</label>
+            <label class="form-text ml-2 ">:وضعیت</label>
             <select
               class="form-control-sm border"
               type="text"
@@ -23,7 +23,7 @@
               <option value="busy">مشغول</option>
             </select>
 
-            <label class="form-text ml-2 ">: مبدا</label>
+            <label class="form-text ml-2 ">:مبدا</label>
             <input
               type="text"
               class="form-control-sm border"
@@ -31,7 +31,7 @@
               formControlName="src"
               style="border:1px;"
             />
-            <label class="form-text ml-2 ">: مقصد</label>
+            <label class="form-text ml-2 ">:مقصد</label>
             <input
               class="form-control-sm border"
               type="text"
@@ -59,7 +59,7 @@
         <div>
           <ngx-datatable
             #usersTable
-            class="material expandable"
+            class="material bootstrap expandable"
             [rows]="data"
             [columnMode]="'force'"
             [headerHeight]="50"
@@ -70,6 +70,7 @@
             [offset]="page.pageNumber"
             [limit]="page.size"
             (page)="setPage($event)"
+            [messages]="my_messages"
           >
             <ngx-datatable-column name="date" [width]="80">
               <ng-template
@@ -108,18 +109,19 @@
                 let-value="value"
                 ngx-datatable-cell-template
               >
+              
                 <span
                   class="badge"
                   [ngClass]="{
-                    ' badge-success': value == 'Answered',
-                    ' badge-danger': value == 'No answer',
-                    ' badge-warning': value == 'Busy'
+                    ' badge-success': value.trim() == 'Answered',
+                    ' badge-danger': value.trim() == 'No answer',
+                    ' badge-warning': value.trim() == 'Busy'
                   }"
                 >
                   {{
-                    value == "Answered"
+                    value.trim() == "Answered"
                       ? "پاسخ داده شده"
-                      : value == "No answer"
+                      : value.trim() == "No answer"
                       ? "پاسخ داده نشده"
                       : "مشغول"
                   }}
@@ -136,7 +138,6 @@
               >
                 <span (click)="sort()">مبدا</span>
                 <app-search-column
-                  filterText="src"
                   columnName="src"
                 ></app-search-column>
               </ng-template>
@@ -176,7 +177,7 @@
                 let-sort="sortFn"
                 ngx-datatable-header-template
               >
-                <span (click)="sort()">(دقیقه)مدت تماس</span>
+                <span (click)="sort()">مدت تماس</span>
               </ng-template>
               <ng-template
                 let-value="value"

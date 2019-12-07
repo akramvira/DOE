@@ -38,18 +38,13 @@ export class DaterangeComponent implements OnInit {
 
     
     this.sharedService.minMaxTime.subscribe(data => {
-     // debugger;
       this.setMinMax(data["min"], data["max"]);
     });
-
-
-    //debugger;
   }
 
   
  
   setMinMax(min, max){
-    debugger;
     this.minDate =  moment(min, "jYYYY/jMM/jDD").locale('fa');
     this.maxDate =  moment(max, "jYYYY/jMM/jDD").locale('fa');
 
