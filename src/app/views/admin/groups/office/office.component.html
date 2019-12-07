@@ -98,12 +98,12 @@
       </div>
     </div>
     <div class="card-body direction-ltr text-center">
-        <div *ngFor="let item of selectedGroupExtensions" class="btn col-6 btn-success m-1"
+        <div *ngFor="let item of selectedGroupExtensions" class="btn col-9 btn-success m-1"
         (click)="removeFromSelectedParent($event, item)"  title="{{item.number}}">
         
-        {{ item.name? item.name : item.number }}
+        {{ item.name? item.name+' ('+item.number+')' : item.number }}
           </div>
-            {{selectedGroupExtensions? '' : 'ادارهی انتخاب نشده است.' }}
+            {{selectedGroupExtensions.length? '' : 'اداره ای انتخاب نشده است.' }}
     </div>
     <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
   </div>

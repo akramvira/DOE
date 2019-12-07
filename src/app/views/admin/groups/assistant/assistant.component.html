@@ -42,7 +42,7 @@
         [canAutoResize]="false"
         [draggable]="false"
         [resizeable]="false"
-        [width]="120"
+        [width]="220"
         name="name"
         >
         <ng-template let-column="column" let-sort="sortFn" ngx-datatable-header-template>
@@ -70,9 +70,6 @@
           </ng-template>
      </ngx-datatable-column>
 	 
-	 
-
-
     </ngx-datatable>
 
   <div class="col-12 text-left">
@@ -97,7 +94,7 @@
         <div class="col-12">
           <div class="row align-items-center">
             <span class="col-5 pl-2">اداره های این معاونت </span>
-            <input class="form-control col-3" placeholder="فیلتر"/> 
+            <!-- <input class="form-control col-3" placeholder="فیلتر"/>  -->
           </div>
       </div>
     </div>
@@ -108,7 +105,7 @@
         (click)="removeFromSelectedParent($event, item)"  title="{{item.number}}">
         {{ item.name? item.name : item.number }}
           </div>
-            {{selectedGroupExtensions? '' : 'معاونتی انتخاب نشده است.' }}
+            <label class="p-2" [hidden]="selectedGroupExtensions.length"> معاونتی انتخاب نشده است</label>
       </div>
       </div>
     </div>
@@ -121,16 +118,18 @@
           <div class="col-12">
             <div class="row align-items-center">
               <span class="col-5 pl-2">همه اداره ها </span>
-              <input class="form-control col-3 text-left" type="number"
-               placeholder="فیلتر" (keyup)="filterAllExtensions($event)" /> 
+              <!--<input class="form-control col-3 text-left" type="number"
+                placeholder="فیلتر" (keyup)="filterAllExtensions($event)" />  -->
             </div>
         </div>
       </div>
     <div class="card-body row justify-content-center align-items-center direction-ltr text-center">
-          <div *ngFor="let item of remainingExtensions" class="col-4 btn btn-info m-1" 
+          <div *ngFor="let item of remainingExtensions" class="col-5 btn btn-info m-1" 
           (click)="addItemToSelectedParent($event, item)"  title="{{item.number}}">
           {{ item.name? item.name : item.number }}
-            </div>
+          </div>
+
+          <label [hidden]="remainingExtensions.length">اداره ای جهت نمایش وجود ندارد</label>
     </div>
   </div>
 </div>

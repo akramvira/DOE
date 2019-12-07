@@ -125,7 +125,6 @@ export class LineChartComponent implements OnInit {
                   if(item == 0 ) return 0;
                   let d = Number(item);
                   
-                  
                   let h = Math.floor(d / 3600);
                   let m = Math.floor(d % 3600 / 60);
                   let s = Math.floor(d % 3600 % 60);
@@ -136,7 +135,8 @@ export class LineChartComponent implements OnInit {
                 let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
                 let time = hDisplay + mDisplay + ":" + sDisplay;
 
-               return time;
+                return time;
+
                 }
                
                 else return item;
@@ -147,7 +147,7 @@ export class LineChartComponent implements OnInit {
               display: true,
               fontFamily: "IRANSans",
               fontColor: "black",
-              fontStyle: "bold",
+              fontStyle: "bold"
             },
             
           }

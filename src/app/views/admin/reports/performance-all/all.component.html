@@ -106,7 +106,6 @@
                 [data]="inDetailsPercent"
                 [labels]="detailPercentLabelsIn"
                 [colors]="inPercentsColors"
-                
               >
               </app-doughnut-chart>
             </div>
@@ -149,6 +148,7 @@
                 [datasets]="barchartCallsAll"
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
+                timeType="hourMin"
                 title="مدت زمان مکالمات در تماس های ورودی"
               >
               </app-bar-chart>

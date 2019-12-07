@@ -241,6 +241,7 @@ export class SettingsComponent implements OnInit {
   datafileToUpload: File = null;
   handleDataFileInput(files: FileList) {
     this.datafileToUpload = files.item(0);
+
   }
 
   submitOtherData() {

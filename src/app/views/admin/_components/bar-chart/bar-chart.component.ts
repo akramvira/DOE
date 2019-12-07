@@ -14,7 +14,7 @@ export class BarChartComponent implements OnInit {
   @Input() isPercentChart: boolean = false;
   @Input() unitLabel: string = "";
   @Input() title: string = "";
-  @Input() timeType: string = "full"; // min , hour
+  @Input() timeType: string = "full"; // hourMin, minSec
 
   ngOnInit() {
     this.setChartConfig();
@@ -87,235 +87,228 @@ export class BarChartComponent implements OnInit {
 
   zoomOut() {}
 
-
   ngOnChanges(changes: SimpleChanges) {
-    this.setChartConfig()
-}
+    this.setChartConfig();
+  }
 
+  isZoomMode: boolean = false;
 
-isZoomMode:boolean =false;
+  setChartConfig() {
+    {
+      let barsCount = 0;
+      for (let i in this.datasets) {
+        barsCount += this.datasets[i]["data"].length;
+        debugger;
+      }
 
-setChartConfig(){
-  {
+      let isTimeChart = this.isTimeChart;
+      let isPercentChart = this.isPercentChart;
+      let unitLabel = this.unitLabel;
 
-    let barsCount = 0;
-    for(let i in this.datasets){
-      barsCount += this.datasets[i]['data'].length
-      debugger;
-    }
+      let topNumbersType = !isPercentChart ? "value" : "percent";
+      let stepSizee = isPercentChart ? 10 : 1;
+      let timeType = this.timeType;
 
-    
-    
-    let isTimeChart = this.isTimeChart;
-    let isPercentChart = this.isPercentChart;
-    let unitLabel = this.unitLabel;
+      this.chartOptions = {
+        scaleShowVerticalLines: true,
 
-    let topNumbersType = !isPercentChart? "value" : 'percent';
-    let stepSizee = isPercentChart? 10: 1;
-    let timeType = this.timeType;
-
-    this.chartOptions = {
-      scaleShowVerticalLines: true,
-
-      barRoundness: 3,
-      legend: {
-        labels: {
-          fontFamily: "IRANSans",
-          fontColor: "black",
-          fontStyle: "bold"
-        }
-      },
-      tooltips: {
-        fontFamily: "IRANSans",
-        fontColor: "black",
-        fontStyle: "bold",
-        enabled: false,
-        custom: CustomTooltips,
-        callbacks: {
-          label: function(tooltipItem, data) {
-            if (isTimeChart) {
-              var label = data.datasets[tooltipItem.datasetIndex].label || "";
-
-              let d = Number(tooltipItem.yLabel);
-              //let day = Math.floor(d / (3600*24));
-              //d = d % (3600*24);
-              let h = Math.floor(d / 3600);
-              let m = Math.floor((d % 3600) / 60);
-              let s = Math.floor((d % 3600) % 60);
-
-              let hDisplay = h >= 10 ? h : (("0" + h) as string);
-              let mDisplay = m >= 10 ? m : (("0" + m) as string);
-              let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-              let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
-
-              return ' '+ label + '<i class="icon icon-clock"></i> :: ' + time;
-              // else return label + ' ' + tooltipItem.yLabel;
-            } else if (isPercentChart) {
-              var label = data.datasets[tooltipItem.datasetIndex].label || "";
-
-              if (label) {
-                label += ": ";
-              }
-              label += isNaN(tooltipItem.yLabel)
-                ? "0"
-                : tooltipItem.yLabel + "%";
-              return ' '+ label;
-            } else {
-              var label = data.datasets[tooltipItem.datasetIndex].label || "";
-
-              if (label) {
-                label += ": ";
-              }
-              label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
-
-              //if (unitLabel) label = label + 'تماس';
-
-              return ' '+ label + ' تماس';
-            }
-          }
-        }
-      },
-      scales: {
-        xAxes: [
-          {
-            ticks: {
-              beginAtZero: true,
-              //this will fix your problem with NaN
-              callback: function(label, index, labels, data) {
-                return label ? label : "";
-              },
-              fontFamily: "IRANSans",
-              fontColor: "black",
-              fontSize: 13
-            },
-            barPercentage: 0.9
-          }
-        ],
-        yAxes: [
-          {
+        barRoundness: 3,
+        legend: {
+          labels: {
             fontFamily: "IRANSans",
             fontColor: "black",
-            fontStyle: "bold",
-            scaleLabel:{
-              labelString: isTimeChart? 'مدت زمان' : isPercentChart?'درصد': 'تعداد تماس' ,
-              display: true,
+            fontStyle: "bold"
+          }
+        },
+        tooltips: {
+          fontFamily: "IRANSans",
+          fontColor: "black",
+          fontStyle: "bold",
+          enabled: false,
+          custom: CustomTooltips,
+          callbacks: {
+            label: function(tooltipItem, data) {
+              if (isTimeChart) {
+                var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+                let d = Number(tooltipItem.yLabel);
+                //let day = Math.floor(d / (3600*24));
+                //d = d % (3600*24);
+                let h = Math.floor(d / 3600);
+                let m = Math.floor((d % 3600) / 60);
+                let s = Math.floor((d % 3600) % 60);
+
+                let hDisplay = h >= 10 ? h : (("0" + h) as string);
+                let mDisplay = m >= 10 ? m : (("0" + m) as string);
+                let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+
+                let time = "";
+
+                if (timeType == "hourMin")
+                  time = hDisplay + ":" + mDisplay ;
+                else if (timeType == "minSec")
+                  time =  mDisplay + ":" + sDisplay;
+                else time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+
+                return (
+                  " " + label + '<i class="icon icon-clock"></i> :: ' + time
+                );
+                // else return label + ' ' + tooltipItem.yLabel;
+              } else if (isPercentChart) {
+                var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+                if (label) {
+                  label += ": ";
+                }
+                label += isNaN(tooltipItem.yLabel)
+                  ? "0"
+                  : tooltipItem.yLabel + "%";
+                return " " + label;
+              } else {
+                var label = data.datasets[tooltipItem.datasetIndex].label || "";
+
+                if (label) {
+                  label += ": ";
+                }
+                label += isNaN(tooltipItem.yLabel) ? "0" : tooltipItem.yLabel;
+
+                //if (unitLabel) label = label + 'تماس';
+
+                return " " + label + " تماس";
+              }
+            }
+          }
+        },
+        scales: {
+          xAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+                //this will fix your problem with NaN
+                callback: function(label, index, labels, data) {
+                  return label ? label : "";
+                },
+                fontFamily: "IRANSans",
+                fontColor: "black",
+                fontSize: 13
+              },
+              barPercentage: 0.9
+            }
+          ],
+          yAxes: [
+            {
               fontFamily: "IRANSans",
               fontColor: "black",
               fontStyle: "bold",
-            },
-            ticks: {
-              beginAtZero: true,
-              fontFamily: "IRANSans",
-              fontColor: "black",
-              fontSize: 11,
-              padding:10,
-              margin:100,
-              min: 0,
-              maxTicksLimi:10,
-              max: isPercentChart ? 100 : undefined,
-              userCallback: function(item) {
-                if (isTimeChart) {
-                  if(item == 0) return 0;
-                  let d = Number(item);
+              scaleLabel: {
+                labelString: isTimeChart
+                  ? "مدت زمان"
+                  : isPercentChart
+                  ? "درصد"
+                  : "تعداد تماس",
+                display: true,
+                fontFamily: "IRANSans",
+                fontColor: "black",
+                fontStyle: "bold"
+              },
+              ticks: {
+                beginAtZero: true,
+                fontFamily: "IRANSans",
+                fontColor: "black",
+                fontSize: 11,
+                padding: 10,
+                margin: 100,
+                min: 0,
+                maxTicksLimi: 10,
+                max: isPercentChart ? 100 : undefined,
+                userCallback: function(item) {
+                  if (isTimeChart) {
+                    if (item == 0) return 0;
+                    let d = Number(item);
 
-                  let day = Math.floor(d / (3600 * 24));
-                  //d = d % (3600*24);
-                  let h = Math.floor(d / 3600);
-                  let m = Math.floor((d % 3600) / 60);
-                  let s = Math.floor((d % 3600) % 60);
+                    let day = Math.floor(d / (3600 * 24));
+                    //d = d % (3600*24);
+                    let h = Math.floor(d / 3600);
+                    let m = Math.floor((d % 3600) / 60);
+                    let s = Math.floor((d % 3600) % 60);
 
-                  let hDisplay = h >= 10 ? h : (("0" + h) as string);
-                  let mDisplay = m >= 10 ? m : (("0" + m) as string);
-                  let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+                    let hDisplay = h >= 10 ? h : (("0" + h) as string);
+                    let mDisplay = m >= 10 ? m : (("0" + m) as string);
+                    let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
 
-                  let time = '';
-                  if(timeType == 'min')
-                     time =  mDisplay + ":" + sDisplay;
-                 else if(timeType == 'hour')
-                    time = hDisplay + ":" + mDisplay;// + ":" + sDisplay;
-                 else 
-                     time = hDisplay + ":" + mDisplay;// + ":" + sDisplay;
+                    let time = "";
+                    if (timeType == "min") time = mDisplay + ":" + sDisplay;
+                    else if (timeType == "hour")
+                      time = hDisplay + ":" + mDisplay;
+                    // + ":" + sDisplay;
+                    else time = hDisplay + ":" + mDisplay; // + ":" + sDisplay;
 
-                  return time;
-                } else if (isPercentChart) return item + "%";
-                else return item;
+                    return time;
+                  } else if (isPercentChart) return item + "%";
+                  else return item;
+                }
               }
             }
-            
-            
-          }
-        ]
-      },
-      
+          ]
+        },
 
-      plugins: {
-        labels: {
-          render: function (args) {
-            
-            console.log('barsCount', barsCount);
-            if(!this.isZoomMode && barsCount > 10) return '';
-            if(args.value == 0)
-              return '';
+        plugins: {
+          labels: {
+            render: function(args) {
+              if (!this.isZoomMode && barsCount > 10) return "";
+              if (args.value == 0) return "";
 
-            if(isPercentChart)
-              return '%' + args.value;
-            else if(isTimeChart){
-              
+              if (isPercentChart) return "%" + args.value;
+              else if (isTimeChart) {
+                let d = Number(args.value);
 
-              let d = Number(args.value);
+                let day = Math.floor(d / (3600 * 24));
+                //d = d % (3600*24);
+                let h = Math.floor(d / 3600);
+                let m = Math.floor((d % 3600) / 60);
+                let s = Math.floor((d % 3600) % 60);
+
+                let hDisplay = h >= 10 ? h : (("0" + h) as string);
+                let mDisplay = m >= 10 ? m : (("0" + m) as string);
+                let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
+                let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
+
+                return time;
+              } else return args.value;
+            },
+            precision: 2,
+            arc: true
+          },
+          userCallback: function(value) {
+            console.log(value);
+            if (isNaN(value)) {
+              return "";
+            }
+
+            if (isTimeChart) {
+              let d = Number(value);
 
               let day = Math.floor(d / (3600 * 24));
               //d = d % (3600*24);
               let h = Math.floor(d / 3600);
               let m = Math.floor((d % 3600) / 60);
               let s = Math.floor((d % 3600) % 60);
-  
+
               let hDisplay = h >= 10 ? h : (("0" + h) as string);
               let mDisplay = m >= 10 ? m : (("0" + m) as string);
               let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
               let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
-  
+
               return time;
-            }
-             
-             else return args.value;
-      
-          },
-          precision: 2,
-          arc: true
-        },
-        userCallback: function(value) {
-        
-          console.log(value);
-          if (isNaN(value)) {
-            return "";
+            } else if (isPercentChart) return value + "%";
+            else return value;
           }
-
-          if (isTimeChart) {
-            let d = Number(value);
-
-            let day = Math.floor(d / (3600 * 24));
-            //d = d % (3600*24);
-            let h = Math.floor(d / 3600);
-            let m = Math.floor((d % 3600) / 60);
-            let s = Math.floor((d % 3600) % 60);
-
-            let hDisplay = h >= 10 ? h : (("0" + h) as string);
-            let mDisplay = m >= 10 ? m : (("0" + m) as string);
-            let sDisplay = s >= 10 ? s : (("0" + s) as string); // > 0 ? s ;// + (s == 1 ? "" : "") : "";
-            let time = hDisplay + ":" + mDisplay + ":" + sDisplay;
-
-            return time;
-          } else if (isPercentChart) return value + "%";
-          else return value;
         }
-      }
-    };
+      };
+    }
   }
-}
 
-onCloseModal(){
-  debugger;
-}
-
+  onCloseModal() {
+    debugger;
+  }
 }

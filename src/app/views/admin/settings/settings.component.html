@@ -355,6 +355,7 @@
                       <div class="col-12">
                           <div *ngIf="datafileToUpload" >
                             {{ datafileToUpload.name }}
+                            
                           </div>
                           <div
                             *ngIf="systemDataSubmitted && systemDataInfo.file.errors"
@@ -369,8 +370,9 @@
                   </div>
                   <div class="row justify-content-center align-items-center"><div class="col-7 border-top m-2"></div></div>
                   <div class="form-group form-actions  text-center">
-                    <button type="submit" class="btn  btn-success" disabled="!datafileToUpload">
+                    <button type="submit" class="btn  btn-success" >
                       ذخیره شود
+                        
                       <app-spintick [showSpinner]="fileIsUploading"></app-spintick>
                     </button>
                   </div>
@@ -526,10 +528,11 @@
             دسترسی های شما
           </div>
           <div class="card-body text-center">
-            <div class="alert alert-success" *ngFor="let item of accessList">
-              {{ item.title }}: زمان:{{ item.active_time }}: تعداد:{{
-                item.count
-              }}
+            <div class="alert p-1 border border-success alert-success row" *ngFor="let item of accessList">
+            <label class="col-4" ><b>عنوان</b>: {{ item.tite }}</label>
+            <label class="col-2"><b>تعداد</b>:{{item.count}}</label>
+            <label class="col-6"><b>زمان فعال سازی</b>: {{ item.active_time }}</label>
+
             </div>
             <div class="alert alert-danger" *ngIf="accessList.length == 0">
               دسترسی موجود نیست.

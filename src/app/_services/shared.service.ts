@@ -22,6 +22,7 @@ export class SharedService {
 
   setMinMaxDate() {
  
+    
     let token = this.authServ.getLSToken();
     let headers = new HttpHeaders({
       Authorization: "Bearer " + token,
@@ -31,7 +32,10 @@ export class SharedService {
       headers: headers
     }).subscribe(
       data=>{
+     
         this.minMaxTime.next(data['data']);
+
+        
       },
       error=>{
         this.authServ.handdleAuthErrors(error);

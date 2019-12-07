@@ -70,7 +70,6 @@ export class OfficeComponent implements OnInit {
       })
       .subscribe(
         data => {
-          console.log(data);
           this.itemsChanged = false;
           this.toastr.success("نام اداره با موفقیت تغییر یافت");
         },
@@ -112,8 +111,6 @@ export class OfficeComponent implements OnInit {
 
   setRemainingExtensions() {
     let $this = this;
-
-    this.selectedGroupExtensions;
    
     this.remainingExtensions = this.allExtensions.filter(el => {
       return !$this.selectedGroupExtensions.includes(el);
