@@ -149,7 +149,7 @@
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
                 timeType="hourMin"
-                title="مدت زمان مکالمات در تماس های ورودی"
+                [colors] = "callsBarColors"
               >
               </app-bar-chart>
             </div>
@@ -172,7 +172,7 @@
                 [labels]="['مدت زمان مکالمات']"
                 [isTimeChart]="true"
                 timeType="min"
-                title="مدت زمان مکالمات در تماس های خروجی"
+                [colors] = "callsBarColors"
               >
               </app-bar-chart>
             </div>

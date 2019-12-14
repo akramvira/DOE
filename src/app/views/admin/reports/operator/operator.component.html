@@ -141,7 +141,7 @@
           
         <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
           <div class="card-header row">
-          مدت زمان مکالمات در تماس های ورودی
+            مقایسه مدت زمان کل مکالمات
             <div class="card-header-actions"></div>
           </div>
           <div class="card-body">
@@ -149,11 +149,10 @@
               <div class="row">
                 <div class="chart-wrapper col-12">
                     <app-bar-chart
-                  class="col-12"
-                    [datasets]="barChartDataTimeIn"
-                    title="مدت زمان مکالمات در تماس های ورودی"
+                    [datasets]="barchartCallsAll"
                     [labels]= "['مدت زمان مکالمات']"
                     [isTimeChart]="true"
+                    [colors] = "callsBarColors"
                   >
                   </app-bar-chart>
                 </div>
@@ -164,7 +163,7 @@
     
         <div class="card col-12 col-md-12 col-lg-12 col-xl-5 mr-xl-3 ml-2">
             <div class="card-header row">
-                مدت زمان مکالمات در تماس های خروجی
+              مقایسه میانگین مدت زمان مکالمات
               <div class="card-header-actions"></div>
             </div>
             <div class="card-body">
@@ -172,11 +171,10 @@
                 <div class="row">
                   <div class="chart-wrapper col-12">
                       <app-bar-chart
-                      class="col-12"
-                        [datasets]="barChartDataTimeOut"
-                        title="مدت زمان مکالمات در تماس های خروجی"
+                        [datasets]="barchartCallsAvg"
                         [labels]= "['مدت زمان مکالمات']"
                         [isTimeChart]="true"
+                        [colors] = "callsBarColors"
                       >
                       </app-bar-chart>
                   </div>

@@ -38,6 +38,7 @@ export class DaterangeComponent implements OnInit {
 
     
     this.sharedService.minMaxTime.subscribe(data => {
+      
       this.setMinMax(data["min"], data["max"]);
     });
   }

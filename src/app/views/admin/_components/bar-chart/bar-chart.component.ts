@@ -98,7 +98,6 @@ export class BarChartComponent implements OnInit {
       let barsCount = 0;
       for (let i in this.datasets) {
         barsCount += this.datasets[i]["data"].length;
-        debugger;
       }
 
       let isTimeChart = this.isTimeChart;
@@ -280,7 +279,6 @@ export class BarChartComponent implements OnInit {
             arc: true
           },
           userCallback: function(value) {
-            console.log(value);
             if (isNaN(value)) {
               return "";
             }

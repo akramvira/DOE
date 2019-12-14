@@ -30,6 +30,14 @@ export class AllComponent implements OnInit {
       backgroundColor: ["#a5deb9", "#f86c6b", '#ffda6a']
     }
   ];
+  public callsBarColors = [
+    {
+      backgroundColor: ["#009688"]
+    },
+    {
+      backgroundColor: ["#ffc107"]
+    }
+  ];
   
   public barChartInColors = [
     {

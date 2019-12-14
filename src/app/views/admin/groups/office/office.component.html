@@ -103,7 +103,7 @@
         
         {{ item.name? item.name+' ('+item.number+')' : item.number }}
           </div>
-            {{selectedGroupExtensions.length? '' : 'اداره ای انتخاب نشده است.' }}
+            {{selectedGroupExtensions.length? '' : 'اداره ای انتخاب نشده است' }}
     </div>
     <div class="card-footer text-left" [hidden]="!itemsChanged"> <button class="btn btn-primary" (click)="updateParentItems()">ثبت نهایی</button>  </div>
   </div>
