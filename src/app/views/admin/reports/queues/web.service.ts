@@ -14,7 +14,7 @@ export class WebService {
   //queues
   public getQueuesData() {
     let options = this.authServ.getRequestOpions();
-    return this.http.get(environment.apiUrl + "/admin/reports/queues", options);
+    return this.http.get(environment.apiUrl + "/admin/reports/queues/all", options);
   }
   public gerChartsData(data) {
     let options = this.authServ.getRequestOpions();
